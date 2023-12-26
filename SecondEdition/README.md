@@ -9,3 +9,9 @@ This is the repo for my bool "Deep Learning Algorithms" (second edition)
 ## YouTube videos
 
 * https://www.youtube.com/channel/UCKRgi-HJDEq0a3nhlG2nQvg
+
+## Chapters
+
+* Chapter 4 - Starting with Deep Learning
+* Chapter 6 - CNNs
+* Chapter 10 - GPTs
