@@ -2,7 +2,7 @@
 
 This is the repo for my bool "Deep Learning Algorithms" (second edition)
 
-## Additional PyTorch code from classes or labs
+## Additional PyTorch code from my classes or labs
 
 * [code](https://github.com/rcalix1/PyTorch)https://github.com/rcalix1/PyTorch
 
