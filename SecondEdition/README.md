@@ -1,8 +1,8 @@
 # Deep Learning Algorithms (second edition)
 
-This is the repo for Deep Learning Algorithms (second edition)
+This is the repo for my bool "Deep Learning Algorithms" (second edition)
 
-## Code
+## Additional PyTorch code from classes or labs
 
 * [code](https://github.com/rcalix1/PyTorch)https://github.com/rcalix1/PyTorch
 
