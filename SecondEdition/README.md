@@ -1,6 +1,6 @@
 # Deep Learning Algorithms (second edition)
 
-This is the repo for my bool "Deep Learning Algorithms" (second edition)
+This is the repo for my book "Deep Learning Algorithms" (Second Edition)
 
 ## Additional PyTorch code from my classes or labs
 
