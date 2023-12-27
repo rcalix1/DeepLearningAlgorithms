@@ -4,5 +4,5 @@ I wrote this book in Tensorflow 1.0 a few years ago. All materials can be found 
 
 ## Available from Amazon
 
-[![name](DLA.edition1.png)]([link to your URL](https://www.amazon.com/Deep-Learning-Algorithms-Transformers-encoders/dp/B08GFPMFW9/ref=sr_1_5?qid=1703637639&refinements=p_27%3ARicardo+A+Calix&s=books&sr=1-5&text=Ricardo+A+Calix)https://www.amazon.com/Deep-Learning-Algorithms-Transformers-encoders/dp/B08GFPMFW9/ref=sr_1_5?qid=1703637639&refinements=p_27%3ARicardo+A+Calix&s=books&sr=1-5&text=Ricardo+A+Calix)
+[![name](DLA.edition1.jpeg)]([link to your URL](https://www.amazon.com/Deep-Learning-Algorithms-Transformers-encoders/dp/B08GFPMFW9/ref=sr_1_5?qid=1703637639&refinements=p_27%3ARicardo+A+Calix&s=books&sr=1-5&text=Ricardo+A+Calix)https://www.amazon.com/Deep-Learning-Algorithms-Transformers-encoders/dp/B08GFPMFW9/ref=sr_1_5?qid=1703637639&refinements=p_27%3ARicardo+A+Calix&s=books&sr=1-5&text=Ricardo+A+Calix)
 
