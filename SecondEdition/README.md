@@ -13,5 +13,8 @@ This is the repo for my book "Deep Learning Algorithms" (Second Edition)
 ## Chapters
 
 * Chapter 4 - Starting with Deep Learning
+* Chapter 5 - Semantic Vector Spaces
 * Chapter 6 - CNNs
-* Chapter 10 - GPTs
+* Chapter 7 - RNNs
+* Chapter 9 - Reinforcement Learning
+* Chapter 10 - GPTs 
