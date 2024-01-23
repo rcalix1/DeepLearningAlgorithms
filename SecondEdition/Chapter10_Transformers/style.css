@@ -163,3 +163,7 @@ td.off {
     margin-right: auto;
     width: 50%;
 }
+
+textarea {
+   font-size: large;
+}
