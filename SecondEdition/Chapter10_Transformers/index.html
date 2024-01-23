@@ -22,7 +22,7 @@
 			<h3><a href="https://www.youtube.com/channel/UCKRgi-HJDEq0a3nhlG2nQvg">YouTube</a></h3>
 			</td>
                         <td>
-			        <h3><a href="https://rcalix1.github.io/STEM/">STEM</a></h3>
+			        <h3><a href="https://github.com/rcalix1/DeepLearningAlgorithms/tree/main/SecondEdition">GitHub</a></h3>
 			</td>
 			
 
@@ -177,6 +177,7 @@ Masks serve several purposes. One is to help ignore the padded values during tra
  Given an input in english: "the cat is sleeping"
  
 </p>
+	  
 <p>
 a Transformer is also given part of the output sentence. In this case:  "el gato esta ?". 
       The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
@@ -199,7 +200,7 @@ Positional Encoding
   embedding, you have a vector per token of, say, size 512. 
 
 Now, with positional encoding, a function that calculates sines and cosines, is used to create a new vector also of size 512 that represents position (i.e. sequence) of 
-  the tokens. The 2 vectors are added together (embedding + positional\_encoding) to get the new inputs to the network. Also, the position vector values are smaller than
+  the tokens. The 2 vectors are added together (embedding + positional_encoding) to get the new inputs to the network. Also, the position vector values are smaller than
   the embedding vector values so as to not let position dominate. 
 
 </p>
@@ -307,11 +308,15 @@ Therefore, first we need to understand how to encode this for the neural network
   
 </p>
 
-    <ul>
+	  <p>
+
+		   <ul>
     <li> Padding these sequences of ids</li>
 
    <li> Taking text sentences and converting them into sequences of ids</li>   
     </ul>
+	  </p>
+   
 
 
 
@@ -324,7 +329,7 @@ Therefore, first we need to understand how to encode this for the neural network
 
     <center>
 <div>
-<textarea rows="15" cols="100">
+<textarea rows="8" cols="60">
 
 
   
@@ -344,16 +349,19 @@ Therefore, first we need to understand how to encode this for the neural network
 
 
 
+<p>
 
+	and for the other language
+
+
+</p>
    
-and for the other language
-
 
 
 
  <center>
 <div>
-<textarea rows="15" cols="100">
+<textarea rows="8" cols="60">
 
 
   
@@ -368,9 +376,12 @@ and for the other language
   </center>
 
 
+<h1>
+
+	GPTs
+</h1>
 
 
-\section{GPTs}
 
 <p>
 GPTs stand for Generative Pre-trained Transformers. The GPT uses the decoder only part of the Transformer. The input to the decoder varies based on whether you are 
@@ -389,14 +400,18 @@ The full architecture of the decoder can be seen in the following figure.
 
   <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="600" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="800" width="auto">
       </div>
 
     </center>
 
+<p>
+Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m\_heads (e.g. 8) parallel 
+	attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 
+	
+</p>
 
-Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m\_heads (e.g. 8) parallel attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 
 <h1>
 
@@ -433,7 +448,7 @@ Here, we first input our common python libraries.
 
    <center>
 <div>
-<textarea rows="15" cols="100">
+<textarea rows="8" cols="40">
 
 
   
@@ -452,7 +467,7 @@ In the following code segment we can set the parameters as we have done before.
 
       <center>
 <div>
-<textarea rows="20" cols="1150">
+<textarea rows="20" cols="70">
 
 
 torch.manual_seed(256)
@@ -478,15 +493,18 @@ dropout           = 0.2
     </center>
 
       
-
-
-
+<p>
 
 Now we proceed to read the text data to train on. 
 
+	
+</p>
+
+
+
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="10" cols="80">
 
 
  text = ''
@@ -501,15 +519,18 @@ with open(input_file2, 'r', encoding='utf-8') as f:
 </div>
     </center>
 
-
-
+<p>
 After reading the text file, we can look at the information about it with the following code. 
+
+	
+</p>
+
 
 
 
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="8" cols="80">
 
 
 print("length of data in letter or characters")
