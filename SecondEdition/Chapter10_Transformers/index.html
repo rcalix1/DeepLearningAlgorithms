@@ -112,15 +112,14 @@ The previous code gives us the  following dimensions of all the vectors we have 
 
 And it generates this graph with is our positional encoding tensor.
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/positional_encoding.png}
-}
 
-\caption{Positional Encoding Tensor}
-\label{RegLin:fig}
-\end{figure}
 
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/positional_encoding.png" height="300" width="auto">
+      </div>
+
+    </center>
 
 
 
@@ -212,15 +211,14 @@ The decoder consists of N (e.g. 6) decoder layers, followed by a fully connected
 The full architecture of the decoder can be seen in the following figure. 
 
 
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="300" width="auto">
+      </div>
+
+    </center>
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.85\textheight}{
-    \includegraphics{images/full_decoder_gpt.png}
-}
-\caption{Full Decoder GPT}
-\label{RegLin:fig}
-\end{figure}
 
 Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m\_heads (e.g. 8) parallel attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 
@@ -1577,15 +1575,15 @@ BERT is an example of an encoder-only Transformer. In contrast to pure Encoders 
 
 BERT stands for Bidirectional Encoder Representations from Transformers. They were trained using 2 approaches. 
 
+   <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="300" width="auto">
+      </div>
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.80\textheight}{
-    \includegraphics{images/BERT_final_masking.png}
-    %%%\includegraphics[width=0.8\textwidth]{images/BERT_final_masking.png}
-}
-\caption{Masked Language Modeling}
-\label{RegLin:fig}
-\end{figure}
+    </center>
+  
+
+
 
 The approaches are:
 
@@ -1601,16 +1599,14 @@ The second task BERT was pre-trained on is a 2 sentence classification task. The
 BERT was originally developed by Google and there have now been several other versions that were developed. They all follow the simliar naming convention of being called RoBERTa, AlBERT, DistilBERT, etc.
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.80\textheight}{
-    \includegraphics{images/BERT_FIG_next_sent_pred.png}
-    %%%\includegraphics[width=0.8\textwidth]{images/BERT_final_masking.png}
-}
-\caption{Two Sentence Task Modeling}
-\label{RegLin:fig}
-\end{figure}
 
 
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="300" width="auto">
+      </div>
+
+    </center>
 
 \section{Encoder Decoder Transformers}
 
@@ -1626,14 +1622,14 @@ In the Encoder Decoder Transformer (for the language translation problem),  the 
 
 If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. The predicted word is then added to the previous tokens and the process is repeated. The decoder consists of 6 decoder layers, followed by a linear layer. Each decoder layer has a decoder multi-head attention layer, followed by a decoder-encoder attention layer, and a fully connected layer. The decoder architecture for the Encoder Decoder Transformer (for the language translation problem) can be seen in the following figure.
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    %%% \includegraphics[width=0.3\textwidth]{frog.jpg}
-    \includegraphics[width=0.9\textwidth]{images/decoder_layer.300dpi_lang_model.jpg}
-}
-\caption{Encoder Decoder Transformer New Decoder block}
-\label{RegLin:fig}
-\end{figure}
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/decoder_layer.300dpi_lang_model.jpg" height="300" width="auto">
+      </div>
+
+    </center>
+  
+
 
 The attention layers consist of 8 parallel attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 The first code segment in this section describes the decoder’s overall architecture. The decoder has more inputs than the encoder. 
@@ -2823,15 +2819,15 @@ Multi Head Attention Layer
 
 [N, 40, 512]
 
+   <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/decoder_layer_2.300dpi.jpg" height="300" width="auto">
+      </div>
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.50\textheight}{
-    \includegraphics{images/decoder_layer_2.300dpi.jpg}
-}
+    </center>
 
-\caption{decoder\_layer (x6) in the decoder}
-\label{RegLin:fig}
-\end{figure}
+
+
 
 
 
@@ -3409,9 +3405,15 @@ Note that it can span multiple lines.
 This is very useful.
 \end{comment}
 
-\section{Summary}
+<h1>Summary</h1>
+                
+<p>
 
-In this chapter, I have introduced the topic of Transformers. I discussed the main ideas and code for the Encoder Decoder with Multi-Head Attention Transformer first introduced by Vaswani et al. (2017), ideas of BERTs, and the GPT.
+  In this chapter, I have introduced the topic of Transformers. I discussed the main ideas and code for the Encoder Decoder with Multi-Head Attention 
+  Transformer first introduced by Vaswani et al. (2017), ideas of BERTs, and the GPT.
+
+</p>
+
 
 
 
