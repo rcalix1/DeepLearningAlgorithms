@@ -588,7 +588,7 @@ The tokens need to be converted into IDs. We can use a dictionary and reverse di
  
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
    stoi = { ch:i for i, ch in enumerate(the_chars) }
    itos = { i:ch for i, ch in enumerate(the_chars) }
@@ -792,9 +792,13 @@ val_data   = data[n:]
     </center>
 
   
+<p>
+The next step is to create a function to read the data so we can train the GPT. We will use a function to get the data in batches. The code can be seen in the
+	  next code listing.
 
 
-The next step is to create a function to read the data so we can train the GPT. We will use a function to get the data in batches. The code can be seen in the next code listing.
+	
+</p>
 
 
 
@@ -872,15 +876,19 @@ print( ix )
 
 
 
-
-
-
-
-
-
+<p>
 Given the four index position (13173, 989153, 193174, 874116), we can see what Tokenizer IDs are stored there with the following code listing. The "for" loop gives us: 
-
+<br/>
 tensor(59), tensor(43), tensor(58), tensor(17)
+
+
+
+	
+</p>
+
+
+
+
 
 
 
@@ -1002,7 +1010,7 @@ Now we proceed to define the loss function. In this function we evaluate the mod
 
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="20">
 
 
   @torch.no_grad()    ## for efficient processing
@@ -1036,17 +1044,24 @@ def estimate_loss():
 
 I will now proceed to describe the architecture of the decoder (GPT). 
 
-\subsubsection{Architecture of the GPT or Decoder}
+
+<h1>
+Architecture of the GPT or Decoder
+	
+</h1>
+	  
 
 As can be seen in the following figure, the decoder starts with inputs that go in sequentially into N (e.g. 6) decoder layers, and then a feed forward layer to predict the logit for the given token in the vocabulary. Each decoder layer has the exact same architecture and consists of multi-head attention layers, feed forward layers, and performance improvement steps such as batch normalizations, residuals, dropouts, etc. Remember that the encoder is not used for the GPT.
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.70\textheight}{
-    \includegraphics{images/full_decoder_gpt.png}
-}
-\caption{Full Decoder GPT}
-\label{RegLin:fig}
-\end{figure}
+
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="600" width="auto">
+      </div>
+
+    </center>
+	  
+
 
 
 In the following code segment we can see the class to instantiate the whole decoder with all 6 decoder layers and the last feed forward layer. 
