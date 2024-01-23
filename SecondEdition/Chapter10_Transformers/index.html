@@ -2104,33 +2104,44 @@ import collections
 
 I like working with python dictionaries so, for this example, I extracted the data set and created python dictionaries for training and testing. I saved the dictionaries to Python pickle files for ease of use. The following code shows how to load the dictionaries. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Load Dictionaries}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+   
+
+
+        <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 def load_dictionary(file_name):
     with open(file_name, 'rb') as handle:
         dict = pickle.loads( handle.read() ) 
     return dict
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+  
+
+
 
 After loading the data sets from file, you have to create the dictionary and reverse dictionary. You create 2 dictionaries per language (e.g. two for English and two for Portuguese). These  are dictionaries of ids to tokens and vice-cersa. Notice that I set the vocabulary size to 12,000. You can play with this value for optimal performance.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Build dataset function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
 
 ## Includes <eos> and <sos> tokens
 
@@ -2152,20 +2163,27 @@ def build_dataset(words):
     
     return dictionary, reverse_dictionary
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
 
 
 The following is an example function in case you want to process sentences with regular expressions or tokenize manually. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Process tokens}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 def preprocess_sentence(sentence):
     sentence = sentence.lower().strip()
@@ -2179,21 +2197,28 @@ def preprocess_sentence(sentence):
     sentence = sentence.strip()
     return sentence
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
 
 
 For tokenization, I used the NLTK tokenizer. In the paper “Attention Is All You Need”, the authors used byte pair encoding. Byte pair encoding does not use full words as tokens. Instead, you do something like this: "walk" and "ing" for the word “walking”. Therefore, words are broken into smaller elements (subwords). Byte-pair encoding is used to tokenize sentences in a language, which, like the WordPiece encoding, breaks words up into tokens that are slightly larger than single characters but less than entire words. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Get tokens function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  
+
+
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 def get_tokens(sentence_list): 
     tokens_list = []
@@ -2204,19 +2229,28 @@ def get_tokens(sentence_list):
     tokens_list = np.array(tokens_list) 
     return tokens_list
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
 
 Once you have the dictionaries and the tokens, you can proceed to convert words into ids with the encode function.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={An Encoding function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 def encode(sentence, dictionary): 
     ids_list = []
@@ -2226,20 +2260,29 @@ def encode(sentence, dictionary):
             ids_list.append( dictionary[word] )
     return ids_list
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
+
 
 Decoding is just the process in reverse. Here you convert ids back to tokens using the reverse dictionary for convenience and speed up.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={A Decoding function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  
+
+
+  
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 def decode(list_ids, reverse_dictionary): 
     words_list = []
@@ -2248,19 +2291,25 @@ def decode(list_ids, reverse_dictionary):
         words_list.append( reverse_dictionary[id] )
     return words_list
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
 
 The following function aligns the English and Portuguese sentence pairs and creates two lists.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Align the pairs function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+        <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 
 ## this returns 2 lists of english and portuguese sentences 
 ## that are aligned by index
@@ -2274,76 +2323,109 @@ def get_en_and_pt_sentences(train_dict):
         pt_list.append( val['pt']  )
     return en_list, pt_list
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+  
+
+
+
+
 
 The below line of code just loads the sentences data before processing from the pickle objects.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Read in the data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+     <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+
 
 ## Read in the data of english and portuguese sentences
 
 train_dict = load_dictionary("data/en_pt_train_dictionary.txt") 
 validation = load_dictionary("data/en_pt_val_dictionary.txt"  )
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
 
 The next function creates 2 lists of aligned English and Portuguese sentences.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Create alignment lists}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+    
+
+     <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 english_sentence_list, portuguese_sentence_list = get_en_and_pt_sentences(train_dict)
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
 
 
 The function get\_tokens converts each sentence into a list of tokens. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Convert to list of tokens}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 
 print("creating the dictionaries takes a while ... ")
 
 en_tokens = get_tokens(english_sentence_list   ) 
 pt_tokens = get_tokens(portuguese_sentence_list)
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
 
 
 After creating the dictionaries for each language, we calculate the vocabulary size for each language. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Calculate Vocab size}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 ## when 2 languages, you have 2 separate tokenizers.
 
@@ -2355,22 +2437,30 @@ VOCAB_SIZE_PT = len(pt_dictionary)
 print("vocab size english ",    VOCAB_SIZE_EN) 
 print("vocab size portuguese ", VOCAB_SIZE_PT)
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
 
 
 The following “for” loop brings all the previous functions together. It results in 2 lists of sentence ids, one for each language  (2 lists of Numpy objects). Notice that, to each sentence list of ids, we add the start token id at the beginning and the end token id at the end. 
 
 The final “if” statement is used to only include sentences shorter than 40 tokens (the max length I used). Sentences shorter than 40 will be padded but all sentences will eventually be tensors of size 40 (n\_tokens + padding).
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={For loop to do everything}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 
 english_sentence_ids_list = [] 
 portuguese_sentence_ids_list = []
@@ -2402,21 +2492,29 @@ for i in range( len(english_sentence_list) ):
         english_sentence_ids_list.append(    en_sentence_ids) 
         portuguese_sentence_ids_list.append( pt_sentence_ids)
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
 
 
 Now we need to use a Torch padding function. 
 
+   
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Padding}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+
 
 en_MAX_LENGTH = MAX_LENGTH 
 pt_MAX_LENGTH = MAX_LENGTH + 1
@@ -2426,22 +2524,30 @@ english_sentence_ids_list = torch.preprocessing.sequence.pad_sequences( english_
 portuguese_sentence_ids_list = torch.preprocessing.sequence.pad_sequences( portuguese_sentence_ids_list, maxlen=pt_MAX_LENGTH, padding='post')
 
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
 
 
 
 If you would like to view the data, you can do so with the following code.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={View the data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ 
+
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 for i in range( len(english_sentence_ids_list) ):   
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@") 
@@ -2450,19 +2556,30 @@ for i in range( len(english_sentence_ids_list) ):
     ## input()
 
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
+
+
 
 After padding, the data will look like this:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Eng and pt after padding}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 
 en
     
@@ -2479,8 +2596,17 @@ pt
      0     0     0     0     0     0     0 ]
 
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
 
 
 
@@ -2488,15 +2614,13 @@ pt
 
 And without padding, the data will look like this: 
 
-         
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Eng and pt without padding}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+   
+
+     <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 
 en
     
@@ -2511,13 +2635,22 @@ pt
   2960     2   157   119     1 12211     ]
 
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+         
 
 
 
 
 
+
+<!--
 
 
 
@@ -3677,6 +3810,7 @@ This is my comment.
 Note that it can span multiple lines.
 This is very useful.
 \end{comment}
+                -->
 
 <h1>Summary</h1>
                 
