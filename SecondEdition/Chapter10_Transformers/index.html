@@ -324,7 +324,7 @@ Therefore, first we need to understand how to encode this for the neural network
 
     <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="15" cols="100">
 
 
   
@@ -353,7 +353,7 @@ and for the other language
 
  <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="15" cols="100">
 
 
   
@@ -433,7 +433,7 @@ Here, we first input our common python libraries.
 
    <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="15" cols="100">
 
 
   
@@ -452,7 +452,7 @@ In the following code segment we can set the parameters as we have done before.
 
       <center>
 <div>
-<textarea rows="20" cols="15">
+<textarea rows="20" cols="1150">
 
 
 torch.manual_seed(256)
@@ -486,7 +486,7 @@ Now we proceed to read the text data to train on.
 
 <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
 
  text = ''
@@ -509,7 +509,7 @@ After reading the text file, we can look at the information about it with the fo
 
 <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
 
 print("length of data in letter or characters")
@@ -538,7 +538,7 @@ With the previous code we can look at the length of the text and type of charact
 
   <center>
 <div>
-<textarea rows="20" cols="20">
+<textarea rows="10" cols="200">
 
 
 ['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q', '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
@@ -556,7 +556,7 @@ With the following code we can calculate the size of the vocabulary which is 65 
   
   <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="15" cols="100">
 
 the_chars  = sorted(     list(set(text))     )
 
@@ -588,7 +588,7 @@ The tokens need to be converted into IDs. We can use a dictionary and reverse di
  
   <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
    stoi = { ch:i for i, ch in enumerate(the_chars) }
    itos = { i:ch for i, ch in enumerate(the_chars) }
@@ -606,7 +606,7 @@ We can now print the dictionary (string to int ) and reverse dictionary (int to 
 
     <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
 print( stoi )
 print( itos )
@@ -623,7 +623,7 @@ The string to int dictionary will give us
 
    <center>
 <div>
-<textarea rows="20" cols="20">
+<textarea rows="20" cols="200">
 
 
 {'\n': 0,
@@ -662,7 +662,7 @@ and the int to string dictionary will give us
 
    <center>
 <div>
-<textarea rows="20" cols="30">
+<textarea rows="20" cols="200">
 
 
 
@@ -703,7 +703,7 @@ Now we need to define an encoding tokenizer called "encode" so we can convert st
 
    <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
 
 encode = lambda s: [ stoi[c]          for c in s   ] 
@@ -726,7 +726,7 @@ We do the same for the tokenizer decode to decoder from integer to strings as fo
 
    <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="10">
 
 
 decode = lambda l: ''.join(   itos[i] for i in l   )    
@@ -752,7 +752,7 @@ Now we need to encode the text from our book and convert it to a Torch tensor. T
 
    <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
 
 data = torch.tensor(   encode(text), dtype=torch.long   )
@@ -778,7 +778,7 @@ We now proceed to split the data into train and text. We do that next by slicing
 
    <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
 n          = int(   0.9*len(data)   )
 
@@ -804,7 +804,7 @@ The next step is to create a function to read the data so we can train the GPT. 
 
   <center>
 <div>
-<textarea rows="20" cols="20">
+<textarea rows="20" cols="200">
 
 def get_batch(split):
     if split == "train":
@@ -853,7 +853,7 @@ tensor([   213173, 989153, 193174, 874116   ])
 
        <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="15" cols="100">
 
 
 temp_batch_size = 4
@@ -895,7 +895,7 @@ tensor(59), tensor(43), tensor(58), tensor(17)
 
     <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="10" cols="100">
 
 
   
@@ -926,7 +926,7 @@ Now with these 4 index positions we can proceed to slice out the four sentences 
 
     <center>
 <div>
-<textarea rows="20" cols="10">
+<textarea rows="15" cols="100">
 
 x  = torch.stack(    
     [ data[   i : i+  temp_block_size ]   for i in ix ] 
@@ -961,7 +961,7 @@ Printing \textbf{x} and \textbf{y} gives us our \textbf{x} batch of size [4, 16]
 
   <center>
 <div>
-<textarea rows="20" cols="20">
+<textarea rows="20" cols="200">
 
 
   x = 
@@ -1010,7 +1010,7 @@ Now we proceed to define the loss function. In this function we evaluate the mod
 
   <center>
 <div>
-<textarea rows="20" cols="20">
+<textarea rows="20" cols="200">
 
 
   @torch.no_grad()    ## for efficient processing
@@ -1056,7 +1056,7 @@ As can be seen in the following figure, the decoder starts with inputs that go i
 
   <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="600" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="700" width="auto">
       </div>
 
     </center>
@@ -1069,7 +1069,7 @@ In the following code segment we can see the class to instantiate the whole deco
 
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="30" cols="100">
 
 
 class GPTModel(nn.Module):
@@ -1139,7 +1139,7 @@ The following code is what instantiates the 6 decoder layers in sequence where t
 
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="10" cols="100">
 
 
   self.blocks = nn.Sequential(
@@ -1173,7 +1173,7 @@ First we take \textbf{idx} (the data as ids) an pass it through the embedding la
 
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="10" cols="100">
 
 
     
