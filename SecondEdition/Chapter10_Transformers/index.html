@@ -42,7 +42,7 @@
 
 
 
-<h1>Cahpter 10 - Transformers</h1>
+<h1>Chapter 10 - Transformers</h1>
 
     <center>
       <div>
@@ -51,20 +51,31 @@
 
     </center>
 
+<p>
+Transformers are the latest step in the evolution of deep learning. As is necessary with progress, newer deep learning algorithms are also much more complicated, with 
+	  deeper and more resource intensive networks. The Transformer is the best example of this. 
+Transformers are, for me, the first algorithm I was not able to run on a laptop when using a significantly large data set. They truly require a machine learning “war machine”.
+	  Lots of GPU power and memory, etc. The algorithms are much more complicated, as you will see, and the networks are very deep. 
 
 
 
-Transformers are the latest step in the evolution of deep learning. As is necessary with progress, newer deep learning algorithms are also much more complicated, with deeper and more resource intensive networks. The Transformer is the best example of this. 
-Transformers are, for me, the first algorithm I was not able to run on a laptop when using a significantly large data set. They truly require a machine learning “war machine”. Lots of GPU power and memory, etc. The algorithms are much more complicated, as you will see, and the networks are very deep. 
+Transformers are one of the new innovations in NLP since 2017. They were first made popular by the paper “Attention Is All You Need” by  (\babelEN{\cite{vaswaniRef}}). 
+	  They are very interesting and seem to be very powerful. Currently, they are better than  Recurrent Neural Networks (RNNs) for NLP because they parallelize better 
+	  and because of the Attention mechanism. 
+So far, Transformers have been used to develop very impressive implementations such as BERT (Devlin et al. 2018), and GPT-3 (Radford et al. 2019), and most notably, chatGPT 
+	  from OpenAI, as of this writing. ChatGPT in particular seems to be very good at language understanding. Transformers have also been applied to language translation,
+	  question answering, document summarization, automatic code generation, text generation, etc. 
 
-
-
-Transformers are one of the new innovations in NLP since 2017. They were first made popular by the paper “Attention Is All You Need” by  (\babelEN{\cite{vaswaniRef}}). They are very interesting and seem to be very powerful. Currently, they are better than  Recurrent Neural Networks (RNNs) for NLP because they parallelize better and because of the Attention mechanism. 
-So far, Transformers have been used to develop very impressive implementations such as BERT (Devlin et al. 2018), and GPT-3 (Radford et al. 2019), and most notably, chatGPT from OpenAI, as of this writing. ChatGPT in particular seems to be very good at language understanding. Transformers have also been applied to language translation, question answering, document summarization, automatic code generation, text generation, etc. 
-
-In general, something like chatGPT requires at least 2 steps. One step is called the Pre-Training process and the other step is called fine tuning. Basically, a Transformer network is trained on all the data you have (e.g. all text data in the world). This process requires massive amounts of computing and can be very expensive. The are the GPT-3, GPT-4, and LlaMa models to name a few. The next step is to fine tune the model once the fine tuning is complete. Here you have options such as adding more neural net layers after the transformer and freezing the already pre-trained weights. Or you can just keep training the transformer for a specific task and have all the weights be changed. The amount of fine tuning data does not need to be as large as the data for pre-training. In fact, it can be orders of magnitude smaller. 
+In general, something like chatGPT requires at least 2 steps. One step is called the Pre-Training process and the other step is called fine tuning. Basically, a Transformer
+	  network is trained on all the data you have (e.g. all text data in the world). This process requires massive amounts of computing and can be very expensive. 
+	  There are the GPT-3, GPT-4, and LlaMa models to name a few. The next step is to fine tune the model once the fine tuning is complete. Here you have options such as adding more neural net layers after the transformer and freezing the already pre-trained weights. Or you can just keep training the transformer for a specific task and have all the weights be changed. The amount of fine tuning data does not need to be as large as the data for pre-training. In fact, it can be orders of magnitude smaller. 
 
 Okay, let’s get started.
+
+	
+</p>
+
+
 
 
 <h1>FTC and Amazon Disclaimer</h1>
@@ -297,7 +308,7 @@ Therefore, first we need to understand how to encode this for the neural network
 </p>
 
     <ul>
-<li> Padding these sequences of ids</li>
+    <li> Padding these sequences of ids</li>
 
    <li> Taking text sentences and converting them into sequences of ids</li>   
     </ul>
@@ -313,7 +324,7 @@ Therefore, first we need to understand how to encode this for the neural network
 
     <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
   
@@ -342,7 +353,7 @@ and for the other language
 
  <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
   
@@ -361,13 +372,19 @@ and for the other language
 
 \section{GPTs}
 
-
-
-GPTs stand for Generative Pre-trained Transformers. The GPT uses the decoder only part of the Transformer. The input to the decoder varies based on whether you are training or predicting. If you are training, the input to the decoder is the sentence itself. When training, a mask is needed here to prevent the model from seeing all the words it is trying to predict. This is called a look ahead mask.
-If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. The predicted word is then added to the previous tokens and the process is repeated.
+<p>
+GPTs stand for Generative Pre-trained Transformers. The GPT uses the decoder only part of the Transformer. The input to the decoder varies based on whether you are 
+	training or predicting. If you are training, the input to the decoder is the sentence itself. When training, a mask is needed here to prevent the model from 
+	seeing all the words it is trying to predict. This is called a look ahead mask.
+If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. 
+	The predicted word is then added to the previous tokens and the process is repeated.
 The decoder consists of N (e.g. 6) decoder layers, followed by a fully connected layer.
 
 The full architecture of the decoder can be seen in the following figure. 
+
+	
+</p>
+
 
 
   <center>
@@ -381,27 +398,42 @@ The full architecture of the decoder can be seen in the following figure.
 
 Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m\_heads (e.g. 8) parallel attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 
+<h1>
 
-\subsection{Teacher forcing}
+	Teacher forcing
+</h1>
+	  
+<p>
+You may have already read somewhere (on-line) that the Decoder in the Transformer network predicts one word at a time and that that word is read back as an input in the 
+	next iteration. Also, the network predicts the last word in the sequence of words. But you may think, aren't those last words just padding? Eh? So, what is going on 
+	here? As it turns out, the mechanism of predicting one word at a time and feeding it back as an input in the next iteration is only done during the \textbf{testing} 
+	phase and it is not done during \textbf{training}. Instead, during \textbf{training} of a decoder we use “Teacher Forcing”.
+Teacher forcing is a technique in auto regressive models where you do not use the predicted outputs of the decoder to feed back as input but instead you use the real data. 
+	This helps the model to learn the correct information instead of its own erroneous predictions (especially at the beginning of training).
+</p>
 
-You may have already read somewhere (on-line) that the Decoder in the Transformer network predicts one word at a time and that that word is read back as an input in the next iteration. Also, the network predicts the last word in the sequence of words. But you may think, aren't those last words just padding? Eh? So, what is going on here? As it turns out, the mechanism of predicting one word at a time and feeding it back as an input in the next iteration is only done during the \textbf{testing} phase and it is not done during \textbf{training}. Instead, during \textbf{training} of a decoder we use “Teacher Forcing”.
-Teacher forcing is a technique in auto regressive models where you do not use the predicted outputs of the decoder to feed back as input but instead you use the real data. This helps the model to learn the correct information instead of its own erroneous predictions (especially at the beginning of training).
+	  <h1>
+Implementing a GPT in PyTorch from Scratch
+		  
+	  </h1>
 
-\subsection{Implementing a GPT in PyTorch from Scratch}
+	  <p>
+In this section,  I will implement a simple GPT using everything we have learned in this book. The code will be very object oriented for efficiency. That being said, 
+	this GPT is implemented from scratch, works really well, and can be scaled. 
 
-In this section,  I will implement a simple GPT using everything we have learned in this book. The code will be very object oriented for efficiency. That being said, this GPT is implemented from scratch, works really well, and can be scaled. 
-
-For the sake of simplicity I will not use subwords here and instead just use the letters of the English alphabet and a few symbols. The vocabulary of a large GPT such as GPT-4 could be hundreds of thousands of subwords or more. This GPT reads in one text file and trains on it. 
+For the sake of simplicity I will not use subwords here and instead just use the letters of the English alphabet and a few symbols. The vocabulary of a large GPT such as
+	GPT-4 could be hundreds of thousands of subwords or more. This GPT reads in one text file and trains on it. 
 
 
 Here, we first input our common python libraries.  
 
-
+	
+</p>
 
 
    <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
   
@@ -420,7 +452,7 @@ In the following code segment we can set the parameters as we have done before.
 
       <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="15">
 
 
 torch.manual_seed(256)
@@ -454,7 +486,7 @@ Now we proceed to read the text data to train on.
 
 <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
  text = ''
@@ -477,7 +509,7 @@ After reading the text file, we can look at the information about it with the fo
 
 <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
 print("length of data in letter or characters")
@@ -492,17 +524,21 @@ list(set(text))
 
 
 
-  
+  <p>
+With the previous code we can look at the length of the text and type of characters. The length of data in letters or characters is 2,365,132, for instance. 
+	  The characters can be seen in the next code listing. 
 
 
-With the previous code we can look at the length of the text and type of characters. The length of data in letters or characters is 2,365,132, for instance. The characters can be seen in the next code listing. 
+	  
+  </p>
+
 
 
 
 
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="20">
 
 
 ['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q', '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
@@ -520,7 +556,7 @@ With the following code we can calculate the size of the vocabulary which is 65 
   
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 the_chars  = sorted(     list(set(text))     )
 
@@ -540,12 +576,16 @@ print(  ''.join(the_chars)  )
 </div>
     </center>
 
+<p>
+The tokens need to be converted into IDs. We can use a dictionary and reverse dictionary for this like so. This was previously shown in the word2vec code description. 
+	These are called the tokenizer. 
+
+     
+	
+</p>
 
 
-
-The tokens need to be converted into IDs. We can use a dictionary and reverse dictionary for this like so. This was previously shown in the word2vec code description. These are called the tokenizer. 
-
-      
+ 
   <center>
 <div>
 <textarea rows="20" cols="100">
@@ -566,7 +606,7 @@ We can now print the dictionary (string to int ) and reverse dictionary (int to 
 
     <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 print( stoi )
 print( itos )
@@ -583,7 +623,7 @@ The string to int dictionary will give us
 
    <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="20">
 
 
 {'\n': 0,
@@ -622,7 +662,7 @@ and the int to string dictionary will give us
 
    <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="30">
 
 
 
@@ -663,7 +703,7 @@ Now we need to define an encoding tokenizer called "encode" so we can convert st
 
    <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
 encode = lambda s: [ stoi[c]          for c in s   ] 
@@ -686,7 +726,7 @@ We do the same for the tokenizer decode to decoder from integer to strings as fo
 
    <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
 decode = lambda l: ''.join(   itos[i] for i in l   )    
@@ -712,7 +752,7 @@ Now we need to encode the text from our book and convert it to a Torch tensor. T
 
    <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
 data = torch.tensor(   encode(text), dtype=torch.long   )
@@ -738,7 +778,7 @@ We now proceed to split the data into train and text. We do that next by slicing
 
    <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 n          = int(   0.9*len(data)   )
 
@@ -760,7 +800,7 @@ The next step is to create a function to read the data so we can train the GPT. 
 
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="20">
 
 def get_batch(split):
     if split == "train":
@@ -783,26 +823,33 @@ def get_batch(split):
 </div>
     </center>
 
-  
+  <p>
 
+To better understand the previous function, I will create a simple example with smaller values for the batch size and the M\_tokens parameter. 
+	  This will help to illustrate what is going on on this function. 
 
-
-To better understand the previous function, I will create a simple example with smaller values for the batch size and the M\_tokens parameter. This will help to illustrate what is going on on this function. 
-
-A GPT is a very deep neural network. To train it you need inputs ( $x$ ) and outputs ( $y$ ).  Inputs and outputs are matrices of the same size [batch\_size, N\_tokens]. They are basically several sentences as rows (batch\_size) with N\_tokens (i.e. 40) as columns for each sentence.  
+A GPT is a very deep neural network. To train it you need inputs ( $x$ ) and outputs ( $y$ ).  Inputs and outputs are matrices of the
+	  same size [batch\_size, N\_tokens]. They are basically several sentences as rows (batch\_size) with N\_tokens (i.e. 40) as columns for each sentence.  
 
 The same sentence is selected for $ x $ and $ y $ . They are the same sentence but $ y $ is shifted by one from $x$.
 
-For our example, we can slice batches of 4 with a sentence sequence length of 16. The torch.randint function helps us to select random starting points for the 4 sentences from the text. Printing the variable "ix" from the code below gives us the following 4 starting points in the text. 
-
+For our example, we can slice batches of 4 with a sentence sequence length of 16. The torch.randint function helps us to select random starting points for the 4 sentences
+	  from the text. Printing the variable "ix" from the code below gives us the following 4 starting points in the text. 
+<br/>
 tensor([   213173, 989153, 193174, 874116   ])
+
+	  
+  </p>
+
+
+
 
     
 
 
        <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
 temp_batch_size = 4
@@ -840,7 +887,7 @@ tensor(59), tensor(43), tensor(58), tensor(17)
 
     <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 
   
@@ -857,16 +904,21 @@ for index_temp in ix:
 
 
 
+<p>
 
-
-
-Now with these 4 index positions we can proceed to slice out the four sentences of size 16 from the torch data tensor. Remember that we hold IDs for the tokens and not the actual letter in this tensor. This gives us 4 pairs of (x, y). Notice that "y" is shfted by one from "x". 
+Now with these 4 index positions we can proceed to slice out the four sentences of size 16 from the torch data tensor. Remember that we hold IDs for the tokens and not 
+	the actual letter in this tensor. This gives us 4 pairs of (x, y). Notice that "y" is shfted by one from "x". 
 
   
+	
+</p>
+
+
+
 
     <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="10">
 
 x  = torch.stack(    
     [ data[   i : i+  temp_block_size ]   for i in ix ] 
@@ -901,7 +953,7 @@ Printing \textbf{x} and \textbf{y} gives us our \textbf{x} batch of size [4, 16]
 
   <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="20" cols="20">
 
 
   x = 
@@ -930,15 +982,19 @@ tensor([
 
 
 
-
-
-
-
+<p>
 
 
 And that is how you get and process the data to train a GPT. This is sometimes called data wrangling. More detail about data wrangling is provided later in the chapter.
 
-Now we proceed to define the loss function. In this function we evaluate the model by predicting and comparing the predictions to the real values. The difference is the loss as can be seen below. 
+Now we proceed to define the loss function. In this function we evaluate the model by predicting and comparing the predictions to the real values. The difference is the 
+	loss as can be seen below. 
+
+
+	
+</p>
+
+
 
 
 
