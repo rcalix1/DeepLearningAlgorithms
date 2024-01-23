@@ -64,16 +64,22 @@ to a 3d tensor of size:
 
  The term N\_tokens can also be called  seq\_length\_max. Here N\_batches is the batch size, N\_tokens or seq\_length\_max is 40, and embedding\_dimension is 512. The term N\_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is selected arbitrarily like in word2vec. 
 
+<h1>Masks</h1>
 
-\subsection{Masks}
+    <p>
+Masks serve several purposes. One is to help ignore the padded values during training. The other goal is to block the given word you want to predict 
+      or future words). This brings up the important aspect of training with Transformers. Transformers predict the last word in a sequence. For example:
+    </p>
+<p>
 
-Masks serve several purposes. One is to help ignore the padded values during training. The other goal is to block the given word you want to predict (or future words). This brings up the important aspect of training with Transformers. Transformers predict the last word in a sequence. For example:
-
-Given an input in english: "the cat is sleeping"
-
-a Transformer is also given part of the output sentence. In this case:  "el gato esta ?". The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
-
-
+ Given an input in english: "the cat is sleeping"
+ 
+</p>
+<p>
+a Transformer is also given part of the output sentence. In this case:  "el gato esta ?". 
+      The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
+  
+    </p>
 
 
 
@@ -265,14 +271,11 @@ from torch.nn import functional as F
 In the following code segment we can set the parameters as we have done before.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={GPT parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 torch.manual_seed(256)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -289,88 +292,88 @@ n_embd            = 512
 n_head            = 8         ## 8 attention heads
 n_layer           = 6         ## 6 eoncoder layers
 dropout           = 0.2
+  
+</textarea>
+  
+</div>
+    </center>
+
+      
 
 
-\end{lstlisting}
-\end{minipage}
+
 
 Now we proceed to read the text data to train on. 
 
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Reading the train data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-text = ''
+ text = ''
 
 input_file2 = 'AdventureHuckFinn.txt'
 
 with open(input_file2, 'r', encoding='utf-8') as f:
     text = f.read()
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 After reading the text file, we can look at the information about it with the following code. 
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print number of characters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="20" cols="100">
+
 
 print("length of data in letter or characters")
 len(text)
 
 list(set(text))
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+
 
 With the previous code we can look at the length of the text and type of characters. The length of data in letters or characters is 2,365,132, for instance. The characters can be seen in the next code listing. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The unique characters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
 
 
 ['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q', '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
 
-
-\end{lstlisting}
-\end{minipage}
-
-
+ 
+  
+</textarea>
+  
+</div>
+    </center>
 
 With the following code we can calculate the size of the vocabulary which is 65 and can print the tokens as a string. 
 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Vocabulary Size}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  
+  <center>
+<div>
+<textarea rows="20" cols="100">
 
 the_chars  = sorted(     list(set(text))     )
 
@@ -383,9 +386,15 @@ print(  ''.join(the_chars)  )
 ## The printed oputput
 ## !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 
+ 
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+
+
 
 The tokens need to be converted into IDs. We can use a dictionary and reverse dictionary for this like so. This was previously shown in the word2vec code description. These are called the tokenizer. 
 
