@@ -10,7 +10,7 @@
 
     <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_transformer.png" height="300" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_transformer.png" height="600" width="auto">
       </div>
 
     </center>
@@ -115,7 +115,7 @@ And it generates this graph with is our positional encoding tensor.
 
   <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/positional_encoding.png" height="300" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/positional_encoding.png" height="600" width="auto">
       </div>
 
     </center>
@@ -160,7 +160,9 @@ Consider that after encoding and padding, your sentences will look like this:
 
     <center>
 <div>
-<textarea rows="20" cols="40>
+<textarea rows="20" cols="100">
+
+
   
   [ 12110   203     4  3947    29     2   168     2     4    27    
      68  4333     8  3622  2943  1012     1 12111     0     0     
@@ -182,23 +184,25 @@ Consider that after encoding and padding, your sentences will look like this:
    
 and for the other language
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Spanish encoding}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+ <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 [ 12110    13     4  3947    29     2     5    32    36    16  
    1145     4    58    34  7905    58    25    28   354  2482     
       3    17    27    28  4395     9  2886     7 12111     0     
       0     0     0     0     0     0    0     0     0      0 ]
 
+  
+</textarea>
+</div>
+  </center>
 
-\end{lstlisting}
-\end{minipage}
 
 
 
@@ -215,7 +219,7 @@ The full architecture of the decoder can be seen in the following figure.
 
   <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="300" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="600" width="auto">
       </div>
 
     </center>
@@ -240,22 +244,23 @@ For the sake of simplicity I will not use subwords here and instead just use the
 Here, we first input our common python libraries.  
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Libraries for GPT}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 import torch
 import numpy as np
 import torch.nn as nn
 
 from torch.nn import functional as F
-
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+</div>
+  </center>
 
 In the following code segment we can set the parameters as we have done before.
 
