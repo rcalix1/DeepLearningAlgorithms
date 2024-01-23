@@ -30,9 +30,8 @@ In general, something like chatGPT requires at least 2 steps. One step is called
 
 Okay, let’s get started.
 
+<h1>Main Ideas of the Transformer</h1>
 
-
-\section{Main Ideas of the Transformer}
 
 
 So, where does one start with Transformers? The Transformer is complex and it involves several ideas to make it work correctly. In this section I will present the main ideas first with some relevant code. Understanding these concepts or steps really well before venturing to write the code for the Transformers is really important. It will save you time in the long run. So now, let us proceed to discuss these topics. In the next sections I will start discussing the code for GPTs, BERTs, the full Encoder Decoder transformer architecture, and a few other subjects. 
@@ -159,23 +158,26 @@ Therefore, first we need to understand how to encode this for the neural network
 
 Consider that after encoding and padding, your sentences will look like this:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={English encoding}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-[ 12110   203     4  3947    29     2   168     2     4    27    
+    <center>
+<div>
+<textarea rows="20" cols="40>
+  
+  [ 12110   203     4  3947    29     2   168     2     4    27    
      68  4333     8  3622  2943  1012     1 12111     0     0     
       0     0     0     0     0     0     0     0     0     0     
       0     0     0     0     0     0     0     0     0     0 ]
 
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
 
    
 and for the other language
