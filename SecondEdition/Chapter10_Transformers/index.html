@@ -663,15 +663,12 @@ For our example, we can slice batches of 4 with a sentence sequence length of 16
 
 tensor([   213173, 989153, 193174, 874116   ])
 
+    
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Select 4 random starting point for the text}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+       <center>
+<div>
+<textarea rows="20" cols="100">
 
 
 temp_batch_size = 4
@@ -685,9 +682,19 @@ ix = torch.randint(
 
 print( ix )
 
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
+
+
 
 
 Given the four index position (13173, 989153, 193174, 874116), we can see what Tokenizer IDs are stored there with the following code listing. The "for" loop gives us: 
@@ -695,35 +702,37 @@ Given the four index position (13173, 989153, 193174, 874116), we can see what T
 tensor(59), tensor(43), tensor(58), tensor(17)
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={View id values at selected random positions}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 
+    <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 for index_temp in ix:
     print(  data[index_temp]  )
 
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
 
 Now with these 4 index positions we can proceed to slice out the four sentences of size 16 from the torch data tensor. Remember that we hold IDs for the tokens and not the actual letter in this tensor. This gives us 4 pairs of (x, y). Notice that "y" is shfted by one from "x". 
 
+  
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Slice x and y (shifted x) from the data }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+    <center>
+<div>
+<textarea rows="20" cols="100">
 
 x  = torch.stack(    
     [ data[   i : i+  temp_block_size ]   for i in ix ] 
@@ -736,24 +745,32 @@ y  = torch.stack(
 
 print(x)
 print(y)
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
 
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
 
 Printing \textbf{x} and \textbf{y} gives us our \textbf{x} batch of size [4, 16] and our shifted \textbf{y} batch of size [4, 16] as can be seen below.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The x and y batches}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
-x = 
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  x = 
 tensor([
 [59, 58,  1, 15, 50, 39, 56, 43, 52, 41, 43, 12,  1, 39, 52, 42],
 [43, 56,  1, 24, 59, 41, 43, 52, 58, 47, 53,  8,  0,  0, 24, 33],
@@ -768,8 +785,18 @@ tensor([
 [37, 10,  0, 32, 56, 59, 50, 63,  6,  1, 57, 47, 56,  6,  1, 47]])
 
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
+
+
+
 
 
 
@@ -781,17 +808,14 @@ Now we proceed to define the loss function. In this function we evaluate the mod
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The loss function to train a GPT}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 
-@torch.no_grad()    ## for efficient processing
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  @torch.no_grad()    ## for efficient processing
 def estimate_loss():
     out = {}
     model.eval()   ## set to no training
@@ -806,8 +830,18 @@ def estimate_loss():
     return out
 
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
+
+
+
 
 
 I will now proceed to describe the architecture of the decoder (GPT). 
@@ -828,14 +862,10 @@ As can be seen in the following figure, the decoder starts with inputs that go i
 In the following code segment we can see the class to instantiate the whole decoder with all 6 decoder layers and the last feed forward layer. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The full decoder based GPT}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 class GPTModel(nn.Module):
     def __init__(self):
@@ -884,31 +914,47 @@ class GPTModel(nn.Module):
             idx = torch.cat(  (idx, idx_next), dim=1  )   ## (B, T+1) append sample to running sequence
         return idx
             
-\end{lstlisting}
-\end{minipage}
+
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
 
 The GPTmodel class consists of 3 functions. They are init, forward, and generate. We initialize the embedding and positional encoding object in init. 
 
 The following code is what instantiates the 6 decoder layers in sequence where the outputs from one decoder layer become the inputs of another decoder layer. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Define the 6 sequential decoder layers}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
 
 
-self.blocks = nn.Sequential(
+  self.blocks = nn.Sequential(
                 *[   Block(n_embd, n_head=n_head) for _ in range(n_layer)    ]
         )
 
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+  
+
+
+
+
+
 
 The final 2 lines of code in the init function define a normalization and the feed forward layer to predict the logits (i.e. the tokens).
 
@@ -917,21 +963,31 @@ The second function is the forward funtion which is where we actually define the
 First we take \textbf{idx} (the data as ids) an pass it through the embedding layer. This gives us \textbf{tok\_emb}. Remember that the token embedding are learned by Transformers during the training. After that we create the positional encoding table. The encoded \textbf{tok\_emb} does not go through this object. instead \textbf{pos\_emb} is added to \textbf{tok\_emb}. Sequence was established when \textbf{po\_emb} was instantiated. Adding them gives us \textbf{x} which goes into  the main architecture as can be seen below
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Main Decoder Architecture}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+    
 x      = self.blocks(  x  )      ## (B, T, E)        
 x      = self.ln_f(    x  )      ## (B, T, E)   norm
 logits = self.lm_ffw_head(x)     ## [B, 40, 65] 
 
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
 
 Finally, the generate function invokes the model defined through forward to generate text auto-regressively. 
 
@@ -954,17 +1010,17 @@ Here it might help to look at a diagram of the decoder layer.
 As can be seen we need a Multi-Head Attention layer followed by a FeedForward layer. Two normalizations (ln1, ln2) can also be performed. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Decoder layer class "Block"}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 
-class Block(nn.Module):
+
+
+  
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  class Block(nn.Module):
     
     def __init__(self, n_embd, n_head):     ## (512, 8)
         super().__init__()
@@ -979,8 +1035,18 @@ class Block(nn.Module):
         x = x + self.ffwd(   self.ln2(x)      )
         return x
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
+
+
+
 
 
 The Block class uses 2 more classes which are Multi-Head Attention and FeedForward. We can now proceed to define these. 
@@ -988,16 +1054,15 @@ The Block class uses 2 more classes which are Multi-Head Attention and FeedForwa
 We can first define the Multi-Head class as follows
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Multi Head Attention class}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ 
 
-class MultiHeadAttention(nn.Module):
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  class MultiHeadAttention(nn.Module):
 
     def __init__(self, num_heads, head_size):    ## (8, 64)
         super().__init__()
@@ -1011,63 +1076,90 @@ class MultiHeadAttention(nn.Module):
         out = self.dropout(   out   )
         return out
 
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
+
 
 The Masked multi-head attention layer is done N\_head times (e.g. 8) in parallel and the results are concatenated. This concatenated result is added to the original after mapping it through one more layer and a Residual can also be used.
 
 The 2 key aspects are the instantiation of 8 heads which are parallel and independent of each other using \textbf{nn.ModuleList} as can be seen in the next code listing
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Instantiate 8 parallel Heads}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 self.heads = nn.ModuleList(  [ Head(head_size) for _ in range(num_heads) ] )
 
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
 
 
 and the concatenation of the 8 head Heads of size 64 to create a new tensor of size 512 ( 64 * 8 = 512).
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Concatenation of the Heads}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
-out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
+ 
 
 
-\end{lstlisting}
-\end{minipage}
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
+
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
 
 
 The FeedForward class is very straight forward  as can be seen below. It is a simple linear layer followed by a non-linearity. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Feed Forward class in the Block class}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+  
+
+
+    <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 class FeedForward(nn.Module):
 
-    def __init__(self, n_embd):         ## 512
+   def __init__(self, n_embd):         ## 512
         
         super().__init__()
         self.net = nn.Sequential(
@@ -1080,20 +1172,26 @@ class FeedForward(nn.Module):
     def forward(self, x):
         return self.net(x)
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
+
 
 Finally, the Multi-Head Attention class use the Head class where the Attention mechanism is defined. The  next code segment is probably the most important in term of the power of Transformers. It defines the Attention layer. Here we define the Attention Head class. 
 
+ 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Definition of the Attention Head class}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+    <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 class Head(nn.Module):
 
@@ -1139,48 +1237,71 @@ class Head(nn.Module):
         out = wei @ v             ## (B, T, T) @ (B, T, 64) -> (B, T, 64)
         
         return out
-        
-\end{lstlisting}
-\end{minipage}
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
 
 
 The sentence and corresponding padding mask are the only inputs to this Attention layer. The output of this Attention mechanism is then passed to a fully connected layer. The mask must not be part of the computational graph since it is only used for masking. We use the following command to keep it out of the computational graph. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Keep Mask out of computational graph}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
 
 
 
 The Attention mechanism uses K, Q, and V to compute the Attention scores. The values are computed from the original \textbf{x} input. The intuition is that the sentence is compared with itself and that is why the comparison or scores matrix will result in size [N\_tokens, N\_tokens] (e.g. [40, 40]). This is accomplished with the following code:
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Compute K, Q, V}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+
+     <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 self.key   = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
 self.query = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
 self.value = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
 
 
 
@@ -1189,16 +1310,16 @@ The input \textbf{x} is of size [N, 40, 512] and the \textbf{look\_ahead\_mask} 
 
 Remember that using \textbf{nn.Linear} is equivalent to the following:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The nn.Linear function for  K, Q, V}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
-Wq = torch.tensor( [batch_size, 512, 64] )
+
+
+
+     <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  Wq = torch.tensor( [batch_size, 512, 64] )
 bq = torch.tensor( [batch_size,  40, 64] )  
 Q  = torch.matmul( x, Wq ) + bq    # Nx40x64
     
@@ -1210,19 +1331,29 @@ Wv = torch.tensor( xavier_init( [batch_size, 512, 64] )  )
 bv = torch.tensor( torch.random_normal( [batch_size, 40, 64] )  )
 V = torch.matmul(x, Wv) + bv    # Nx40x64
 
-\end{lstlisting}
-\end{minipage}
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
 
 Once Q, K, and V are defined, the next step is to multiply Q times K. You can think of this as calculating a score of the importance of \textbf{token\_i} in \textbf{x} to all other words in \textbf{x}.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Matmul Q and K}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+ 
+
+
+  
+     <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 ## (B, T, 64) @ (B, E, 64)  -> (B, T, T)
 
@@ -1237,8 +1368,18 @@ wei = wei.masked_fill(
 wei = F.softmax( wei, dim= -1 )         ## (B, T, T)
 wei = self.dropout(   wei   )
 
-\end{lstlisting}
-\end{minipage}
+
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+  
+
+
 
 
 The variable \textbf{wei} is computed by a nn.matmul between Q and the transpose of K like so
@@ -1257,22 +1398,30 @@ where Embd\_size is equal to 64 (i.e. E ** -0.5). At this point \textbf{wei} con
 
 The following code segment adds \textbf{wei} to the Mask. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Add wei and Mask (infinity operation) }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 wei = wei.masked_fill(
         self.tril[:T, :T] == 0, 
         float('-inf')
-)   
+)
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+   
         
-\end{lstlisting}
-\end{minipage}
+
 
 The \textbf{look\_ahead\_mask} is of size [N, 40, 40]. This should be an addition of [N, 40, 40] + [N, 40, 40]. Notice that the wei.masked\_fill function makes use on an infinity parameter. A simplified view of this operation is as follows:
 
@@ -1284,16 +1433,17 @@ The \textbf{look\_ahead\_mask} is of size [N, 40, 40]. This should be an additio
 The final part of the forward function in the Head class (next code segment) finishes the Attention computation. The softmax is used to normalize on the last axis so that the scores add up to 1 (axis -1 is for last dimension in the tensor). 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Final part of forward in Head class}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  
 
-class Head(nn.Module):
+
+  
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  class Head(nn.Module):
 
     ...
 
@@ -1311,9 +1461,18 @@ class Head(nn.Module):
         out = wei @ v             ## (B, 40, 40) @ (B, 40, 64) -> (B, 40, 64)
         
         return out
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
         
-\end{lstlisting}
-\end{minipage}
+
 
 
 Finally, the following operation is performed which result in a tensor of size [N, 40, 64]. Remember that 8 of these Head output tensors will be concatenated to return to the original size of [N, 40, 512] (64 * 8 = 512). 
@@ -1336,22 +1495,32 @@ a7 = torch.constant([0.6, 0.2, 0.3, 0.4, 0, 0, 0, 0, 0, 0])
  
 gives the following
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Torch Infinity example - normal}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+  
+  
+
+
+  
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 <torch.Tensor: shape=(10,), dtype=float32, numpy=
 array([0.15330984, 0.10276665, 0.11357471, 0.12551947, 0.08413821,
 0.08413821, 0.08413821, 0.08413821, 0.08413821, 0.08413821], dtype=float32)>
 
-        
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
 
 
 
@@ -1362,22 +1531,29 @@ b7 = torch.constant([0.6, 0.2, 0.3, 0.4, -1e9, -1e9, -1e9, -1e9, -1e9, -1e9])
 then the softmax operation on b7 (torch.nn.softmax(b7)) should give us
 
 
+ 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Torch Infinity example - infinity}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 
 <torch.Tensor: shape=(10,), dtype=float32, numpy=
 array([ 0.3096101 , 0.20753784, 0.22936477, 0.25348732, 0. ,0. , 0. , 0. , 0. , 0. ], dtype=float32)>
 
-        
-\end{lstlisting}
-\end{minipage}
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
 
 
 Notice the infinities are now zeros! 
@@ -1388,36 +1564,42 @@ The decoder has a final linear layer after the 6 decoder\_layer functions. The f
 And that covers all the classes of the NN architecture. We are now ready to instantiate the GPT and call the core functions for the optimizer, etc. like so:
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Instantiate the GPT class and core functions}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ 
 
+
+       <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 model   = GPTModel()
 
 m       = model.to(device)
 
 optimizer = torch.optim.Adam(  m.parameters(), lr=learning_rate   )
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
 
 The training function is presented below and is straight forward
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Training Loop}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+
+        <center>
+<div>
+<textarea rows="20" cols="100">
 
 for iter in range(max_iters):
     
@@ -1433,24 +1615,31 @@ for iter in range(max_iters):
     optimizer.zero_grad(set_to_none=True)   ## zero out
     loss.backward()
     optimizer.step()
+  
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
+
 
 Now, regenerate after some training
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={use GPT after training}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 
-## Starting token  id_sos = 0
+          <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  ## Starting token  id_sos = 0
 sos_context = torch.zeros(  (1, 1),  dtype=torch.long, device=device   )   
 
 generated_text = m.generate(sos_context, max_new_tokens=500)[0].tolist()
@@ -1458,9 +1647,18 @@ generated_text = m.generate(sos_context, max_new_tokens=500)[0].tolist()
 print(  decode(generated_text)   )
 
 
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
+
 
 Using the generate function gives GPT generated text. 
 
@@ -1468,14 +1666,17 @@ Obviously, the amount of data will determine the quality of a GPT and it can tak
 
 For South Park training data we can get
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Generated text for South Park Training Data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+  
+ 
+
+
+  
+          <center>
+<div>
+<textarea rows="20" cols="100">
+
+
 
 Mr. Hankey: Who, don't look it, but looks like you have thrown them.
 These chees. 
@@ -1493,23 +1694,29 @@ Stan: Dammit!
 Cartman: If anyone cools orget and have meet hundestly kids he since
 
 
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
 
 
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 For Harry Potter training data we can get
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Generated text for Harry Potter Training Data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+ 
+
+
+           <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 HARRY: What is saying that Time-Turner, ghe dangerous
 and gentlemen —
@@ -1534,9 +1741,18 @@ falls talking about the blanked than I had a son.
 ALBUS: I’ll give to you that strave to do with my
 died it son. And my for you because it fly. And
 you schoolow how Harried in Potion
+  
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
 
 
 
@@ -1556,15 +1772,13 @@ The next code segment shows the standard encoder architecture code. Notice it is
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The full encoder based architecture}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+            <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
 class Encoder_Model(nn.Module):
     def __init__(self):
         super().__init__()
@@ -1591,9 +1805,15 @@ class Encoder_Model(nn.Module):
         x = self.blocks(  x  )   ## (B, T, E)        
         x = self.ln_f(    x  )   ## (B, T, E)   ## [B, 40, 512]
 
-            
-\end{lstlisting}
-\end{minipage}
+
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
 
 
 Notice that 6 identical encoder layers are created were the outputs of one become the inputs of the next layer. The dimensions of all inputs and output at this stage are the same [B, 40, 512] where B is batch size.  The input is  a batch of \textbf{B} sentences, with 40 tokens per each sentence, and where 512 is each id that has been embedded to a vector of size 512. Remember that the embedding vectors of size 512 are learned by the model so initially they are random data. 
@@ -1679,7 +1899,7 @@ This is what allows us to select the predicted word.
 
 
 
-
+<--
 
 \begin{comment}
 
@@ -1832,6 +2052,8 @@ is exactly as we described for the encoder. You calculate the keys, queries, and
 
 \end{comment}
 
+-->
+
 \section{Data Wrangling from Scratch}
 
 
@@ -1839,14 +2061,23 @@ PyTorch offers many new techniques for extracting and processing data sets. As I
 
 For this example, I will use the implementation of a Transformer-based Translator using the English to Portuguese dataset. The code and data set are available on the book GitHub. First, let us import the libraries:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Libraries}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+          <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+            <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 import sklearn
 import numpy as np
@@ -1859,8 +2090,16 @@ import pandas as pd
 import pickle
 import collections
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
+
 
 
 I like working with python dictionaries so, for this example, I extracted the data set and created python dictionaries for training and testing. I saved the dictionaries to Python pickle files for ease of use. The following code shows how to load the dictionaries. 
