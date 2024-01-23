@@ -8,5 +8,5 @@ This is the main page for my book "Deep Learning Algorithms"
 
 ## Books
 
-* <a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/README.md">The Second Edition Book</a>
+* <a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/index.html">The Second Edition Book</a>
 
