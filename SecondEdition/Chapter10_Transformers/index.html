@@ -39,30 +39,60 @@ So, where does one start with Transformers? The Transformer is complex and it in
 As can be seen in the previous figure, the original Transformer consisted of an Encoder and a Decoder layer. 
 
 
-\subsection{Numpy arrays, tensors, and linear algebra}
+<h1>Numpy arrays, tensors, and linear algebra</h1>
+    
+<p>
+Linear algebra, numpy arrays, and tensor operations are at the heart of understanding the Transformer architecture. Before you continue, 
+  I strongly recommend that you read and practice the topics in chapter 1, and in particular, the section on linear algebra, numpy arrays, and tensor operations. 
 
-Linear algebra, numpy arrays, and tensor operations are at the heart of understanding the Transformer architecture. Before you continue, I strongly recommend that you read and practice the topics in chapter 1, and in particular, the section on linear algebra, numpy arrays, and tensor operations. 
+  
+</p>
+
+<h1>
+Attention
+  
+</h1>
+
+<p>
+
+  The Attention mechanism in Transformers is the heart of the whole algorithm. The attention matrix is nothing more than a dot product matrix multiplication 
+  between all the words in a sentence (e.g. the input English sentence). The idea is that, given the input and output, the model learns to correlate the words in
+  the sentence to determine their importance. This is done multiple times and that is why it is called a multi head attention mechanism. 
+
+
+</p>
+
+    <h1>
+
+      Embeddings
+    </h1>
+
+<p>
+
+Sequences of tokens in a sentence are converted into sequences of IDs. An Embedding approach converts the sequence of ids into a sequence of embeddings. 
+  You will go from a 2d tensor 
+
+  
+</p>
+    
+<p>
+[N_batches, \_tokens]
+  <br/>
+  to a 3d tensor of size:
+<br/>
+ [N_batches, N_tokens ,   embedding_dimension ]
+  <br/>
+  
+ The term N_tokens can also be called  seq_length\_max. Here N_batches is the batch size, N\_tokens or seq\_length\_max is 40, and embedding\_dimension is 512.
+  The term N\_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define
+  a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is \
+  selected arbitrarily like in word2vec. 
+
+  
+</p>
 
 
 
-\subsection{Attention}
-
-
-The Attention mechanism in Transformers is the heart of the whole algorithm. The attention matrix is nothing more than a dot product matrix multiplication between all the words in a sentence (e.g. the input English sentence). The idea is that, given the input and output, the model learns to correlate the words in the sentence to determine their importance. This is done multiple times and that is why it is called a multi head attention mechanism. 
-
-
-
-\subsection{Embeddings}
-
-Sequences of tokens in a sentence are converted into sequences of IDs. An Embedding approach converts the sequence of ids into a sequence of embeddings. You will go from a 2d tensor 
-
-[N\_batches, N\_tokens]
-
-to a 3d tensor of size:
-
- [N\_batches, N\_tokens ,   embedding\_dimension ]
-
- The term N\_tokens can also be called  seq\_length\_max. Here N\_batches is the batch size, N\_tokens or seq\_length\_max is 40, and embedding\_dimension is 512. The term N\_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is selected arbitrarily like in word2vec. 
 
 <h1>Masks</h1>
 
@@ -82,14 +112,27 @@ a Transformer is also given part of the output sentence. In this case:  "el gato
     </p>
 
 
+<h1>
+Positional Encoding
+  
+</h1>
 
-\subsection{Positional Encoding}
+<p>
 
+  This is the technique that allows you to encode sequence. Transformers are all about being parallel. Their direct competitor is Recurrent Neural Networks (RNNs).
+  RNNs have had several problems in the past. One is that they do not scale well to GPUs and parallel approaches because of their recurrence and dependence on previous
+  steps. The other problem is the famous "vanishing gradients" problem which was addressed by by residuals and LSTMs seem to have addressed this now.  Transformers did
+  away with the type of sequence modeling approach used in RNNs all together so they are very good for parallel approaches. But how do they address or encode the sequence? 
+  Obviously knowing that the word "cat" goes before the word "sleeping" is useful. This is where a technique called positional encoding comes into play. Basically, after 
+  embedding, you have a vector per token of, say, size 512. 
 
-This is the technique that allows you to encode sequence. Transformers are all about being parallel. Their direct competitor is Recurrent Neural Networks (RNNs). RNNs have had several problems in the past. One is that they do not scale well to GPUs and parallel approaches because of their recurrence and dependence on previous steps. The other problem is the famous "vanishing gradients" problem which was addressed by by residuals and LSTMs seem to have addressed this now.  Transformers did away with the type of sequence modeling approach used in RNNs all together so they are very good for parallel approaches. But how do they address or encode the sequence? Obviously knowing that the word "cat" goes before the word "sleeping" is useful. This is where a technique called positional encoding comes into play. Basically, after embedding, you have a vector per token of, say, size 512. 
+Now, with positional encoding, a function that calculates sines and cosines, is used to create a new vector also of size 512 that represents position (i.e. sequence) of 
+  the tokens. The 2 vectors are added together (embedding + positional\_encoding) to get the new inputs to the network. Also, the position vector values are smaller than
+  the embedding vector values so as to not let position dominate. 
 
-Now, with positional encoding, a function that calculates sines and cosines, is used to create a new vector also of size 512 that represents position (i.e. sequence) of the tokens. The 2 vectors are added together (embedding + positional\_encoding) to get the new inputs to the network. Also, the position vector values are smaller than the embedding vector values so as to not let position dominate. 
+</p>
 
+    <!--
 \begin{comment}
 
 To illustrate this, we can look at the code to generate a positional encoding vector and visualize it with matploylib. In the code segment below, first you create a vector of dimension 512 called “i”. Then, you create the position vector pos. After that, With the vector “i”, you calculate the angle rates (angle\_rates) with the formula
@@ -145,37 +188,67 @@ Now that we have discussed some of the main ideas in the Transformer, we are now
 
 \end{comment}
 
-\subsection{Tokens}
+    -->
 
-In a GPT we want to predict the next word given previous words. However, to improve performance, transformer models do not predict the next word. Instead, they predict the next subword. A good analogy for subword is syllable, although transformer do not use syllables either. The subwords are calculated based on specific algorithm such as BPE or SentencePiece. This allows transformers to learn to generate new words never seen before. For example, it may have seen 
+<h1>
+Tokens
+  
+</h1>
+    
+<p>
 
+  In a GPT we want to predict the next word given previous words. However, to improve performance, transformer models do not predict the next word. Instead, they 
+  predict the next subword. A good analogy for subword is syllable, although transformer do not use syllables either. The subwords are calculated based on specific 
+  algorithm such as BPE or SentencePiece. This allows transformers to learn to generate new words never seen before. For example, it may have seen 
+<br/>
 The dog is play - ing.
-
+<br/>
 And by breaking the word into subwords (i.e. play and ing), it can learn to generate new variations of words it never saw before such as
-
+<br/>
 The lady is iphone - ing.
-
+<br/>
 We and the Transformer know intuitively what this means.
-
+<br/>
 The fact is that tokens can be words, syllables, subwords, letters, etc. Subwords through SentencePiece type algorithms just have proven to give the best results. 
 
-\subsection{Inputs and Outputs}
+</p>
 
-So, let us start there. Let's quickly remember our classic example of MNIST supervised classification. In MNIST standard feed forward classification, you have an input image which is 28x28 and a predicted vector of size 10 for the classes. So, what do the inputs and outputs look like for transformers? For language translation, they are lists of ids. Each id can represent a word in a sentence. This is best visualized with an example. 
-First, let us look at the classic use case for Transformers. As I said earlier, Transformers have been used extensibly in NLP. And the first example was in language translation where we have sentence pairs. Such as the following for English-Spanish translation:
+<h1>
 
+Inputs and Outputs
+  
+</h1>
+
+<p>
+    
+So, let us start there. Let's quickly remember our classic example of MNIST supervised classification. In MNIST standard feed forward classification, you have an 
+  input image which is 28x28 and a predicted vector of size 10 for the classes. So, what do the inputs and outputs look like for transformers? For language translation, 
+  they are lists of ids. Each id can represent a word in a sentence. This is best visualized with an example. 
+First, let us look at the classic use case for Transformers. As I said earlier, Transformers have been used extensibly in NLP. And the first example was in language 
+  translation where we have sentence pairs. Such as the following for English-Spanish translation:
+<br/>
 "the cat is sleeping"    -->   which translates to   -- >    "el gato esta durmiendo"
+<br/>
+Therefore, first we need to understand how to encode this for the neural network and then to understand how exactly it is that the network will train and learn. 
+  So, again, before you look into the network's very deep and complex layers, I believe that one needs to  focus on:
 
-Therefore, first we need to understand how to encode this for the neural network and then to understand how exactly it is that the network will train and learn. So, again, before you look into the network's very deep and complex layers, I believe that one needs to  focus on:
+  
+</p>
 
-\begin{itemize}
-    \item Taking text sentences and converting them into sequences of ids
-    \item Padding these sequences of ids 
-\end{itemize}
+    <ul>
+<li> Padding these sequences of ids</li>
 
- 
+   <li> Taking text sentences and converting them into sequences of ids</li>   
+    </ul>
 
-Consider that after encoding and padding, your sentences will look like this:
+
+
+ <p>
+
+   Consider that after encoding and padding, your sentences will look like this:
+
+ </p>
+
 
     <center>
 <div>
