@@ -102,7 +102,12 @@ Given the vectors pos and angle\_rates, we perform a multiplication to get a mat
 
 The previous code gives us the  following dimensions of all the vectors we have created. 
 
-    
+
+      
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
     i.shape  (1, 512)
     pos.shape  (40, 1)
     batch.shape  (64, 40, 512)
@@ -112,6 +117,14 @@ The previous code gives us the  following dimensions of all the vectors we have 
     
     angle\_rads[np.newaxis, ...]
     angle\_rads.shape  (1, 40, 512)
+  
+</textarea>
+  
+</div>
+    </center>
+
+    
+   
 
 
 
@@ -398,52 +411,45 @@ print(  ''.join(the_chars)  )
 
 The tokens need to be converted into IDs. We can use a dictionary and reverse dictionary for this like so. This was previously shown in the word2vec code description. These are called the tokenizer. 
 
+      
+  <center>
+<div>
+<textarea rows="20" cols="100">
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Tokenizing}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+   stoi = { ch:i for i, ch in enumerate(the_chars) }
+   itos = { i:ch for i, ch in enumerate(the_chars) }
+  
+</textarea>
+  
+</div>
+    </center>
+  
 
-stoi = { ch:i for i, ch in enumerate(the_chars) }
-itos = { i:ch for i, ch in enumerate(the_chars) }
 
-\end{lstlisting}
-\end{minipage}
 
 We can now print the dictionary (string to int ) and reverse dictionary (int to string). 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print tokenizers}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+    <center>
+<div>
+<textarea rows="20" cols="100">
 
 print( stoi )
 print( itos )
+  
+</textarea>
+  
+</div>
+    </center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 The string to int dictionary will give us
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={string to int dictionary}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
 
 
 {'\n': 0,
@@ -468,21 +474,23 @@ The string to int dictionary will give us
  }
 
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
 
 
 and the int to string dictionary will give us
 
+   <center>
+<div>
+<textarea rows="20" cols="100">
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={int to string dictionary }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
 
 
 {0: '\n',
@@ -506,47 +514,45 @@ and the int to string dictionary will give us
  ...
  }
 
+  
+</textarea>
+  
+</div>
+    </center>
+  
 
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 Now we need to define an encoding tokenizer called "encode" so we can convert string to integer.
 
+   <center>
+<div>
+<textarea rows="20" cols="100">
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Tokenizer encode}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 encode = lambda s: [ stoi[c]          for c in s   ] 
 
 encode("bahh")
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
 
 
 Encoding from the sheep language "bahh" with the tokenizer encoder gives [40, 39, 46, 46].
 
 We do the same for the tokenizer decode to decoder from integer to strings as follows: 
 
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={tokenizer decode}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+   <center>
+<div>
+<textarea rows="20" cols="100">
 
 
 decode = lambda l: ''.join(   itos[i] for i in l   )    
@@ -554,8 +560,14 @@ decode = lambda l: ''.join(   itos[i] for i in l   )
 decode([40, 39, 46, 46])
 
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
 
 
 Using the function decode([40, 39, 46, 46]) gives us our sheep tokens back which are  'bahh'.
@@ -563,21 +575,24 @@ Using the function decode([40, 39, 46, 46]) gives us our sheep tokens back which
 Now we need to encode the text from our book and convert it to a Torch tensor. The code for that is as follows: 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Make the book text into a tensor after encoding}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
+
 
 data = torch.tensor(   encode(text), dtype=torch.long   )
 
 print( data )
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
 
 Printing the encoded data in the Torch tensor gives us:  
 
@@ -586,34 +601,32 @@ tensor([18, 47, 56,  ..., 45,  8,  0])
 
 We now proceed to split the data into train and text. We do that next by slicing the data torch tensor with $ n $.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Split the tensor text data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+   <center>
+<div>
+<textarea rows="20" cols="100">
 
 n          = int(   0.9*len(data)   )
 
 train_data = data[:n]
 val_data   = data[n:]
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+    </center>
+
+  
+
 
 The next step is to create a function to read the data so we can train the GPT. We will use a function to get the data in batches. The code can be seen in the next code listing.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Get batches function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
 
 def get_batch(split):
     if split == "train":
@@ -630,9 +643,14 @@ def get_batch(split):
 
     return x, y
 
+  
+</textarea>
+  
+</div>
+    </center>
 
-\end{lstlisting}
-\end{minipage}
+  
+
 
 
 To better understand the previous function, I will create a simple example with smaller values for the batch size and the M\_tokens parameter. This will help to illustrate what is going on on this function. 
