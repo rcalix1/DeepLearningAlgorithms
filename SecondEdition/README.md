@@ -19,4 +19,4 @@ This is the repo for my new book "Deep Learning Algorithms" (Second Edition), No
 * Chapter 6 - CNNs
 * Chapter 7 - RNNs
 * Chapter 9 - Reinforcement Learning
-* Chapter 10 - GPTs 
+* Chapter 10 - GPTs (<a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/Chapter10_Transformers/index.md">Link</a>)
