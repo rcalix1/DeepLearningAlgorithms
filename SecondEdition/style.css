@@ -113,16 +113,20 @@ div.txt {
     width: 13%;
 }
 
-/* The navigation bar */
+/*-------------------------RC--------------------------------------------------*/
+
+
+
 .navbar {
   overflow: hidden;
-  background-color: #333;
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 100%; /* Full width */
+  background-color: #333; 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
 }
 
-/* Links inside the navbar */
+
+
 .navbar a {
   float: left;
   display: block;
@@ -132,16 +136,17 @@ div.txt {
   text-decoration: none;
 }
 
-/* Change background on mouse-over */
+
 .navbar a:hover {
   background: #ddd;
   color: black;
 }
 
-/* Main content */
+
 .main {
   margin-top: 30px; /* Add a top margin to avoid content overlay */
 }
+/*------------------------RC---------------------------------------------------*/
 
 /*---------------------------------------------------------------------------*/
 /* Calender table                                                            */
