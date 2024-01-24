@@ -101,17 +101,11 @@ div.txt {
     width: 100%;
     margin-bottom: 2em;
 
-    overflow: hidden;
-    background-color: #333;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-   
-
 }
 
 #nav td {
     text-align: center;
-    /* width: 13%; */
+    width: 13%;
 }
 
 
