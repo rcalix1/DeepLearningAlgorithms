@@ -1178,15 +1178,18 @@ The following code is what instantiates the 6 decoder layers in sequence where t
   
 
 
-
-
-
+<p>
 
 The final 2 lines of code in the init function define a normalization and the feed forward layer to predict the logits (i.e. the tokens).
 
 The second function is the forward funtion which is where we actually define the architecture from inputs to outputs through the entire deep neural network of the decoder.
 
 First we take \textbf{idx} (the data as ids) an pass it through the embedding layer. This gives us \textbf{tok\_emb}. Remember that the token embedding are learned by Transformers during the training. After that we create the positional encoding table. The encoded \textbf{tok\_emb} does not go through this object. instead \textbf{pos\_emb} is added to \textbf{tok\_emb}. Sequence was established when \textbf{po\_emb} was instantiated. Adding them gives us \textbf{x} which goes into  the main architecture as can be seen below
+
+
+	
+</p>
+
 
 
 
@@ -1367,11 +1370,14 @@ and the concatenation of the 8 head Heads of size 64 to create a new tensor of s
     </center>
 
 
+<p>
 
-
-
-
+	
 The FeedForward class is very straight forward  as can be seen below. It is a simple linear layer followed by a non-linearity. 
+
+
+
+</p>
 
 
 
@@ -1987,19 +1993,30 @@ you schoolow how Harried in Potion
 
 And that concludes the discussion on GPTs.
 
-\section{Encoder Only Models}
+	<h1>
+Encoder Only Models
+		
+	</h1>
+
+<p>
+The encoder has 6 sub-layers called encoder layers. Each encoding layer has a Multi-Head Attention layer followed by a standard fully connected feed forward layer. 
+	The input to the encoder goes through all these layers in the encoder and it is converted into an encoder output. The input to the encoder and the output of 
+	the encoder have the same dimensions. For instance, here, the input to the encoder would be the English sentence. 
+
+The attention layer consists of 8 parallel Attention sub layers that are later concatenated. The intuition is that each of these 8 layers can learn something new and 
+	different. So this gives more capacity to the network. The input to the encoder goes through all these layers in the encoder and is converted into an encoder output. 
+
+The next code segment shows the standard encoder architecture code. Notice it is almost exactly like the GPT (decoder) code. The only difference is in the last layer.
+	The pure Encoder does not need to predict words. Instead, it takes sentences and converts them to embeddings. In this case of size [B, 40, 512]. 
 
 
-The encoder has 6 sub-layers called encoder layers. Each encoding layer has a Multi-Head Attention layer followed by a standard fully connected feed forward layer. The input to the encoder goes through all these layers in the encoder and it is converted into an encoder output. The input to the encoder and the output of the encoder have the same dimensions. For instance, here, the input to the encoder would be the English sentence. 
-
-The attention layer consists of 8 parallel Attention sub layers that are later concatenated. The intuition is that each of these 8 layers can learn something new and different. So this gives more capacity to the network. The input to the encoder goes through all these layers in the encoder and is converted into an encoder output. 
-
-The next code segment shows the standard encoder architecture code. Notice it is almost exactly like the GPT (decoder) code. The only difference is in the last layer. The pure Encoder does not need to predict words. Instead, it takes sentences and converts them to embeddings. In this case of size [B, 40, 512]. 
+	
+</p>
 
 
 
 
-            <center>
+<center>
 <div>
 <textarea rows="20" cols="100">
 
@@ -2041,87 +2058,144 @@ class Encoder_Model(nn.Module):
     </center>
 
 
-
-Notice that 6 identical encoder layers are created were the outputs of one become the inputs of the next layer. The dimensions of all inputs and output at this stage are the same [B, 40, 512] where B is batch size.  The input is  a batch of \textbf{B} sentences, with 40 tokens per each sentence, and where 512 is each id that has been embedded to a vector of size 512. Remember that the embedding vectors of size 512 are learned by the model so initially they are random data. 
+<p>
+Notice that 6 identical encoder layers are created were the outputs of one become the inputs of the next layer. The dimensions of all inputs and output at this 
+	stage are the same [B, 40, 512] where B is batch size.  The input is  a batch of \textbf{B} sentences, with 40 tokens per each sentence, and where 512 is 
+	each id that has been embedded to a vector of size 512. Remember that the embedding vectors of size 512 are learned by the model so initially they are random data. 
 
 We use a padding mask to ignore tokens with 0 value (i.e. padding).
 
 
 BERTs are based on the encoder part of the original Transformer,  and are encoder only Transformers.
 
-\subsection{BERT}
+	
+</p>
+	
+<h1>
 
-BERT is an example of an encoder-only Transformer. In contrast to pure Encoders that take a sentence and only produce an embedding (e.g. [B, 40, 512]), BERT models will add neural network layers (called heads) after the embedding (e.g. [B, 40, 512]) to convert those embeddings into words or sentences. 
+	BERT
+</h1>
+
+
+<p>
+
+BERT is an example of an encoder-only Transformer. In contrast to pure Encoders that take a sentence and only produce an embedding (e.g. [B, 40, 512]), BERT 
+	models will add neural network layers (called heads) after the embedding (e.g. [B, 40, 512]) to convert those embeddings into words or sentences. 
 
 BERT stands for Bidirectional Encoder Representations from Transformers. They were trained using 2 approaches. 
 
+	
+</p>
+
+	
+
    <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="600" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="900" width="auto">
       </div>
 
     </center>
   
 
-
-
+<p>
 The approaches are:
+	
+</p>
 
-\begin{itemize}
-    \item Masked language task training
-    \item Two sentence task training
-\end{itemize}
 
-The first task BERT was pre-trained on was the Masked Language modeling approach. This approach is summarized in the previous figure. Here the BERT model receives the same sentence as input and output. Some tokens are masked and the model needs to learn to predict those masked tokens during the training process. 
+<ul>
+<li>Masked language task training</li>
+<li>Two sentence task training</li>
+	
+</ul>
 
-The second task BERT was pre-trained on is a 2 sentence classification task. The figure below summarizes this approach. Basically, here, 2 sentences are given to the BERT model as input. The model trains to predict if these 2 input sentences are sequential whcih means they are also related, or if they are not sequential and, therefore, unrelated. 
 
-BERT was originally developed by Google and there have now been several other versions that were developed. They all follow the simliar naming convention of being called RoBERTa, AlBERT, DistilBERT, etc.
+	<p>
 
+The first task BERT was pre-trained on was the Masked Language modeling approach. This approach is summarized in the previous figure. Here the BERT model 
+		receives the same sentence as input and output. Some tokens are masked and the model needs to learn to predict those masked tokens during the training process. 
+
+The second task BERT was pre-trained on is a 2 sentence classification task. The figure below summarizes this approach. Basically, here, 2 sentences are given to the BERT
+		model as input. The model trains to predict if these 2 input sentences are sequential whcih means they are also related, or if they are not sequential and, 
+		therefore, unrelated. 
+
+BERT was originally developed by Google and there have now been several other versions that were developed. They all follow the simliar naming convention of being
+		called RoBERTa, AlBERT, DistilBERT, etc.
+
+
+		
+	</p>
 
 
 
   <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="600" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="900" width="auto">
       </div>
 
     </center>
 
-\section{Encoder Decoder Transformers}
+	<h1>
+Encoder Decoder Transformers
+		
+	</h1>
+<p>
 
-In this section, I will discuss the first version of the Transformer first made popular in the paper “Attention Is All You Need” by Vaswani et al.  They were first used for language translation. The Encoder Decoder with Multi Head Attention Transformer is a very deep network.  
+In this section, I will discuss the first version of the Transformer first made popular in the paper “Attention Is All You Need” by Vaswani et al. 
+	They were first used for language translation. The Encoder Decoder with Multi Head Attention Transformer is a very deep network.  
 The architecture has an encoder followed by a decoder. 
 
-The decoder layer has 2 inputs. One input is the encoder output. The second input to the decoder varies based on whether you are training or predicting. If you are training, the input to the decoder is the sentence in the other language. For instance, the Spanish sentence. In the decoder, when training the Transformer, a mask is needed to prevent the model from seeing all the words it is trying to predict. This is called a look ahead mask. 
+The decoder layer has 2 inputs. One input is the encoder output. The second input to the decoder varies based on whether you are training or predicting. 
+	If you are training, the input to the decoder is the sentence in the other language. For instance, the Spanish sentence. In the decoder, when training the 
+	Transformer, a mask is needed to prevent the model from seeing all the words it is trying to predict. This is called a look ahead mask. 
 
-If you are testing, the input to the decoder is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict iteratively. The predicted word is then added to the previous tokens and the process is repeated. 
+If you are testing, the input to the decoder is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>)
+	and predict iteratively. The predicted word is then added to the previous tokens and the process is repeated. 
 
-In the Encoder Decoder Transformer (for the language translation problem),  the decoder layer has 2 inputs. One input is the encoder output. The second input to the decoder varies based on whether you are training or predicting. If you are training, the input to the decoder is the sentence in the other language. For instance, the Portuguese or Spanish sentence. When training, a mask is needed here to prevent the model from seeing all the words it is trying to predict. This is called a look ahead mask. 
+In the Encoder Decoder Transformer (for the language translation problem),  the decoder layer has 2 inputs. One input is the encoder output. The second input to the 
+	decoder varies based on whether you are training or predicting. If you are training, the input to the decoder is the sentence in the other language. For instance, 
+	the Portuguese or Spanish sentence. When training, a mask is needed here to prevent the model from seeing all the words it is trying to predict. This is called a 
+	look ahead mask. 
 
 
-If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. The predicted word is then added to the previous tokens and the process is repeated. The decoder consists of 6 decoder layers, followed by a linear layer. Each decoder layer has a decoder multi-head attention layer, followed by a decoder-encoder attention layer, and a fully connected layer. The decoder architecture for the Encoder Decoder Transformer (for the language translation problem) can be seen in the following figure.
+If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. 
+	The predicted word is then added to the previous tokens and the process is repeated. The decoder consists of 6 decoder layers, followed by a linear layer. 
+	Each decoder layer has a decoder multi-head attention layer, followed by a decoder-encoder attention layer, and a fully connected layer. 
+	The decoder architecture for the Encoder Decoder Transformer (for the language translation problem) can be seen in the following figure.
+
+	
+</p>
 
  <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/decoder_layer.300dpi_lang_model.jpg" height="600" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/decoder_layer.300dpi_lang_model.jpg" height="700" width="auto">
       </div>
 
     </center>
   
 
-
+<p>
 The attention layers consist of 8 parallel attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 The first code segment in this section describes the decoder’s overall architecture. The decoder has more inputs than the encoder. 
 
-The decoder\_layer is the busiest function of the Transformer. It is basically very similar to the encoder\_layer except that it has 2 attention mechanisms instead of just one. The Multi-Head Attention is the first attention mechanism. For our reference language problem, The Portuguese sentence and corresponding padding mask are the only inputs to this sub layer. 
-The output of this attention mechanism plus the encoder output are the inputs to the second attention mechanism which is usually referred to as the Encoder-Decoder-Attention mechanism. The output of this second Attention mechanism is passed to a fully connected layer just like the one used in the encoder. The first Masked multi-head attention layer is done 8 times in parallel just like in the encoder and the results are concatenated. This concatenated result is added to the original after mapping it through one more layer to calculate the residual. 
+The decoder\_layer is the busiest function of the Transformer. It is basically very similar to the encoder\_layer except that it has 2 attention mechanisms instead of
+	just one. The Multi-Head Attention is the first attention mechanism. For our reference language problem, The Portuguese sentence and corresponding padding mask 
+	are the only inputs to this sub layer. 
+The output of this attention mechanism plus the encoder output are the inputs to the second attention mechanism which is usually referred to as the Encoder-Decoder-Attention
+	mechanism. The output of this second Attention mechanism is passed to a fully connected layer just like the one used in the encoder. The first Masked multi-head
+	attention layer is done 8 times in parallel just like in the encoder and the results are concatenated. This concatenated result is added to the original after 
+	mapping it through one more layer to calculate the residual. 
 
 The final layer maps a tensor of size [N, 40, 512] to a tensor of size [N, 40, pt\_vocab\_size] where pt\_vocab\_size is the size of the Portuguese vocabulary. 
 
 
 
 This is what allows us to select the predicted word. 
+
+
+	
+</p>
+	
 
 
 
