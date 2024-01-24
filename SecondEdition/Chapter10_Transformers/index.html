@@ -72,7 +72,7 @@ Okay, let’s get started.
 
      <center>
       <div class="img"> 
-        <a href="https://amzn.to/3vOL8NF"><img src="https://m.media-amazon.com/images/I/71Wi+z5fKzL._SL1233_.jpg" height="400" width="auto"></a>
+        <a href="https://amzn.to/3vOL8NF"><img src="https://m.media-amazon.com/images/I/71Wi+z5fKzL._SL1233_.jpg" height="500" width="auto"></a>
       </div>
 
     </center>
@@ -248,7 +248,6 @@ Now that we have discussed some of the main ideas in the Transformer, we are now
 
 <h1>
 Tokens
-  
 </h1>
     
 <p>
@@ -292,11 +291,9 @@ Therefore, first we need to understand how to encode this for the neural network
 </p>
 
 	  <p>
-
-		   <ul>
+    <ul>
     <li> Padding these sequences of ids</li>
-
-   <li> Taking text sentences and converting them into sequences of ids</li>   
+    <li> Taking text sentences and converting them into sequences of ids</li>   
     </ul>
 	  </p>
    
@@ -310,12 +307,11 @@ Therefore, first we need to understand how to encode this for the neural network
  </p>
 
 
-    <center>
+<center>
 <div>
 <textarea rows="8" cols="60">
 
 
-  
   [ 12110   203     4  3947    29     2   168     2     4    27    
        68  4333     8  3622  2943  1012     1 12111     0     0     
         0     0     0     0     0     0     0     0     0     0     
@@ -345,7 +341,6 @@ Therefore, first we need to understand how to encode this for the neural network
  <center>
 <div>
 <textarea rows="8" cols="60">
-
 
   
 [ 12110    13     4  3947    29     2     5    32    36    16  
@@ -422,19 +417,17 @@ In this section,  I will implement a simple GPT using everything we have learned
 For the sake of simplicity I will not use subwords here and instead just use the letters of the English alphabet and a few symbols. The vocabulary of a large GPT such as
 	GPT-4 could be hundreds of thousands of subwords or more. This GPT reads in one text file and trains on it. 
 
-
+<br/>
 Here, we first input our common python libraries.  
 
 	
 </p>
 
 
-   <center>
+<center>
 <div>
 <textarea rows="8" cols="40">
 
-
-  
 import torch
 import numpy as np
 import torch.nn as nn
@@ -445,7 +438,13 @@ from torch.nn import functional as F
 </div>
   </center>
 
-In the following code segment we can set the parameters as we have done before.
+
+<p>
+
+	In the following code segment we can set the parameters as we have done before.
+
+</p>
+	
 
 
 <center>
@@ -471,7 +470,6 @@ n_layer           = 6         ## 6 eoncoder layers
 dropout           = 0.2
   
 </textarea>
-  
 </div>
     </center>
 
@@ -515,7 +513,6 @@ After reading the text file, we can look at the information about it with the fo
 <div>
 <textarea rows="8" cols="80">
 
-
 print("length of data in letter or characters")
 len(text)
 
@@ -545,25 +542,26 @@ With the previous code we can look at the length of the text and type of charact
 <textarea rows="10" cols="100">
 
 
-['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q', '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
+['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q',
+ '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 
+ 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
 
  
-  
 </textarea>
   
 </div>
     </center>
 
-	<p>
+
+<p>
 With the following code we can calculate the size of the vocabulary which is 65 and can print the tokens as a string. 
 
-
 		
-	</p>
+</p>
 
 
   
-  <center>
+<center>
 <div>
 <textarea rows="15" cols="100">
 
@@ -587,14 +585,12 @@ print(  ''.join(the_chars)  )
 <p>
 The tokens need to be converted into IDs. We can use a dictionary and reverse dictionary for this like so. This was previously shown in the word2vec code description. 
 	These are called the tokenizer. 
-
-     
 	
 </p>
 
 
  
-  <center>
+<center>
 <div>
 <textarea rows="10" cols="100">
 
@@ -604,18 +600,16 @@ The tokens need to be converted into IDs. We can use a dictionary and reverse di
 </textarea>
   
 </div>
-    </center>
+</center>
   
 
 <p>
-We can now print the dictionary (string to int ) and reverse dictionary (int to string). 
-
-	
+We can now print the dictionary (string to int ) and reverse dictionary (int to string). 	
 </p>
 
 
 
-    <center>
+<center>
 <div>
 <textarea rows="10" cols="100">
 
@@ -625,19 +619,17 @@ print( itos )
 </textarea>
   
 </div>
-    </center>
+</center>
 
 <p>
-The string to int dictionary will give us
-
-	
+The string to int dictionary will give us	
 </p>
 
 
 
-   <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="30" cols="100">
 
 
 {'\n': 0,
@@ -661,8 +653,6 @@ The string to int dictionary will give us
  ...
  }
 
-
-  
 </textarea>
   
 </div>
@@ -677,9 +667,9 @@ and the int to string dictionary will give us
 
 
 
-   <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="30" cols="100">
 
 
 
@@ -721,7 +711,7 @@ Now we need to define an encoding tokenizer called "encode" so we can convert st
 
 
 
-   <center>
+<center>
 <div>
 <textarea rows="10" cols="100">
 
@@ -731,7 +721,6 @@ encode = lambda s: [ stoi[c]          for c in s   ]
 encode("bahh")
 
 
-  
 </textarea>
   
 </div>
@@ -740,14 +729,14 @@ encode("bahh")
 
 <p>
 Encoding from the sheep language "bahh" with the tokenizer encoder gives [40, 39, 46, 46].
-
+<br/>
 We do the same for the tokenizer decode to decoder from integer to strings as follows: 
 
 	
 </p>
 
 
-   <center>
+<center>
 <div>
 <textarea rows="10" cols="100">
 
@@ -794,9 +783,11 @@ print( data )
 <p>
 
 Printing the encoded data in the Torch tensor gives us:  
-
+<br/>
+<br/>
 tensor([18, 47, 56,  ..., 45,  8,  0])
-
+<br/>
+<br/>
 
 We now proceed to split the data into train and text. We do that next by slicing the data torch tensor with $ n $.
 
@@ -805,7 +796,7 @@ We now proceed to split the data into train and text. We do that next by slicing
 
 
 
-   <center>
+<center>
 <div>
 <textarea rows="10" cols="100">
 
@@ -831,7 +822,7 @@ The next step is to create a function to read the data so we can train the GPT. 
 
 
 
-  <center>
+<center>
 <div>
 <textarea rows="20" cols="100">
 
@@ -852,7 +843,6 @@ def get_batch(split):
 
   
 </textarea>
-  
 </div>
     </center>
 
@@ -860,12 +850,12 @@ def get_batch(split):
 
 To better understand the previous function, I will create a simple example with smaller values for the batch size and the M\_tokens parameter. 
 	  This will help to illustrate what is going on on this function. 
-
-A GPT is a very deep neural network. To train it you need inputs ( $x$ ) and outputs ( $y$ ).  Inputs and outputs are matrices of the
-	  same size [batch\_size, N\_tokens]. They are basically several sentences as rows (batch\_size) with N\_tokens (i.e. 40) as columns for each sentence.  
-
-The same sentence is selected for $ x $ and $ y $ . They are the same sentence but $ y $ is shifted by one from $x$.
-
+<br/>
+A GPT is a very deep neural network. To train it you need inputs ( "x" ) and outputs ( "y" ).  Inputs and outputs are matrices of the
+	  same size [batch_size, N_tokens]. They are basically several sentences as rows (batch_size) with N_tokens (i.e. 40) as columns for each sentence.  
+<br/>
+The same sentence is selected for "x" and "y" . They are the same sentence but "y" is shifted by one from "x".
+<br/>
 For our example, we can slice batches of 4 with a sentence sequence length of 16. The torch.randint function helps us to select random starting points for the 4 sentences
 	  from the text. Printing the variable "ix" from the code below gives us the following 4 starting points in the text. 
 <br/>
@@ -877,10 +867,7 @@ tensor([   213173, 989153, 193174, 874116   ])
 
 
 
-    
-
-
-       <center>
+    <center>
 <div>
 <textarea rows="15" cols="100">
 
@@ -900,7 +887,7 @@ print( ix )
 </textarea>
   
 </div>
-    </center>
+</center>
 
 
 
@@ -927,13 +914,11 @@ tensor(59), tensor(43), tensor(58), tensor(17)
 <textarea rows="10" cols="100">
 
 
-  
 for index_temp in ix:
     print(  data[index_temp]  )
 
 
 
-  
 </textarea>
   
 </div>
@@ -953,7 +938,7 @@ Now with these 4 index positions we can proceed to slice out the four sentences 
 
 
 
-    <center>
+<center>
 <div>
 <textarea rows="15" cols="100">
 
@@ -1206,9 +1191,9 @@ The following code is what instantiates the 6 decoder layers in sequence where t
 <p>
 
 The final 2 lines of code in the init function define a normalization and the feed forward layer to predict the logits (i.e. the tokens).
-
+<br/>
 The second function is the forward funtion which is where we actually define the architecture from inputs to outputs through the entire deep neural network of the decoder.
-
+<br/>
 First we take "idx" (the data as ids) an pass it through the embedding layer. This gives us "tok_emb". Remember that the token embedding are learned by 
 	Transformers during the training. After that we create the positional encoding table. The encoded "tok_emb" does not go through this object. 
 	Instead "pos_emb" is added to "tok_emb". Sequence was established when "pos_emb" was instantiated. Adding them gives us "x" which
@@ -1228,14 +1213,11 @@ First we take "idx" (the data as ids) an pass it through the embedding layer. Th
 <textarea rows="10" cols="100">
 
 
-    
 x      = self.blocks(  x  )      ## (B, T, E)        
 x      = self.ln_f(    x  )      ## (B, T, E)   norm
 logits = self.lm_ffw_head(x)     ## [B, 40, 65] 
 
 
-
-  
 </textarea>
   
 </div>
@@ -1245,14 +1227,14 @@ logits = self.lm_ffw_head(x)     ## [B, 40, 65]
 
 <p>
 Finally, the generate function invokes the model defined through forward to generate text auto-regressively. 
-
+<br/>
 The GPTmodel class used a Block class to define the the decoder layers. We can now define that class. Block needs "n_embd" which is the embedding
 	dimension (e.g. 512), and "n_head" which is the number of Attention heads we will use (e.g. 8). We need to 
 	calculate the "head_size" by dividing "n_embd" by "n_head". For our example this should be
 
 </p>
 	<center>
-		<p>
+<p>
 
  64 = 512 / 8 
 		
@@ -1280,8 +1262,6 @@ Here it might help to look at a diagram of the decoder layer.
 <p>
 
 As can be seen we need a Multi-Head Attention layer followed by a FeedForward layer. Two normalizations (ln1, ln2) can also be performed. 
-
-
 	
 </p>
 
@@ -1293,7 +1273,7 @@ As can be seen we need a Multi-Head Attention layer followed by a FeedForward la
 <textarea rows="20" cols="100">
 
 
-  class Block(nn.Module):
+class Block(nn.Module):
     
     def __init__(self, n_embd, n_head):     ## (512, 8)
         super().__init__()
@@ -1321,7 +1301,7 @@ As can be seen we need a Multi-Head Attention layer followed by a FeedForward la
 <p>
 
 The Block class uses 2 more classes which are Multi-Head Attention and FeedForward. We can now proceed to define these. 
-
+<br/>
 We can first define the Multi-Head class as follows
 
 
@@ -1334,12 +1314,12 @@ We can first define the Multi-Head class as follows
  
 
 
-  <center>
+<center>
 <div>
 <textarea rows="20" cols="100">
 
 
-  class MultiHeadAttention(nn.Module):
+class MultiHeadAttention(nn.Module):
 
     def __init__(self, num_heads, head_size):    ## (8, 64)
         super().__init__()
@@ -1382,14 +1362,12 @@ The 2 key aspects are the instantiation of 8 heads which are parallel and indepe
 
    <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="6" cols="100">
 
 
-  
 self.heads = nn.ModuleList(  [ Head(head_size) for _ in range(num_heads) ] )
 
 
-  
 </textarea>
   
 </div>
@@ -1413,14 +1391,11 @@ and the concatenation of the 8 head Heads of size 64 to create a new tensor of s
 
    <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="6" cols="100">
+
+out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
 
 
-  out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
-
-
-
-  
 </textarea>
   
 </div>
@@ -1557,10 +1532,9 @@ The sentence and corresponding padding mask are the only inputs to this Attentio
 
    <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="6" cols="100">
 
 
-  
 self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
 
   
@@ -1577,28 +1551,22 @@ The Attention mechanism uses K, Q, and V to compute the Attention scores. The va
 	is compared with itself and that is why the comparison or scores matrix will result in size [N_tokens, N_tokens] (e.g. [40, 40]). This is accomplished with 
 	the following code:
 
-
-
 	
 </p>
 
 
 
 
-
-     <center>
+<center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="7" cols="100">
 
 
-  
 self.key   = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
 self.query = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
 self.value = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
 
 
-
-  
 </textarea>
   
 </div>
@@ -1641,7 +1609,6 @@ V = torch.matmul(x, Wv) + bv    # Nx40x64
 
 
 
-  
 </textarea>
   
 </div>
@@ -1722,10 +1689,9 @@ The following code segment adds "wei" to the Mask.
 
       <center>
 <div>
-<textarea rows="15" cols="100">
+<textarea rows="10" cols="100">
 
 
-  
 wei = wei.masked_fill(
         self.tril[:T, :T] == 0, 
         float('-inf')
@@ -1824,29 +1790,21 @@ a7 = torch.constant([0.6, 0.2, 0.3, 0.4, 0, 0, 0, 0, 0, 0])
 	<br/>
 gives the following
 
-
-  
-  
 	
 </p>
         
 
-
-
-
   
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="8" cols="100">
 
 
-  
 <torch.Tensor: shape=(10,), dtype=float32, numpy=
 array([0.15330984, 0.10276665, 0.11357471, 0.12551947, 0.08413821,
 0.08413821, 0.08413821, 0.08413821, 0.08413821, 0.08413821], dtype=float32)>
 
 
-  
 </textarea>
 </div>
 </center>
@@ -1874,14 +1832,11 @@ then the softmax operation on b7 (torch.nn.softmax(b7)) should give us
 
       <center>
 <div>
-<textarea rows="10" cols="100">
-
+<textarea rows="8" cols="100">
 
 
 <torch.Tensor: shape=(10,), dtype=float32, numpy=
 array([ 0.3096101 , 0.20753784, 0.22936477, 0.25348732, 0. ,0. , 0. , 0. , 0. , 0. ], dtype=float32)>
-
-  
 
   
 </textarea>
@@ -1900,7 +1855,7 @@ array([ 0.3096101 , 0.20753784, 0.22936477, 0.25348732, 0. ,0. , 0. , 0. , 0. , 
 
 Notice the infinities are now zeros! 
 
-
+<br/>
 The decoder has a final linear layer after the 6 decoder_layer functions. The final layer in the decoder is the decoder_final_layer. This is a linear layer with 
 	 no non-linearities and a softmax that maps the tensor [N, 40, 512] to a tensor of size [N, 40, n_vocab_size].
 
@@ -1912,10 +1867,9 @@ And that covers all the classes of the NN architecture. We are now ready to inst
 
        <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="8" cols="100">
 
 
-  
 model   = GPTModel()
 
 m       = model.to(device)
@@ -1923,18 +1877,17 @@ m       = model.to(device)
 optimizer = torch.optim.Adam(  m.parameters(), lr=learning_rate   )
 
 
-  
 </textarea>
   
 </div>
     </center>
 
 
-
-
-
+<p>
 The training function is presented below and is straight forward
 
+	
+</p>
 
 
 
@@ -1968,21 +1921,23 @@ for iter in range(max_iters):
 
 
 
-
-
-
+<p>
 
 Now, regenerate after some training
+
+
+	
+</p>
+
 
 
 
 
           <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="10" cols="100">
 
-
-  ## Starting token  id_sos = 0
+## Starting token  id_sos = 0
 sos_context = torch.zeros(  (1, 1),  dtype=torch.long, device=device   )   
 
 generated_text = m.generate(sos_context, max_new_tokens=500)[0].tolist()
@@ -1990,7 +1945,6 @@ generated_text = m.generate(sos_context, max_new_tokens=500)[0].tolist()
 print(  decode(generated_text)   )
 
 
-  
 </textarea>
   
 </div>
@@ -1999,26 +1953,22 @@ print(  decode(generated_text)   )
 
 
 
-
-
-
-
+<p>
 Using the generate function gives GPT generated text. 
 
-Obviously, the amount of data will determine the quality of a GPT and it can take a lot of money and time to properly train a GPT. The following are examples of generated text using just single books or scripts. 
-
+Obviously, the amount of data will determine the quality of a GPT and it can take a lot of money and time to properly train a GPT. 
+	The following are examples of generated text using just single books or scripts. 
+<br/>
 For South Park training data we can get
+	
+</p>
+
 
 
   
- 
-
-
-  
-          <center>
+<center>
 <div>
 <textarea rows="20" cols="100">
-
 
 
 Mr. Hankey: Who, don't look it, but looks like you have thrown them.
@@ -2038,8 +1988,6 @@ Cartman: If anyone cools orget and have meet hundestly kids he since
 
 
   
-
-  
 </textarea>
   
 </div>
@@ -2047,16 +1995,19 @@ Cartman: If anyone cools orget and have meet hundestly kids he since
 
 
 
-
-
+<p>
 
 For Harry Potter training data we can get
+
+	
+</p>
+
 
 
  
 
 
-           <center>
+<center>
 <div>
 <textarea rows="20" cols="100">
 
@@ -2095,14 +2046,18 @@ you schoolow how Harried in Potion
 
 
 
-
-
-
-
-
-
+<p>
 
 And that concludes the discussion on GPTs.
+	
+</p>
+
+
+
+
+
+
+
 
 	<h1>
 Encoder Only Models
@@ -2129,10 +2084,9 @@ The next code segment shows the standard encoder architecture code. Notice it is
 
 <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="24" cols="100">
 
 
-  
 class Encoder_Model(nn.Module):
     def __init__(self):
         super().__init__()
@@ -2465,29 +2419,29 @@ is exactly as we described for the encoder. You calculate the keys, queries, and
 
 -->
 
-\section{Data Wrangling from Scratch}
+
+	<h1>
+
+Data Wrangling from Scratch
+		
+	</h1>
+<p>
+
+PyTorch offers many new techniques for extracting and processing data sets. As I like building things from scratch, I will present my own approach to data wrangling for 
+	Transformers. The approach is very standard and is similar to what you do in NLP for algorithms like word2vec, for instance.
+
+For this example, I will use the implementation of a Transformer-based Translator using the English to Portuguese dataset. The code and data set are available 
+	on the book GitHub. First, let us import the libraries:
+
+	
+</p>
 
 
-PyTorch offers many new techniques for extracting and processing data sets. As I like building things from scratch, I will present my own approach to data wrangling for Transformers. The approach is very standard and is similar to what you do in NLP for algorithms like word2vec, for instance.
 
-For this example, I will use the implementation of a Transformer-based Translator using the English to Portuguese dataset. The code and data set are available on the book GitHub. First, let us import the libraries:
 
-          <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
-
-
-  
-
-  
-</textarea>
-  
-</div>
-    </center>
-
-            <center>
-<div>
-<textarea rows="20" cols="100">
+<textarea rows="15" cols="100">
 
 
 import sklearn
@@ -2509,27 +2463,26 @@ import collections
   
 
 
+<p>
+
+I like working with python dictionaries so, for this example, I extracted the data set and created python dictionaries for training and testing. 
+	I saved the dictionaries to Python pickle files for ease of use. The following code shows how to load the dictionaries. 
+
+
+</p>
 
 
 
 
-I like working with python dictionaries so, for this example, I extracted the data set and created python dictionaries for training and testing. I saved the dictionaries to Python pickle files for ease of use. The following code shows how to load the dictionaries. 
-
-
-   
-
-
-        <center>
+ <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="10" cols="100">
 
 
 def load_dictionary(file_name):
     with open(file_name, 'rb') as handle:
         dict = pickle.loads( handle.read() ) 
     return dict
-
-
 
   
 </textarea>
@@ -2539,11 +2492,16 @@ def load_dictionary(file_name):
 
 
 
-  
+<p>
+
+	
+After loading the data sets from file, you have to create the dictionary and reverse dictionary. You create 2 dictionaries per language (e.g. two for English 
+	and two for Portuguese). These  are dictionaries of ids to tokens and vice-cersa. Notice that I set the vocabulary size to 12,000. You can play with this 
+	value for optimal performance.
 
 
+</p>  
 
-After loading the data sets from file, you have to create the dictionary and reverse dictionary. You create 2 dictionaries per language (e.g. two for English and two for Portuguese). These  are dictionaries of ids to tokens and vice-cersa. Notice that I set the vocabulary size to 12,000. You can play with this value for optimal performance.
 
 
 
@@ -2575,19 +2533,20 @@ def build_dataset(words):
     return dictionary, reverse_dictionary
 
 
-
-
-  
 </textarea>
   
 </div>
     </center>
   
 
-
-
-
+<p>
 The following is an example function in case you want to process sentences with regular expressions or tokenize manually. 
+
+
+
+	
+</p>
+
 
 
 
@@ -2617,18 +2576,25 @@ def preprocess_sentence(sentence):
 
 
 
+<p>
 
-
-For tokenization, I used the NLTK tokenizer. In the paper “Attention Is All You Need”, the authors used byte pair encoding. Byte pair encoding does not use full words as tokens. Instead, you do something like this: "walk" and "ing" for the word “walking”. Therefore, words are broken into smaller elements (subwords). Byte-pair encoding is used to tokenize sentences in a language, which, like the WordPiece encoding, breaks words up into tokens that are slightly larger than single characters but less than entire words. 
+For tokenization, I used the NLTK tokenizer. In the paper “Attention Is All You Need”, the authors used byte pair encoding. Byte pair encoding does not use
+	full words as tokens. Instead, you do something like this: "walk" and "ing" for the word “walking”. Therefore, words are broken into smaller elements 
+	(subwords). Byte-pair encoding is used to tokenize sentences in a language, which, like the WordPiece encoding, breaks words up into tokens that are
+	slightly larger than single characters but less than entire words. 
 
 
   
+	
+</p>
+
+
 
 
 
       <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="15" cols="100">
 
 
 def get_tokens(sentence_list): 
@@ -2649,18 +2615,21 @@ def get_tokens(sentence_list):
     </center>
 
 
+<p>
+
+	Once you have the dictionaries and the tokens, you can proceed to convert words into ids with the encode function.
+
+
+</p>
 
 
 
-Once you have the dictionaries and the tokens, you can proceed to convert words into ids with the encode function.
 
 
 
-
-
-      <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="15" cols="100">
 
 
 def encode(sentence, dictionary): 
@@ -2679,21 +2648,24 @@ def encode(sentence, dictionary):
 
 
 
-
-
+<p>
 
 
 Decoding is just the process in reverse. Here you convert ids back to tokens using the reverse dictionary for convenience and speed up.
 
 
   
+	
+</p>
+
+
+
 
 
   
-      <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
-
+<textarea rows="10" cols="100">
 
 def decode(list_ids, reverse_dictionary): 
     words_list = []
@@ -2701,8 +2673,6 @@ def decode(list_ids, reverse_dictionary):
     if id in reverse_dictionary.keys(): 
         words_list.append( reverse_dictionary[id] )
     return words_list
-
-
 
   
 </textarea>
@@ -2712,14 +2682,17 @@ def decode(list_ids, reverse_dictionary):
 
 
 
+<p>
 
 The following function aligns the English and Portuguese sentence pairs and creates two lists.
 
 
-        <center>
+	
+</p>
+
+<center>
 <div>
 <textarea rows="20" cols="100">
-
 
 
 ## this returns 2 lists of english and portuguese sentences 
@@ -2735,7 +2708,6 @@ def get_en_and_pt_sentences(train_dict):
     return en_list, pt_list
 
 
-  
 </textarea>
   
 </div>
@@ -2743,22 +2715,20 @@ def get_en_and_pt_sentences(train_dict):
 
 
   
-
-
-
+<p>
 
 
 The below line of code just loads the sentences data before processing from the pickle objects.
 
+	
+</p>
 
 
 
-     <center>
+
+<center>
 <div>
-<textarea rows="20" cols="100">
-
-
-
+<textarea rows="10" cols="100">
 
 ## Read in the data of english and portuguese sentences
 
@@ -2766,49 +2736,50 @@ train_dict = load_dictionary("data/en_pt_train_dictionary.txt")
 validation = load_dictionary("data/en_pt_val_dictionary.txt"  )
 
 
-  
 </textarea>
   
 </div>
-    </center>
+</center>
 
 
 
-
-
-
+<p>
 The next function creates 2 lists of aligned English and Portuguese sentences.
+
+	
+</p>
+
+
 
 
     
 
-     <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="8" cols="100">
 
 
 english_sentence_list, portuguese_sentence_list = get_en_and_pt_sentences(train_dict)
 
 
-
-
-  
 </textarea>
   
 </div>
     </center>
 
 
+<p>
+The function get_tokens converts each sentence into a list of tokens. 
 
+	
+</p>
 
-The function get\_tokens converts each sentence into a list of tokens. 
 
   
 
-   <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
-
+<textarea rows="10" cols="100">
 
 
 print("creating the dictionaries takes a while ... ")
@@ -2817,25 +2788,27 @@ en_tokens = get_tokens(english_sentence_list   )
 pt_tokens = get_tokens(portuguese_sentence_list)
 
 
-  
 </textarea>
   
 </div>
-    </center>
+</center>
 
 
 
-
-
+<p>
 
 
 After creating the dictionaries for each language, we calculate the vocabulary size for each language. 
+	
+</p>
+
+
 
   
 
-   <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="15" cols="100">
 
 
 ## when 2 languages, you have 2 separate tokenizers.
@@ -2849,8 +2822,6 @@ print("vocab size english ",    VOCAB_SIZE_EN)
 print("vocab size portuguese ", VOCAB_SIZE_PT)
 
 
-
-  
 </textarea>
   
 </div>
@@ -2858,19 +2829,23 @@ print("vocab size portuguese ", VOCAB_SIZE_PT)
 
 
 
+<p>
 
+The following “for” loop brings all the previous functions together. It results in 2 lists of sentence ids, one for each language  (2 lists of Numpy objects). 
+	Notice that, to each sentence list of ids, we add the start token id at the beginning and the end token id at the end. 
 
+The final “if” statement is used to only include sentences shorter than 40 tokens (the max length I used). Sentences shorter than 40 will be padded but all 
+	sentences will eventually be tensors of size 40 (n_tokens + padding).
 
-The following “for” loop brings all the previous functions together. It results in 2 lists of sentence ids, one for each language  (2 lists of Numpy objects). Notice that, to each sentence list of ids, we add the start token id at the beginning and the end token id at the end. 
+	
+</p>
 
-The final “if” statement is used to only include sentences shorter than 40 tokens (the max length I used). Sentences shorter than 40 will be padded but all sentences will eventually be tensors of size 40 (n\_tokens + padding).
 
 
 
    <center>
 <div>
-<textarea rows="20" cols="100">
-
+<textarea rows="25" cols="100">
 
 
 english_sentence_ids_list = [] 
@@ -2904,27 +2879,25 @@ for i in range( len(english_sentence_list) ):
         portuguese_sentence_ids_list.append( pt_sentence_ids)
 
 
-
-
-  
 </textarea>
   
 </div>
     </center>
   
 
-
-
+<p>
 Now we need to use a Torch padding function. 
 
-   
+  
+	
+</p>
+
+ 
 
 
    <center>
 <div>
-<textarea rows="20" cols="100">
-
-
+<textarea rows="10" cols="100">
 
 
 en_MAX_LENGTH = MAX_LENGTH 
@@ -2935,29 +2908,29 @@ english_sentence_ids_list = torch.preprocessing.sequence.pad_sequences( english_
 portuguese_sentence_ids_list = torch.preprocessing.sequence.pad_sequences( portuguese_sentence_ids_list, maxlen=pt_MAX_LENGTH, padding='post')
 
 
-
-  
 </textarea>
   
 </div>
-    </center>
+</center>
 
 
 
 
 
+<p>
 
 
+	If you would like to view the data, you can do so with the following code.
 
-If you would like to view the data, you can do so with the following code.
+
+</p>
+
 
 
  
-
-
-  <center>
+<center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="10" cols="100">
 
 
 for i in range( len(english_sentence_ids_list) ):   
@@ -2967,7 +2940,6 @@ for i in range( len(english_sentence_ids_list) ):
     ## input()
 
 
-  
 </textarea>
   
 </div>
@@ -2976,21 +2948,20 @@ for i in range( len(english_sentence_ids_list) ):
 
 
 
-
-
-
-
+<p>
 After padding, the data will look like this:
 
+</p>
 
 
 
 
-   <center>
+
+
+
+<center>
 <div>
 <textarea rows="20" cols="100">
-
-
 
 en
     
@@ -3007,8 +2978,6 @@ pt
      0     0     0     0     0     0     0 ]
 
 
-
-  
 </textarea>
   
 </div>
@@ -3018,19 +2987,21 @@ pt
 
 
 
-
-
-
-
+<p>
 
 And without padding, the data will look like this: 
 
    
+	
+</p>
+
+
+
+
 
      <center>
 <div>
 <textarea rows="20" cols="100">
-
 
 
 en
@@ -3046,9 +3017,6 @@ pt
   2960     2   157   119     1 12211     ]
 
 
-
-
-  
 </textarea>
   
 </div>
@@ -3056,1172 +3024,6 @@ pt
 
          
 
-
-
-
-
-
-<!--
-
-
-
-\begin{comment}
-
-
-
-
-In the function encoder\_layer below, the input x is of size  [N, 40, 512]. So imagine 
-                    
-                    [1200  45   23  1201   0    0     0]
-
-is a sentence except that instead of ids like 45, 23, etc. you have vectors there of size 512. One for each id. The padding mask is simply a [N, 40] tensor with 0s and 1s like so
-
-                    [ 0   0    0    0    1    1     1]
-
-The encoder\_layer consists of the multi-head attention segment followed by the fully connected layer segment. I used torch torch.variable\_scope to re-use the function:    
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-Enc\_MultiHeadAttention()
-
-\end{lstlisting}
-\end{minipage} 
-
-
-
-Notice also that x and the padding\_mask go into the function Enc\_Multihead\_Attention 8 times, in parallel, and that the results are concatenated. 
-
-The researchers in Vaswani et al. (2017) found that they could reduce the dimensionalliy of these 8 attention heads to improve performance. As you will see in the function
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-     Enc\_MultiHeadAttention
-
-\end{lstlisting}
-\end{minipage}
-
-                   
-
-In the Enc\_Multihead\_Attention function, the tensors are reduced from size [N, 40, 512] to [N, 40, 64].  
-After concatenation, you end up with a tensor of the original size which is 
-
-[N, 40, 64*8]  = [N, 40, 512]
-
-The concatenation step is as follows. The value of -1 just indicates that you concatenate on the last dimension of the tensors. So, for each tensor of size [N, 40, 64], you only concatenate the last 64. That results in 64 * 8 = 512.
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-z\_concat = torch torch.concat([z1, z2 ,z3, z4, z5, z6, z7, z8], -1)  ## [N, 40, 512]
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-In the following code segment, we map the result in z\_concat to a new tensor by doing this (a standard NN layer connection). 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-W0 = torch torch.Variable(          xavier\_init(  [batch\_size, 8*64, 512]  )    )
-
-b  = torch torch.Variable(torch torch.random\_normal([batch\_size, 40, 512]))
-
-z  = torch torch.add(    torch torch.matmul(z\_concat, W0) ,   b       )  ## [N, 40, 512]
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-and with the following step, we take the current processed tensor “z” and add it to the original tensor “x”. Remember that x has not been processed. This operation is called a residual operation and is done to avoid vanishing gradients or situations where so much processing has happened that the weights are almost zero after a while. This technique of the “residuals” helps models to learn much better. 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-residual1 = layer\_norm(x + z)  ## this is [N, 40, 512]
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-The result of adding x and z is normalized and results in a tensor of size [N, 40, 512]. The residual1 is the output of the 8 headed monster called Multi-Head Attention. This residual1 becomes the input to the fully connected layer as can be seen in the following code segment
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-h1 = fully\_connected\_layer(residual1, dropout)  ## [N, 40, 512]
-                
-residual2 = layer\_norm(residual1 + h1)      ## [N, 40, 512]
-
-return residual2     #  [N, 40, 512]
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-the result of the fully connected layer is once again added to the original input and normalized. The output of the encoder is residual2 which is a tensor of size [N, 40, 512]. This will be the input to the decoder and is also called the encoder\_output. The intuition here is that you took English sentences and you encoded them with this scheme.
-
-Now, let us explore the inner workings of the encoder multihead attention function. The input to the enc\_multihead attention function is a tensor x of size [N, 40, 512].
-And an Encoder padding mask of size  [N, 40]. Remember that masking does this:
-
-    if [1200  45   23  1201   0    0     0]
-                                        
-    then [ 0   0    0    0    1    1     1]
-
-let’s break down the code in 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-    Enc\_MultiHeadAttention
-
-\end{lstlisting}
-\end{minipage}
-
-                
-
-The first segment is what is referred to as calculating the keys (K), values (V), and queries (Q). This is what is needed to calculate and use the Attention mechanism. Notice that these are nothing more than tensors that are the result of a matrix multiplication (matmul) between the input X ([N, 40, 512]) matrix multiplied by a respective weight matrix. Notice that the dimension of the resulting Q, K, and V is now 64 and not 512 (remember: 8*64 = 512). Effectively the 40 tokens per sentence in the batch of 64 are now embeddings of 64 instead of 512 as can be seen here. 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
- Wq = torch torch.Variable(         xavier\_init(  [batch\_size, 512, 64]  )    )
-   
-    bq = torch torch.Variable( torch torch.random\_normal(  [batch\_size, 40, 64]  )  )
-    
-    Q = torch torch.matmul(x, Wq) + bq     ## Nx40x64
-        
-    Wk = torch torch.Variable(         xavier\_init(  [batch\_size, 512, 64]  )    )
-    
-    bk = torch torch.Variable( torch torch.random\_normal(  [batch\_size, 40, 64]  )  )
-    
-    K = torch torch.matmul(x, Wk) + bk      ## Nx40x64
-    
-    Wv = torch torch.Variable(         xavier\_init(  [batch\_size, 512, 64]  )    )
-    
-    bv = torch torch.Variable( torch torch.random\_normal(  [ batch\_size, 40, 64]  )  )
-    
-    V = torch torch.matmul(x, Wv) + bv      ## Nx40x64
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-  
-The next step is where it gets interesting. In this step, you calculate a score of word\_i’s importance to all other words in the input sentence by effectively doing a dot product. That is it! That is the magic of the attention mechanism. The intuition is that at the sentence level, every word in the sentence looks at every other word, for the given problem (e.g. translation), and during the learning process it assigns weights to words that are important given other words. That is why it is called Attention (as in paying attention). The queries (Q) tensor is matrix multiplied by the transpose of the keys (K) tensor. The result scores\_matrix is of size [N, 40, 40]. 
-
-   
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-scores\_matrix = torch torch.matmul(  Q, K, transpose\_b=True)    
-                                  
-scores\_matrix = scores\_matrix/(torch torch.sqrt(64.0))  
-
-\end{lstlisting}
-\end{minipage}
-
-    
-we don’t really want the network to pay attention to the padding so we’re going to mask it with the Encoder padding mask of size [N, 40]. This is another place where we use broadcasting as can be seen in the following code segment. 
-
-
-
-
-We use newaxis to make the rank equal for both tensors and for broadcasting to be possible. We multiply the padding by -1e9 which is basically negative infinity in python. What this does is that when we run the result tensor through the softmax function, the softmax function will make those infinities close to zero which will allow us to ignore the padding. 
-
-    
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-[N, 40, 40]   +    [N, 1, 40]              ## for broadcasting 
-                   
-scores\_matrix = scores\_matrix + (enc\_padding\_mask[:, torch torch.newaxis, :] * -1e9)
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-Finally, in the previous code segment the softmax is calculated on the last axis (seq\_len\_k) so that the scores add up to 1. The axis -1 is for the last dimension in this tensor. Notice that the last step is to matrix multiply the values (V) tensor with the scores matrix after running it through the softmax and a dropout layer as can be seen here. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    
-a1 = torch torch.nn.softmax(scores\_matrix, axis = -1)  # (N, seq\_len\_q, seq\_len\_k)
-
-a1 = torch torch.nn.dropout(a1, dropout)
-
-a2 = torch torch.matmul(a1, V)   ##   [N, 40, 40]  *   [N, 40, 64]   
-return a2   ## [N, 40, 64]
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-the resulting tensor is of size [N, 40, 64]. Remember that his function is done 8 times. That is why the Attention mechanism is called the 8 headed monster. 
-That is it for attention! If you understand this, then you understand Attention for all other layers of the transformer. 
-
-Congratulations!
-
-The last part of the encoder is the fully connected layer. That is just a simple deep learning layer as you first learned when you started with deep learning.
-
-
-
-As you can see in the code below, the Feed Forward layer provides for non-linearity using RELU and changes the representation of data to a higher dimension of 2048 before going back down to 512. 
-Now that we are done with the encoder, let us move to the decoder. The decoder is similar to the encoder. 
-
-The Decoder Architecture
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    ## calc a score of word\_i importance to all other words
-scores\_matrix = torch torch.matmul(  Q, K, transpose\_b=True)    ### (N, 40, 40)
-
-scores\_matrix = scores\_matrix/(torch torch.sqrt(64.0))                  ## [N, 40, 40]
-
-\end{lstlisting}
-\end{minipage}
-
-After calculating the score matrix, we need to mask the values so that we don’t cheat by looking ahead. We apply the look ahead and padding masks. The mask for look ahead attention happens before the softmax calculation. Notice that the masking is done to the dot\_product scores matrix only. The mask is multiplied with -1e9 (close to negative infinity). 
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-## look\_ahead\_mask     [N, 40, 40]
-           ##                          [N, 40, 40]   +    [N, 40, 40]
-           
-scores\_matrix = scores\_matrix + (look\_ahead\_mask * -1e9)     ## [N, 40, 40]
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-This is done because the mask is summed with the scaled matrix multiplication of Q and K and is applied immediately before a softmax. The goal is to zero out padded cells, and large negative inputs to softmax are near zero in the output. 
-For example, softmax for “a”
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
->>> a = torch torch.constant([0.6, 0.2, 0.3, 0.4, 0, 0, 0, 0, 0, 0])
-
->>> torch torch.nn.softmax(a)
-
-\end{lstlisting}
-\end{minipage}
-
-gives the following 
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-<torch torch.Tensor: shape=(10,), dtype=float32, numpy=
-    array([0.15330984, 0.10276665, 0.11357471, 0.12551947, 0.08413821,
-             0.08413821, 0.08413821, 0.08413821, 0.08413821, 0.08413821],
-                dtype=float32)>
-
-
-\end{lstlisting}
-\end{minipage}
-
-now, if some of the values are negative infinities
-
-  
-    
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-   >>> b = torch torch.constant([0.6, 0.2, 0.3, 0.4, -1e9, -1e9, -1e9, -1e9, -1e9, -1e9])
-    
-    >>> torch torch.nn.softmax(b)
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-then softmax gives us
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-<torch torch.Tensor: shape=(10,), dtype=float32, numpy= 
-array([  0.3096101 , 0.20753784, 0.22936477, 0.25348732,     0.     ,0.     , 0.   , 0.     , 0.      , 0.    ],                                     dtype=float32)>
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-Notice the infinities are now zeros! At this point, just like with the encoder\_multihead\_attention function, the decoder\_multihead\_attention function takes the scores\_matrix after adding the mask and applies the softmax. The softmax is normalized on the last axis (seq\_len\_k) so that the scores add up to 1. The value of axis = -1 is for the last dimension in this tensor.
-    
-  
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-  a1 = torch torch.nn.softmax(scores\_matrix, axis=-1)  # (N, seq\_len\_q, seq\_len\_k)
-    
-    a1 = torch torch.nn.dropout(a1, dropout)
-    
-    a2 = torch torch.matmul(a1, V)            ##  [N, 40, 40]   *   [N, 40, 64]
-    
-    return a2         ## [N, 40, 64]
-
-\end{lstlisting}
-\end{minipage}
-
-
-Finally, just like before, dropout is applied and the result is multiplied with the matrix V. The final tensor is of size [N, 40, 64]. 
-Remember that the previous function 
-
-                        Dec\_MultiHeadAttention
-
-is done 8 times in parallel with the same input and that the outputs of these 8 attention layers are concatenated together. The concatenated output becomes the input to the second Attention layer which is called encoder\_decoder\_attention.   
-
-Let us continue, the next step in the decoder layer is to take the outputs from the the dec\_multihead\_attention layers and process it through another Attention layer. This layer is called the encoder\_decoder\_attention layer. And as its name implies this layer has something to do with the encoder. If you remember, we have the encoder\_output which we haven’t used yet. As it turns out this is where the encoder\_output is inserted to the decoder. 
-
-
-
-Therefore, the encoder\_decoder\_attention layer has 2 inputs which are:
-
-the output from the first dec\_multihead\_attention layer which is of size [N, 40, 512].
-The output from the encoder which we call encoder\_output and which is also of size [N, 40 , 512] 
-
-The second decoder attention mechanism (decoder\_encoder\_attention), as you may imagine, will be very similar to all our previous discussions of attention mechanisms. The only difference is that we now have 2 inputs to an attention layer and we need to account for that. 
-
-Just like before we calculate the queries, keys, and values but notice the difference this time in the following code segment
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
- Wq = torch torch.Variable(         xavier\_init(  [batch\_size, 512, 64]  )    )
-    
-    bq = torch torch.Variable( torch torch.random\_normal(  [batch\_size, 40, 64]  )  )
-    
-    Q = torch torch.matmul(input, Wq)  +  bq     # Nx40x64   
-    
-    ## from decoder\_attention layer below 
-   
-    
-    Wk = torch torch.Variable(         xavier\_init( [batch\_size, 512, 64]  )    )
-    
-    bk = torch torch.Variable( torch torch.random\_normal(  [batch\_size, 40, 64]  )  )
-    
-    K = torch torch.matmul(encoder\_output, Wk)  +  bk    
-    
-    ## from encoder output  [N, 40, 64]
-     
-
-    Wv = torch torch.Variable(         xavier\_init(  [batch\_size, 512, 64]  )    )
-    
-    bv = torch torch.Variable( torch torch.random\_normal(  [batch\_size, 40, 64]  )  )
-    
-    V = torch torch.matmul(encoder\_output, Wv)  +  bv       
-    
-    ## from encoder output  [N, 40, 64]
-
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-   
-
-
-The full code is below
-
-
-The calculation is the same. The only thing that changes now is the inputs. Notice that the Q tensor is matrix multiplied with the output from the previous multi-head attention layer or the actual input in the case of the first decoder layer. 
-
-Whereas, the K and V tensors are multiplied by the encoder output. 
-
-Then, as before, we calculate the scores matrix
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-Q  *   transpose(K)     =     [N, 40, 64] * [N, 64, 40]    =   [N, 40, 40]
-
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-
-Which gives us a tensor of size [N, 40, 40]. From here the process is exactly the same as all other attention layers. 
-
-So just to recap, each decoder\_layer function has 3 sub layers which are
-
-Decoder multihead attention
-Encoder-Decoder attention layer
-And the fully connected layer
-
-After the 2 attention layers, each decoder layer has a fully connected layer with RELU activation. This is exactly as we decribed for the encoder layer.
-
-As can be seen in the figure.
-
-
-
-
-[N, 40, 512]
-
-
-
-Fully Connected Layer
-
-
-[N, 40, 512]
-(encoder output)
-Encoder Decoder Attention Layer
-
-
-
-Multi Head Attention Layer
-
-
-
-[N, 40, 512]
-
-   <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/decoder_layer_2.300dpi.jpg" height="600" width="auto">
-      </div>
-
-    </center>
-
-
-
-
-
-
-
-And that completes the description of the attention layers in the decoder\_layer funtions of the decoder. If you remember, (see figure below), there is one more layer in the decoder that we have not discussed
-
-
-Decoder Output (y\_pred))
-[N, 40, pt\_vocabulary\_size]
-
-
-Encoder Output
-[N, 40, 512]
-
-
-
-Final Linear Layer
-Encoder Layer
-
-Decoder Layer
-Encoder Layer
-
-Decoder Layer
-Encoder Layer
-
-Decoder Layer
-Decoder Layer
-Encoder Layer
-
-Decoder Layer
-Encoder Layer
-
-Decoder Layer
-Encoder Layer
-
-Apply embeddings and positional encoding [N, 40, 512]
-Apply embeddings and positional encoding [N, 40, 512]
-
-
-Input (e.g. <sos> or predicted words as ids) with masks [N, 40]
-Input (e.g. English sentence as ids)
-[N, 40]
-
-
-
-Figure. Transformer (and inputs during testing)
-
-
-
-The decoder has a final linear layer after the 6 decoder\_layer functions. We proceed to discuss it in the next section.
-
-Decoder Final Linear Layer
-
-The final layer in the decoder is the decoder\_final\_layer. This is a linear layer with no non-linearities and a softmax that maps the tensor [N, 40, 512] to a tensor of size [N, 40, pt\_vocab\_size] as can be seen in the next code segment. 
-
-
-
- And that concludes the encoder and decoder layers. Now we are ready to discuss some of the additional utility functions and the process of training, losses, and the prediction function. 
-
-The following function is an example of how to normalize your data. Data normalization in deep learning is essential to have more stable models.
-
-
-
-Throughout this chapter, masks have been mentioned several times. The masks used in the Transformer were one of the most difficult things for me to understand. It took me considerable time to finally  understand how they work. In the next section, we will discuss the code for masks.
-
-Masks
-There are only 2 tyoes of masks that you need here. They are:
-The padding mask
-The look ahead mask
-
-Masks, as it turns out, are a simple mechanism; you add them to your scores matrix to mask away padding or terms you should not be looking at when predicting words. Let’s start with the look ahead mask. The look-ahead mask is used to mask the future tokens in a sequence. In other words, the mask indicates which entries should not be used. This means that to predict the third word, only the first and second words will be used. Similarly to predict the fourth word, only the first, second, and the third word will be used and so on. Remember that unlike RNNs, Transformers do not rely on sequence in the network, per se. Instead, sequence is encoded as a feature with positional encoding. However, when predicting a term, the Transformer can see the encoder input all at once (i.e. the English sentence), and during training, could potentially see the entire decoder input (i.e. the Portuguese sentence). Obviously, if we show it the whole portuguese sentence, then the transformer will just copy the decoder input as its output. Instead, we want to predict the next Portuguese word given all previous Portuguese words and the entire English sentence. During training, to block out some of the future terms or the current term we want to predict, we use the look ahead mask. Programatically, we just create a square matrix with size equal to the max length of the sentence including padding. For example
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-
-   x = torch torch.random.uniform(   (1, 3)   )         ##  [the cat is]
-                               
-look\_ahead\_mask = create\_look\_ahead\_mask(x.shape[1])   ## 3 (seq\_len)
-
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-The mask will look like this for a sequence length of 3
-
-<torch torch.Tensor: shape=(3, 3), dtype=float32, numpy=
-array(     [[0., 1., 1.],
-           [0., 0., 1.],
-           [0., 0., 0.]], dtype=float32)>
-
-This simple square matrix makes sure that we cannot look ahead . The code for the look ahead mask is as follows:
-
-
-
-Now that we have discussed the look ahead mask, let’s move on to the padding mask. Let us consider an example. For an input sequence like this one 
-
-            [1200  45   23  1201   0    0     0]
-
-Your padding mask looks like this 
-
-         [      0    0     0       0    1    1     1]
-
-You simply place 1s on the 0 padded positions. The following code shows how to do this. 
-
-
-
-And now we can create one single function that will create all the masks we will need for the Transformer. The inputs to this function are enc\_in [N, 40] which is the English sentence and dec\_in [N, 40] which is the Portuguese sentence. This function calculates 3 padding masks and 1 look ahead mask. The last padding mask and look ahead mask are combined for convenience. Therefore, this function returns 3 masks. 
-
-First we calculate the encoder padding mask. Again, the idea is to have something like this.
-
-
-    Encoder\_in padding mask for one english sentence
-
-
-    if [1200  45   23  1201   0    0     0]
-
-    then [      0    0    0        0    1    1     1]
-
-We then calculate the padding mask for the encoder output. Since we will use this in the decoder, we will need to mask it for padding to avoid paying attention to zero values. The encoder output and this mask will be used in the decoder\_encoder\_attention block in the decoder. This padding mask is used to mask the encoder\_outputs. The enc\_in tensor can be used here for convenience because the enc\_out has the same dimensions and padding as enc\_in. 
-
-Finally, the third mask is a combination of a padding mask and a look\_ahead\_mask. The decoder is the only place where we need a look ahead. The input to the very first layer of the decoder is the Portuguese sentence. As we are predicting words in this sentence during training via Teacher Forcing, we need to mask future terms so that a word being predicted can only use the terms that 
-
-
-
-have appeared before it. The look ahead mask is a simple square matrix of size sequence length (e.g. 40) where the upper triangle above the diagonal is all 1s. So, to recap, we need to calculate the padding mask for the decoder in (the Portuguese sentence), a look ahead mask, and combined them. The look ahead mask is used to mask future tokens in the dec input received by the decoder. 
-
-Notice that attention dot\_product matrices in the attention layers are 40x40 for out current set of parameters and the look ahead mask is also [40, 40]. So, the dimensions match. To combine the 2 masks we use torch torch.maximum() which is a function that returns the maximum values elementwise between 2 matrices. The function torch torch.maximum supports broadcasting and so we can use newdimension to make sure the tensors have the same rank. The mask dec\_in\_padding\_mask of size [N, 40] is converted to size [N, 1, 40]. The look\_ahead\_mask [40, 40] is changed to size [1, 40, 40]. We need to braodcast so we can add these new dimensions as can be seen below.
-
-
-
-dec\_combined\_mask = torch torch.maximum( 
-            dec\_in\_padding\_mask[:, torch torch.newaxis, :], look\_ahead\_mask[torch torch.newaxis, ...])
-
-                [N, 1, 40]                                        [1, 40, 40]
-
-
-
-
-
-
-
-
-
- Finally, the create\_masks function returns the masks: 
- 
-enc\_in\_padding\_mask
-
-dec\_combined\_mask
-
-dec\_enc\_out\_padding\_mask
-
-Now we are ready to proceed to define core functions, place holders and the main loop. As usual, I will define the inference function, the loss, and the training function together. The inference function will be called inference\_transformer and it is the place where you bring all the Transformer parts together. So, in essence, it is the transformer itself.  We  define the Transformer architecture here. The inputs are x\_ph\_enc\_in which is the English sentence of size [N, 40] and y\_ph\_dec\_in which is the Portuguese sentence of size [N, 40]. The first step is to create the masks as previously described. Then we proceed to perform the embeddings. As previously mentioned, the inputs
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-x\_ph\_enc\_in       [N, 40]
-            
-            y\_ph\_dec\_in       [N, 40]
-
-currently have dimension [N, 40]. We will change that to make each id into a vector of dimensionality 512 by using the PyTorch lookup function. This embedding is done in the following code segment:
-
-   
-    embeddings\_en = torch torch.Variable( torch.random\_uniform(  [VOCAB\_SIZE\_EN, 512], -1.0, 1.0) )
-    
-    embed\_en\_enc\_in      = torch.nn.embedding\_lookup(embeddings\_en, x\_ph\_enc\_in)
-    ##  token embeddings are multiplied by a scaling factor which is square root of depth size
-    
-    embed\_en\_enc\_in      = embed\_en\_enc\_in * torch.sqrt(   torch torch.cast(512, torch torch.float32)    )
-    
-    
-
-     embeddings\_pt = torch torch.Variable(  torch.random\_uniform(  [VOCAB\_SIZE\_PT, 512], -1.0, 1.0)  )
-    
-    embed\_pt\_dec\_in      = torch.nn.embedding\_lookup(embeddings\_pt, y\_ph\_dec\_in)
-   
-    ##  token embeddings are multiplied by a scaling factor which is square root of depth size
-    
-    embed\_pt\_dec\_in      = embed\_pt\_dec\_in * torch.sqrt(   torch torch.cast(512, torch torch.float32)    )
-
-
-
-
-\end{lstlisting}
-\end{minipage}
-
-            
-This embedding layer maps from ids which have a size equal to vocabulary size to 512. Embedding vectors of size 512 are initially random and will be learned via backpropagation. The token embeddings are multiplied by a scaling factor which is the square root of the depth size like so
-
-
-embed\_en\_enc\_in = embed\_en\_enc\_in * torch torch.sqrt(   torch torch.cast(512, torch torch.float32)    )
-
-
-These embeddings are later added to another tensor called positional encoding which holds the positional information. The scaling factor allows the embeddings data to not be dominated  by the positional data after the sum.
-After mapping the data to the embeddings, we can proceed to add the positional data. We do this with the following code 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-
-                   
-    embed\_en\_pos\_enc\_in = positional\_encoding(  embed\_en\_enc\_in , dropout )    ## [N, 40, 512]
-
-     embed\_pt\_pos\_dec\_in = positional\_encoding(  embed\_pt\_dec\_in , dropout )     ## [N, 40, 512]
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-the positional\_encoding was previously defined, but if you remember, in that function both tensors have the same size of [N, 40 ,512] and so it is an easy sum. 
-
-After doing all these transformations (hence the name?), we are ready to enter the Transformer network. As we can see in this code segment 
-
-
-
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   
-
-                    [N, 40, 512]          [N, 40]
-    
-encoder\_output = encoder(embed\_en\_pos\_enc\_in, enc\_padding\_mask, dropout)
-
-
-
-                            [N, 40, 512]        [N, 40, 512]                
-    y = decoder(encoder\_output, embed\_pt\_pos\_dec\_in, 
-                
-                
-enc\_out\_padding\_mask, dec\_look\_ahead\_comb\_mask, dropout)
-                                                         [N, 40]
-                                                         
-                                                         [N, 40 , 40]
-
-
-
-    return y       ## [N, 40, vocabulary\_size]
-
-                
-\end{lstlisting}
-\end{minipage}
-
-
-
-the flow is fairly simple, inputs go into the encoder. The encoder converts those inputs into an encoder output. This encoder output plus some decoder inputs go into the decoder. And the decoder will produce a decoder output of size 
-
-
-[N, 40, pt\_vocab\_size]
-
-
-
-
-
-
-After defining the inference function, we can proceed to define the loss function. The loss is similar to other cross entropy based loss functions except that we want to use a mask and that the y\_pred and y\_real tensors have different dimensions. We mask the loss incurred by the padded tokens to 0 so that they do not contribute to the mean loss. Therefore, we want to ignore padding when calculating the loss function. For this loss, y\_ph\_dec\_real is of size [N, 40] and y\_pred is one hot encoded of size [N, 40, vocab\_size], which is big. Conveniently, PyTorch has the loss function
-
-    torch.nn.sparse\_softmax\_cross\_entropy\_with\_logits
-
-which by definition takes tensors with different dimensions as our inputs. 
-
-For example,
-  
-torch.nn.sparse\_softmax\_cross\_entropy\_with\_logits(labels=y\_ph\_dec\_real, logits=y\_)
-
-Here the loss takes y\_ph\_dec\_real as [N, 40] and  y\_pred as [N, 40, vocab\_size]. We also mask the y\_real data to avoid the padding. This is done through this code segment
-
-
-   
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-    ## y\_ph\_dec\_real   [N, 40]
-    ## torch torch.equal(y\_ph\_dec\_real, 0)   -->>    ([0 0 0 1 1 1])
-    
-    ## then reverse it with torch torch.math.logical\_not  -->>    ## [1 1 1 0 0 0]
-
-    mask = torch torch.math.logical\_not(   torch torch.equal(y\_ph\_dec\_real, 0)    )
-    
-    mask = torch torch.cast(mask, torch torch.float32)        ## [N, 40]
-
-                
-\end{lstlisting}
-\end{minipage}
-
-and that is it! The full loss can be seen below.
-
-
-
-Once the loss is defined, we can specify the training function which uses the Adam optimizer. In their paper, Vaswani et al. (2017) recommended to use a certain set of parameters for Adam as indicated in the function below. 
-
-
-
-Wow! At this point we are almost done with the transformer. Now we just need to define the inputs an how to feed them into the Transformer through the main loop.
-Let’s keep going.
-
-In the next code segment we proceed to define the placeholders. Initially for me this was difficult to understand. I did not quite get these placeholders. In deep learning, you are used to 2 placeholders for the input and output. But if you look at the code below, I have 3! So what is going on? The best way to understand this is to think of the translation problem. In translation, we have, for example, and English sentence and a Portuguese sentence. The English sentence is simple. That is the input to the encoder (x\_ph\_enc\_in). What about the Portuguese sentence? The Portuguese sentence is what you want to predict. Therefore, it should be the data (y\_ph\_dec\_real) we feed to the loss function to be compared with y\_pred (y\_ph\_dec\_real). So far everything is normal. But what about y\_ph\_dec\_in? What is it for? The placeholder y\_ph\_dec\_in is the decoder input and it is a bit more complex. The simplest explanation is that the decoder input is also the portuguese sentence. So y\_ph\_dec\_in and y\_ph\_dec\_real are both the Portuguese sentence but on one sentence the words are all shitfted to the left. 
-This was confusing to me at first. The Portuguese sentence or the batch (of 64 portuguese sentences), call it batch\_pt, is divided into batch\_pt\_inp and batch\_pt\_real for the decoder. The tensor batch\_pt\_inp is passed as an input to the decoder. The batch\_pt\_real is that same input shifted by 1 and only used by the loss function. It is compared to y\_pred. At each location “i” in each sentence in batch\_pt\_inp, the tensor batch\_pt\_real contains the next token that should be predicted. 
-
-
-
-
-
-
-
-For example, for a sentence which has already been padded 
-                   
-   batch\_pt  = "SOS    A    lion    in       the     jungle       is       sleeping    EOS    0     0"
-
-we can split it into the two tensors batch\_pt\_inp and batch\_pt\_real as seen below. Notice that the sentences are the same except that one (batch\_pt\_real) is shifted to the left. The shifting allows you to align words so that you can predict the next word in the sequence. 
-
-   batch\_pt\_inp  = "SOS    A    lion    in       the       jungle       is          sleeping    EOS    0"
-   batch\_pt\_real = " A      lion    in     the     jungle     is         sleeping     EOS         0        0"
-        
-In this case, given this English sentence we would feed the model the SOS token and the model should predict A, given SOS A, then the model should predict lion, and so on. This can be better visualized like this: 
-
-                          Given                                                                         Predict
-                          SOS                                                               -- >>         A
-                          SOS  A                                                          -- >>         lion
-                          SOS  A  lion                                                  -- >>         in
-                          SOS  A  lion  in                                             -- >>         the
-
-And so on. 
-
-During the testing phase, the predicted value is concatenated to the previously predicted values. And the first token given is <sos>.
-During training we use Teacher Forcing  which means we do not use predicted values but we actually use the real values. Using predicted values during training, especially when the model has not learned much, would mean that you would be teaching the model a lot of errors. The look ahead mask is critical here because it prevents looking ahead.  
-                          
-Finally, notice that the data type of all these placeholders is integer because these placeholder hold the ids or padding. 
-
-
-
-One more placeholder can be declared for dropout. 
-
-
-
-After defining the placeholders, we can proceed to call the core functions. We call the transformer which predicts y\_pred (y). The value of y contains the one hot encoded id after the softmax. The predicted y value is fed to the loss function along with y\_real which is the actual protuguese sentence. The y tensor is size [N, 40, pt\_vocab\_size] and the y\_ph\_dec\_real is of size [N, 40]. This is not a problem because, as previously described, the loss function we are using is designed for this exact scenario. After we define the loss, we can call the Adam optimizer through the training() function.  
-
-
-
-
-
-At this point we are done with all architecture in the computational graph and we can move to call the session and train the model. So let us proceed. 
-
-
-
- After initializing the data and session let us grab our data and store it in X\_en [N, 40] and X\_pt  [N, 41] for convenience. 
-
-
-
-
-
-Here we calculate the number of batches to load into our GPU.
-
-
-
-And finally we have arrived at the Main Loop for training. In the main loop, after calculating the batch offsets, we can slice the data by doing  the following
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-batch\_en = X\_en[sta:end, : ]                 ## [N, 40]
-                          
-batch\_pt = X\_pt[sta:end, : ]                  ## [N, 41]  
-
-                
-\end{lstlisting}
-\end{minipage}
-
-
-
-This will result in batches with rows like these of sequences of ids for the corresponding words in the sentence. 
-
- batch\_en      ->   the cat   is  0    0 ->    [12110  12  34 ...  56     12111    0   0   0]
- 
- batch\_pt      ->   el  gato  es  0   0 ->    [12210   6    54 ...  23   23  12211  0   0   0]
-        
-After getting the batches, we can perform shifting 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-                                                      ## batch\_pt [N, 41]
-                                                      
-                                    batch\_pt\_inp  = batch\_pt[:, :-1]              ## [N, 40]
-                                    
-                                    batch\_pt\_real = batch\_pt[:, 1:]               ## [N, 40]
-
-                
-\end{lstlisting}
-\end{minipage}
-
-This shifting results in the following alignment. Notice that this is only done for the Portuguese sentences (i.e. the sentences fed into the decoder). The target (batch\_pt) is divided into batch\_pt\_inp and batch\_pt\_real for the decoder. The batch\_pt\_inp is passed as an input to the decoder. The batch\_pt\_real is that same input shifted by 1 and only used by the loss function. It is compared to y\_pred. At each location “i” in each sentence in batch\_pt\_inp, batch\_pt\_real contains the next token that should be predicted. For example, 
-
-
-         batch\_pt      = "SOS    A    lion    in       the     jungle       is       sleeping    EOS    0     0"
-
-
-after the shifting becomes 
-
- 
-          batch\_pt\_inp  = "SOS    A    lion    in       the     jungle       is       sleeping    EOS    0"
-           batch\_pt\_real = " A    lion   in     the     jungle     is       sleeping     EOS        0       0"
-        
-
-what matters is that given "jungle", the transformer should predict "is", given "is" the transformer should predict "sleeping", and so on. Finally, we call the session and pass the data through feed\_dict as can be seen here
-
-
-               
-
-And that is it for training. The entire code segment can be seen below
-
-
-
-
-After training the model, we are ready to begin testing it. For the evaluation we need to encode the input sentence (english) using the english tokenizer (tokenizer\_en). We also add the start and end tokens so the input is equivalent to what the model is trained with. This is the encoder input. 
-The decoder\_input is the start token in the portuguese tokenizer.  The decoder then outputs the predictions by looking at the encoder\_output and its own self-attention of all previously predicted words before the one being predicted. After predicting a word, the model concatenates it to the decoder input to predict the next word in the sequence. In this approach, the decoder predicts the next word based on the previous words it has predicted. The process should look like this
-
-              sent\_en      ->  <sos> the cat   is  <eos> ->    [12110  12  34 ...  56  12111  ]
-              sent\_pt      ->  <sos>                               ->    [12210 ]
-
-To keep track of the currently predicted word, in the evaluation function, we can use an index. As we are predicting each decoder output tensor, we can use the index to select the word we need given the current iteration. For example
-
-        iteration 0  (index=0)
-        enc\_in    [sos  the   cat   eos   0 ]
-        dec\_in    [sos    0     0     0      0 ]
-        y\_pred    [el     *     *     *   * ]
-        index ->   0
-
-        iteration 1  (index=1)
-        enc\_in    [sos  the   cat   eos   0 ]
-        dec\_in    [sos    el     0     0   0 ]
-        y\_pred    [el    gato    *     *   * ]
-        index ->            1
-
-        iteration 2  (index=2)
-        enc\_in    [sos  the   cat   eos   0 ]
-        dec\_in    [sos   el   gato    0   0 ]
-        y\_pred    [el   gato  eos    *   * ]
-        index ->                    2
-        
-
-
-
-In the evaluation “for” loop, we need to take the data and pad it to size 40. After padding, the data will look like this
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-   enc\_in\_pad    [batch\_size, 40]     ##axis=1 ->> [12110, 7, 15, 47, 12111, 0, 0, ..., 0]
-        
-        dec\_in\_pad    [batch\_size, 40]     ##axis=1 ->> [12220, 0,  0,  0,           0, 0, 0, ..., 0]
-
-                
-\end{lstlisting}
-\end{minipage}
-
-     
-
-After padding, we can feed the data to the computational graph to predict the next word with the following code
-
-             
-the predicted tensor is of size
-
-                    y\_pred = [batch\_size, 40, pt\_vocab\_size]
-
-our batch of 64 can contain 64 translations or just 1. So we can select the one we want by doing something like this
-
-                        prediction = y\_pred[0, index, :]                  
-
-this tensor has size [1, 1, pt\_vocab\_size], at this point we can also increment the index for the next iteration. 
-        
-                        index = index + 1
-
- now we are ready to get the id of the currently predicted word by using agmax
-
-            predicted\_id\_tf = torch torch.cast(torch torch.argmax(prediction, axis=-1), torch torch.int32)
-
-To evalutate and get an integer we can call the session
-        
-            predicted\_id = sess.run(predicted\_id\_tf)
-
-Once we have the id for the current iteration we can proceed to check if this is the end token. If it is, we stop with 
-
-        
-    if predicted\_id == pt\_END\_TOKEN\_id:
-                                    break
-
-if we don’t stop, then we concatenate the currently predicted id to our decoder input and repeat the process like so
-
-%% ## concatentate predicted\_id to output then give to decoder as input
-      
-pt\_sentence\_ids = np.concatenate(   [   pt\_sentence\_ids,  [predicted\_id]   ]    )
-      
-
-once we hit the end of sentence token, we return pt\_sentence\_ids which will have the translated sentence. The full  evaluate()  function is shown below.
-
-
-
-
-
-The last piece of the puzzle is to call the evaluate function. Give it the input data and then obtain the predictions list. The predictions list contains a list of ids so this must be converted back to the text. We do this with the decode function. 
-
-
-
-I know I say this a lot but know I mean it. That is it!
-
-
-
-This completed our discussion on the Encoder Decoder with Multi-Head Attention proposed by Vaswani et al. (2017). While I used fixed values for certain parameters, you can change these and experiment with your own model and data.
-
-
-This is my comment.
-Note that it can span multiple lines.
-This is very useful.
-\end{comment}
-                -->
 
 <h1>Summary</h1>
                 
