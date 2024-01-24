@@ -37,14 +37,7 @@ a:active  { color:#FF0000; text-decoration: underline; }
 
 body {
 
-  /* This is a single-line comment */
-    margin-left:   5%;
-    margin-right:  5%;
-    margin-top:    2em;
-    margin-bottom: 5em;
-    font-family: "Lucida Grande", "Verdana", "Arial", sans-serif;
-    font-size: large;
-    line-height: 140%;
+  
 }
 
 table {
@@ -122,6 +115,17 @@ div.txt {
 
 .main {
   margin-top: 20px; /* Add a top margin to avoid content overlay */
+
+  /* This is a single-line comment */
+  margin-left:   5%;
+  margin-right:  5%;
+  margin-top:    2em;
+  margin-bottom: 5em;
+  font-family: "Lucida Grande", "Verdana", "Arial", sans-serif;
+  font-size: large;
+  line-height: 140%;
+
+  
 }
 
 
