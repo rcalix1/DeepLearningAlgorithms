@@ -101,6 +101,11 @@ div.txt {
     width: 100%;
     margin-bottom: 2em;
 
+
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0;          /* Position the navbar at the top of the page */
+   
+
 }
 
 #nav td {
@@ -109,26 +114,9 @@ div.txt {
 }
 
 
-/*-------------------------RC--------------------------------------------------*/
-
-
-
-
-.navbar {
-  overflow: hidden;
-  background-color: #333; 
-  position: fixed; 
-  top: 0; 
-  width: 100%; 
-}
-
-
-
 .main {
   margin-top: 30px; /* Add a top margin to avoid content overlay */
 }
-/*------------------------RC---------------------------------------------------*/
-
 
 /*---------------------------------------------------------------------------*/
 /* Calender table                                                            */
