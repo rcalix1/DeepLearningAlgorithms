@@ -97,6 +97,10 @@ div.txt {
 /* Navigation table                                                          */
 
 #nav {
+
+    margin-left:   10%;
+    margin-right:  10%;
+  
     clear: both;
     width: 100%;
     margin-bottom: 2em;
