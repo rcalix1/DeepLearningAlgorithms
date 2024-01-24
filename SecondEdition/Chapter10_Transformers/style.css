@@ -102,7 +102,7 @@ div.txt {
     margin-bottom: 2em;
 
   
-     overflow: hidden;
+    overflow: hidden;
     background-color: #333;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
@@ -130,7 +130,7 @@ div.txt {
 }
 
 
-
+/*
 .navbar a {
   float: left;
   display: block;
@@ -138,13 +138,13 @@ div.txt {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-}
+} */
 
-
+/*
 .navbar a:hover {
   background: #ddd;
   color: black;
-}
+} */
 
 
 .main {
