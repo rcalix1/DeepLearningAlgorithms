@@ -42,7 +42,7 @@ Transformers are, for me, the first algorithm I was not able to run on a laptop 
 
 
 
-Transformers are one of the new innovations in NLP since 2017. They were first made popular by the paper “Attention Is All You Need” by  (\babelEN{\cite{vaswaniRef}}). 
+Transformers are one of the new innovations in NLP since 2017. They were first made popular by the paper “Attention Is All You Need” by  (Vaswani et al.). 
 	  They are very interesting and seem to be very powerful. Currently, they are better than  Recurrent Neural Networks (RNNs) for NLP because they parallelize better 
 	  and because of the Attention mechanism. 
 So far, Transformers have been used to develop very impressive implementations such as BERT (Devlin et al. 2018), and GPT-3 (Radford et al. 2019), and most notably, chatGPT 
@@ -131,16 +131,16 @@ Sequences of tokens in a sentence are converted into sequences of IDs. An Embedd
 </p>
     
 <p>
-[N_batches, \_tokens]
+[N_batches, _tokens]
   <br/>
   to a 3d tensor of size:
 <br/>
  [N_batches, N_tokens ,   embedding_dimension ]
   <br/>
   
- The term N_tokens can also be called  seq_length\_max. Here N_batches is the batch size, N\_tokens or seq\_length\_max is 40, and embedding\_dimension is 512.
-  The term N\_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define
-  a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is \
+ The term N_tokens can also be called  seq_length_max. Here N_batches is the batch size, N_tokens or seq_length_max is 40, and embedding_dimension is 512.
+  The term N_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define
+  a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is 
   selected arbitrarily like in word2vec. 
 
   
@@ -163,7 +163,8 @@ Masks serve several purposes. One is to help ignore the padded values during tra
 	  
 <p>
 a Transformer is also given part of the output sentence. In this case:  "el gato esta ?". 
-      The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
+      The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. 
+	All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
   
     </p>
 
@@ -188,63 +189,7 @@ Now, with positional encoding, a function that calculates sines and cosines, is 
 
 </p>
 
-    <!--
-\begin{comment}
-
-To illustrate this, we can look at the code to generate a positional encoding vector and visualize it with matploylib. In the code segment below, first you create a vector of dimension 512 called “i”. Then, you create the position vector pos. After that, With the vector “i”, you calculate the angle rates (angle\_rates) with the formula
-
-angle\_rates = 1 / np.power(10000, (2 * (i // 2)) / 512.0 )
-
-Given the vectors pos and angle\_rates, we perform a multiplication to get a matrix (angle\_rads) of size [40, 512]. Now we can calculate the sines and cosines of angle\_rads and plot it.
-
-
-
-The previous code gives us the  following dimensions of all the vectors we have created. 
-
-
-      
-  <center>
-<div>
-<textarea rows="20" cols="100">
-
-    i.shape  (1, 512)
-    pos.shape  (40, 1)
-    batch.shape  (64, 40, 512)
-    angle\_rates.shape  (1, 512)
-    angle\_rads.shape  (40, 512)
-    sin and cos to angle\_rads
-    
-    angle\_rads[np.newaxis, ...]
-    angle\_rads.shape  (1, 40, 512)
-  
-</textarea>
-  
-</div>
-    </center>
-
-    
-   
-
-
-
-And it generates this graph with is our positional encoding tensor.
-
-
-
-  <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/positional_encoding.png" height="600" width="auto">
-      </div>
-
-    </center>
-
-
-
-Now that we have discussed some of the main ideas in the Transformer, we are now ready to start discussing the code. 
-
-\end{comment}
-
-    -->
+ 
 
 <h1>
 Tokens
@@ -309,7 +254,7 @@ Therefore, first we need to understand how to encode this for the neural network
 
 <center>
 <div>
-<textarea rows="8" cols="60">
+<textarea rows="8" cols="90">
 
 
   [ 12110   203     4  3947    29     2   168     2     4    27    
@@ -340,7 +285,7 @@ Therefore, first we need to understand how to encode this for the neural network
 
  <center>
 <div>
-<textarea rows="8" cols="60">
+<textarea rows="8" cols="90">
 
   
 [ 12110    13     4  3947    29     2     5    32    36    16  
@@ -384,7 +329,7 @@ The full architecture of the decoder can be seen in the following figure.
     </center>
 
 <p>
-Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m\_heads (e.g. 8) parallel 
+Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m_heads (e.g. 8) parallel 
 	attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 
 	
@@ -399,8 +344,8 @@ Each decoder layer consists of a decoder multi-head attention layer, followed by
 <p>
 You may have already read somewhere (on-line) that the Decoder in the Transformer network predicts one word at a time and that that word is read back as an input in the 
 	next iteration. Also, the network predicts the last word in the sequence of words. But you may think, aren't those last words just padding? Eh? So, what is going on 
-	here? As it turns out, the mechanism of predicting one word at a time and feeding it back as an input in the next iteration is only done during the \textbf{testing} 
-	phase and it is not done during \textbf{training}. Instead, during \textbf{training} of a decoder we use “Teacher Forcing”.
+	here? As it turns out, the mechanism of predicting one word at a time and feeding it back as an input in the next iteration is only done during the "testing"
+	phase and it is not done during "training". Instead, during "training" of a decoder we use “Teacher Forcing”.
 Teacher forcing is a technique in auto regressive models where you do not use the predicted outputs of the decoder to feed back as input but instead you use the real data. 
 	This helps the model to learn the correct information instead of its own erroneous predictions (especially at the beginning of training).
 </p>
@@ -488,7 +433,7 @@ Now we proceed to read the text data to train on.
 <textarea rows="10" cols="80">
 
 
- text = ''
+text = ''
 
 input_file2 = 'AdventureHuckFinn.txt'
 
@@ -539,7 +484,7 @@ With the previous code we can look at the length of the text and type of charact
 
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="10" cols="130">
 
 
 ['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q',
@@ -592,7 +537,7 @@ The tokens need to be converted into IDs. We can use a dictionary and reverse di
  
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="5" cols="60">
 
    stoi = { ch:i for i, ch in enumerate(the_chars) }
    itos = { i:ch for i, ch in enumerate(the_chars) }
@@ -611,7 +556,7 @@ We can now print the dictionary (string to int ) and reverse dictionary (int to 
 
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="5" cols="60">
 
 print( stoi )
 print( itos )
@@ -629,7 +574,7 @@ The string to int dictionary will give us
 
 <center>
 <div>
-<textarea rows="30" cols="100">
+<textarea rows="30" cols="85">
 
 
 {'\n': 0,
@@ -669,9 +614,7 @@ and the int to string dictionary will give us
 
 <center>
 <div>
-<textarea rows="30" cols="100">
-
-
+<textarea rows="30" cols="85">
 
 
 {0: '\n',
@@ -713,8 +656,7 @@ Now we need to define an encoding tokenizer called "encode" so we can convert st
 
 <center>
 <div>
-<textarea rows="10" cols="100">
-
+<textarea rows="5" cols="100">
 
 encode = lambda s: [ stoi[c]          for c in s   ] 
 
@@ -738,15 +680,13 @@ We do the same for the tokenizer decode to decoder from integer to strings as fo
 
 <center>
 <div>
-<textarea rows="10" cols="100">
-
+<textarea rows="5" cols="100">
 
 decode = lambda l: ''.join(   itos[i] for i in l   )    
 
 decode([40, 39, 46, 46])
 
 
-  
 </textarea>
   
 </div>
@@ -911,7 +851,7 @@ tensor(59), tensor(43), tensor(58), tensor(17)
 
     <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="5" cols="100">
 
 
 for index_temp in ix:
@@ -1096,7 +1036,7 @@ In the following code segment we can see the class to instantiate the whole deco
 
   <center>
 <div>
-<textarea rows="30" cols="130">
+<textarea rows="30" cols="160">
 
 
 class GPTModel(nn.Module):
@@ -1170,15 +1110,13 @@ The following code is what instantiates the 6 decoder layers in sequence where t
 
   <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="6" cols="100">
 
-
-  self.blocks = nn.Sequential(
+self.blocks = nn.Sequential(
                 *[   Block(n_embd, n_head=n_head) for _ in range(n_layer)    ]
         )
 
 
-  
 </textarea>
   
 </div>
@@ -1210,7 +1148,7 @@ First we take "idx" (the data as ids) an pass it through the embedding layer. Th
 
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="7" cols="100">
 
 
 x      = self.blocks(  x  )      ## (B, T, E)        
@@ -1316,7 +1254,7 @@ We can first define the Multi-Head class as follows
 
 <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="16" cols="100">
 
 
 class MultiHeadAttention(nn.Module):
@@ -1391,10 +1329,9 @@ and the concatenation of the 8 head Heads of size 64 to create a new tensor of s
 
    <center>
 <div>
-<textarea rows="6" cols="100">
+<textarea rows="4" cols="100">
 
 out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
-
 
 </textarea>
   
@@ -1413,10 +1350,8 @@ The FeedForward class is very straight forward  as can be seen below. It is a si
 
 
 
-  
 
-
-    <center>
+<center>
 <div>
 <textarea rows="20" cols="100">
 
@@ -1532,12 +1467,10 @@ The sentence and corresponding padding mask are the only inputs to this Attentio
 
    <center>
 <div>
-<textarea rows="6" cols="100">
-
+<textarea rows="4" cols="100">
 
 self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
 
-  
 </textarea>
   
 </div>
@@ -1592,7 +1525,7 @@ Remember that using "nn.Linear" is equivalent to the following:
 
      <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="16" cols="100">
 
 
 Wq = torch.tensor( [batch_size, 512, 64] )
@@ -1606,7 +1539,6 @@ K = torch.matmul(x, Wk) + bk    # Nx40x64
 Wv = torch.tensor( xavier_init( [batch_size, 512, 64] )  )
 bv = torch.tensor( torch.random_normal( [batch_size, 40, 64] )  )
 V = torch.matmul(x, Wv) + bv    # Nx40x64
-
 
 
 </textarea>
@@ -1631,7 +1563,7 @@ Once Q, K, and V are defined, the next step is to multiply Q times K. You can th
   
      <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="17" cols="100">
 
 
 ## (B, T, 64) @ (B, E, 64)  -> (B, T, T)
@@ -1648,9 +1580,6 @@ wei = F.softmax( wei, dim= -1 )         ## (B, T, T)
 wei = self.dropout(   wei   )
 
 
-  
-
-  
 </textarea>
   
 </div>
@@ -1689,8 +1618,7 @@ The following code segment adds "wei" to the Mask.
 
       <center>
 <div>
-<textarea rows="10" cols="100">
-
+<textarea rows="8" cols="80">
 
 wei = wei.masked_fill(
         self.tril[:T, :T] == 0, 
@@ -1700,7 +1628,7 @@ wei = wei.masked_fill(
 </textarea>
   
 </div>
-    </center>
+</center>
 
 
 <p>
@@ -1731,7 +1659,7 @@ The final part of the forward function in the Head class (next code segment) fin
 <textarea rows="20" cols="100">
 
 
-  class Head(nn.Module):
+class Head(nn.Module):
 
     ...
 
@@ -1832,20 +1760,15 @@ then the softmax operation on b7 (torch.nn.softmax(b7)) should give us
 
       <center>
 <div>
-<textarea rows="8" cols="100">
-
+<textarea rows="6" cols="100">
 
 <torch.Tensor: shape=(10,), dtype=float32, numpy=
 array([ 0.3096101 , 0.20753784, 0.22936477, 0.25348732, 0. ,0. , 0. , 0. , 0. , 0. ], dtype=float32)>
 
-  
 </textarea>
   
 </div>
     </center>
-
-
-
 
 
 
@@ -1895,7 +1818,7 @@ The training function is presented below and is straight forward
 
         <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="18" cols="100">
 
 for iter in range(max_iters):
     
@@ -1913,7 +1836,6 @@ for iter in range(max_iters):
     optimizer.step()
   
 
-  
 </textarea>
   
 </div>
@@ -2125,7 +2047,7 @@ class Encoder_Model(nn.Module):
 
 <p>
 Notice that 6 identical encoder layers are created were the outputs of one become the inputs of the next layer. The dimensions of all inputs and output at this 
-	stage are the same [B, 40, 512] where B is batch size.  The input is  a batch of \textbf{B} sentences, with 40 tokens per each sentence, and where 512 is 
+	stage are the same [B, 40, 512] where B is batch size.  The input is  a batch of "B" sentences, with 40 tokens per each sentence, and where 512 is 
 	each id that has been embedded to a vector of size 512. Remember that the embedding vectors of size 512 are learned by the model so initially they are random data. 
 
 We use a padding mask to ignore tokens with 0 value (i.e. padding).
@@ -2245,7 +2167,7 @@ If you are testing, the input is just the previous words before the word you are
 The attention layers consist of 8 parallel attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
 The first code segment in this section describes the decoder’s overall architecture. The decoder has more inputs than the encoder. 
 
-The decoder\_layer is the busiest function of the Transformer. It is basically very similar to the encoder\_layer except that it has 2 attention mechanisms instead of
+The decoder_layer is the busiest function of the Transformer. It is basically very similar to the encoder_layer except that it has 2 attention mechanisms instead of
 	just one. The Multi-Head Attention is the first attention mechanism. For our reference language problem, The Portuguese sentence and corresponding padding mask 
 	are the only inputs to this sub layer. 
 The output of this attention mechanism plus the encoder output are the inputs to the second attention mechanism which is usually referred to as the Encoder-Decoder-Attention
@@ -2253,7 +2175,7 @@ The output of this attention mechanism plus the encoder output are the inputs to
 	attention layer is done 8 times in parallel just like in the encoder and the results are concatenated. This concatenated result is added to the original after 
 	mapping it through one more layer to calculate the residual. 
 
-The final layer maps a tensor of size [N, 40, 512] to a tensor of size [N, 40, pt\_vocab\_size] where pt\_vocab\_size is the size of the Portuguese vocabulary. 
+The final layer maps a tensor of size [N, 40, 512] to a tensor of size [N, 40, pt_vocab_size] where pt_vocab_size is the size of the Portuguese vocabulary. 
 
 
 
@@ -2576,13 +2498,12 @@ The below line of code just loads the sentences data before processing from the 
 
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="5" cols="100">
 
 ## Read in the data of english and portuguese sentences
 
 train_dict = load_dictionary("data/en_pt_train_dictionary.txt") 
 validation = load_dictionary("data/en_pt_val_dictionary.txt"  )
-
 
 </textarea>
   
@@ -2604,11 +2525,9 @@ The next function creates 2 lists of aligned English and Portuguese sentences.
 
 <center>
 <div>
-<textarea rows="8" cols="100">
-
+<textarea rows="5" cols="100">
 
 english_sentence_list, portuguese_sentence_list = get_en_and_pt_sentences(train_dict)
-
 
 </textarea>
   
@@ -2656,7 +2575,7 @@ After creating the dictionaries for each language, we calculate the vocabulary s
 
 <center>
 <div>
-<textarea rows="15" cols="100">
+<textarea rows="15" cols="140">
 
 
 ## when 2 languages, you have 2 separate tokenizers.
@@ -2745,7 +2664,7 @@ Now we need to use a Torch padding function.
 
    <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="14" cols="100">
 
 
 en_MAX_LENGTH = MAX_LENGTH 
@@ -2778,7 +2697,7 @@ portuguese_sentence_ids_list = torch.preprocessing.sequence.pad_sequences( portu
  
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="10" cols="80">
 
 
 for i in range( len(english_sentence_ids_list) ):   
