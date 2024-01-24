@@ -559,7 +559,7 @@ With the previous code we can look at the length of the text and type of charact
 
   <center>
 <div>
-<textarea rows="10" cols="200">
+<textarea rows="10" cols="100">
 
 
 ['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q', '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
@@ -644,7 +644,7 @@ The string to int dictionary will give us
 
    <center>
 <div>
-<textarea rows="20" cols="200">
+<textarea rows="20" cols="100">
 
 
 {'\n': 0,
@@ -683,7 +683,7 @@ and the int to string dictionary will give us
 
    <center>
 <div>
-<textarea rows="20" cols="200">
+<textarea rows="20" cols="100">
 
 
 
@@ -825,7 +825,7 @@ The next step is to create a function to read the data so we can train the GPT. 
 
   <center>
 <div>
-<textarea rows="20" cols="200">
+<textarea rows="20" cols="100">
 
 def get_batch(split):
     if split == "train":
@@ -976,13 +976,13 @@ print(y)
 
 
 
-Printing \textbf{x} and \textbf{y} gives us our \textbf{x} batch of size [4, 16] and our shifted \textbf{y} batch of size [4, 16] as can be seen below.
+Printing "x"and \textbf{y} gives us our \textbf{x} batch of size [4, 16] and our shifted \textbf{y} batch of size [4, 16] as can be seen below.
 
 
 
   <center>
 <div>
-<textarea rows="20" cols="200">
+<textarea rows="20" cols="100">
 
 
   x = 
@@ -1031,7 +1031,7 @@ Now we proceed to define the loss function. In this function we evaluate the mod
 
   <center>
 <div>
-<textarea rows="20" cols="200">
+<textarea rows="20" cols="100">
 
 
   @torch.no_grad()    ## for efficient processing
