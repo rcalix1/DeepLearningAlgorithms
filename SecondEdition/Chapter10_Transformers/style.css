@@ -51,6 +51,14 @@ table {
     font-size: small;
 }
 
+tbody {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0;          /* Position the navbar at the top of the page */
+
+}
+
 hr {
     clear: both;
     border-style: none;
@@ -98,18 +106,10 @@ div.txt {
 
 #nav {
 
-    margin-left:   10%;
-    margin-right:  10%;
   
     clear: both;
     width: 100%;
     margin-bottom: 2em;
-
-    overflow: hidden;
-    background-color: #333;
-  
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0;          /* Position the navbar at the top of the page */
    
 
 }
