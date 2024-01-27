@@ -101,24 +101,47 @@ As can be seen in the previous figure, the original Transformer consisted of an 
   
 </p>
 
+<h1>
+
+Reinforcement Learning
+	
+</h1>
+
+
+<p>
+
+
+	In this section of the book I will cover the topic of Reinforcement Learning. This is an area of machine learning somewhere between supervised learning and unsupervised 
+	learning. It has been extensively applied to recommender systems and AI-based games. Recently, it was shown that a deep Q-network, using only pixels and game scores
+	as inputs, could achieve a playing level comparable to that of professional human gamers across a set of 49 Atari games (\babelEN{\cite{mnihRef}}). The main advantage 
+	of applying reinforcement learning to games is that games are governed by rules. You have game states (the inputs) and actions (output) that lead to new states and 
+	rewards (the objectives to maximize). Because of this, no annotation is needed and instead you rely on the rules of the game for feedback (e.g. instead of annotated 
+	labels). 
+There are several types of reinforcement learning techniques. In this chapter, I will focus on getting started with Q-learning since this is the technique used in 
+	the Mnih et al (2015) paper I referenced above. Here, I will try to provide a simple intuition based description of the technique. I should note that to achieve 
+	the level of Q-Learning presented in the Mnih et al (2015) paper, several additional optimizations need to be included. However, the discussion in this chapter 
+	should provide a simple way to get started with Q-Learning. 
+</p>
 
 
 
+<h1>
 
-\chapter{Reinforcement Learning}
+ So what is Q-Learning?
+	
+</h1>
 
-
-
-
-In this section of the book I will cover the topic of Reinforcement Learning. This is an area of machine learning somewhere between supervised learning and unsupervised learning. It has been extensively applied to recommender systems and AI-based games. Recently, it was shown that a deep Q-network, using only pixels and game scores as inputs, could achieve a playing level comparable to that of professional human gamers across a set of 49 Atari games (\babelEN{\cite{mnihRef}}). The main advantage of applying reinforcement learning to games is that games are governed by rules. You have game states (the inputs) and actions (output) that lead to new states and rewards (the objectives to maximize). Because of this, no annotation is needed and instead you rely on the rules of the game for feedback (e.g. instead of annotated labels). 
-There are several types of reinforcement learning techniques. In this chapter, I will focus on getting started with Q-learning since this is the technique used in the Mnih et al (2015) paper I referenced above. Here, I will try to provide a simple intuition based description of the technique. I should note that to achieve the level of Q-Learning presented in the Mnih et al (2015) paper, several additional optimizations need to be included. However, the discussion in this chapter should provide a simple way to get started with Q-Learning. 
-
-
-\section{ So what is Q-Learning? }
+<p>
 
 Q-Learning tries to learn the value of being in a given state (s), and taking a specific action from there. 
-As I indicated, Q-learn has been applied to games. The best way to understand the algorithm is to analyze it from the point of view of a game. Here we will use Python’s OpenAI Gym module to play games. We will select the simple FrozenLake game environment. 
-FrozenLake is a game about crossing a frozen lake that has some cracks in the ice with holes and there is wind sometimes that pushes the person crossing it. The game is very simple and consists of a grid that is 4x4 like so. 
+As I indicated, Q-learn has been applied to games. The best way to understand the algorithm is to analyze it from the point of view of a game. Here we will use 
+	Python’s OpenAI Gym module to play games. We will select the simple FrozenLake game environment. 
+FrozenLake is a game about crossing a frozen lake that has some cracks in the ice with holes and there is wind sometimes that pushes the person crossing it. 
+	The game is very simple and consists of a grid that is 4x4 like so. 
+	
+</p>
+
+
 
 
  <center>
@@ -130,24 +153,42 @@ FrozenLake is a game about crossing a frozen lake that has some cracks in the ic
 
 
 
-
-
-
-So, the objective is to get to the cheese without falling into a hole or being pushed by the wind into a hole. There are 4 moves which are up, down, right, and left. There is only one reward and that is to get to the cheese. However, you only get that reward in the future by first taking several steps on frozen blocks without falling in a hole. Therefore, one challenge is that you have to state your objective in terms of several future moves. This is accomplished using something called the Bellman Equation. 
+<p>
+So, the objective is to get to the cheese without falling into a hole or being pushed by the wind into a hole. There are 4 moves which are up, down, right, and 
+	left. There is only one reward and that is to get to the cheese. However, you only get that reward in the future by first taking several steps on frozen 
+	blocks without falling in a hole. Therefore, one challenge is that you have to state your objective in terms of several future moves. This is accomplished
+	using something called the Bellman Equation. 
 
 
 
 
 The key to predicting these rewards is to know the associated reward given a current state and action to take. This is called a Q mapping 
+	
+</p>
 
-\begin{center}
-    Q (state, action) = reward
-\end{center}
+
+<center>
+
+
+	<p>
+
+		    Q (state, action) = reward
+	</p>
+</center>
+
+
+	<p>
 
                 
-                
-For such a simple grid, we could just use a table. In this case our table would be 16x4 because there are 16 possible states (position in the grid of 4x4) and there are 4 actions (up, down, right, left). Since we know the rules of the game and the layout of the grid, we can populate the table and learn the Q rewards for each state/action pair. 
+For such a simple grid, we could just use a table. In this case our table would be 16x4 because there are 16 possible states (position in the grid of 4x4) and there 
+	are 4 actions (up, down, right, left). Since we know the rules of the game and the layout of the grid, we can populate the table and learn the Q rewards for
+	each state/action pair. 
 An example of the table can be seen below.
+		
+	</p>
+
+                
+
 
 
 
