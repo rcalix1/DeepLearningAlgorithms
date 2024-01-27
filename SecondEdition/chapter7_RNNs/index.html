@@ -107,20 +107,35 @@ Recurrent Neural Networks
 	
 </h1>
 
-
-
-In this chapter of the book I will cover the topic of Recurrent Neural Networks (RNNs). This is an important technique in deep learning that deals with sequence data mining and can be used for classification. This technique can be applied to images,  text, and many other domains.   As you may imagine, we are going to re-use a lot of the code from previous sections and chapters. The only main differences will be in defining the RNN architecture and in arranging the data for sequence modeling. 
+<p>
+In this chapter of the book I will cover the topic of Recurrent Neural Networks (RNNs). This is an important technique in deep learning that deals with sequence data
+	mining and can be used for classification. This technique can be applied to images,  text, and many other domains.   As you may imagine, we are going to re-use a 
+	lot of the code from previous sections and chapters. The only main differences will be in defining the RNN architecture and in arranging the data for sequence modeling. 
+	
 
 RNNs are well known for their use to solve NLP problems. However, since 2017, they have been overshadowed by the arrival of Transformers and Large Language Models (LLMs). 
 
 
+	
+</p>
 
-\section{Using an RNN to classify MNIST}
+<h1>
+Using an RNN to classify MNIST
+	
+</h1>
 
+<p>
 For the first example provided in this chapter, I will use the Mnist dataset.  The goal of the RNN will be to classify the images into one of the 8 classes. 
 
-In previous chapters, we have treated each image as a sample static in time of size 28x28 that we want to classify as a digit. In the RNN, we still want to classify each image into one of the 10 digits. However, in the RNN we will not treat each image as a vector of 784 features or tensor of size 28x28. Instead, we will use a sequence modeling approach to classify the image. So, to summarize, let us compare the RNN’s approach to previous approaches. 
-In previous approaches we looked at the whole image as an instance of 784 features or tensor of 28x28 and classified it that way. The figure below shows the non-sequential pipeline.
+In previous chapters, we have treated each image as a sample static in time of size 28x28 that we want to classify as a digit. In the RNN, we still want to classify 
+	each image into one of the 10 digits. However, in the RNN we will not treat each image as a vector of 784 features or tensor of size 28x28. Instead, we will use
+	a sequence modeling approach to classify the image. So, to summarize, let us compare the RNN’s approach to previous approaches. 
+In previous approaches we looked at the whole image as an instance of 784 features or tensor of 28x28 and classified it that way. The figure below shows the non-sequential
+	pipeline.
+	
+</p>
+
+
 
 
 
@@ -132,8 +147,15 @@ In previous approaches we looked at the whole image as an instance of 784 featur
 
     </center>
 
-With the RNN we look at each image as a sequence of segments of the image or patches (e.g. a sequence in time). We use this sequence from beginning to end to predict the final class for the image. 
+
+<p>
+With the RNN we look at each image as a sequence of segments of the image or patches (e.g. a sequence in time). We use this sequence from beginning to end to
+	predict the final class for the image. 
 With RNNs the pipeline is as follows:
+	
+</p>
+	
+
 
 
 
@@ -145,13 +167,20 @@ With RNNs the pipeline is as follows:
     </center>
 	
 
+<p>
+So, it can be seen in the previous image that the 28X28 image is converted into 28 vectors of 28 features each (the pixels). These vectors are fed sequentially into the
+	model. With this definition of how to represent the input data, we can proceed to define the RNN algorithm. 
+
+When I build NN  models, I like to build simple networks first with random data to figure out the tensor dimensions. Once I understand the tensor multiplications and 
+	dimensions, I then feel ready to implement the architecture and train the model. So, in this section I will show this process. First, I will run the simplest torch
+	RNN module on some dummy data. After that, we can proceed at building the RNN model for MNIST. 
+
+Let us define the libraries here to get them out of the way. The only new steps will be to invoke the rnn modules from PyTorch. These modules will help us to define the 
+	architecture. 
+	
+</p>
 
 
-So, it can be seen in the previous image that the 28X28 image is converted into 28 vectors of 28 features each (the pixels). These vectors are fed sequentially into the model. With this definition of how to represent the input data, we can proceed to define the RNN algorithm. 
-
-When I build NN  models, I like to build simple networks first with random data to figure out the tensor dimensions. Once I understand the tensor multiplications and dimensions, I then feel ready to implement the architecture and train the model. So, in this section I will show this process. First, I will run the simplest torch RNN module on some dummy data. After that, we can proceed at building the RNN model for MNIST. 
-
-Let us define the libraries here to get them out of the way. The only new steps will be to invoke the rnn modules from PyTorch. These modules will help us to define the architecture. 
 
 
 
