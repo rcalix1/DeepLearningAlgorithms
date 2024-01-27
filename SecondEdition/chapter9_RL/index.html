@@ -121,13 +121,14 @@ As I indicated, Q-learn has been applied to games. The best way to understand th
 FrozenLake is a game about crossing a frozen lake that has some cracks in the ice with holes and there is wind sometimes that pushes the person crossing it. The game is very simple and consists of a grid that is 4x4 like so. 
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.80\textheight}{
-    \includegraphics{images/frozen\_lake.png}
-}
-\caption{Frozen Lake}
-\label{RegLin:fig}
-\end{figure}
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/frozen_lake.png" height="700" width="auto">
+      </div>
+
+    </center>
+
+
 
 
 
@@ -149,15 +150,14 @@ For such a simple grid, we could just use a table. In this case our table would 
 An example of the table can be seen below.
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.80\textheight}{
-    \includegraphics{images/q\_learn\_table.png}
-}
-\caption{Q-Learn Table}
-\label{RegLin:fig}
-\end{figure}
 
 
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/q_learn_table.png" height="700" width="auto">
+      </div>
+
+    </center>
 
 
 Now the main challenge is that we need to learn future rewards for future actions as we move through the grid. Here the Bellman equation will help. Think of the Bellman equation as a type of recursive equation that looks at the future state given a current state. The Bellman equation is as follows:
@@ -560,6 +560,7 @@ we get the actions vector. We will use a torch.max function later to select the 
 
 
 As can be seen from the previous class code, the network looks like the figure below.  
+
 
 
 \begin{figure}[H]\centering
