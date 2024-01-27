@@ -282,7 +282,7 @@ output_zz, hn = rnn_basic_rc(input_basic_rnn, h0)
 
 
 <p>
-The RNN needs values for the hidden layer at time "t" equal zero since that in the first hidden layer in the sequence.  That is usually solved by initializing that
+The RNN needs values for the hidden layer at time "t" equal zero since that is the first hidden layer in the sequence.  That is usually solved by initializing that
 	first hidden layer to random or zero values. This can be seen in the next code segment.
 
 
@@ -293,7 +293,7 @@ The RNN needs values for the hidden layer at time "t" equal zero since that in t
 
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="7" cols="100">
 
 ##            (n_layers,  batch_size,  hidden_size)
 h0 = torch.randn(     2,           3,           20)
@@ -315,7 +315,7 @@ h0.shape
 
 Finally, printing the shapes of "output_zz" and "hn" gives us [5, 3, 20] and [2, 3, 20], respectively.
 
-In the next section we will repeat this exercise but with the dimensions of the MNIST dataset. 
+In the next section we will repeat this exercise but with the dimensions for the MNIST dataset. 
 
 
 </p>
@@ -330,7 +330,7 @@ Classifying MNIST with RNNs
 
 <p>
 
-In this section, we will focus on training an RNN for MNIST classification. First we will try some dummy data just to look at the dimensions. After that, we can proceed to 
+In this section, we will focus on training an RNN for MNIST classification. First we will try using some dummy data just to look at the dimensions. After that, we can proceed to 
 	train the actual RNN model on the real MNIST data.
 	
 </p>
@@ -341,7 +341,7 @@ Visualising the dimensions of MNSIT for the RNN
 	</h1>
 
 <p>
-Let us start by setting a size to the batch such as 
+Let us start by setting a size for the number of batches such as 
 
 	
 </p>
@@ -365,7 +365,7 @@ Let us start by setting a size to the batch such as
 
 <center>
 <div>
-<textarea rows="10" cols="100">
+<textarea rows="7" cols="100">
 
 ## xb  shape (batch_size,    seq_len,     vector_size)
 
