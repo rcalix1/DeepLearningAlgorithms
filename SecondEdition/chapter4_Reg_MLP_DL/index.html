@@ -193,15 +193,13 @@ In the next section I will proceed to further elaborate on this.
 
 The figure below presents the accuracy plot per epoch of a deep neural net as it is being trained. The x axis represents the epochs over time and the y axis represents the accuracy score. As can be seen, the accuracy is low at first but it starts to improve after a certain number of epochs when the classifier begins to learn and converge.  
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/accuracy_per_epoch.png}
-}
-\caption{Accuracy per epoch}
-\label{RegLin:fig}
-\end{figure}
 
 
+    <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/accuracy_per_epoch.png" height="700" width="auto">
+      </div>
+    </center>
 
 In this example on the figure, a deep net takes a few epochs to learn how to detect and classify the samples. After about 200 epochs, a deep net of say 2 hidden layers stabilizes and is able to maintain a consistent accuracy score. 
 
@@ -212,28 +210,26 @@ So what’s it all about? Again, my focus here is not to discuss deep learning f
 The figures below present some of the challenges that must be addressed when dealing with real data. Real data such as language data from Twitter is highly noisy and un-balanced. An imbalance in the data means, for example, that 80 \% of the samples belong to 1 class and the remaining 20 \% belong to the other class. Therefore, training a classifier to, say, perform emotion classification (where data is highly imbalanced) can be a difficult task. In the figure below, a sample of Twitter data is represented. Each sample in the dataset had multiple features but was compressed into a two dimensional vector for visualization purposes. 
 As can be seen, the data in the figures has a high overlap in the classes and the data is difficult to separate. A linear classifier (the line seen on the graph) can only separate a small portion of the samples and the majority are not easy to separate in this space. The graph below is available on-line in color. 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/log_reg_line.png}
-}
-\caption{ Logistic Regression Classifier}
-\label{RegLin:fig}
-\end{figure}
+
+
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/log_reg_line.png" height="700" width="auto">
+      </div>
+    </center>
 
 
 So how can we get more of the samples of one class without getting too many of the samples of the other class? Well, the answer is that we could use another type of line for the separation. For instance, instead of using a straight line we could use a curved line. This is why some algorithms are called linear and others are called non-linear. Non-linear algorithms can sometimes create better separations in the data and therefore obtain fewer errors. In the next Figure, an example of this is shown using Support Vector Machines (SVM). SVM methods can sometimes build better non-linear classifiers because of their ability to project data to higher dimensional spaces.  Deep neural networks can be used to learn non-linear models as well. This property of non-linear models can help to obtain better classification accuracy scores. This figure is available on-line in color. 
 
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/svm_line_chart.png}
-}
-\caption{SVM Classifier}
-\label{RegLin:fig}
-\end{figure}
 
 
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/svm_line_chart.png" height="700" width="auto">
+      </div>
+    </center>
 
 The figure above shows an SVM classifier building a non-linear separation line (the curved line in the graph) on the data. It could be expected that a deep neural network could build even better separation boundaries and that different architectures could give different results. This takes us to the very important aspect of deep learning architecture. 
 Deep learning architecture is where we define the parameters such as layers and neurons that define a deep neural network. You could think of this as the way that you construct the line that you want to build and use. We will discuss this in the next sections but it is important to know that you can define many deep learning architectures.
@@ -289,14 +285,13 @@ res = model(a, b)
 In this code we initialize 2 variables $ a $ and $ b $ as torch tensors, and add them together. . What is important to note here is that whenever you reference an object in PyTorch with torch, such as initializing the variable a, you are actually adding elements or nodes to a graph.  The graph can be seen in the following figure.
 
 
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/tensorflowGraph.ch4.300dpi.jpg" height="700" width="auto">
+      </div>
+    </center>
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/tensorflowGraph.ch4.300dpi.jpg}
-}
-\caption{PyTorch graph}
-\label{RegLin:fig}
-\end{figure}
+
 
 
 In this case, the command adds the 2 numbers together. The answer for this after printing the results should be 42.
@@ -512,15 +507,14 @@ Where $ n $ represents the number of samples.
 In linear regression, a line is fitted to the dataset in feature space by minimizing the sum of errors. That is to say, the sum of the error distances between the values in the predicted line and the real values are estimated (see figure below). 
 
 
+     <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/linearregressionline.chap4.300dpi.jpg" height="700" width="auto">
+      </div>
+    </center>
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/linearregressionline.chap4.300dpi.jpg}
-}
-\caption{Linear Regression Line}
-\label{RegLin:fig}
-\end{figure}
+
 
 
 
@@ -553,15 +547,12 @@ we can show it in diagram form as can be seen in the figure.
 
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-\includegraphics{images/linearregressionarchitecture.chp4.300dpi.jpg}
-}
-\caption{Linear Regression Architecture}
-\label{RegLin:fig}
-\end{figure}
 
-
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/linearregressionarchitecture.chp4.300dpi.jpg" height="700" width="auto">
+      </div>
+    </center>
 
 As shown in the previous equation, a linear regression is an equation made up of 3 main elements: x, w, and b. The x value holds the training data (features), w represents the weights per feature, and b is the offset value (bias) learned by the model. These values are directly coded into our algorithm using PyTorch. 
 
@@ -1406,15 +1397,17 @@ plt.savefig("PredVsRealPlot", dpi=300)
 
 and the plot is as follows: 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.25\textheight}{
-    \includegraphics{images/LinRegRealVsPred.png}
-}
-\caption{Real vs. predicted test samples}
-\label{RegLin:fig}
-\end{figure}
 
 
+
+
+
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/LinRegRealVsPred.png" height="700" width="auto">
+      </div>
+    </center>
+	
 
 \section{Linear Regression to Logistic Regression and Neural Nets}
 
@@ -1690,13 +1683,15 @@ If you look at this as a network, we can see that it has 3 output neurons and 1 
 
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.60\textheight}{
-    \includegraphics{images/housingpriceequationsarch.chp4.300dpi.jpg}
-}
-\caption{Housing price equations architecture}
-\label{RegLin:fig}
-\end{figure}
+
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/housingpriceequationsarch.chp4.300dpi.jpg" height="700" width="auto">
+      </div>
+    </center>
+
+	
+
 
 
 
@@ -1879,32 +1874,20 @@ $
 
 These 2 equations generate the following graphs:
 
-\clearpage
-
-
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/logregcrossentropy1.ch4.300dpi.jpg}
-}
-\caption{Logistic regression graphs (y=1)}
-\label{RegLin:fig}
-\end{figure}
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/logregcrossentropy1.ch4.300dpi.jpg" height="700" width="auto">
+      </div>
+    </center>
 
 
 
 
-
-
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/logregcrossentrpy2.ch4.300dpi.jpg}
-}
-\caption{Logistic regression graphs (y=0)}
-\label{RegLin:fig}
-\end{figure}
-
-
-
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/logregcrossentrpy2.ch4.300dpi.jpg" height="700" width="auto">
+      </div>
+    </center>
 
 
 As can be seen in the graphs, the loss has one shape for one class and another shape for the other. 
