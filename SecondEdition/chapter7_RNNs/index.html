@@ -29,7 +29,7 @@
 
    <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="400" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="300" width="auto">
       </div>
 
     </center>
@@ -97,7 +97,7 @@ In previous approaches we looked at the whole image as an instance of 784 featur
 
  <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="500" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="300" width="auto">
       </div>
 
     </center>
@@ -116,7 +116,7 @@ With RNNs the pipeline is as follows:
 
 <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/seq_pipeline_rnn.chp7.300dpi.jpg" height="600" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/seq_pipeline_rnn.chp7.300dpi.jpg" height="300" width="auto">
       </div>
 
     </center>
@@ -176,17 +176,16 @@ from torch.autograd import Variable
 
 
 
-
+<h1>
+Reshaping Tensors for use with RNNs and dummy data
+	
+</h1>
     
 
-
-
-
-\subsection{Reshaping Tensors for use with RNNs and dummy data}
-
+<p>
 First, let us initialize the the RNN module. The basic RNN requires [vector\_size, hidden\_size,  n\_layers]. As can be seen in the following code segment:
 
-
+</p>
 
 
 
@@ -194,44 +193,52 @@ First, let us initialize the the RNN module. The basic RNN requires [vector\_siz
 
 <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="10" cols="100">
 
 
 ##                (vector_size, hidden_size,  n_layers)
 rnn_basic_rc = nn.RNN(      10,          20,         2)
     
 
-
-
-  
 </textarea>
 </div>
 </center>
 
-	
+
+	<p>
 The parameters can be visualized in the following graph:
+
+		
+	</p>
 
 
 
 
 <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="400" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="300" width="auto">
       </div>
 
     </center>
 	
 
-In the previous graph, the parameter \textbf{vector\_size} refers to size of $x_t$. It indicates the number of features in that vector. For the MNIST, it represents the rows in the image of which are of size 28 at time $t$.
-The parameter \textbf{hidden\_size} refers to the number of neurons in the hidden layer $h_t$. And finally, the variable \textbf{n\_layers} refers to the number of hidden layers. In this case the recurring line going from $h_t$ back onto itself. 
+<p>
+In the previous graph, the parameter "vector_size" refers to size of "x_t". It indicates the number of features in that vector. For the MNIST, it 
+	represents the rows in the image of which are of size 28 at time "t".
+The parameter "hidden_size" refers to the number of neurons in the hidden layer "h_t". And finally, the variable "n_layers" refers to the number 
+	of hidden layers. In this case the recurring line going from "h_t" back onto itself. 
 
-
+<br/>
 Next we can create the dummy data. 
+
+	
+</p>
+	
 
 
 <center>
 <div>
-<textarea rows="20" cols="100">
+<textarea rows="10" cols="100">
 
 
 ## This is the data
@@ -241,21 +248,26 @@ input_basic_rnn = torch.randn(   5,           3,             10)
 input_basic_rnn.shape
 
 
-  
 </textarea>
 </div>
 </center>
 
 
+<p>
 
+	Notice the shape of the data. We are used to seeing the shape of MNIST to be [number of batches, 28, 28]. However, traditionally RNNs have expected the data to 
+	look like this [28, number of batches, 28]. So remember to always reshape your data. Torch already makes this step not necessary. But I continue to use it 
+	to force myself to pay more attention to what I am doing when using RNNs. Here, the first 28 dimension is for the sequence length and the last 28 dimension is 
+	for the size of vector. 
+<br/>
+We now proceed to run the data through the RNN as can be seen here
+
+</p>
 
 
     
 
 
-Notice the shape of the data. We are used to seeing the shape of MNIST to be [number of batches, 28, 28]. However, traditionally RNNs have expected the data to look like this [28, number of batches, 28]. So remember to always reshape your data. Torch already makes this step not necessary. But I continue to use it to force myself to pay more attention to what I am doing when using RNNs. Here, the first 28 dimension is for the sequence length and the last 28 dimension is for the size of vector. 
-
-We now proceed to run the data through the RNN as can be seen here
 
 
 <center>
@@ -272,10 +284,14 @@ output_zz, hn = rnn_basic_rc(input_basic_rnn, h0)
 
 
 
-    
+<p>
+The RNN needs values for the hidden layer at time "t" equal zero since that in the first hidden layer in the sequence.  That is usually solved by initializing that
+	first hidden layer to random or zero values. This can be seen in the next code segment.
 
 
-The RNN needs values for the hidden layer at time $t$ equal zero since that in the first hidden layer in the sequence.  That is usually solved by initializing that first hidden layer to random or zero values. This can be seen in the next code segment.
+	
+</p>
+
 
 
 <center>
@@ -296,21 +312,32 @@ h0.shape
 	
 
 
+<p>
 
+	
 
-    
-
-
-
-Finally, printing the shapes of \textbf{output\_zz} and \textbf{hn} gives us [5, 3, 20] and [2, 3, 20], respectively.
+Finally, printing the shapes of "output_zz" and "hn" gives us [5, 3, 20] and [2, 3, 20], respectively.
 
 In the next section we will repeat this exercise but with the dimensions of the MNIST dataset. 
 
 
+</p>
 
-\subsection{Classifying MNIST with RNNs}
+    
 
-In this section, we will focus on training an RNN for MNIST classification. First we will try some dummy data just to look at the dimensions. After that, we can proceed to train the actual RNN model on the real MNIST data.
+<h1>
+
+Classifying MNIST with RNNs
+	
+</h1>
+
+<p>
+
+In this section, we will focus on training an RNN for MNIST classification. First we will try some dummy data just to look at the dimensions. After that, we can proceed to 
+	train the actual RNN model on the real MNIST data.
+	
+</p>
+
 
 \subsubsection{Visualising the dimensions of MNSIT for the RNN }
 
