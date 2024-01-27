@@ -1,0 +1,2819 @@
+<html>
+<head>
+
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+  <body>
+
+<div class="navbar">
+  <a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/index.html"> Deep Learning </a>
+  <a href="https://ricardocalix.substack.com">Substack</a>
+  <a href="https://www.youtube.com/channel/UCKRgi-HJDEq0a3nhlG2nQvg">YouTube</a>
+  <a href="https://github.com/rcalix1/DeepLearningAlgorithms/tree/main/SecondEdition">GitHub</a>
+  <a href="https://www.galacticbackwater.com/theAIhub/index.html">Recommender</a>
+  <a href="https://amzn.to/3OauEG0">Books</a>
+  <a href="https://www.linkedin.com/in/ricardo-calix-phd">About</a>
+  <a href="https://scholar.google.com/citations?hl=en&user=TiKVs6AAAAAJ">Scholar</a>	
+  <a href="">Shop</a>
+  <a href="https://www.rcalix.com">Contact</a>
+</div>
+
+    
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<div class="main">    <!-- for the fixed nav bar -->
+
+<h1>Chapter 10 - Transformers</h1>
+
+    <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_transformer.png" height="700" width="auto">
+      </div>
+
+    </center>
+
+<p>
+Transformers are the latest step in the evolution of deep learning. As is necessary with progress, newer deep learning algorithms are also much more complicated, with 
+	  deeper and more resource intensive networks. The Transformer is the best example of this. 
+Transformers are, for me, the first algorithm I was not able to run on a laptop when using a significantly large data set. They truly require a machine learning “war machine”.
+	  Lots of GPU power and memory, etc. The algorithms are much more complicated, as you will see, and the networks are very deep. 
+
+
+
+Transformers are one of the new innovations in NLP since 2017. They were first made popular by the paper “Attention Is All You Need” by  (Vaswani et al.). 
+	  They are very interesting and seem to be very powerful. Currently, they are better than  Recurrent Neural Networks (RNNs) for NLP because they parallelize better 
+	  and because of the Attention mechanism. 
+So far, Transformers have been used to develop very impressive implementations such as BERT (Devlin et al. 2018), and GPT-3 (Radford et al. 2019), and most notably, chatGPT 
+	  from OpenAI, as of this writing. ChatGPT in particular seems to be very good at language understanding. Transformers have also been applied to language translation,
+	  question answering, document summarization, automatic code generation, text generation, etc. 
+
+In general, something like chatGPT requires at least 2 steps. One step is called the Pre-Training process and the other step is called fine tuning. Basically, a Transformer
+	  network is trained on all the data you have (e.g. all text data in the world). This process requires massive amounts of computing and can be very expensive. 
+	  The most notable pre-trained GPTs include: GPT-3, GPT-4, and LlaMa models, to name a few. The next step is to fine tune the model. Once the fine tuning is 
+	complete, you have options such as adding more neural net layers after the transformer and freezing the already pre-trained weights. 
+	Or you can just keep training the transformer for a specific task and have all the weights be changed. 
+	The amount of fine tuning data does not need to be as large as the data for pre-training. In fact, it can be orders of magnitude smaller. 
+
+Okay, let’s get started.
+
+	
+</p>
+
+
+
+
+<h1>Copyright, License, FTC and Amazon Disclaimer</h1>
+
+<p>
+ Copyright &copy by Ricardo A. Calix. <br/>
+ All rights reserved. No part of this work may be reproduced or transmitted in any form or by any means, without written permission of the copyright owner. <br/>
+ This post/page/article includes Amazon Affiliate links to products. This site receives income if you purchase through these links. 
+ This income helps support content such as this one. 
+ <br/>
+
+	
+
+  
+</p>
+
+     <center>
+      <div class="img"> 
+        <a href="https://amzn.to/3vOL8NF"><img src="https://m.media-amazon.com/images/I/71Wi+z5fKzL._SL1233_.jpg" height="500" width="auto"></a>
+      </div>
+
+    </center>
+    
+
+
+<h1>Main Ideas of the Transformer</h1>
+
+
+<p>
+So, where does one start with Transformers? The Transformer is complex and it involves several ideas to make it work correctly. In this section I will present the main 
+    ideas first with some relevant code. Understanding these concepts or steps really well before venturing to write the code for the Transformers is really important. 
+    It will save you time in the long run. So now, let us proceed to discuss these topics. In the next sections I will start discussing the code for GPTs, BERTs, the full 
+    Encoder Decoder transformer architecture, and a few other subjects. 
+
+As can be seen in the previous figure, the original Transformer consisted of an Encoder and a Decoder layer. 
+
+  
+</p>
+
+
+<h1>Numpy arrays, tensors, and linear algebra</h1>
+    
+<p>
+Linear algebra, numpy arrays, and tensor operations are at the heart of understanding the Transformer architecture. Before you continue, 
+  I strongly recommend that you read and practice the topics in chapter 1, and in particular, the section on linear algebra, numpy arrays, and tensor operations. 
+
+  
+</p>
+
+<h1>
+Attention
+  
+</h1>
+
+<p>
+
+  The Attention mechanism in Transformers is the heart of the whole algorithm. The attention matrix is nothing more than a dot product matrix multiplication 
+  between all the tokens (e.g. words, syllables, subwords, etc.) in a sentence (e.g. the input English sentence). The idea is that, given the input and output, the model learns to correlate the words in
+  the sentence to determine their importance. This is done multiple times and that is why it is called a multi head attention mechanism. 
+
+
+</p>
+
+    <h1>
+
+      Embeddings
+    </h1>
+
+<p>
+
+Sequences of tokens in a sentence are converted into sequences of IDs. An Embedding approach converts the sequence of ids into a sequence of embeddings. 
+  You will go from a 2d tensor 
+
+  
+</p>
+    
+<p>
+[N_batches, _tokens]
+  <br/>
+  to a 3d tensor of size:
+<br/>
+ [N_batches, N_tokens ,   embedding_dimension ]
+  <br/>
+  
+ The term N_tokens can also be called  seq_length_max. Here N_batches is the batch size, N_tokens or seq_length_max is 40, and embedding_dimension is 512.
+  The term N_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define
+  a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is 
+  selected arbitrarily like in word2vec. 
+
+  
+</p>
+
+
+
+
+<h1>Masks</h1>
+
+    <p>
+Masks serve several purposes. One is to help ignore the padded values during training. The other goal is to block the given word you want to predict 
+      or future words). This brings up the important aspect of training with Transformers. Transformers predict the last word in a sequence. For example:
+    </p>
+<p>
+
+ Given an input in english: "the cat is sleeping"
+ 
+</p>
+	  
+<p>
+a Transformer is also given part of the output sentence. In this case:  "el gato esta ?". 
+      The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. 
+	All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
+  
+    </p>
+
+
+<h1>
+Positional Encoding
+  
+</h1>
+
+<p>
+
+  This is the technique that allows you to encode sequence. Transformers are all about being parallel. Their direct competitor is Recurrent Neural Networks (RNNs).
+  RNNs have had several problems in the past. One is that they do not scale well to GPUs and parallel approaches because of their recurrence and dependence on previous
+  steps. The other problem is the famous "vanishing gradients" problem which was addressed by by residuals and LSTMs seem to have addressed this now.  Transformers did
+  away with the type of sequence modeling approach used in RNNs all together so they are very good for parallel approaches. But how do they address or encode the sequence? 
+  Obviously knowing that the word "cat" goes before the word "sleeping" is useful. This is where a technique called positional encoding comes into play. Basically, after 
+  embedding, you have a vector per token of, say, size 512. 
+
+Now, with positional encoding, a function that calculates sines and cosines, is used to create a new vector also of size 512 that represents position (i.e. sequence) of 
+  the tokens. The 2 vectors are added together (embedding + positional_encoding) to get the new inputs to the network. Also, the position vector values are smaller than
+  the embedding vector values so as to not let position dominate. 
+
+</p>
+
+ 
+
+<h1>
+Tokens
+</h1>
+    
+<p>
+
+  In a GPT we want to predict the next word given previous words. However, to improve performance, transformer models do not predict the next word. Instead, they 
+  predict the next subword. A good analogy for subword is syllable, although transformer do not use syllables either. The subwords are calculated based on specific 
+  algorithm such as BPE or SentencePiece. This allows transformers to learn to generate new words never seen before. For example, it may have seen 
+<br/>
+The dog is play - ing.
+<br/>
+And by breaking the word into subwords (i.e. play and ing), it can learn to generate new variations of words it never saw before such as
+<br/>
+The lady is iphone - ing.
+<br/>
+We and the Transformer know intuitively what this means.
+<br/>
+The fact is that tokens can be words, syllables, subwords, letters, etc. Subwords through SentencePiece type algorithms just have proven to give the best results. 
+
+</p>
+
+<h1>
+
+Inputs and Outputs
+  
+</h1>
+
+<p>
+    
+So, let us start there. Let's quickly remember our classic example of MNIST supervised classification. In MNIST standard feed forward classification, you have an 
+  input image which is 28x28 and a predicted vector of size 10 for the classes. So, what do the inputs and outputs look like for transformers? For language translation, 
+  they are lists of ids. Each id can represent a word in a sentence. This is best visualized with an example. 
+First, let us look at the classic use case for Transformers. As I said earlier, Transformers have been used extensibly in NLP. And the first example was in language 
+  translation where we have sentence pairs. Such as the following for English-Spanish translation:
+<br/>
+"the cat is sleeping"    -->   which translates to   -- >    "el gato esta durmiendo"
+<br/>
+Therefore, first we need to understand how to encode this for the neural network and then to understand how exactly it is that the network will train and learn. 
+  So, again, before you look into the network's very deep and complex layers, I believe that one needs to  focus on:
+
+  
+</p>
+
+	  <p>
+    <ul>
+    <li> Padding these sequences of ids</li>
+    <li> Taking text sentences and converting them into sequences of ids</li>   
+    </ul>
+	  </p>
+   
+
+
+
+ <p>
+
+   Consider that after encoding and padding, your sentences will look like this:
+
+ </p>
+
+
+<center>
+<div>
+<textarea rows="8" cols="90">
+
+
+  [ 12110   203     4  3947    29     2   168     2     4    27    
+       68  4333     8  3622  2943  1012     1 12111     0     0     
+        0     0     0     0     0     0     0     0     0     0     
+        0     0     0     0     0     0     0     0     0     0 ]
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
+
+<p>
+
+	and for the other language
+
+
+</p>
+   
+
+
+
+ <center>
+<div>
+<textarea rows="8" cols="90">
+
+  
+[ 12110    13     4  3947    29     2     5    32    36    16  
+   1145     4    58    34  7905    58    25    28   354  2482     
+      3    17    27    28  4395     9  2886     7 12111     0     
+      0     0     0     0     0     0     0     0     0     0 ]
+
+  
+</textarea>
+</div>
+  </center>
+
+
+<h1>
+
+	GPTs
+</h1>
+
+
+
+<p>
+GPTs stand for Generative Pre-trained Transformers. The GPT uses the decoder only part of the Transformer. The input to the decoder varies based on whether you are 
+	training or predicting. If you are training, the input to the decoder is the sentence itself. When training, a mask is needed here to prevent the model from 
+	seeing all the words it is trying to predict. This is called a look ahead mask.
+If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. 
+	The predicted word is then added to the previous tokens and the process is repeated.
+The decoder consists of N (e.g. 6) decoder layers, followed by a fully connected layer.
+
+The full architecture of the decoder can be seen in the following figure. 
+
+	
+</p>
+
+
+
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="800" width="auto">
+      </div>
+
+    </center>
+
+<p>
+Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m_heads (e.g. 8) parallel 
+	attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
+
+	
+</p>
+
+
+<h1>
+
+	Teacher Forcing
+</h1>
+	  
+<p>
+You may have already read somewhere (on-line) that the Decoder in the Transformer network predicts one word at a time and that that word is read back as an input in the 
+	next iteration. Also, the network predicts the last word in the sequence of words. But you may think, aren't those last words just padding? Eh? So, what is going on 
+	here? As it turns out, the mechanism of predicting one word at a time and feeding it back as an input in the next iteration is only done during the "testing"
+	phase and it is not done during "training". Instead, during "training" of a decoder we use “Teacher Forcing”.
+Teacher forcing is a technique in auto regressive models where you do not use the predicted outputs of the decoder to feed back as input but instead you use the real data. 
+	This helps the model to learn the correct information instead of its own erroneous predictions (especially at the beginning of training).
+</p>
+
+	  <h1>
+Implementing a GPT in PyTorch from Scratch
+		  
+	  </h1>
+
+	  <p>
+In this section,  I will implement a simple GPT using everything we have learned in this book. The code will be very object oriented for efficiency. That being said, 
+	this GPT is implemented from scratch, works really well, and can be scaled. Thanks to Andrej Karpathy for helping me to better understand the PyTorch 
+		  implementation of a GPT (<a href="https://karpathy.ai">Andrej Karpathy</a>).
+
+For the sake of simplicity I will not use subwords here and instead just use the letters of the English alphabet and a few symbols. The vocabulary of a large GPT such as
+	GPT-4 could be hundreds of thousands of subwords or more. This GPT reads in one text file and trains on it. 
+
+<br/>
+Here, we first input our common python libraries.  
+
+	
+</p>
+
+
+<center>
+<div>
+<textarea rows="8" cols="40">
+
+import torch
+import numpy as np
+import torch.nn as nn
+
+from torch.nn import functional as F
+  
+</textarea>
+</div>
+  </center>
+
+
+<p>
+
+	In the following code segment we can set the parameters as we have done before.
+
+</p>
+	
+
+
+<center>
+<div>
+<textarea rows="20" cols="70">
+
+
+torch.manual_seed(256)
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+block_size        = 40      ## N tokens in sequence
+batch_size        = 64 
+max_iters         = 6000
+eval_interval     = 500     
+learning_rate     = 0.0003
+eval_iters        = 300
+vocab_size        = 65
+
+## every id for a given token is embedded to vector of this size
+n_embd            = 512                  
+n_head            = 8         ## 8 attention heads
+n_layer           = 6         ## 6 eoncoder layers
+dropout           = 0.2
+  
+</textarea>
+</div>
+    </center>
+
+      
+<p>
+
+Now we proceed to read the text data to train on. 
+
+	
+</p>
+
+
+
+<center>
+<div>
+<textarea rows="10" cols="80">
+
+
+text = ''
+
+input_file2 = 'AdventureHuckFinn.txt'
+
+with open(input_file2, 'r', encoding='utf-8') as f:
+    text = f.read()
+  
+</textarea>
+  
+</div>
+    </center>
+
+<p>
+After reading the text file, we can look at the information about it with the following code. 
+
+	
+</p>
+
+
+
+
+<center>
+<div>
+<textarea rows="8" cols="80">
+
+print("length of data in letter or characters")
+len(text)
+
+list(set(text))
+  
+</textarea>
+  
+</div>
+ </center>
+
+
+
+  <p>
+With the previous code we can look at the length of the text and type of characters. The length of data in letters or characters is 2,365,132, for instance. 
+	  The characters can be seen in the next code listing. 
+
+
+	  
+  </p>
+
+
+
+
+
+<center>
+<div>
+<textarea rows="10" cols="130">
+
+
+['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q',
+ '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 
+ 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
+
+ 
+</textarea>
+  
+</div>
+    </center>
+
+
+<p>
+With the following code we can calculate the size of the vocabulary which is 65 and can print the tokens as a string. 
+
+		
+</p>
+
+
+  
+<center>
+<div>
+<textarea rows="15" cols="100">
+
+the_chars  = sorted(     list(set(text))     )
+
+vocab_size = len( the_chars )      ## 65
+
+print(  len(the_chars)  )
+
+print(  ''.join(the_chars)  )
+
+## The printed oputput
+## !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+ 
+  
+</textarea>
+</div>
+    </center>
+
+<p>
+The tokens need to be converted into IDs. We can use a dictionary and reverse dictionary for this like so. This was previously shown in the word2vec code description. 
+	These are called the tokenizer. 
+	
+</p>
+
+
+ 
+<center>
+<div>
+<textarea rows="5" cols="60">
+
+   stoi = { ch:i for i, ch in enumerate(the_chars) }
+   itos = { i:ch for i, ch in enumerate(the_chars) }
+  
+</textarea>
+  
+</div>
+</center>
+  
+
+<p>
+We can now print the dictionary (string to int ) and reverse dictionary (int to string). 	
+</p>
+
+
+
+<center>
+<div>
+<textarea rows="5" cols="60">
+
+print( stoi )
+print( itos )
+  
+</textarea>
+  
+</div>
+</center>
+
+<p>
+The string to int dictionary will give us	
+</p>
+
+
+
+<center>
+<div>
+<textarea rows="30" cols="85">
+
+
+{'\n': 0,
+ ' ': 1,
+ '!': 2,
+ '$': 3,
+ '&': 4,
+ "'": 5,
+ ',': 6,
+ '-': 7,
+ '.': 8,
+ '3': 9,
+ ':': 10,
+ ';': 11,
+ '?': 12,
+ 'A': 13,
+ 'B': 14,
+ 'C': 15,
+ 'D': 16,
+ 'E': 17,
+ ...
+ }
+
+</textarea>
+  
+</div>
+    </center>
+  
+
+<p>
+and the int to string dictionary will give us
+
+	
+</p>
+
+
+
+<center>
+<div>
+<textarea rows="30" cols="85">
+
+
+{0: '\n',
+ 1: ' ',
+ 2: '!',
+ 3: '$',
+ 4: '&',
+ 5: "'",
+ 6: ',',
+ 7: '-',
+ 8: '.',
+ 9: '3',
+ 10: ':',
+ 11: ';',
+ 12: '?',
+ 13: 'A',
+ 14: 'B',
+ 15: 'C',
+ 16: 'D',
+ 17: 'E',
+ ...
+ }
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+<p>
+
+	
+Now we need to define an encoding tokenizer called "encode" so we can convert string to integer.
+
+</p>
+
+
+
+<center>
+<div>
+<textarea rows="5" cols="100">
+
+encode = lambda s: [ stoi[c]          for c in s   ] 
+
+encode("bahh")
+
+
+</textarea>
+  
+</div>
+    </center>
+  
+
+<p>
+Encoding from the sheep language "bahh" with the tokenizer encoder gives [40, 39, 46, 46].
+<br/>
+We do the same for the tokenizer decode to decoder from integer to strings as follows: 
+
+	
+</p>
+
+
+<center>
+<div>
+<textarea rows="5" cols="100">
+
+decode = lambda l: ''.join(   itos[i] for i in l   )    
+
+decode([40, 39, 46, 46])
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+Using the function decode([40, 39, 46, 46]) gives us our sheep tokens back which are  'bahh'.
+
+Now we need to encode the text from our book and convert it to a Torch tensor. The code for that is as follows: 
+
+	
+</p>
+
+
+
+
+   <center>
+<div>
+<textarea rows="10" cols="100">
+
+
+data = torch.tensor(   encode(text), dtype=torch.long   )
+
+print( data )
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+<p>
+
+Printing the encoded data in the Torch tensor gives us:  
+<br/>
+<br/>
+tensor([18, 47, 56,  ..., 45,  8,  0])
+<br/>
+<br/>
+
+We now proceed to split the data into train and text. We do that next by slicing the data torch tensor with $ n $.
+
+	
+</p>
+
+
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
+n          = int(   0.9*len(data)   )
+
+train_data = data[:n]
+val_data   = data[n:]
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+  
+<p>
+The next step is to create a function to read the data so we can train the GPT. We will use a function to get the data in batches. The code can be seen in the
+	  next code listing.
+
+
+	
+</p>
+
+
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+def get_batch(split):
+    if split == "train":
+        data = train_data
+    else:
+        data = val_data
+        
+    ix = torch.randint(   len(data) - block_size, (batch_size,)   )
+    
+    x  = torch.stack(    [  data[   i : i+block_size ]     for i in ix ]    ) 
+    y  = torch.stack(    [  data[ i+1 : i+1+block_size ]   for i in ix ]    )
+    
+    x, y = x.to(device), y.to(device)
+
+    return x, y
+
+  
+</textarea>
+</div>
+    </center>
+
+  <p>
+
+To better understand the previous function, I will create a simple example with smaller values for the batch size and the M\_tokens parameter. 
+	  This will help to illustrate what is going on on this function. 
+<br/>
+A GPT is a very deep neural network. To train it you need inputs ( "x" ) and outputs ( "y" ).  Inputs and outputs are matrices of the
+	  same size [batch_size, N_tokens]. They are basically several sentences as rows (batch_size) with N_tokens (i.e. 40) as columns for each sentence.  
+<br/>
+The same sentence is selected for "x" and "y" . They are the same sentence but "y" is shifted by one from "x".
+<br/>
+For our example, we can slice batches of 4 with a sentence sequence length of 16. The torch.randint function helps us to select random starting points for the 4 sentences
+	  from the text. Printing the variable "ix" from the code below gives us the following 4 starting points in the text. 
+<br/>
+tensor([   213173, 989153, 193174, 874116   ])
+
+	  
+  </p>
+
+
+
+
+    <center>
+<div>
+<textarea rows="15" cols="100">
+
+
+temp_batch_size = 4
+temp_block_size = 16
+
+## select random starting points for the 4 sentences
+ix = torch.randint(   
+            len(data) - block_size, 
+            (temp_batch_size,)   
+)
+
+print( ix )
+
+  
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+<p>
+Given the four index position (13173, 989153, 193174, 874116), we can see what Tokenizer IDs are stored there with the following code listing. The "for" loop gives us: 
+<br/>
+tensor(59), tensor(43), tensor(58), tensor(17)
+
+
+
+	
+</p>
+
+
+
+
+
+
+
+
+    <center>
+<div>
+<textarea rows="5" cols="100">
+
+
+for index_temp in ix:
+    print(  data[index_temp]  )
+
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+Now with these 4 index positions we can proceed to slice out the four sentences of size 16 from the torch data tensor. Remember that we hold IDs for the tokens and not 
+	the actual letter in this tensor. This gives us 4 pairs of (x, y). Notice that "y" is shfted by one from "x". 
+
+  
+	
+</p>
+
+
+
+
+<center>
+<div>
+<textarea rows="15" cols="100">
+
+x  = torch.stack(    
+    [ data[   i : i+  temp_block_size ]   for i in ix ] 
+    
+) 
+
+y  = torch.stack(    
+    [ data[ i+1 : i+1+ temp_block_size ]  for i in ix ]    
+)
+
+print(x)
+print(y)
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+<p>
+
+Printing "x"and "y" gives us our "x" batch of size [4, 16] and our shifted "y" batch of size [4, 16] as can be seen below.
+	
+</p>
+
+
+
+
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+x = 
+tensor([
+[59, 58,  1, 15, 50, 39, 56, 43, 52, 41, 43, 12,  1, 39, 52, 42],
+[43, 56,  1, 24, 59, 41, 43, 52, 58, 47, 53,  8,  0,  0, 24, 33],
+[58, 46, 53, 59, 45, 46, 58, 57,  6,  1, 39,  1, 50, 43, 45, 47],
+[17, 37, 10,  0, 32, 56, 59, 50, 63,  6,  1, 57, 47, 56,  6,  1]])
+
+y = 
+tensor([
+[58,  1, 15, 50, 39, 56, 43, 52, 41, 43, 12,  1, 39, 52, 42,  1],
+[56,  1, 24, 59, 41, 43, 52, 58, 47, 53,  8,  0,  0, 24, 33, 15],
+[46, 53, 59, 45, 46, 58, 57,  6,  1, 39,  1, 50, 43, 45, 47, 53],
+[37, 10,  0, 32, 56, 59, 50, 63,  6,  1, 57, 47, 56,  6,  1, 47]])
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
+
+
+<p>
+
+
+And that is how you get and process the data to train a GPT. This is sometimes called data wrangling. More detail about data wrangling is provided later in the chapter.
+
+Now we proceed to define the loss function. In this function we evaluate the model by predicting and comparing the predictions to the real values. The difference is the 
+	loss as can be seen below. 
+
+
+	
+</p>
+
+
+
+
+
+
+
+  <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+@torch.no_grad()    ## for efficient processing
+def estimate_loss():
+    out = {}
+    model.eval()   ## set to no training
+    for split in ['train', 'val']:
+        losses = torch.zeros(eval_iters)
+        for k in range(eval_iters):
+            X, Y = get_batch(split)
+            logits, loss = model(X, Y)
+            losses[k] = loss.item()
+        out[split] = losses.mean()
+    model.train()  ## back to training
+    return out
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+<p>
+
+
+
+
+I will now proceed to describe the architecture of the decoder (GPT). 
+
+
+	
+</p>
+
+
+
+
+<h1>
+Architecture of the GPT or Decoder
+	
+</h1>
+	  
+<p>
+As can be seen in the following figure, the decoder starts with inputs that go in sequentially into N (e.g. 6) decoder layers, and then a feed forward layer to predict 
+	the logit for the given token in the vocabulary. Each decoder layer has the exact same architecture and consists of multi-head attention layers, feed forward layers, 
+	and performance improvement steps such as batch normalizations, residuals, dropouts, etc. Remember that the encoder is not used for the GPT.
+
+
+</p>
+
+
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="700" width="auto">
+      </div>
+
+    </center>
+	  
+
+<p>
+
+In the following code segment we can see the class to instantiate the whole decoder with all 6 decoder layers and the last feed forward layer. 
+
+	
+</p>
+
+
+  <center>
+<div>
+<textarea rows="30" cols="130">
+
+
+class GPTModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)   ## [65, 512]
+        self.pos_emb_table = nn.Embedding(block_size, n_embd)     ## [block, 512]
+        
+        self.blocks = nn.Sequential(
+                *[   Block(n_embd, n_head=n_head) for _ in range(n_layer)    ]
+        )
+        
+        self.ln_f    = nn.LayerNorm(  n_embd    )        
+        self.lm_ffw_head = nn.Linear(n_embd, vocab_size)  ## [512, 65] # FFW Layer
+        
+    def forward(self, idx, targets=None):
+        B, T = idx.shape     ## (Batch, 40)
+        ## ids and targets are both (B, T) tensors of integers
+        
+        tok_emb = self.token_embedding_table(idx)      
+        pos_emb = self.pos_emb_table(torch.arange(T, device=device))  
+        
+        x = tok_emb + pos_emb    ## [B, T, E] or [64, 40, 512]
+
+        ## This is the architecture
+        x = self.blocks(  x  )   ## (B, T, E)        
+        x = self.ln_f(    x  )   ## (B, T, E)   ## norm
+        logits = self.lm_ffw_head(x)         ## [B, 40, 65] 
+        
+        if targets is None:
+            loss = None
+        else:
+            B, T, E  = logits.shape
+            logits  = logits.view( B*T, E)
+            targets = targets.view(B*T)
+            loss    = F.cross_entropy(logits, targets)
+        return logits, loss
+        
+    def generate(self, idx, max_new_tokens):    ## idx is (B, T)
+        for _ in range(max_new_tokens):
+            ## crop idx to the last block_size tokens
+            idx_cond = idx[:, -block_size:]
+            logits, loss = self(idx_cond)    ## ## get preds
+            logits = logits[:, -1, :]    ## focus on last one (B, E)
+            probs = F.softmax(logits, dim= -1)    ## (B, E) get probs
+            idx_next = torch.multinomial(probs, num_samples=1)     ## (B, 1) selected
+            idx = torch.cat(  (idx, idx_next), dim=1  )   ## (B, T+1) append sample to running sequence
+        return idx
+            
+
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+<p>
+The GPTmodel class consists of 3 functions. They are init, forward, and generate. We initialize the embedding and positional encoding object in init. 
+
+The following code is what instantiates the 6 decoder layers in sequence where the outputs from one decoder layer become the inputs of another decoder layer. 
+
+
+
+	
+</p>
+
+
+
+  <center>
+<div>
+<textarea rows="6" cols="100">
+
+self.blocks = nn.Sequential(
+                *[   Block(n_embd, n_head=n_head) for _ in range(n_layer)    ]
+        )
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+  
+
+
+<p>
+
+The final 2 lines of code in the init function define a normalization and the feed forward layer to predict the logits (i.e. the tokens).
+<br/>
+The second function is the forward funtion which is where we actually define the architecture from inputs to outputs through the entire deep neural network of the decoder.
+<br/>
+First we take "idx" (the data as ids) an pass it through the embedding layer. This gives us "tok_emb". Remember that the token embedding are learned by 
+	Transformers during the training. After that we create the positional encoding table. The encoded "tok_emb" does not go through this object. 
+	Instead "pos_emb" is added to "tok_emb". Sequence was established when "pos_emb" was instantiated. Adding them gives us "x" which
+	goes into  the main architecture as can be seen below
+
+
+	
+</p>
+
+
+
+
+
+
+<center>
+<div>
+<textarea rows="7" cols="100">
+
+
+x      = self.blocks(  x  )      ## (B, T, E)        
+x      = self.ln_f(    x  )      ## (B, T, E)   norm
+logits = self.lm_ffw_head(x)     ## [B, 40, 65] 
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+Finally, the generate function invokes the model defined through forward to generate text auto-regressively. 
+<br/>
+The GPTmodel class used a Block class to define the the decoder layers. We can now define that class. Block needs "n_embd" which is the embedding
+	dimension (e.g. 512), and "n_head" which is the number of Attention heads we will use (e.g. 8). We need to 
+	calculate the "head_size" by dividing "n_embd" by "n_head". For our example this should be
+
+</p>
+	<center>
+<p>
+
+ 64 = 512 / 8 
+		
+	</p>
+	</center>
+	
+<p>
+
+Here it might help to look at a diagram of the decoder layer.
+
+
+	
+</p>
+	
+
+
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/Decoder_Layer_gpt.png" height="700" width="auto">
+      </div>
+
+    </center>
+
+
+<p>
+
+As can be seen we need a Multi-Head Attention layer followed by a FeedForward layer. Two normalizations (ln1, ln2) can also be performed. 
+	
+</p>
+
+
+
+  
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+
+class Block(nn.Module):
+    
+    def __init__(self, n_embd, n_head):     ## (512, 8)
+        super().__init__()
+        head_size = n_embd // n_head        ## 64
+        self.sa   = MultiHeadAttention(n_head, head_size)
+        self.ffwd = FeedForward( n_embd)    ## 512
+        self.ln1  = nn.LayerNorm(n_embd)
+        self.ln2  = nn.LayerNorm(n_embd)
+        
+    def forward(self, x):
+        x = x + self.sa(     self.ln1(x)      )
+        x = x + self.ffwd(   self.ln2(x)      )
+        return x
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
+
+<p>
+
+The Block class uses 2 more classes which are Multi-Head Attention and FeedForward. We can now proceed to define these. 
+<br/>
+We can first define the Multi-Head class as follows
+
+
+	
+</p>
+
+
+
+
+ 
+
+
+<center>
+<div>
+<textarea rows="16" cols="100">
+
+
+class MultiHeadAttention(nn.Module):
+
+    def __init__(self, num_heads, head_size):    ## (8, 64)
+        super().__init__()
+        self.heads = nn.ModuleList(  [ Head(head_size) for _ in range(num_heads) ] )
+        self.proj  = nn.Linear(n_embd, n_embd)   ## 512, 512
+        self.dropout = nn.Dropout(dropout)
+    
+    def forward(self, x):
+        out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
+        out = self.proj(  out   )
+        out = self.dropout(   out   )
+        return out
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+<p>
+
+
+The Masked multi-head attention layer is done N\_head times (e.g. 8) in parallel and the results are concatenated. This concatenated result is added to the original 
+	after mapping it through one more layer and a Residual can also be used.
+
+The 2 key aspects are the instantiation of 8 heads which are parallel and independent of each other using "nn.ModuleList"as can be seen in the next code listing
+
+
+
+	
+</p>
+
+
+
+
+
+
+   <center>
+<div>
+<textarea rows="6" cols="100">
+
+
+self.heads = nn.ModuleList(  [ Head(head_size) for _ in range(num_heads) ] )
+
+
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+<p>
+
+and the concatenation of the 8 head Heads of size 64 to create a new tensor of size 512 ( 64 * 8 = 512).
+
+
+	
+</p>
+
+
+
+
+ 
+
+
+   <center>
+<div>
+<textarea rows="4" cols="100">
+
+out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
+
+</textarea>
+  
+</div>
+    </center>
+
+
+<p>
+
+	
+The FeedForward class is very straight forward  as can be seen below. It is a simple linear layer followed by a non-linearity. 
+
+
+
+</p>
+
+
+
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+
+class FeedForward(nn.Module):
+
+   def __init__(self, n_embd):         ## 512
+        
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(n_embd, 4 * n_embd),      ## [512, 4*512]
+            nn.ReLU(),
+            nn.Linear(4 * n_embd, n_embd),      ## [4*512, 512]
+            nn.Dropout(dropout),
+        )
+        
+    def forward(self, x):
+        return self.net(x)
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+<p>
+
+Finally, the Multi-Head Attention class use the Head class where the Attention mechanism is defined. The  next code segment is probably the most important in
+	terms of the power of Transformers. It defines the Attention layer. Here we define the Attention Head class. 
+
+ 
+
+	
+</p>
+
+
+
+
+    <center>
+<div>
+<textarea rows="30" cols="100">
+
+
+class Head(nn.Module):
+
+    def __init__(self, head_size):
+        super().__init__()
+        
+        self.key   = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
+        self.query = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
+        self.value = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
+
+        tril_def = torch.tril( torch.ones(block_size, block_size) )  ## [40, 40]
+        
+        self.register_buffer(
+                  'tril', 
+                  tril_def
+               )
+        
+        self.dropout = nn.Dropout(dropout)
+
+    def forward(self, x):
+        
+        B, T, E = x.shape   ## [batch_size, 40, 512]
+        
+        k = self.key(   x )            ## k = (B, T, 64)
+        q = self.query( x )            ## q = (B, T, 64)
+
+        E2 = 64     ## I think this is 64 and not 512
+        ## (B, T, E) @ (B, E, T)  -> (B, T, T)
+        wei = q @ k.transpose(-2, -1) * E2 ** -0.5        
+        
+        wei = wei.masked_fill(
+                      self.tril[:T, :T] == 0, 
+                      float('-inf')
+        )   
+        
+        ## (B, T, T)
+        wei = F.softmax( wei, dim= -1 )         ## (B, T, T)
+        wei = self.dropout(   wei   )
+        
+        ## perform weighted aggregation of values
+        
+        v   = self.value(  x  )   ## x = (B, 40, E)
+        out = wei @ v             ## (B, T, T) @ (B, T, 64) -> (B, T, 64)
+        
+        return out
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+<p>
+
+The sentence and corresponding padding mask are the only inputs to this Attention layer. The output of this Attention mechanism is then passed to a 
+	fully connected layer. The mask must not be part of the computational graph since it is only used for masking. We use the following command to keep it 
+	out of the computational graph. 
+
+
+</p>
+
+
+
+
+
+
+   <center>
+<div>
+<textarea rows="4" cols="100">
+
+self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
+
+</textarea>
+  
+</div>
+    </center>
+
+
+<p>
+
+
+The Attention mechanism uses K, Q, and V to compute the Attention scores. The values are computed from the original "x" input. The intuition is that the sentence 
+	is compared with itself and that is why the comparison or scores matrix will result in size [N_tokens, N_tokens] (e.g. [40, 40]). This is accomplished with 
+	the following code:
+
+	
+</p>
+
+
+
+
+<center>
+<div>
+<textarea rows="7" cols="100">
+
+
+self.key   = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
+self.query = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
+self.value = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
+
+
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+<p>
+
+
+The input "x" is of size [N, 40, 512] and the "look_ahead_mask" is of size [N_batches, 40, 40].
+
+
+Remember that using "nn.Linear" is equivalent to the following:
+
+
+	
+</p>
+
+
+
+
+
+     <center>
+<div>
+<textarea rows="16" cols="100">
+
+
+Wq = torch.tensor( [batch_size, 512, 64] )
+bq = torch.tensor( [batch_size,  40, 64] )  
+Q  = torch.matmul( x, Wq ) + bq    # Nx40x64
+    
+Wk = torch.tensor( [batch_size, 512, 64] )  
+bk = torch.tensor( [batch_size,  40, 64] )  
+K = torch.matmul(x, Wk) + bk    # Nx40x64
+    
+Wv = torch.tensor( xavier_init( [batch_size, 512, 64] )  )
+bv = torch.tensor( torch.random_normal( [batch_size, 40, 64] )  )
+V = torch.matmul(x, Wv) + bv    # Nx40x64
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+Once Q, K, and V are defined, the next step is to multiply Q times K. You can think of this as calculating a score of the importance of "token_i" in
+	"x" to all other words in "x".
+
+
+	
+</p>
+
+ 
+
+
+  
+     <center>
+<div>
+<textarea rows="17" cols="100">
+
+
+## (B, T, 64) @ (B, E, 64)  -> (B, T, T)
+
+wei = q @ k.transpose(-2, -1) * E ** -0.5        
+        
+wei = wei.masked_fill(
+        self.tril[:T, :T] == 0, 
+        float('-inf')
+)   
+        
+## (B, T, T)
+wei = F.softmax( wei, dim= -1 )         ## (B, T, T)
+wei = self.dropout(   wei   )
+
+
+</textarea>
+  
+</div>
+    </center>
+
+  
+
+<p>
+
+The variable "wei" is computed by a nn.matmul between Q and the transpose of K like so
+<br/>
+<br/>
+    wei = nn.matmul( Q, K, transpose_b=True) 
+<br/>
+<br/>
+	
+This nn.matmul results in a matrix of size  [N, 40, 40]. We then divide "wei" by 
+<br/>
+<br/>
+    sqrt(  Embd_size  )        
+<br/>
+<br/>
+	
+where Embd_size is equal to 64 (i.e. E ** -0.5). At this point "wei" continues to be of size [N, 40, 40].
+
+The following code segment adds "wei" to the Mask. 
+
+
+	
+</p>
+
+
+
+
+
+
+      <center>
+<div>
+<textarea rows="8" cols="80">
+
+wei = wei.masked_fill(
+        self.tril[:T, :T] == 0, 
+        float('-inf')
+)
+  
+</textarea>
+  
+</div>
+</center>
+
+
+<p>
+
+
+The "look_ahead_mask" is of size [N, 40, 40]. This should be an addition of [N, 40, 40] + [N, 40, 40]. Notice that the wei.masked_fill function
+	makes use on an infinity parameter. A simplified view of this operation is as follows:
+
+<br/>
+    wei = wei + (look_ahead_mask * -1e9)
+<br/>
+
+
+The final part of the forward function in the Head class (next code segment) finishes the Attention computation. The softmax is used to normalize on 
+	the last axis so that the scores add up to 1 (axis -1 is for last dimension in the tensor). 
+
+
+	
+</p> 
+        
+
+
+
+  
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+
+class Head(nn.Module):
+
+    ...
+
+    def forward(self, x):
+        
+        ...
+        
+        ## (B, T, T)
+        wei = F.softmax( wei, dim= -1 )         ## (B, T, T)
+        wei = self.dropout(   wei   )
+        
+        ## perform weighted aggregation 
+        
+        v   = self.value(  x  )   ## (B, T, E)
+        out = wei @ v             ## (B, 40, 40) @ (B, 40, 64) -> (B, 40, 64)
+        
+        return out
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+   
+
+Finally, the following operation is performed which result in a tensor of size [N, 40, 64]. Remember that 8 of these Head output tensors will be concatenated to return 
+	to the original size of [N, 40, 512] (64 * 8 = 512). 
+
+<br/>
+out = nn.matmul(wei, V)    
+<br/>
+    
+The operation looks like the following [N, 40, 40] * [N, 40, 64].
+
+
+So, in summary you calculate the keys, queries, and values which are tensors that map the input \textbf{x} of size [N, 40, 512] to size [N, 40, 64]. We then
+	calculate the scores matrix (wei) which is the Attention mechanism. This is a dot product. We matrix multiply Q with the transpose of K. This results 
+	in a matrix that is size [N, 40, 40].
+
+After calculating the score matrix (wei), we need to mask the values so that we don’t cheat by looking ahead. We apply the look ahead and padding masks. 
+	The mask for look ahead attention happens before the softmax calculation. Notice that the masking is done to the dot_product scores matrix (wei) only. 
+	The mask is multiplied with -1e9 (close to negative infinity). This is done because the mask is summed with the scaled matrix multiplication of Q and K and is 
+	applied immediately before a softmax. The goal is to zero out padded cells, and large negative inputs to softmax are near zero in the output.
+
+<br/>
+	<br/>
+For example, the  softmax ( torch.nn.softmax(a7) ) for “a” defined as follows:
+<br/>
+	<br/>
+a7 = torch.constant([0.6, 0.2, 0.3, 0.4, 0, 0, 0, 0, 0, 0]) 
+ <br/>
+	<br/>
+gives the following
+
+	
+</p>
+        
+
+  
+<center>
+<div>
+<textarea rows="8" cols="100">
+
+
+<torch.Tensor: shape=(10,), dtype=float32, numpy=
+array([0.15330984, 0.10276665, 0.11357471, 0.12551947, 0.08413821,
+0.08413821, 0.08413821, 0.08413821, 0.08413821, 0.08413821], dtype=float32)>
+
+
+</textarea>
+</div>
+</center>
+
+
+
+<p>
+
+now, if some of the values are negative infinities
+<br/>
+	<br/>
+b7 = torch.constant([0.6, 0.2, 0.3, 0.4, -1e9, -1e9, -1e9, -1e9, -1e9, -1e9])
+<br/>
+	<br/>
+then the softmax operation on b7 (torch.nn.softmax(b7)) should give us
+<br/>
+
+	
+</p>
+
+
+
+ 
+
+
+      <center>
+<div>
+<textarea rows="6" cols="100">
+
+<torch.Tensor: shape=(10,), dtype=float32, numpy=
+array([ 0.3096101 , 0.20753784, 0.22936477, 0.25348732, 0. ,0. , 0. , 0. , 0. , 0. ], dtype=float32)>
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+ <p>
+
+
+Notice the infinities are now zeros! 
+
+<br/>
+The decoder has a final linear layer after the 6 decoder_layer functions. The final layer in the decoder is the decoder_final_layer. This is a linear layer with 
+	 no non-linearities and a softmax that maps the tensor [N, 40, 512] to a tensor of size [N, 40, n_vocab_size].
+
+And that covers all the classes of the NN architecture. We are now ready to instantiate the GPT and call the core functions for the optimizer, etc. like so:
+
+	 
+ </p>
+
+
+       <center>
+<div>
+<textarea rows="8" cols="100">
+
+
+model   = GPTModel()
+
+m       = model.to(device)
+
+optimizer = torch.optim.Adam(  m.parameters(), lr=learning_rate   )
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+<p>
+The training function is presented below and is straight forward
+
+	
+</p>
+
+
+
+
+
+        <center>
+<div>
+<textarea rows="18" cols="100">
+
+for iter in range(max_iters):
+    
+    if iter % eval_interval == 0:
+        losses = estimate_loss()
+        print(f"step {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
+
+    xb, yb = get_batch('train')
+    
+    ## eval the loss
+    logits, loss = m(xb, yb)
+    
+    optimizer.zero_grad(set_to_none=True)   ## zero out
+    loss.backward()
+    optimizer.step()
+  
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+Now, regenerate after some training
+
+
+	
+</p>
+
+
+
+
+
+          <center>
+<div>
+<textarea rows="10" cols="100">
+
+## Starting token  id_sos = 0
+sos_context = torch.zeros(  (1, 1),  dtype=torch.long, device=device   )   
+
+generated_text = m.generate(sos_context, max_new_tokens=500)[0].tolist()
+
+print(  decode(generated_text)   )
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+<p>
+Using the generate function gives GPT generated text. 
+
+Obviously, the amount of data will determine the quality of a GPT and it can take a lot of money and time to properly train a GPT. 
+	The following are examples of generated text using just single books or scripts. 
+<br/>
+For South Park training data we can get
+	
+</p>
+
+
+
+  
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+
+Mr. Hankey: Who, don't look it, but looks like you have thrown them.
+These chees. 
+Stan: Now back a friend people.me. 
+Kenny: (HA f!) 
+Stan: The new bestsays to expon is weep thing the beny first they wan
+t
+Stan: Thank you.
+Kyle: His realet! Stan, co musb me friends Vagisil magine?
+Stan: Nat Just sind out hurt. Hallway gaves millions? Are Me: Preest
+y revitalizing there?
+Stan: D'RCRANNSSEA.
+Stan: What?
+Stan: Dammit!
+Cartman: If anyone cools orget and have meet hundestly kids he since
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+For Harry Potter training data we can get
+
+	
+</p>
+
+
+
+ 
+
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+
+HARRY: What is saying that Time-Turner, ghe dangerous
+and gentlemen —
+GINNY: And is Albus Scorpius about to ldemborn King. And
+we should be very moths die. He means the
+rumble. It feels the appos his and forcement.
+HARRY: Get out out of the train is and for the
+Ministry had of fist or your pament.
+DRACO: Wh, does it say?
+HARRY: You came?
+RON enters on a baccused by through through,
+finality. It is it can’t better but Padma sets in for
+one champions and to be to reface the Boy — she
+speak.
+HARRY: Year the rumors?
+PROFESSOR McGONAGALL: I came it extraord the might be
+minty Iave progice to your paplay — then your
+nose? (She fining, an is hurts.) I, am Dad.
+Sound that . . . weld your have beyou’ve gone?
+SCORPIUS is saying in his roommount. What she
+falls talking about the blanked than I had a son.
+ALBUS: I’ll give to you that strave to do with my
+died it son. And my for you because it fly. And
+you schoolow how Harried in Potion
+  
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+<p>
+
+And that concludes the discussion on GPTs.
+	
+</p>
+
+
+
+
+
+
+
+
+	<h1>
+Encoder Only Models
+		
+	</h1>
+
+<p>
+The encoder has 6 sub-layers called encoder layers. Each encoding layer has a Multi-Head Attention layer followed by a standard fully connected feed forward layer. 
+	The input to the encoder goes through all these layers in the encoder and it is converted into an encoder output. The input to the encoder and the output of 
+	the encoder have the same dimensions. For instance, here, the input to the encoder would be the English sentence. 
+
+The attention layer consists of 8 parallel Attention sub layers that are later concatenated. The intuition is that each of these 8 layers can learn something new and 
+	different. So this gives more capacity to the network. The input to the encoder goes through all these layers in the encoder and is converted into an encoder output. 
+
+The next code segment shows the standard encoder architecture code. Notice it is almost exactly like the GPT (decoder) code. The only difference is in the last layer.
+	The pure Encoder does not need to predict words. Instead, it takes sentences and converts them to embeddings. In this case of size [B, 40, 512]. 
+
+
+	
+</p>
+
+
+
+
+<center>
+<div>
+<textarea rows="24" cols="100">
+
+
+class Encoder_Model(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)   ## [65, 512]
+        self.pos_emb_table = nn.Embedding(block_size, n_embd)     ## [block, 512]
+        
+        self.blocks = nn.Sequential(
+                *[   Block(n_embd, n_head=n_head) for _ in range(n_layer)    ]
+        )
+        
+        self.ln_f    = nn.LayerNorm(  n_embd    )        
+        
+        
+    def forward(self, idx, targets=None):
+        B, T = idx.shape     ## (Batch, 40)
+        ## ids and targets are both (B, T) tensors of integers
+        
+        tok_emb = self.token_embedding_table(idx)      
+        pos_emb = self.pos_emb_table(torch.arange(T, device=device))  
+        
+        x = tok_emb + pos_emb    ## [B, T, E] or [64, 40, 512]
+
+        ## This is the architecture
+        x = self.blocks(  x  )   ## (B, T, E)        
+        x = self.ln_f(    x  )   ## (B, T, E)   ## [B, 40, 512]
+
+
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+<p>
+Notice that 6 identical encoder layers are created were the outputs of one become the inputs of the next layer. The dimensions of all inputs and output at this 
+	stage are the same [B, 40, 512] where B is batch size.  The input is  a batch of "B" sentences, with 40 tokens per each sentence, and where 512 is 
+	each id that has been embedded to a vector of size 512. Remember that the embedding vectors of size 512 are learned by the model so initially they are random data. 
+
+We use a padding mask to ignore tokens with 0 value (i.e. padding).
+
+
+BERTs are based on the encoder part of the original Transformer,  and are encoder only Transformers.
+
+	
+</p>
+	
+<h1>
+
+	BERT
+</h1>
+
+
+<p>
+
+BERT is an example of an encoder-only Transformer. In contrast to pure Encoders that take a sentence and only produce an embedding (e.g. [B, 40, 512]), BERT 
+	models will add neural network layers (called heads) after the embedding (e.g. [B, 40, 512]) to convert those embeddings into words or sentences. 
+
+BERT stands for Bidirectional Encoder Representations from Transformers. They were trained using 2 approaches. 
+
+	
+</p>
+
+	
+
+   <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="900" width="auto">
+      </div>
+
+    </center>
+  
+
+<p>
+The approaches are:
+	
+</p>
+
+
+<ul>
+<li>Masked language task training</li>
+<li>Two sentence task training</li>
+	
+</ul>
+
+
+	<p>
+
+The first task BERT was pre-trained on was the Masked Language modeling approach. This approach is summarized in the previous figure. Here the BERT model 
+		receives the same sentence as input and output. Some tokens are masked and the model needs to learn to predict those masked tokens during the training process. 
+
+The second task BERT was pre-trained on is a 2 sentence classification task. The figure below summarizes this approach. Basically, here, 2 sentences are given to the BERT
+		model as input. The model trains to predict if these 2 input sentences are sequential whcih means they are also related, or if they are not sequential and, 
+		therefore, unrelated. 
+
+BERT was originally developed by Google and there have now been several other versions that were developed. They all follow the simliar naming convention of being
+		called RoBERTa, AlBERT, DistilBERT, etc.
+
+
+		
+	</p>
+
+
+
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/BERT_final_masking.png" height="900" width="auto">
+      </div>
+
+    </center>
+	<br/>
+	<br/>
+
+	<h1>
+Encoder Decoder Transformers
+		
+	</h1>
+<p>
+
+In this section, I will discuss the first version of the Transformer first made popular in the paper “Attention Is All You Need” by Vaswani et al. 
+	They were first used for language translation. The Encoder Decoder with Multi Head Attention Transformer is a very deep network.  
+The architecture has an encoder followed by a decoder. 
+
+The decoder layer has 2 inputs. One input is the encoder output. The second input to the decoder varies based on whether you are training or predicting. 
+	If you are training, the input to the decoder is the sentence in the other language. For instance, the Spanish sentence. In the decoder, when training the 
+	Transformer, a mask is needed to prevent the model from seeing all the words it is trying to predict. This is called a look ahead mask. 
+
+If you are testing, the input to the decoder is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>)
+	and predict iteratively. The predicted word is then added to the previous tokens and the process is repeated. 
+
+In the Encoder Decoder Transformer (for the language translation problem),  the decoder layer has 2 inputs. One input is the encoder output. The second input to the 
+	decoder varies based on whether you are training or predicting. If you are training, the input to the decoder is the sentence in the other language. For instance, 
+	the Portuguese or Spanish sentence. When training, a mask is needed here to prevent the model from seeing all the words it is trying to predict. This is called a 
+	look ahead mask. 
+
+
+If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. 
+	The predicted word is then added to the previous tokens and the process is repeated. The decoder consists of 6 decoder layers, followed by a linear layer. 
+	Each decoder layer has a decoder multi-head attention layer, followed by a decoder-encoder attention layer, and a fully connected layer. 
+	The decoder architecture for the Encoder Decoder Transformer (for the language translation problem) can be seen in the following figure.
+
+	
+</p>
+
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/decoder_layer.300dpi_lang_model.jpg" height="700" width="auto">
+      </div>
+
+    </center>
+  
+
+<p>
+The attention layers consist of 8 parallel attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
+The first code segment in this section describes the decoder’s overall architecture. The decoder has more inputs than the encoder. 
+
+The decoder_layer is the busiest function of the Transformer. It is basically very similar to the encoder_layer except that it has 2 attention mechanisms instead of
+	just one. The Multi-Head Attention is the first attention mechanism. For our reference language problem, The Portuguese sentence and corresponding padding mask 
+	are the only inputs to this sub layer. 
+The output of this attention mechanism plus the encoder output are the inputs to the second attention mechanism which is usually referred to as the Encoder-Decoder-Attention
+	mechanism. The output of this second Attention mechanism is passed to a fully connected layer just like the one used in the encoder. The first Masked multi-head
+	attention layer is done 8 times in parallel just like in the encoder and the results are concatenated. This concatenated result is added to the original after 
+	mapping it through one more layer to calculate the residual. 
+
+The final layer maps a tensor of size [N, 40, 512] to a tensor of size [N, 40, pt_vocab_size] where pt_vocab_size is the size of the Portuguese vocabulary. 
+
+
+
+This is what allows us to select the predicted word. 
+
+
+	
+</p>
+	
+
+
+
+
+
+	<h1>
+
+Data Wrangling from Scratch
+		
+	</h1>
+<p>
+
+PyTorch offers many new techniques for extracting and processing data sets. As I like building things from scratch, I will present my own approach to data wrangling for 
+	Transformers. The approach is very standard and is similar to what you do in NLP for algorithms like word2vec, for instance.
+
+For this example, I will use the implementation of a Transformer-based Translator using the English to Portuguese dataset. The code and data set are available 
+	on the book GitHub. First, let us import the libraries:
+
+	
+</p>
+
+
+
+
+<center>
+<div>
+<textarea rows="15" cols="100">
+
+
+import sklearn
+import numpy as np
+import nltk
+from nltk.tokenize import word_tokenize
+from numpy import genfromtxt
+from sklearn import datasets
+from sklearn.model_selection import train_test_split 
+import pandas as pd
+import pickle
+import collections
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+<p>
+
+I like working with python dictionaries so, for this example, I extracted the data set and created python dictionaries for training and testing. 
+	I saved the dictionaries to Python pickle files for ease of use. The following code shows how to load the dictionaries. 
+
+
+</p>
+
+
+
+
+ <center>
+<div>
+<textarea rows="10" cols="100">
+
+
+def load_dictionary(file_name):
+    with open(file_name, 'rb') as handle:
+        dict = pickle.loads( handle.read() ) 
+    return dict
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+	
+After loading the data sets from file, you have to create the dictionary and reverse dictionary. You create 2 dictionaries per language (e.g. two for English 
+	and two for Portuguese). These  are dictionaries of ids to tokens and vice-cersa. Notice that I set the vocabulary size to 12,000. You can play with this 
+	value for optimal performance.
+
+
+</p>  
+
+
+
+
+
+
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
+## Includes <eos> and <sos> tokens
+
+def build_dataset(words):
+    START_TOKEN = "<sos>"
+    END_TOKEN   = "<eos>"
+    UNK_TOKEN   = "<unk>"
+    count = collections.Counter(words).most_common(12000) 
+    dictionary = dict()
+    for word, _ in count:
+        ##add + 1 so that 0 is not used as index to avoid padding conflict 
+        dictionary[word] = len(dictionary) + 1         ## + 1
+    size_vocab = len(dictionary)
+    dictionary[START_TOKEN] = size_vocab 
+    dictionary[END_TOKEN]   = size_vocab + 1 
+    dictionary[UNK_TOKEN]   = size_vocab + 2
+
+    reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys())) 
+    
+    return dictionary, reverse_dictionary
+
+
+</textarea>
+  
+</div>
+    </center>
+  
+
+<p>
+The following is an example function in case you want to process sentences with regular expressions or tokenize manually. 
+
+
+
+	
+</p>
+
+
+
+
+      <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+def preprocess_sentence(sentence):
+    sentence = sentence.lower().strip()
+    # creating a space between a word and the punctuation following it 
+    # eg: "it is a cat." => "it is a cat ."
+    sentence = re.sub(r"([?.!,])", r" \1 ", sentence)
+    sentence = re.sub(r'[" "]+', " ", sentence)
+    # replacing everything with space except (a-z, A-Z, ".", "?", "!", ",") 
+    
+    sentence = re.sub(r"[^a-zA-Z?.!,]+", " ", sentence)
+    sentence = sentence.strip()
+    return sentence
+
+  
+</textarea>
+  
+</div>
+    </center>
+  
+
+
+
+<p>
+
+For tokenization, I used the NLTK tokenizer. In the paper “Attention Is All You Need”, the authors used byte pair encoding. Byte pair encoding does not use
+	full words as tokens. Instead, you do something like this: "walk" and "ing" for the word “walking”. Therefore, words are broken into smaller elements 
+	(subwords). Byte-pair encoding is used to tokenize sentences in a language, which, like the WordPiece encoding, breaks words up into tokens that are
+	slightly larger than single characters but less than entire words. 
+
+
+  
+	
+</p>
+
+
+
+
+
+      <center>
+<div>
+<textarea rows="15" cols="100">
+
+
+def get_tokens(sentence_list): 
+    tokens_list = []
+    for sentence in sentence_list:
+        tokens = word_tokenize(sentence) 
+        for word in tokens:
+            tokens_list.append(word) 
+    tokens_list = np.array(tokens_list) 
+    return tokens_list
+
+
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+<p>
+
+	Once you have the dictionaries and the tokens, you can proceed to convert words into ids with the encode function.
+
+
+</p>
+
+
+
+
+
+
+<center>
+<div>
+<textarea rows="15" cols="100">
+
+
+def encode(sentence, dictionary): 
+    ids_list = []
+    tokens = word_tokenize(sentence) 
+    for word in tokens:
+        if word in dictionary.keys(): 
+            ids_list.append( dictionary[word] )
+    return ids_list
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+
+Decoding is just the process in reverse. Here you convert ids back to tokens using the reverse dictionary for convenience and speed up.
+
+
+  
+	
+</p>
+
+
+
+
+
+  
+<center>
+<div>
+<textarea rows="10" cols="100">
+
+def decode(list_ids, reverse_dictionary): 
+    words_list = []
+    for id in list_ids:
+    if id in reverse_dictionary.keys(): 
+        words_list.append( reverse_dictionary[id] )
+    return words_list
+
+  
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+The following function aligns the English and Portuguese sentence pairs and creates two lists.
+
+
+	
+</p>
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+
+## this returns 2 lists of english and portuguese sentences 
+## that are aligned by index
+
+def get_en_and_pt_sentences(train_dict): 
+    en_list, pt_list = [], []
+    for key, val in train_dict.items():
+        print(key)
+        print(val)
+        en_list.append( val['en']  )
+        pt_list.append( val['pt']  )
+    return en_list, pt_list
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+  
+<p>
+
+
+The below line of code just loads the sentences data before processing from the pickle objects.
+
+	
+</p>
+
+
+
+
+<center>
+<div>
+<textarea rows="5" cols="100">
+
+## Read in the data of english and portuguese sentences
+
+train_dict = load_dictionary("data/en_pt_train_dictionary.txt") 
+validation = load_dictionary("data/en_pt_val_dictionary.txt"  )
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+<p>
+The next function creates 2 lists of aligned English and Portuguese sentences.
+
+	
+</p>
+
+
+
+
+    
+
+<center>
+<div>
+<textarea rows="5" cols="100">
+
+english_sentence_list, portuguese_sentence_list = get_en_and_pt_sentences(train_dict)
+
+</textarea>
+  
+</div>
+    </center>
+
+
+<p>
+The function get_tokens converts each sentence into a list of tokens. 
+
+	
+</p>
+
+
+  
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
+
+print("creating the dictionaries takes a while ... ")
+
+en_tokens = get_tokens(english_sentence_list   ) 
+pt_tokens = get_tokens(portuguese_sentence_list)
+
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+<p>
+
+
+After creating the dictionaries for each language, we calculate the vocabulary size for each language. 
+	
+</p>
+
+
+
+  
+
+<center>
+<div>
+<textarea rows="15" cols="120">
+
+
+## when 2 languages, you have 2 separate tokenizers.
+
+en_dictionary, en_reverse_dictionary = build_dataset(en_tokens) pt_dictionary, pt_reverse_dictionary = build_dataset(pt_tokens)
+
+VOCAB_SIZE_EN = len(en_dictionary) 
+VOCAB_SIZE_PT = len(pt_dictionary)
+
+print("vocab size english ",    VOCAB_SIZE_EN) 
+print("vocab size portuguese ", VOCAB_SIZE_PT)
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+<p>
+
+The following “for” loop brings all the previous functions together. It results in 2 lists of sentence ids, one for each language  (2 lists of Numpy objects). 
+	Notice that, to each sentence list of ids, we add the start token id at the beginning and the end token id at the end. 
+
+The final “if” statement is used to only include sentences shorter than 40 tokens (the max length I used). Sentences shorter than 40 will be padded but all 
+	sentences will eventually be tensors of size 40 (n_tokens + padding).
+
+	
+</p>
+
+
+
+
+   <center>
+<div>
+<textarea rows="25" cols="100">
+
+
+english_sentence_ids_list = [] 
+portuguese_sentence_ids_list = []
+
+for i in range( len(english_sentence_list) ): 
+
+    en_sentence = english_sentence_list[i] 
+    pt_sentence = portuguese_sentence_list[i]
+    
+    en_sentence_ids = encode(en_sentence, en_dictionary) 
+    pt_sentence_ids = encode(pt_sentence, pt_dictionary)
+    
+    en_sentence_ids = np.array(en_sentence_ids) 
+    pt_sentence_ids = np.array(pt_sentence_ids)
+    
+    en_START_TOKEN_id = en_dictionary['<sos>'] 
+    en_END_TOKEN_id   = en_dictionary['<eos>']
+    
+    pt_START_TOKEN_id = pt_dictionary['<sos>'] 
+    pt_END_TOKEN_id   = pt_dictionary['<eos>']
+    
+    en_sentence_ids = np.concatenate(
+        [ [en_START_TOKEN_id], en_sentence_ids, [en_END_TOKEN_id] ] )
+        
+    pt_sentence_ids = np.concatenate(
+        [ [pt_START_TOKEN_id], pt_sentence_ids, [pt_END_TOKEN_id] ] )
+        
+    if len(en_sentence_ids) <= MAX_LENGTH and len( pt_sentence_ids) <= MAX_LENGTH: 
+        english_sentence_ids_list.append(    en_sentence_ids) 
+        portuguese_sentence_ids_list.append( pt_sentence_ids)
+
+
+</textarea>
+  
+</div>
+    </center>
+  
+
+<p>
+Now we need to use a Torch padding function. 
+
+  
+	
+</p>
+
+ 
+
+
+   <center>
+<div>
+<textarea rows="14" cols="100">
+
+
+en_MAX_LENGTH = MAX_LENGTH 
+pt_MAX_LENGTH = MAX_LENGTH + 1
+
+english_sentence_ids_list = torch.preprocessing.sequence.pad_sequences( english_sentence_ids_list, maxlen=en_MAX_LENGTH, padding='post')
+
+portuguese_sentence_ids_list = torch.preprocessing.sequence.pad_sequences( portuguese_sentence_ids_list, maxlen=pt_MAX_LENGTH, padding='post')
+
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
+<p>
+
+
+	If you would like to view the data, you can do so with the following code.
+
+
+</p>
+
+
+
+ 
+<center>
+<div>
+<textarea rows="10" cols="80">
+
+
+for i in range( len(english_sentence_ids_list) ):   
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@") 
+    print(english_sentence_ids_list[i]) 
+    print(portuguese_sentence_ids_list[i])
+    ## input()
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+<p>
+After padding, the data will look like this:
+
+</p>
+
+
+
+
+
+
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
+en
+    
+[12110   203     4  3947    29     2   168     2     4    27    68  
+  4333     8  3622  2943  1012     1 12111     0     0     0     0    
+     0     0     0     0     0     0     0     0     0     0     0     
+     0     0     0     0     0     0     0 ]
+
+pt
+         
+[12210    13     4  3947    29     2     5    32    36    16  1145     
+     4    58    34  7905    58    25    28   354  2482     3    17    
+    27    28  4395     9  2886     7 12211     0     0     0     0     
+     0     0     0     0     0     0     0 ]
+
+
+</textarea>
+  
+</div>
+    </center>
+
+
+
+
+
+<p>
+
+And without padding, the data will look like this: 
+
+   
+	
+</p>
+
+
+
+
+
+     <center>
+<div>
+<textarea rows="20" cols="100">
+
+
+en
+    
+[12110    13     4  3947    29     2     5    32    36    16  
+  1145     4    58    34  7905    58    25    28   354  2482     
+     3    17    27    28  4395     9  2886     7 12111    ]
+         
+pt
+         
+[12210    62   585   132   202  4395 11969     3    43    18    
+    27   107  7042    15    10   814 11717     4  4053    89  
+  2960     2   157   119     1 12211     ]
+
+
+</textarea>
+  
+</div>
+    </center>
+
+         
+
+
+<h1>Summary</h1>
+                
+<p>
+
+  In this chapter, I have introduced the topic of Transformers. I discussed the main ideas and code for the Encoder Decoder with Multi-Head Attention 
+  Transformer first introduced by Vaswani et al. (2017), ideas of BERTs, and the GPT.
+
+</p>
+
+
+
+</div>  <!-- for the fixed nav bar -->
+
+    
+  </body>
+</html>
