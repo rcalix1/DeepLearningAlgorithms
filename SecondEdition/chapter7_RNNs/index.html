@@ -29,7 +29,7 @@
 
    <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="400" width="auto">
       </div>
 
     </center>
@@ -41,8 +41,6 @@ In this chapter of the book I will cover the topic of Recurrent Neural Networks 
 	
 
 RNNs are well known for their use to solve NLP problems. However, since 2017, they have been overshadowed by the arrival of Transformers and Large Language Models (LLMs). 
-
-
 
 	
 </p>
@@ -59,11 +57,11 @@ RNNs are well known for their use to solve NLP problems. However, since 2017, th
  This income helps support content such as this one. 
  <br/>
 
-	
 
-  
 </p>
 
+
+	
      <center>
       <div class="img"> 
         <a href="https://amzn.to/3vOL8NF"><img src="https://m.media-amazon.com/images/I/71Wi+z5fKzL._SL1233_.jpg" height="500" width="auto"></a>
@@ -99,7 +97,7 @@ In previous approaches we looked at the whole image as an instance of 784 featur
 
  <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="500" width="auto">
       </div>
 
     </center>
@@ -118,7 +116,7 @@ With RNNs the pipeline is as follows:
 
 <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/seq_pipeline_rnn.chp7.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/seq_pipeline_rnn.chp7.300dpi.jpg" height="600" width="auto">
       </div>
 
     </center>
@@ -141,14 +139,12 @@ Let us define the libraries here to get them out of the way. The only new steps 
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Libraries}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+	
+<center>
+<div>
+<textarea rows="20" cols="100">
+
 
 import torch
 import numpy as np
@@ -169,9 +165,20 @@ import torch.optim as optim
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
+
+
+  
+</textarea>
+</div>
+</center>
+
+	
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 
@@ -179,22 +186,29 @@ from torch.autograd import Variable
 
 First, let us initialize the the RNN module. The basic RNN requires [vector\_size, hidden\_size,  n\_layers]. As can be seen in the following code segment:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Initialize the RNN module}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+
+
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
 
 ##                (vector_size, hidden_size,  n_layers)
 rnn_basic_rc = nn.RNN(      10,          20,         2)
     
-\end{lstlisting}
-\end{minipage}
 
 
+
+  
+</textarea>
+</div>
+</center>
+
+	
 The parameters can be visualized in the following graph:
 
 
@@ -202,7 +216,7 @@ The parameters can be visualized in the following graph:
 
 <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="400" width="auto">
       </div>
 
     </center>
@@ -214,14 +228,11 @@ The parameter \textbf{hidden\_size} refers to the number of neurons in the hidde
 
 Next we can create the dummy data. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Create dummy data}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="20" cols="100">
+
 
 ## This is the data
 ##                              28,        1000,             28)
@@ -229,39 +240,47 @@ Next we can create the dummy data.
 input_basic_rnn = torch.randn(   5,           3,             10)
 input_basic_rnn.shape
 
+
+  
+</textarea>
+</div>
+</center>
+
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 Notice the shape of the data. We are used to seeing the shape of MNIST to be [number of batches, 28, 28]. However, traditionally RNNs have expected the data to look like this [28, number of batches, 28]. So remember to always reshape your data. Torch already makes this step not necessary. But I continue to use it to force myself to pay more attention to what I am doing when using RNNs. Here, the first 28 dimension is for the sequence length and the last 28 dimension is for the size of vector. 
 
 We now proceed to run the data through the RNN as can be seen here
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Run dummy data through RNN}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 output_zz, hn = rnn_basic_rc(input_basic_rnn, h0)
 
+
+</textarea>
+</div>
+</center>
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 The RNN needs values for the hidden layer at time $t$ equal zero since that in the first hidden layer in the sequence.  That is usually solved by initializing that first hidden layer to random or zero values. This can be seen in the next code segment.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Initialize hidden 0}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 ##            (n_layers,  batch_size,  hidden_size)
 h0 = torch.randn(     2,           3,           20)
@@ -269,9 +288,18 @@ h0.shape
 
 ## [2, 3, 20])
 
+
+</textarea>
+</div>
+</center>
+
+	
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 Finally, printing the shapes of \textbf{output\_zz} and \textbf{hn} gives us [5, 3, 20] and [2, 3, 20], respectively.
@@ -295,14 +323,11 @@ N\_batches\_rc = 100
 
 Now we create a batch of dummy data with the MNSIT dimensions. This can be done as follows:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Dummy data with MNIST dimensions}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 ## xb  shape (batch_size,    seq_len,     vector_size)
 
@@ -310,29 +335,44 @@ xb_rc = torch.randn(N_batches_rc, 28,  28)
 
 xb_rc.shape
 
+
+</textarea>
+</div>
+</center>
+
+	
+
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 This data needs to be permuted since the RNN traditionally has wanted data like this [28, number of batches, 28]. We do that with the following code segment
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Permute the data}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 xb_rc = xb_rc.permute(1, 0, 2)
 
 xb_rc.shape
 
 ## [28, 100, 28]
+
+
+</textarea>
+</div>
+</center>
+	
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 
