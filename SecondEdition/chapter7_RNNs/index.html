@@ -338,18 +338,32 @@ In this section, we will focus on training an RNN for MNIST classification. Firs
 	
 </p>
 
+	<h1>
+Visualising the dimensions of MNSIT for the RNN
+		
+	</h1>
 
-\subsubsection{Visualising the dimensions of MNSIT for the RNN }
-
+<p>
 Let us start by setting a size to the batch such as 
 
-\begin{center}
-N\_batches\_rc = 100
+	
+</p>
 
-\end{center}
+<center>
+<p>
 
-Now we create a batch of dummy data with the MNSIT dimensions. This can be done as follows:
+	N_batches_rc = 100
+</p>
+	
+</center>
 
+
+<p>
+
+	Now we create a batch of dummy data with the MNSIT dimensions. This can be done as follows:
+
+
+</p>
 
 
 <center>
@@ -370,13 +384,16 @@ xb_rc.shape
 	
 
 
+<p>
 
+	
+This data needs to be permuted since the RNN traditionally has wanted data like this [28, number of batches, 28]. We do that with the following code segment
+
+</p>
 
 
     
 
-
-This data needs to be permuted since the RNN traditionally has wanted data like this [28, number of batches, 28]. We do that with the following code segment
 
 
 <center>
@@ -398,12 +415,12 @@ xb_rc.shape
 
 
 
-    
+<p>
+As previously described, we now need to initialize the first hidden layer "h_0". We do that as follows: 
 
+	
+</p>
 
-
-
-As previously described, we now need to initialize the first hidden layer $h_0$. We do that as follows: 
 
 
 
@@ -427,11 +444,14 @@ hidden_rc.shape
 
 
 
+<p>
+We are now ready to initialize the RNN and run the data through it as can be seen here
 
+	
+</p>
     
 
 
-We are now ready to initialize the RNN and run the data through it as can be seen here
 
 <center>
 <div>
@@ -454,13 +474,18 @@ print(rnn_o.shape)
 
 
 
+<p>
+By definition, the RNN returns 2 parameters. The parameter "hidden_rc" will contain the last hidden embedding of size 128 at time "t=28" for every image in the batch. 
+	This can be run through a fully connected layer that takes the embedding of size 128 and converts to the output vector of size 10. This will hold the predicted 
+	class which can be compared to the real class. 
+<br/>
+Let us define the fully connected layer and run the last hidden layer as follows
 
+	
+</p>
     
 
 
-By definition, the RNN returns 2 parameters. The parameter \textbf{hidden\_rc} will contain the last hidden embedding of size 128 at time $t=28$ for every image in the batch. This can be run through a fully connected layer that takes the embedding of size 128 and converts to the output vector of size 10. This will hold the predicted class which can be compared to the real class. 
-
-Let us define the fully connected layer and run the last hidden layer as follows
 
 
 <center>
@@ -486,21 +511,32 @@ print( y_pred.shape )
 </center>
 
 
-
-
-    
-
-
-As can be seen, our predicted classes for every image in the batch (100 images) will be contained in \textbf{y\_pred}. 
+<p>
+As can be seen, our predicted classes for every image in the batch (100 images) will be contained in "y_pred". 
 
 That completes this discussion. We are now ready to train the RNN on the real MNIST data. 
 
-\subsubsection{The RNN code for MNIST}
+	
+</p>
+
+    
+<h1>
+The RNN code for MNIST
+	
+</h1>
 
 
+<p>
+As previously indicated, to predict the class per each 28x28 image we now think of the image as a sequence of rows. Therefore, you have 28 rows of 28 pixels each and 
+	we need to define this using some parameters. In this case, each row will be defined as a chunk or vector and the size of each chunk or vector will be defined 
+	as the chunk size (vector size). So we end up with a chunk_size = 28, a number of chunks of n_chunks = 28 (sequence length). We still have the standard set of
+	10 classes.  We define that as n_classes = 10. 
+Finally, the architecture will require us to define the size of the RNN hidden layer. We do that with rnn_size = 128. Let us define these parameters as follows:
 
-As previously indicated, to predict the class per each 28x28 image we now think of the image as a sequence of rows. Therefore, you have 28 rows of 28 pixels each and we need to define this using some parameters. In this case, each row will be defined as a chunk or vector and the size of each chunk or vector will be defined as the chunk size (vector size). So we end up with a chunk\_size = 28, a number of chunks of n\_chunks = 28 (sequence length). We still have the standard set of 10 classes.  We define that as n\_classes = 10. 
-Finally, the architecture will require us to define the size of the RNN hidden layer. We do that with rnn\_size = 128. Let us define these parameters as follows:
+	
+</p>
+
+
 
 <center>
 <div>
@@ -526,11 +562,14 @@ n_classes        = 10     # MNIST total classes (0-9 digits)
 
 
     
-
-
-
+<p>
 After defining the parameters, the next step is to load the data. 
 As can be seen below, this step is exactly like previous steps. 
+
+	
+</p>
+
+
 
 
 <center>
@@ -559,12 +598,15 @@ mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False,
 
 
 
+<p>
+It is always a good idea to print the tensor shapes before creating the data loaders. 
 
+	
+</p>
     
 
 
 
-It is always a good idea to print the tensor shapes before creating the data loaders. 
 
 
 <center>
@@ -620,11 +662,12 @@ test_dl   = torch.utils.data.DataLoader(mnist_test_tr,  batch_size=batch_size, s
 </center>
 
 
+	<p>
+
 As previously discussed we need to convert data from the format [batch size, 28, 28] to the shape [28, batch size, 28]. We will do this with the following function.
 
-
-
-
+		
+	</p>
 
 
 
@@ -652,7 +695,12 @@ def make_img_to_sequence(batch_x):
 </center>
 
 
-We can visualize the data as a batch of sequences below. Each row represents an image of 28 chunks with 28 features each sequence.
+<p>
+
+	We can visualize the data as a batch of sequences below. Each row represents an image of 28 chunks with 28 features each sequence.
+
+</p>
+	
 
 <center>
 <div>
@@ -676,13 +724,17 @@ xb =
 </center>
 
 
-
-
-
-
+<p>
 And just like that we are ready to define the RNN architecture. 
-Generally speaking, an RNN can be thought of as a regular neural network except that it now has the additional behavior of recurrence per time step and also has a sequence of input. 
+Generally speaking, an RNN can be thought of as a regular neural network except that it now has the additional behavior of recurrence per time step and also has a sequence 
+	of input. 
 This recurring hidden layers  can be represented as follows:
+
+
+	
+</p>
+
+
 
 
 
@@ -695,30 +747,24 @@ This recurring hidden layers  can be represented as follows:
 
 </center>
 	
-
-
-
+<p>
 The architecture of an RNN can be expressed with the following equations. 
 
-\begin{center}
+<br/>
 
 $ y_{t} = \theta_y \phi(h_t)$
-    
-\end{center}
+	<br/>
 
+	where $h_t$ can be defined as follows:
+	<br/>
 
-where $h_t$ can be defined as follows:
+	$ h_{t} = \theta_h \phi(h_{t-1}) + \theta_x x_t$
+	<br/>
 
-\begin{center}
+	In diagram form, the equations can be represented as follows
 
-$ h_{t} = \theta_h \phi(h_{t-1}) + \theta_x x_t$
-    
-\end{center}
-
-In diagram form, the equations can be represented as follows
-
-
-
+	
+</p>
 
 
 <center>
@@ -728,8 +774,12 @@ In diagram form, the equations can be represented as follows
 
 </center>
 
+<p>
 
 The RNN architecture is defined in the next code segment. 
+
+	
+</p>
 
 <center>
 <div>
@@ -792,17 +842,25 @@ class MNIST_RNN_Net(nn.Module):
 
 
 
+<p>
 
+We will need to make a change to the training function as can be seen below. The function is very much the same as before except for the following line
+<br/>
+<center>
+xb = torch.squeeze(xb, dim=1)
+	
+</center>
+ <br/>   
+
+
+Notice that this line reshapes the batch tensor from [1000, 1, 28, 28] to [1000, 28, 28]. The torch DataLoaders by default add the channel dimension but here we 
+	need to remove it. 
+	
+</p>
   
 
 
-We will need to make a change to the training function as can be seen below. The function is very much the same as before except for the following line
-
-\begin{center}
-    xb = torch.squeeze(xb, dim=1)
-\end{center}
-
-Notice that this line reshapes the batch tensor from [1000, 1, 28, 28] to [1000, 28, 28]. The torch DataLoaders by default add the channel dimension but here we need to remove it.  
+ 
 
 
 <center>
@@ -836,11 +894,14 @@ def training_loop( N_Epochs, model, loss_fn, opt  ):
 	
 
 
-
+<p>
+And that is it. We can now train the model by calling the core functions 
+	
+</p>
   
 
 
-And that is it. We can now train the model by calling the core functions 
+
 
 
 <center>
@@ -865,11 +926,14 @@ training_loop(  N_Epochs, model, loss_fn, opt  )
 	
 
 
+<p>
+and we can see the losses as follows
 
+
+	
+</p>
   
 
-
-and we can see the losses as follows
 
 
 <center>
@@ -905,8 +969,11 @@ and we can see the losses as follows
 </center>
 
 
+<p>
 
 From the losses, we can infer that the model is learning. After training, we proceed to evaluate on the test set 
+	
+</p>
 
 
 <center>
@@ -938,11 +1005,14 @@ with torch.no_grad():
 
 
 
+<p>
+The results look really good (for a batch of 1000 test samples) and our RNN model has learned to classify the images. 
 
+	
+</p>
   
 
 
-The results look really good (for a batch of 1000 test samples) and our RNN model has learned to classify the images. 
 
 
 <center>
