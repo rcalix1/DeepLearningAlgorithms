@@ -102,9 +102,10 @@ As can be seen in the previous figure, the original Transformer consisted of an 
 </p>
 
 
-
-
-\chapter{Recurrent Neural Networks}
+<h1>
+Recurrent Neural Networks
+	
+</h1>
 
 
 
@@ -121,25 +122,30 @@ For the first example provided in this chapter, I will use the Mnist dataset.  T
 In previous chapters, we have treated each image as a sample static in time of size 28x28 that we want to classify as a digit. In the RNN, we still want to classify each image into one of the 10 digits. However, in the RNN we will not treat each image as a vector of 784 features or tensor of size 28x28. Instead, we will use a sequence modeling approach to classify the image. So, to summarize, let us compare the RNN’s approach to previous approaches. 
 In previous approaches we looked at the whole image as an instance of 784 features or tensor of 28x28 and classified it that way. The figure below shows the non-sequential pipeline.
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/nonseqpipeline.ch7.rnn.300dpi.jpg}
-}
-\caption{Non-Sequential pipeline}
-\label{RegLin:fig}
-\end{figure}
+
+
+
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/nonseqpipeline.ch7.rnn.300dpi.jpg" height="700" width="auto">
+      </div>
+
+    </center>
 
 With the RNN we look at each image as a sequence of segments of the image or patches (e.g. a sequence in time). We use this sequence from beginning to end to predict the final class for the image. 
 With RNNs the pipeline is as follows:
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/seq_pipeline_rnn.chp7.300dpi.jpg}
-}
-\caption{Sequential pipeline}
-\label{RegLin:fig}
-\end{figure}
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/seq_pipeline_rnn.chp7.300dpi.jpg" height="700" width="auto">
+      </div>
+
+    </center>
+	
+
+
 
 So, it can be seen in the previous image that the 28X28 image is converted into 28 vectors of 28 features each (the pixels). These vectors are fed sequentially into the model. With this definition of how to represent the input data, we can proceed to define the RNN algorithm. 
 
@@ -206,13 +212,15 @@ rnn_basic_rc = nn.RNN(      10,          20,         2)
 The parameters can be visualized in the following graph:
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/rnn.model.chp7.300dpi.jpg}
-}
-\caption{Initialize the RNN model}
-\label{RegLin:fig}
-\end{figure}
+
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="700" width="auto">
+      </div>
+
+    </center>
+	
 
 In the previous graph, the parameter \textbf{vector\_size} refers to size of $x_t$. It indicates the number of features in that vector. For the MNIST, it represents the rows in the image of which are of size 28 at time $t$.
 The parameter \textbf{hidden\_size} refers to the number of neurons in the hidden layer $h_t$. And finally, the variable \textbf{n\_layers} refers to the number of hidden layers. In this case the recurring line going from $h_t$ back onto itself. 
@@ -558,13 +566,17 @@ Generally speaking, an RNN can be thought of as a regular neural network except 
 This recurring hidden layers  can be represented as follows:
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/rnn.model.chp7.300dpi.jpg}
-}
-\caption{ RNN model}
-\label{RegLin:fig}
-\end{figure}
+
+
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="700" width="auto">
+      </div>
+
+</center>
+	
+
 
 
 The architecture of an RNN can be expressed with the following equations. 
@@ -586,13 +598,16 @@ $ h_{t} = \theta_h \phi(h_{t-1}) + \theta_x x_t$
 
 In diagram form, the equations can be represented as follows
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/rnnarchbig.chp7.300dpi.jpg}
-}
-\caption{RNN sequence architecture}
-\label{RegLin:fig}
-\end{figure}
+
+
+
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnnarchbig.chp7.300dpi.jpg" height="700" width="auto">
+      </div>
+
+</center>
 
 
 The RNN architecture is defined in the next code segment. 
