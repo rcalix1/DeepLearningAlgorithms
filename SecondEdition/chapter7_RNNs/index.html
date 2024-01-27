@@ -378,14 +378,12 @@ xb_rc.shape
 
 As previously described, we now need to initialize the first hidden layer $h_0$. We do that as follows: 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Initialize $h_0$}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
 
 ## hidden has shape (n_layers  , batch_size, rnn_hidden_size)
 ##                       (  n_layers,     batch_size, rnn_hidden_size)
@@ -393,20 +391,25 @@ hidden_rc   = torch.zeros(         1,   N_batches_rc,             128)
 hidden_rc.shape
 
 ## [1, 100, 128]
+
+
+  
+</textarea>
+</div>
+</center>
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 We are now ready to initialize the RNN and run the data through it as can be seen here
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Run data through the RNN}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="100">
+
 
 rnn_rc    = nn.RNN(        28,     128,    1) 
 rnn_o, hidden_rc = rnn_rc(xb_rc, hidden_rc  )        
@@ -414,22 +417,29 @@ rnn_o, hidden_rc = rnn_rc(xb_rc, hidden_rc  )
 print(rnn_o.shape)
 
 ## [28, 100, 128]
+
+
+  
+</textarea>
+</div>
+</center>
+
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 By definition, the RNN returns 2 parameters. The parameter \textbf{hidden\_rc} will contain the last hidden embedding of size 128 at time $t=28$ for every image in the batch. This can be run through a fully connected layer that takes the embedding of size 128 and converts to the output vector of size 10. This will hold the predicted class which can be compared to the real class. 
 
 Let us define the fully connected layer and run the last hidden layer as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hidden layer and fully connected layer}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
 
 fully_connected_rc = nn.Linear(128, 10)
 out  = fully_connected_rc( hidden_rc )
@@ -441,9 +451,18 @@ y_pred = out.view(-1, 10)    # batch_size X n_output for 10 classes
 print( y_pred.shape )
 
 ## [100, 10]
+
+
+  
+</textarea>
+</div>
+</center>
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 As can be seen, our predicted classes for every image in the batch (100 images) will be contained in \textbf{y\_pred}. 
 
@@ -456,15 +475,11 @@ That completes this discussion. We are now ready to train the RNN on the real MN
 As previously indicated, to predict the class per each 28x28 image we now think of the image as a sequence of rows. Therefore, you have 28 rows of 28 pixels each and we need to define this using some parameters. In this case, each row will be defined as a chunk or vector and the size of each chunk or vector will be defined as the chunk size (vector size). So we end up with a chunk\_size = 28, a number of chunks of n\_chunks = 28 (sequence length). We still have the standard set of 10 classes.  We define that as n\_classes = 10. 
 Finally, the architecture will require us to define the size of the RNN hidden layer. We do that with rnn\_size = 128. Let us define these parameters as follows:
 
+<center>
+<div>
+<textarea rows="10" cols="100">
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
 
 learning_rate    = 0.003  ## Adam default   
 batch_size       = 1000   ## 100
@@ -473,22 +488,28 @@ seq_len          = 28     # MNIST data input (img shape: 28*28)
 size_of_vector   = 28     # chunks per image
 rnn_hidden_size  = 128    # size of rnn
 n_classes        = 10     # MNIST total classes (0-9 digits)
+
+
+  
+</textarea>
+</div>
+</center>
+	
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 After defining the parameters, the next step is to load the data. 
 As can be seen below, this step is exactly like previous steps. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Load the data into tensors}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
 
 data_path = "data/MNISTdata/"
 mnist_train = datasets.MNIST(data_path, train=True, download=True)
@@ -502,21 +523,58 @@ mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False,
                                                 transforms.ToTensor()
                                             ]))
 
+
+  
+</textarea>
+</div>
+</center>
+
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 It is always a good idea to print the tensor shapes before creating the data loaders. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print shapes and create DataLoaders}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
+
+data_path = "data/MNISTdata/"
+mnist_train = datasets.MNIST(data_path, train=True, download=True)
+mnist_test = datasets.MNIST(data_path, train=False, download=True)
+mnist_train_tr = datasets.MNIST(data_path, train=True, download=False, 
+                                            transform=transforms.Compose([
+                                                transforms.ToTensor()
+                                            ]))
+mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False, 
+                                            transform=transforms.Compose([
+                                                transforms.ToTensor()
+                                            ]))
+
+
+  
+</textarea>
+</div>
+</center>
+
+<p>
+	For the shapes
+</p>
+
+
+
+
+
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 mnist_train_tr.data.shape
 ## [60000, 28, 28]
@@ -528,20 +586,25 @@ train_dl  = torch.utils.data.DataLoader(mnist_train_tr, batch_size=batch_size, s
 
 test_dl   = torch.utils.data.DataLoader(mnist_test_tr,  batch_size=batch_size, shuffle=False ) 
 
-\end{lstlisting}
-\end{minipage}
+
+
+</textarea>
+</div>
+</center>
 
 
 As previously discussed we need to convert data from the format [batch size, 28, 28] to the shape [28, batch size, 28]. We will do this with the following function.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Make images to RNN sequence}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+
+
+
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 ## MNIST data input (img shape: 28*28)
 ## seq_len         = 28     
@@ -556,22 +619,18 @@ def make_img_to_sequence(batch_x):
     
     return batch_x_new
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
 
 
 We can visualize the data as a batch of sequences below. Each row represents an image of 28 chunks with 28 features each sequence.
 
+<center>
+<div>
+<textarea rows="10" cols="100">
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The data as sequence}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 xb = 
 [              1,              2,              3, ...,             28
@@ -583,8 +642,15 @@ xb =
 [ [1,2,3,...,28], [1,2,3,...,28], [1,2,3,...,28], ..., [1,2,3,...,28] ]
 ]
   
-\end{lstlisting}
-\end{minipage}
+
+
+</textarea>
+</div>
+</center>
+
+
+
+
 
 
 And just like that we are ready to define the RNN architecture. 
@@ -597,7 +663,7 @@ This recurring hidden layers  can be represented as follows:
 
 <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnn.model.chp7.300dpi.jpg" height="400" width="auto">
       </div>
 
 </center>
@@ -630,7 +696,7 @@ In diagram form, the equations can be represented as follows
 
 <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnnarchbig.chp7.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/rnnarchbig.chp7.300dpi.jpg" height="400" width="auto">
       </div>
 
 </center>
@@ -638,15 +704,9 @@ In diagram form, the equations can be represented as follows
 
 The RNN architecture is defined in the next code segment. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={RNN Class definition}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 ## rnn_hidden_size  = 128    # size of rnn hidden layer
 ## n_classes        = 10     # MNIST total classes (0-9 digits) 
@@ -696,9 +756,18 @@ class MNIST_RNN_Net(nn.Module):
         return y_pred
     
      
+
+
+</textarea>
+</div>
+</center>
+
+
+
+
+
   
-\end{lstlisting}
-\end{minipage}
+
 
 We will need to make a change to the training function as can be seen below. The function is very much the same as before except for the following line
 
@@ -708,14 +777,11 @@ We will need to make a change to the training function as can be seen below. The
 
 Notice that this line reshapes the batch tensor from [1000, 1, 28, 28] to [1000, 28, 28]. The torch DataLoaders by default add the channel dimension but here we need to remove it.  
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Training function for RNN}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
 
 def training_loop( N_Epochs, model, loss_fn, opt  ):
     
@@ -734,20 +800,27 @@ def training_loop( N_Epochs, model, loss_fn, opt  ):
             
         if epoch % 1 == 0:
             print(epoch, "loss=", loss)
+
+
+</textarea>
+</div>
+</center>
+
+	
+
+
+
   
-\end{lstlisting}
-\end{minipage}
+
 
 And that is it. We can now train the model by calling the core functions 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Call the core functions}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+
+
 
 model     = MNIST_RNN_Net()
 
@@ -756,20 +829,26 @@ loss_fn   = nn.CrossEntropyLoss( )
 opt       = torch.optim.Adam( model.parameters(), lr=learning_rate )
 
 training_loop(  N_Epochs, model, loss_fn, opt  )
+
+
+</textarea>
+</div>
+</center>
+
+	
+
+
+
   
-\end{lstlisting}
-\end{minipage}
+
 
 and we can see the losses as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The losses}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="15" cols="100">
+
 
 0  loss= tensor(0.7966, grad_fn=<NllLossBackward0>)
 1  loss= tensor(0.5190, grad_fn=<NllLossBackward0>)
@@ -791,20 +870,22 @@ and we can see the losses as follows
 17 loss= tensor(0.0969, grad_fn=<NllLossBackward0>)
 18 loss= tensor(0.0790, grad_fn=<NllLossBackward0>)
 19 loss= tensor(0.1113, grad_fn=<NllLossBackward0>)
-  
-\end{lstlisting}
-\end{minipage}
+
+
+
+</textarea>
+</div>
+</center>
+
+
 
 From the losses, we can infer that the model is learning. After training, we proceed to evaluate on the test set 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Test model}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="15" cols="100">
+
 
 f1_scores_to_plot = []
 
@@ -820,21 +901,27 @@ with torch.no_grad():
         f1, last_conf_mtrx = print_metrics_function(yb, preds)
         f1_scores_to_plot.append(f1)
 
+
+
+</textarea>
+</div>
+</center>
+
+
+
+
+
+
   
-\end{lstlisting}
-\end{minipage}
+
 
 The results look really good (for a batch of 1000 test samples) and our RNN model has learned to classify the images. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Performance metrics}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="15" cols="100">
+
 
 Confusion Matrix:
 [[100   0   0   0   0   2   0   0   0   0]
@@ -850,209 +937,35 @@ Confusion Matrix:
 Precision: 0.969
 Recall: 0.969
 F1-mesure: 0.969
+
+
+
+</textarea>
+</div>
+</center>
+
+
+
+
+
   
-\end{lstlisting}
-\end{minipage}
 
 
-  
 
-\begin{comment}
+<h1>
+Summary 
+</h1>
 
-\section{LSTM }
 
-In this section I will discuss the LSTM (Long Short Term Memory) neuron. Basically, LSTM neurons address the vanishing gradients problem by not multiplying the previous weights from the previous hidden layer. But instead just by passing them without modification to the next layer.  
+	<p>
+In this chapter Recurrent Neural Networks (RNNs) were presented and discussed. An example using the Mnist hand written digits data set was used for the analysis. 
+	Issues related to data representation and RNN architecture were also discussed. 
+		
+	</p>
 
-\section{RNNs for NLP }
 
-In this section we will begin our discussion of RNNs and how they can be applied to natural language processing (NLP) problems. Before I discuss the code, I should say a few things about RNNs and related considerations. As discussed in the previous section, RNNs are sequential methods. That means that the model learns from the outputs from previous steps/layers. That also means that you may end up with very deep networks. Weights at time “t” are dependent from weights at times as far back as 
 
-                            t - n 
-                                                         
-where “n” could be really large. As weights are multiplied they could tend towards 0 or to really large numbers. Both scenarios are bad for deep neural networks. Weights that are 0 basically mean that the network learned nothing, for instance. This is known as the “vanishing gradients” problem. This problem has been addressed by using a special type of neuron called the LSTM or Long Short Term Memory (further discussed in the next section). Basically, LSTM neurons address the vanishing gradients problem by not multiplying the previous weights from the previous hidden layer. But instead just by passing them without modification to the next layer. In this code example we will use LSTM neurons.
-Now, let us discuss our example. Here, we will train a model to learn from text data. The model will then attempt to create a story using the learned RNN model. The data is any text. The text is read as a single long string and then pre-processed. 
 
-
-
-First, we read the libraries as follows. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-Notice the important new library is called rnn. There are also other options. 
-
-Next, we set processing parameters. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-We initialize the algorithm parameters. 
-
-
-This section is very important. Here we need to define the vocabulary size which is the number of words that we will use. This is similar to what is done in Word2vec. The variable is initialized to zero but will be updated once the data is read. We also define the size of the hidden layer in the RNN cell. In this case we use 512. 
-
-
-Next, we specify the name of the file. 
-
-The text looks like this: 
-“In the time of swords and periwigs and full-skirted coats with flowered lappets--when gentlemen wore ruffles, and gold-laced waistcoats of paduasoy and taffeta--there lived a tailor in Gloucester.”
-Short extract from the THE TAILOR OF GLOUCESTER by Beatrix Potter.
-Now we define the function to read our text from file. This returns a list of words.
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-We create the list.
-
-
-
-Now we must build the data sets to use. This function calculates the frequency of the words. Then it creates a dictionary of words where the key is the word and frequency position is the value. The dictionary is also reversed so that the key is the frequency position and the value is the text word. This helps with lookups. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-Now we call the function and it returns both versions of the dictionary. Here we can also calculate the vocabulary size.
-
-
-
-Now we can define the metrics function. 
-
-
-Now we are ready to define the inference function. A lot happens in this function. We define the weights matrix and the bias. We reshape the input to fit into the RNN. We define the LSTM cell. And we define the function for predicting outputs. 
-In our example we use
-
-rnn\_cell = rnn.BasicLSTMCell(n\_hidden)   ## 1 layer LSTM
-
-but we could have used 
-    
-                               
-                               
-   
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-                            
-                               
-                               
-#rnn\_cell = rnn.MultiRNNCell([ rnn.BasicLSTMCell(n\_hidden),    rnn.BasicLSTMCell(n\_hidden)])  ## 2 layer LSTM
-
-
-
-
-Now we can define the loss function which once again uses cross entropy. 
-
-
-Now we use the RMSProp optimizer to train the model.
-
-
-This is our standard accuracy function.
-
-
-After defining our core functions we can define the placehoders. The value n\_input is of size 3. We generate a n\_input element sequence. This gives us:
- 
-(eg. [the] [cat] [is] -> [2] [16] [7])
-
-
-
-Now we can call the core functions
-
-
-The following line of code helps to convert from one hot back to non one hot encoding. The result is the predicted word id. 
-
-
-
-Now we are ready to initialize the variables. 
-
-
-
-In this section we define the step variable.
-
-
-
-This section of code allows us to specify the index tracking variable. We use this to track our position in the story. We use offset to slide a window accross the document.
-
-Every iteration offset is incremented. So it is the index that tracks the current position in the document. 
-
-Finally, we arrive at the main loop. 
-
-
-After training, we can proceed to test our model by generating a story. This is after training.  
-
-This generates a short story using the trained rnn.
-
-
-\end{comment}
-
-\section{Transformers}
-
-In this section I will address Transformers. Transformers have become popular as of 2019. Currently considered to have certain benefits over LSTM neurons. One of the problems with LSTM neurons is that they do not parallelize very well and therefore result in slow and somewhat inefficient learning. Transformers address this issue by reading sequential data more efficiently and are better suited for parallel approaches. Therefore, they can be faster. They also have better architectures for processing the data. Transformers are so important that I have dedicated a whole chapter for them. 
-
-
-\section{Summary }
-
-In this chapter Recurrent Neural Networks (RNNs) were presented and discussed. An example using the Mnist hand written digits data set was used for the analysis. Issues related to data representation and RNN architecture were also discussed. 
-
-\begin{comment}
-Finally, the application of RNNs to NLP was presented.
-    
-\end{comment}
 
 
 
