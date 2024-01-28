@@ -740,22 +740,31 @@ class Q_NN_Net(nn.Module):
 	
 
 
+<p>
+
+	With 
+</p>
 
 
 
 
 
-With 
 
-\begin{center}
-      torch.squeeze(Qout, 0)
-\end{center}
+<center>
 
-
+	  torch.squeeze(Qout, 0)
+</center>
+    
+<p>
 we get the actions vector. We will use a torch.max function later to select the action. 
 
 
 As can be seen from the previous class code, the network looks like the figure below.  
+
+	
+</p>
+
+
 
   <center>
       <div>
@@ -763,9 +772,14 @@ As can be seen from the previous class code, the network looks like the figure b
       </div>
     </center>
 
+<p>
 
+It is important to note that this is a basic architecture and that much more complex deep architectures with different activation functions could be used 
+	such as architectures with many hidden layers or convolutional neural networks, etc. I was able to achieve good results using the following MLP neural 
+	network architecture.
+	
+</p>
 
-It is important to note that this is a basic architecture and that much more complex deep architectures with different activation functions could be used such as architectures with many hidden layers or convolutional neural networks, etc. I was able to achieve good results using the following MLP neural network architecture.
 
 
 <center>
@@ -806,12 +820,17 @@ class Q_NN_MLP_Net(nn.Module):
 
 
 
+<p>
+
+
+Notice that the NN classes us the following function called \textbf{gen\_state\_vector(s)}. We will use this function to convert state in integer form 
+	into one hot encoded vectors of size 16. 
+
 	
+</p>	
 
 
 
-
-Notice that the NN classes us the following function called \textbf{gen\_state\_vector(s)}. We will use this function to convert state in integer form into one hot encoded vectors of size 16. 
 
 <center>
 <div>
@@ -834,28 +853,40 @@ def gen_state_vector(s):
 
 
 
-	
-
-
-
-    
+<p>
 
 The function
+	
+</p>	
 
-\begin{center}
 
-    gen\_state\_vector(s)
+<center>
+	 gen_state_vector(s)
+</center>
     
-\end{center}
+
+
+
+<p>
+
+	takes the current state in the variable \textbf{s} and converts it into a one-hot encoded representation. For instance, if the current state is 4, 
+	then the one-hot encoded representation (of size 16) looks like this
+
+</p>
 
             
-takes the current state in the variable \textbf{s} and converts it into a one-hot encoded representation. For instance, if the current state is 4, then the one-hot encoded representation (of size 16) looks like this
+<center>
 
-\begin{center}
-     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-\end{center}
+	    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+</center>
+ 
+<p>
 
-The loss function can be Least Squares Estimation which is the same as for regression! To calculate the error, we basically compare \textbf{q\_pred} to \textbf{target\_q} and try to minimize the error. 
+The loss function can be Least Squares Estimation which is the same as for regression! To calculate the error, we basically 
+	compare \textbf{q_pred} to \textbf{target_q} and try to minimize the error. 
+	
+</p>
+
 
 
 
@@ -877,12 +908,16 @@ loss_fn = nn.MSELoss()
 	
 
 
+<p>
+
+
+	We can set the following parameters. We create lists to contain  steps taken per episode (game) and  rewards per game. 
+
+
+</p>
 
 
 
-
-
-We can set the following parameters. We create lists to contain  steps taken per episode (game) and  rewards per game. 
 
 
 
@@ -906,11 +941,15 @@ epsilon       = 0.1       ## 0.2    , 0.01
 
 
 
-
-
+<p>
 
 
 The optimization is nothing more than the very familiar Gradient Descent (Adam) with a learning rate of 0.001. We instantiate the Q NN MLP model.
+
+
+
+	
+</p>
 
 
 
@@ -933,12 +972,15 @@ opt = torch.optim.Adam( model.parameters(), lr=learning_rate )
 
 
 
-
-
-
-
+<p>
 
 Finally, we are ready for the main loop which is shown in the next code segment below. 
+
+	
+</p>
+
+
+
 
 
 <center>
@@ -1005,11 +1047,17 @@ for i in range(num_episodes):
 </center>
 	
 
-
-
+<p>
 
 I will now proceed to break the main loop into parts to make it easier to describe. 
-As can be seen in the code segment below, we run the main loop 4000 times (\textbf{num\_episodes}) which means that we play 4000 games. Each time we play a game, we reinitialize the board ( s = env.reset() ) and initialize the rewards variable (\textbf{rAll}) to zero. The variable \textbf{j} is the counter for the current step and \textbf{d} is used to determine if the game is over (win or loss). 
+As can be seen in the code segment below, we run the main loop 4000 times (\textbf{num_episodes}) which means that we play 4000 games. 
+	Each time we play a game, we reinitialize the board ( s = env.reset() ) and initialize the rewards variable (\textbf{rAll}) to zero.
+	The variable \textbf{j} is the counter for the current step and \textbf{d} is used to determine if the game is over (win or loss). 
+
+	
+</p>
+
+
 
 
 <center>
@@ -1037,12 +1085,17 @@ for i in range(num_episodes):
 	
 
 
-
-
-
+<p>
 
         
-for every game iteration we run the following while loop. This while loop is the main code that helps us to learn the \textbf{Q} values and traverse the board (e.g. play the frozen lake game). 
+for every game iteration we run the following while loop. This while loop is the main code that helps us to learn the \textbf{Q} values and traverse the 
+	board (e.g. play the frozen lake game). 
+
+	
+</p>
+
+
+
 
 
 <center>
@@ -1091,18 +1144,28 @@ while j < 1000:
 
 
 
+<p>
+We perform 1000 steps since it should not take more than 1000 steps to traverse the frozen lake. If it does, the game should end. The line 
+	in the while loop is used to increment the steps 
 
+	
+</p>
    
         
-We perform 1000 steps since it should not take more than 1000 steps to traverse the frozen lake. If it does, the game should end. The line in the while loop is used to increment the steps 
 
-\begin{center}
-     j = j + 1
-\end{center}
+<center>
+    j = j + 1
+	
+</center>
+ 
+<p>
+
+After incrementing the steps, we proceed to perform our first model run to train the PyTorch model. Here we predict an action and get Q_s from the model. 
+	
+</p>
            
             
        
-After incrementing the steps, we proceed to perform our first model run to train the PyTorch model. Here we predict an action and get Q\_s from the model. 
 
 
 <center>
@@ -1121,13 +1184,22 @@ a            = max_index.item()
 
 
 	
-
-
-
-
-
+<p>
                     
-The next step is to take the predicted action in \textbf{“a”} and run it through the game. The below statement runs the action through env.step() and this function returns the new state \textbf{s1} which is the new position in the frozen lake grid, \textbf{r} is the reward associated with the step \textbf{s} (for instance r = 0.43) , and \textbf{d} indicates if the game is over (found the cheese or fell in the frozen lake). You know you have lost the game if \textbf{d} is True and if the reward is zero at the same time. To help the model learn, we can assign negative rewards every time that happens. Knowing when to assign rewards is very challenging in Reinforcement Learning. Here, frozen lake is a simple game and using this type of approach is possible. Current research proposes to replace the rewards heuristics with neural networks. One current effective approach is called RLHF which stands for reinforcement learning through human feed-backs.  
+The next step is to take the predicted action in \textbf{“a”} and run it through the game. The below statement runs the action through env.step() and 
+	this function returns the new state \textbf{s1} which is the new position in the frozen lake grid, \textbf{r} is the reward associated with the 
+	step \textbf{s} (for instance r = 0.43) , and \textbf{d} indicates if the game is over (found the cheese or fell in the frozen lake). 
+	You know you have lost the game if \textbf{d} is True and if the reward is zero at the same time. To help the model learn, we can assign negative rewards 
+	every time that happens. Knowing when to assign rewards is very challenging in Reinforcement Learning. Here, frozen lake is a simple game and using this 
+	type of approach is possible. Current research proposes to replace the rewards heuristics with neural networks. One current effective approach is called
+	RLHF which stands for reinforcement learning through human feed-backs.  
+
+
+	
+</p>
+
+
+
 
 
 <center>
@@ -1149,11 +1221,14 @@ if d == True and r == 0:
 
 
               
+<p>
+With the new state \textbf{s1}, we proceed to run the PyTorch model again.  Here we run the model again using \textbf{s1}. 
 
+	
+</p>
 
    
 
-With the new state \textbf{s1}, we proceed to run the PyTorch model again.  Here we run the model again using \textbf{s1}. 
 
 <center>
 <div>
@@ -1172,27 +1247,36 @@ target_q  = r + 0.99 * maxQ_s1
 
 
 
+<p>
 
+
+So \textbf{Q\_s1} will now contain the 4 neuron vector with the \textbf{Q} values for all 4 actions given state \textbf{s1}. We grab the max
+	value from \textbf{Q\_s1} (not the index) and use that to calculate \textbf{target\_q} using the Bellman equation.
+<br/>
+Recall that the Bellman equation looks like this:
+
+	
+</p>
 
 
                
-
-
-
-So \textbf{Q\_s1} will now contain the 4 neuron vector with the \textbf{Q} values for all 4 actions given state \textbf{s1}. We grab the max value from \textbf{Q\_s1} (not the index) and use that to calculate \textbf{target\_q} using the Bellman equation.
-
-Recall that the Bellman equation looks like this:
-
-\begin{center}
-Q(state, action) = reward + weight * max [ Q(future\_state, future\_action )] 
-\end{center}
-
-
-           
-Interestingly, only one of the 4 values in \textbf{Q\_s1} is updated using the Bellman equation. The other values remain the same. The dimension of \textbf{target\_q} is only one which means that that is the only value we will use to perform the optimization.
+<center>
+Q(state, action) = reward + weight * max [ Q(future_state, future_action )]
+	
+</center>
+ 
+<p>
+Interestingly, only one of the 4 values in \textbf{Q\_s1} is updated using the Bellman equation. The other values remain the same. The dimension
+	of \textbf{target\_q} is only one which means that that is the only value we will use to perform the optimization.
 
 
 Finally, we do a final update of the PyTorch model by calculating the losses on state \textbf{“s”} and action \textbf{a}.  
+
+	
+</p>
+
+
+           
 
 
 <center>
@@ -1216,7 +1300,12 @@ opt.step()
 
 
 
+<p>
 
+Finally, the last peace of code adds up the rewards, assigns the new state \textbf{s1} to \textbf{s}, and checks to see if the game is over. 
+
+	
+</p>
 
                
            
@@ -1224,7 +1313,6 @@ opt.step()
 
 
 
-Finally, the last peace of code adds up the rewards, assigns the new state \textbf{s1} to \textbf{s}, and checks to see if the game is over. 
 
 
 <center>
@@ -1245,9 +1333,12 @@ if d == True:
 
 	
 
-           
-
+<p>
 Once you exit the while loop, the last part is to append the results of the current game to the results lists.  
+
+	
+</p>           
+
 
 
 <center>
@@ -1274,10 +1365,14 @@ rewardsList.append(rAll)         ## reward total per game
 
               
 
+<p>
 
+
+	Well, that is it for the algorithm discussion. Finally, we print our results and plot them. 
+
+
+</p>
       
-
-Well, that is it for the algorithm discussion. Finally, we print our results and plot them. 
 
 
 <center>
@@ -1298,16 +1393,25 @@ plt.show()
 
 
 
+<p>
 
+	
+That is it. We have completed implementing our Q learning algorithm with a neural network. In the next section we will add a simple improvement
+	to the code that will improve performance.
+
+</p>
                
 
+<h1>
 
+	Performance, Q-NN, and randomness 
+</h1>
 
-That is it. We have completed implementing our Q learning algorithm with a neural network. In the next section we will add a simple improvement to the code that will improve performance.
-
-\section{Performance, Q-NN, and randomness }
-
+<p>
 In the previous section we described the code to implement Q-learning with a neural network on the frozen lake game. That was the simplest implementation of it. 
+
+	
+</p>
 
 
 <center>
@@ -1363,15 +1467,21 @@ for i in range(num_episodes):
 	
 
 
+<p>
 
+To improve the results, we can add a few lines of additional code which will allow the algorithm to better converge and learn better Q-values. The additions 
+	are simple and basically relate to adding randomness to the code. The full version of the code can be seen below. I will additionally discuss how to measure 
+	performance with RL.
+<br/>
+The new lines of code add randomness to the selection of the next action to take. The idea is that at the beginning of the learning process, the action prediction 
+	function may not be very good. Therefore, picking an action randomly at the beginning may be better than picking actions with the model. 
 
-
-To improve the results, we can add a few lines of additional code which will allow the algorithm to better converge and learn better Q-values. The additions are simple and basically relate to adding randomness to the code. The full version of the code can be seen below. I will additionally discuss how to measure performance with RL.
-
-The new lines of code add randomness to the selection of the next action to take. The idea is that at the beginning of the learning process, the action prediction function may not be very good. Therefore, picking an action randomly at the beginning may be better than picking actions with the model. 
-
-
+<br/>
 This is reflected in the code segment below. 
+	
+</p>
+
+
 
 
 <center>
@@ -1392,17 +1502,22 @@ else:
 
 
 
+<p>
+A random number is obtained and compared to \textbf{epsilon}. If less than \textbf{epsilon}, the action is selected randomly. 
+	As the algorithm improves and the Q values are better, the value of \textbf{epsilon} can be adjusted so that action is more often selected with the
+	model and not with the random function.
 
 
-
-       
-A random number is obtained and compared to \textbf{epsilon}. If less than \textbf{epsilon}, the action is selected randomly. As the algorithm improves and the Q values are better, the value of \textbf{epsilon} can be adjusted so that action is more often selected with the model and not with the random function.
-
-
-
+<br/>
    
 The code can be seen here  where  the value of \textbf{“epsilon”} is adjusted.  
 
+
+	
+</p>
+
+
+       
 
 
 <center>
@@ -1418,15 +1533,19 @@ epsilon = epsilon + epsilon_delta
 
 
 
+<p>
 
+
+That is all it takes to implement randomness. Now we are ready to measure the performance of the RL model using frozen lake. After training, 
+	we can perform several calculations to measure performance. 
+<br/>
+First let us count the number of successes during the last 100 training games (out of 4000). The following calculation gives us a score of 75\%. 
+	
+</p>
 
 
      
 
-
-That is all it takes to implement randomness. Now we are ready to measure the performance of the RL model using frozen lake. After training, we can perform several calculations to measure performance. 
-
-First let us count the number of successes during the last 100 training games (out of 4000). The following calculation gives us a score of 75\%. 
 
 <center>
 <div>
@@ -1441,12 +1560,16 @@ print("Succes for last 100 games: ", sum(success_list[-100:]),  "%")
 
 
 
+<p>
 
+We can look at the rewards trend with the following code. 
+
+	
+</p>
 
      
 
 
-We can look at the rewards trend with the following code. 
 
 <center>
 <div>
@@ -1480,11 +1603,16 @@ plt.show()
 
 
 
+<p>
 
+During training, we collected the total reward per each of the 4000 games. Visualising all 4000 rewards can be confusing. 
+	However, if we average every 100 rewards in sequence, we can clearly  see that the rewards are going up. One of the goals in RL is for the model 
+	to increase its rewards.  
+	
+</p>
      
 
 
-During training, we collected the total reward per each of the 4000 games. Visualising all 4000 rewards can be confusing. However, if we average every 100 rewards in sequence, we can clearly  see that the rewards are going up. One of the goals in RL is for the model to increase its rewards.  
 
  <center>
       <div>
@@ -1493,9 +1621,12 @@ During training, we collected the total reward per each of the 4000 games. Visua
 
     </center>
 	
-
-
+<p>
 Once the model is trained, we want to run it again without training to test its performance. This can be accomplished with the following code 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -1542,10 +1673,13 @@ for i in range(test_games):
 	
 
 
-     
-
+<p>
 
 After running the evaluation (no training), the model is able to win 79\% of the games it played. 
+	
+</p>     
+
+
 
  <center>
       <div>
