@@ -12,11 +12,11 @@ This is the repo for my new book "Deep Learning Algorithms" (Second Edition), No
 
 * https://www.youtube.com/channel/UCKRgi-HJDEq0a3nhlG2nQvg
 
-## Chapters
+## Chapters (<a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/index.html">Link</a>))
 
 * Chapter 4 - Starting with Deep Learning
 * Chapter 5 - Semantic Vector Spaces
 * Chapter 6 - CNNs
 * Chapter 7 - RNNs
 * Chapter 9 - Reinforcement Learning
-* Chapter 10 - GPTs (<a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/Chapter10_Transformers/index.md">Link</a>)
+* Chapter 10 - GPTs 
