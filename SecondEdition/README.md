@@ -12,7 +12,7 @@ This is the repo for my new book "Deep Learning Algorithms" (Second Edition), No
 
 * https://www.youtube.com/channel/UCKRgi-HJDEq0a3nhlG2nQvg
 
-## Chapters (<a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/index.html">Link</a>))
+## Chapters (<a href="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/index.html">Link</a>)
 
 * Chapter 4 - Starting with Deep Learning
 * Chapter 5 - Semantic Vector Spaces
