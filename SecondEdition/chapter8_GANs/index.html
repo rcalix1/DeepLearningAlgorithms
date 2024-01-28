@@ -29,7 +29,7 @@
 
     <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/ganNN.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/ganNN.300dpi.jpg" height="400" width="auto">
       </div>
 
     </center>
@@ -100,163 +100,32 @@ The generator in a GAN is based on Auto-encoders. Therefore, before looking at G
 	
 </p>
 
+<h1>
+Autoencoders
+	
+</h1>
+
+<p>
+
+Autoencoders are a type of compression method where a neural network learns how to represent a vector of size “m” into a vector of size “n” where m >> n. 
+	Here, the input and output vectors in the network are the original sample and the reproduced sample and the hidden layer of the network is the new
+	compressed representation of the input vector. The objective function minimizes the difference/distance between the original input sample and the reproduced 
+	output sample.  
+	
+</p>
+
+<h1>
+Original GAN
+	
+</h1>
+
+<p>
+The original GAN consists of a generator and a Discriminator and was proposed in a 2014 paper by Ian Goodfellow. The general architecture of the GAN can be seen
+	in the figure below.
+
+	
+</p>
 
-
-\section{Autoencoders }
-
-Autoencoders are a type of compression method where a neural network learns how to represent a vector of size “m” into a vector of size “n” where m >> n. Here, the input and output vectors in the network are the original sample and the reproduced sample and the hidden layer of the network is the new compressed representation of the input vector. The objective function minimizes the difference/distance between the original input sample and the reproduced output sample.  
-
-\begin{comment}
-    
-
-
-
-In this section I will describe an auto-encoder. And in particular a denoising auto encoder. Usually the input and output vector are the same vector in an autoencoder. In the case of a denoising algotithm, think of the input vector x and the output vector y as the same one.
-
-                            x = y 
-                            
-except that the x vector has noise. Therefore, this is more like
-
-                    x + random\_noise ~ y 
-                    
-so they are not exactly alike. Think of television. You have 2 versions of the image the transmitted image via wireless (x + noise) and the received image after denoising (with a perfect denoiser, y which is equal to x after the noise is removed). In reality the noise is not removed completely. 
-Also, remember that auto encoders are an unsupervised approach. Therefore, there are no labels. Instead the inputs and outputs are the same thing.
-Okay, now for the code. In the next code segment we initialize the libraries. This code in full is available on the course github. 
-
-
-We will create random data for ease of use. Notice the data is 5x4 in size. This could be an image.
-
-
-Now we add the noise to the original input. We make the input without noise equal to the output given that our goal is to remove noise. We want our inference function to learn to remove noise so our output target should be data without noise. The data with noise will be the inputs to the network.
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Standard HasdfgTML code}}
-\lstset{label={lst:code\_direct34}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-We normalize the data. We can scale it to [0..1]
-
-
-Or scale it to [-1..1]
-
-
-
-Now we rename the scaled data.
-
-
-
-Here we can print the dimensions. 
-
-
-
-Now we can create the place holders. Notice they both have the same dimensions. 
-
-
-
-Now we are ready to define the inference function. This network has a input vector of size 4, a hidden layer of size 3, and an output of size 4. We are using tanh as the activation function. 
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Standard HTML ddfgcode}}
-\lstset{label={lst:code\_direct6}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-
-We define the loss function using Least Square Errors (LSE).
-
-
-We could also use cross entropy.
-
-
-Here we define the train function using gradient descent.
-
-
-
-
-
-Now we are ready to call the core functions. 
-
-
-We are almost done, now we initialize variables.
-
-
-Here we set the number of epochs and the batch size.
-
-
-
-
-Finally, we define the main loop for learning and print the losses.
-
-
-After training, we predict denoised data.
-
-
-The following code segment compares the distances between:
-
-a) the noisy input and the image without noise
-b) the noisy input and the de-noised image
-
-The de-noised image should be closer to the noisy image because the denoising auto encoder tries to remove some noise. 
-
-range: noisy\_image................de-noised\_image...................no\_noise\_image
-
-The code is as follows:
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Standard HTdfghML code}}
-\lstset{label={lst:code\_direct5}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-Finally, we can also print the weights, biases, and hidden layer of the model after training.
-
-
-That is it!
-
-\end{comment}
-
-\section{Original GAN}
-
-The original GAN consists of a generator and a Discriminator and was proposed in a 2014 paper by Ian Goodfellow. The general architecture of the GAN can be seen in the figure below.
 	
 
 \begin{figure}[H]\centering
@@ -269,240 +138,20 @@ The original GAN consists of a generator and a Discriminator and was proposed in
 
 
 
-\begin{comment}
-
-
-  
-
-\section{GAN for a distribution}
-
-In this section, the GAN code to generate distribution will be presented. First we list the libraries that we need. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-Next we initialize our variables
-
-
-
-We will need some helper functions such as a log estimation function. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-To keep things simple, instead of reading in data, we are going to generate it automatically. We will generate samples with a normal distribution of mean=4 and sigma = 0.5. N is the number of samples to generate. 
-
-
-These samples are for the discriminator and represent the real data. 
-
-
-
-The data from the distribution class looks like this:
-
-
-
-We also provide a set of data for the generator. Think of this as noise. We set a range between [-range, range] but the values are random. The generator uses noise as input. 
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-?
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-The data from the generator class looks like this:
-
-
-First we define the layer function for the GAN. 
-
-
-With GANs we have 2 inference functions; one for the generator and one for the discriminator.   The inference function for the generator is:
-
-
-The inference function for the generator with values is:
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-The neural network in inference\_generator() looks like the following: 
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-hidden
-input
-output
-
-
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/ganInference.300dpi.jpg}
-}
-\caption{Neural network in inference\_generator()}
-\label{RegLin:fig}
-\end{figure}
-
-
-
-
-
-And the inference function for the discriminator is: 
-
-
-
-Notice that the discriminator has more capacity to learn. 
-
-
-The neural network in inference\_discriminator() looks like the following: 	
-
-
-
-
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-??
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/gandiscrim.300dpi.jpg}
-}
-\caption{Deep neural network in inference\_discriminator()}
-\label{RegLin:fig}
-\end{figure}
-
-
-
-
-
-
-
-
-The GAN has 2 loss functions to calculate max entropy; one for the discriminator and one for the generator. 
-The loss for the discriminator is as follows:
-
-
-1Think of the 2 parameters in loss\_d\_GAN as tending to 1 and 0 like so
-
-
-And the loss for the generator is: 
-
-Think of parameter in loss\_g\_GAN as tending to 1 like so 
-
-Next we can define the optimization function as follows:  
-
-
-
-Once the core functions are defined, we can proceed to define our placeholders. We select a batch size of 8 so that x and z are data matrices of size [8, 1]. So they contain 8 samples with 1 feature each.  
-
-
-
-Now we proceed to call the core functions as shown below: 
-
-
-We are almost done. All that remains is to initialize the variables and create the session.  
-
-
-
-
-Before we call the main loop we need to have some training data. In this case we call the data generating classes we previously defined and create some data. 
-
-
-
-Finally, we can call the main loop as follows: 
-
-
-And that is it! We have completed our GAN model.  
-
-\end{comment}
-
-\subsection{Generating MNIST digits with GANs}
-
-In this section, I will describe how to implement a GAN that can generate images. The algorithm will work with the MNIST data set. As always, the code can be downloaded from my GitHub. 
-
+<h1>
+Generating MNIST digits with GANs
+	
+</h1>
+
+<p>
+In this section, I will describe how to implement a GAN that can generate images. The algorithm will work with the MNIST data set. As always, 
+	the code can be downloaded from my GitHub. 
+<br/>
 First we import the libraries. 
+
+
+	
+</p>
 
 
 \begin{minipage}{\linewidth}
@@ -2526,7 +2175,7 @@ The 2 key aspects are the instantiation of 8 heads which are parallel and indepe
 
 
 
-   <center>
+<center>
 <div>
 <textarea rows="6" cols="100">
 
@@ -2537,7 +2186,7 @@ self.heads = nn.ModuleList(  [ Head(head_size) for _ in range(num_heads) ] )
 </textarea>
   
 </div>
-    </center>
+</center>
   
 
 
