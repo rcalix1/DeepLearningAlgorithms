@@ -29,35 +29,19 @@
 
     <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_transformer.png" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/frozen_lake.png" height="400" width="auto">
       </div>
 
     </center>
 
 <p>
-Transformers are the latest step in the evolution of deep learning. As is necessary with progress, newer deep learning algorithms are also much more complicated, with 
-	  deeper and more resource intensive networks. The Transformer is the best example of this. 
-Transformers are, for me, the first algorithm I was not able to run on a laptop when using a significantly large data set. They truly require a machine learning “war machine”.
-	  Lots of GPU power and memory, etc. The algorithms are much more complicated, as you will see, and the networks are very deep. 
 
-
-
-Transformers are one of the new innovations in NLP since 2017. They were first made popular by the paper “Attention Is All You Need” by  (Vaswani et al.). 
-	  They are very interesting and seem to be very powerful. Currently, they are better than  Recurrent Neural Networks (RNNs) for NLP because they parallelize better 
-	  and because of the Attention mechanism. 
-So far, Transformers have been used to develop very impressive implementations such as BERT (Devlin et al. 2018), and GPT-3 (Radford et al. 2019), and most notably, chatGPT 
-	  from OpenAI, as of this writing. ChatGPT in particular seems to be very good at language understanding. Transformers have also been applied to language translation,
-	  question answering, document summarization, automatic code generation, text generation, etc. 
-
-In general, something like chatGPT requires at least 2 steps. One step is called the Pre-Training process and the other step is called fine tuning. Basically, a Transformer
-	  network is trained on all the data you have (e.g. all text data in the world). This process requires massive amounts of computing and can be very expensive. 
-	  The most notable pre-trained GPTs include: GPT-3, GPT-4, and LlaMa models, to name a few. The next step is to fine tune the model. Once the fine tuning is 
-	complete, you have options such as adding more neural net layers after the transformer and freezing the already pre-trained weights. 
-	Or you can just keep training the transformer for a specific task and have all the weights be changed. 
-	The amount of fine tuning data does not need to be as large as the data for pre-training. In fact, it can be orders of magnitude smaller. 
-
-Okay, let’s get started.
-
+In this section of the book I will cover the topic of Reinforcement Learning. This is an area of machine learning somewhere between supervised learning and unsupervised 
+	learning. It has been extensively applied to recommender systems and AI-based games. Recently, it was shown that a deep Q-network, using only pixels and game scores
+	as inputs, could achieve a playing level comparable to that of professional human gamers across a set of 49 Atari games (\babelEN{\cite{mnihRef}}). The main advantage 
+	of applying reinforcement learning to games is that games are governed by rules. You have game states (the inputs) and actions (output) that lead to new states and 
+	rewards (the objectives to maximize). Because of this, no annotation is needed and instead you rely on the rules of the game for feedback (e.g. instead of annotated 
+	labels). 
 	
 </p>
 
@@ -87,19 +71,7 @@ Okay, let’s get started.
     
 
 
-<h1>Main Ideas of the Transformer</h1>
 
-
-<p>
-So, where does one start with Transformers? The Transformer is complex and it involves several ideas to make it work correctly. In this section I will present the main 
-    ideas first with some relevant code. Understanding these concepts or steps really well before venturing to write the code for the Transformers is really important. 
-    It will save you time in the long run. So now, let us proceed to discuss these topics. In the next sections I will start discussing the code for GPTs, BERTs, the full 
-    Encoder Decoder transformer architecture, and a few other subjects. 
-
-As can be seen in the previous figure, the original Transformer consisted of an Encoder and a Decoder layer. 
-
-  
-</p>
 
 <h1>
 
@@ -146,7 +118,7 @@ FrozenLake is a game about crossing a frozen lake that has some cracks in the ic
 
  <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/frozen_lake.png" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/frozen_lake.png" height="400" width="auto">
       </div>
 
     </center>
@@ -195,73 +167,98 @@ An example of the table can be seen below.
 
  <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/q_learn_table.png" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/q_learn_table.png" height="400" width="auto">
       </div>
 
     </center>
 
 
-Now the main challenge is that we need to learn future rewards for future actions as we move through the grid. Here the Bellman equation will help. Think of the Bellman equation as a type of recursive equation that looks at the future state given a current state. The Bellman equation is as follows:
+<p>
+Now the main challenge is that we need to learn future rewards for future actions as we move through the grid. Here the Bellman equation will help. 
+	Think of the Bellman equation as a type of recursive equation that looks at the future state given a current state. The Bellman equation is as follows:
 
-\begin{center}
-    Q(state, action) = reward + weight * max [ Q(future\_state, future\_action ) ] 
-\end{center}
+	
+</p>	
 
-  
 
+<center>
+ Q(state, action) = reward + weight * max [ Q(future_state, future_action ) ] 
+
+	
+</center>
+   
+<p>
 These values can be looked up from the Table. 
-The code discussed here can be downloaded from the course website or the github repository. In the next section, the python Q-learning code will be discussed which only uses a table to determine the rewards and the path to follow. Future sections will use the same algorithm but will replace the use of the table with a neural network so that we can see how deep neural networks can improve the approach. 
+The code discussed here can be downloaded from the course website or the github repository. In the next section, the python Q-learning code will be 
+	discussed which only uses a table to determine the rewards and the path to follow. Future sections will use the same algorithm but will replace the use of
+	the table with a neural network so that we can see how deep neural networks can improve the approach. 
 
-\section{Q-Learning using a Table}
+	
+</p>
+  
+<h1>
+Q-Learning using a Table
+	
+</h1>
 
-In this section we discuss the code to implement Q-Learning using a table. This code makes use of the OpenAI gym library.  The libraries used can be seen in the next code segment. 
+<p>
+In this section we discuss the code to implement Q-Learning using a table. This code makes use of the OpenAI gym library.  
+	The libraries used can be seen in the next code segment. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={AI Gym}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
 
+
+<center>
+<div>
+<textarea rows="4" cols="90">
 
 import numpy as np
 import gym
 
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
 
 
 
 
 The frozenLake game can be initialized by creating the env object as can be seen below. This object represents the game and holds all the parameters related to states, actions, rewards, and current game state. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={AI Gym Env initialization}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="90">
 
 env = gym.make('FrozenLake-v0')
 
-\end{lstlisting}
-\end{minipage}
+
+  
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+
+
 
 
 The next step is to initialize the table $ Q $ to all zeros and of size 16x4. Here env.observation\_space.n = 16 and env.action\_space.n = 4.
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Q table and parameters initialization}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 Q = np.zeros( [env.observation_space.n, env.action_space.n] )
 
@@ -269,39 +266,54 @@ lr           = 0.8
 y            = 0.95
 num_episodes = 2000
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+</center>
+	
+	
+
+
+
+
+
+
 
 
 
 We take 2000 epochs (or episodes) and initialize some parameters lr and y. Each episode represents a game played. We use \textbf{jList} and \textbf{rList} to collect the number of steps taken per episode and the total reward per episode, respectively.  These are used to collect results of each game. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Q learning results lists}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="5" cols="90">
+
 
 jList = []
 rList = []
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
 
 
 
 The following code segment goes over the main loop of the Q-learn algorithm. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Q learning "for" loop}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="20" cols="90">
 
 for i in range(num_episodes):
     s = env.reset()
@@ -320,25 +332,42 @@ for i in range(num_episodes):
     #jList.append(j)
     rList.append(rAll)
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
+
                 
 
 
 In the next code segment, the line
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Q learning "for" loop}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
- for i in range(num\_episodes):
 
-\end{lstlisting}
-\end{minipage}
+<center>
+<div>
+<textarea rows="5" cols="90">
+
+for i in range(num\_episodes):
+
+  
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+
+
+
 
                  
 indicates that we are going to play num\_episodes = 2000 games. During these 2000 tries we will learn the best path to take.  
@@ -452,19 +481,23 @@ assigns the current state \textbf{s1} to \textbf{s}.
 The "if" statement in the folowing code listing
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Q learning end game criteria}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="90">
 
 if d == True:
     break
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
 
             
         
@@ -481,21 +514,19 @@ ends the game if \textbf{d} indicates end of game. The statement
 accumulates the number of steps taken to reach end of game. The statement
 
 
-
-     
-         
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Append to rl list}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="90">
 
   rList.append(rAll)
+  
+</textarea>
+  
+</div>
+</center>
+     
+         
 
-\end{lstlisting}
-\end{minipage}
 
 
                   
@@ -515,14 +546,9 @@ Let us begin.
 First we include the libraries as can be seen below. Notice we now add PyTorch.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Libraries for Q NN}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="90">
 
 import gym
 import numpy as np
@@ -533,25 +559,39 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+
+
 
 
 We create the game with the env object. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Create game environment}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="10" cols="90">
+
 
 env = gym.make('FrozenLake-v1')
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
 
 
 
@@ -559,14 +599,11 @@ Next, we define our familiar neural network classes and functions for the  loss 
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The logistic regression Q NN architecture}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="90">
+
 
 class Q_NN_Net(nn.Module):
     
@@ -586,9 +623,18 @@ class Q_NN_Net(nn.Module):
         Qout       = torch.squeeze(Qout, 0)
 
         return Qout
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
 
 With 
 
@@ -615,14 +661,10 @@ As can be seen from the previous class code, the network looks like the figure b
 It is important to note that this is a basic architecture and that much more complex deep architectures with different activation functions could be used such as architectures with many hidden layers or convolutional neural networks, etc. I was able to achieve good results using the following MLP neural network architecture.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The MLP Q NN architecture}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="90">
+
 
 class Q_NN_MLP_Net(nn.Module):
     
@@ -649,20 +691,25 @@ class Q_NN_MLP_Net(nn.Module):
         return Qout
     
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+	
+
+
+
 
 Notice that the NN classes us the following function called \textbf{gen\_state\_vector(s)}. We will use this function to convert state in integer form into one hot encoded vectors of size 16. 
 
+<center>
+<div>
+<textarea rows="10" cols="90">
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The MLP Q NN architecture}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 def gen_state_vector(s):
     states_np = np.identity(16)[s:s+1]
@@ -672,8 +719,19 @@ def gen_state_vector(s):
     return inputs1
     
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+	
+
+
+
+    
 
 The function
 
@@ -692,36 +750,38 @@ takes the current state in the variable \textbf{s} and converts it into a one-ho
 
 The loss function can be Least Squares Estimation which is the same as for regression! To calculate the error, we basically compare \textbf{q\_pred} to \textbf{target\_q} and try to minimize the error. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Loss}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="6" cols="90">
 
 loss = F.smooth_l1_loss( q_pred, target_q )
 
 ## or
 
 loss_fn = nn.MSELoss()
+    
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+
+
+
 
 We can set the following parameters. We create lists to contain  steps taken per episode (game) and  rewards per game. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="9" cols="90">
 
 stepsList     = []
 rewardsList   = []
@@ -730,9 +790,18 @@ learning_rate = 0.001       ## Adam default learning rate
 y             = 0.99
 num_episodes  = 4000
 epsilon       = 0.1       ## 0.2    , 0.01
+    
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
+
+
+
+
 
 The optimization is nothing more than the very familiar Gradient Descent (Adam) with a learning rate of 0.001. We instantiate the Q NN MLP model.
 
@@ -1372,9 +1441,6 @@ Attention
 
 <p>
 
-  The Attention mechanism in Transformers is the heart of the whole algorithm. The attention matrix is nothing more than a dot product matrix multiplication 
-  between all the tokens (e.g. words, syllables, subwords, etc.) in a sentence (e.g. the input English sentence). The idea is that, given the input and output, the model learns to correlate the words in
-  the sentence to determine their importance. This is done multiple times and that is why it is called a multi head attention mechanism. 
 
 
 </p>
