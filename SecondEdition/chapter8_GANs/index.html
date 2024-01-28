@@ -154,15 +154,9 @@ First we import the libraries.
 </p>
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Libraries}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 import torch
 import numpy as np
@@ -186,43 +180,48 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 Next we can define the parameters as follows
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+<center>
+<div>
+<textarea rows="7" cols="100">
 
 learning_rate    = 0.003  ## Adam default   ## 0.001
 batch_size       = 32
 N_Epochs         = 30  ##27000  
 
-     
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
 
+
+
+<p>
 We load the MNIST data in a similar way to what we did in previous chapters
 
+	
+</p>
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Load the data}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="16" cols="100">
 
 data_path   = "data/MNISTdata/"
 mnist_train = datasets.MNIST(data_path, train=True, download=True)
@@ -238,21 +237,23 @@ mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False,
                                                 transforms.ToTensor()
                                             ]))
 
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 It is a good idea to print the shapes of the tensors before creating the DataLoaders.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Create the DataLoaders}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="16" cols="100">
 
 mnist_train_tr.data.shape
 ## [60000, 28, 28]
@@ -264,23 +265,26 @@ train_dl  = torch.utils.data.DataLoader(mnist_train_tr, batch_size=batch_size, s
 
 test_dl   = torch.utils.data.DataLoader(mnist_test_tr,  batch_size=batch_size, shuffle=False ) 
 
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 Now we are ready to define the GAN architectures. GANs have a Generator and a Discriminator
 
 In the following code segment we define the architecture for the Generator. Notice that this will be a neural network of size 100x256x784. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Generator Architecture}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 class Generator_Net(nn.Module):
     
@@ -295,7 +299,6 @@ class Generator_Net(nn.Module):
         self.act2    = nn.Sigmoid()
         self.dropout = nn.Dropout(0.25)
         
-
     def forward(self, rand_input ):
         
 
@@ -309,20 +312,21 @@ class Generator_Net(nn.Module):
         return y_pred
 
      
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+
+
 
 
 I also tried a deeper architecture for the GAN but was not able to get it to learn in 30 epochs as I did with the simple MLP GAN. I am including it here and leave it as a exercise for the reader. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={DL GAN }}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 
 class Generator_DL_Net(nn.Module):
@@ -330,7 +334,6 @@ class Generator_DL_Net(nn.Module):
     def __init__(self):
         super().__init__()
         
-
         self.linear1 = nn.Linear(100, 60)
         self.act1    = nn.LeakyReLU(0.02)
         self.norm1   = nn.LayerNorm(60)
@@ -341,7 +344,6 @@ class Generator_DL_Net(nn.Module):
         self.act3    = nn.Sigmoid()
         self.dropout = nn.Dropout(0.2)
         
-
     def forward(self, rand_input ):
         
 
@@ -361,21 +363,23 @@ class Generator_DL_Net(nn.Module):
         return y_pred
 
      
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+  
+</div>
+</center>
+	
+
+
 
 
 The architecture for the Discriminator can be seen in the next code segment.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Discriminator Architecture}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 class Discriminator_Net(nn.Module):
     
@@ -405,84 +409,102 @@ class Discriminator_Net(nn.Module):
         return y_pred
 
      
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+
 
 
 Notice that the architecture for this network is 784x100x50x1. Its input is an image vector (real or fake) and its output is one neuron with value 0 or 1. 
 
 The following function can be used to generate seed random noise vectors for the Generator input. For training we want batches of noise vectors.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Batches of noise vectors}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="9" cols="100">
 
 def random_G_batch_vector_input():
     rand_vec = torch.randn( (batch_size, 100 ) )
     return rand_vec
 
-     
-\end{lstlisting}
-\end{minipage}
+    
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
+
+
+
+
+
 
 To generate individual images, we can use the following function to generate seed noise vectors
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Individual noise vectors}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="9" cols="100">
 
 def random_G_vector_input():
     rand_vec = torch.randn( 100 )
     return rand_vec
+    
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
 
      
-\end{lstlisting}
-\end{minipage}
+
 
 The Training function for the GAN is the most complicated we have seen so far. The full code can be seen seen below. As can be seen, we train the discriminator twice and the generator once. The Discriminator looks at a real image and it should predict that it is real (a one). Then the discriminator looks at a generated image (fake) and it should predict that it is a fake (a zero). The discriminator weights should be updated accordingly for these objectives. The final step is to update the weights of the Generator. Here, we want to trick the discriminator. So now the generated image (fake) is given to the Discriminator but we want it to say that it is real (a one). We do this using the loss of the Discriminator but adjust the weights of the Generator. So the Generator weights are updated in such a way that it generates images that trick the Discriminator into predicting that the fake images are true (a one). 
 
 Notice that before training, we need to squeeze and reshape the input \textbf{xb} tensor from [batch, 1, 28, 28] to [batch, 784] . We can do that with the following statements.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Squeeze and Reshape input to GAN}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 xb = torch.squeeze(xb, dim=1)
             
 xb = xb.reshape((-1, 784))
 
+    
+</textarea>
+  
+</div>
+</center>
+	
+
+
+<p>
+
+	and the GAN training function is
+</p>
      
-\end{lstlisting}
-\end{minipage}
 
+<center>
+<div>
+<textarea rows="35" cols="100">
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={GAN Training function}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
 list_losses_real    = []
 list_losses_fake    = []
 list_losses_tricked = []
@@ -528,21 +550,22 @@ def training_loop(  N_Epochs, G_model, D_model, D_loss_fn, G_opt, D_opt   ):
             list_losses_fake.append(        D_fake_loss.detach().numpy()  )
             list_losses_tricked.append(  D_tricked_loss.detach().numpy()  )
             
-\end{lstlisting}
-\end{minipage}
+
+
+    
+</textarea>
+  
+</div>
+</center>
+
+
 
 
 Finally, we can call the core functions and print the losses during training. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={GAN core functions}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="12" cols="100">
 
 G_model     = Generator_Net()
 
@@ -560,21 +583,21 @@ D_opt       = torch.optim.Adam( D_model.parameters(), lr=learning_rate )
 
 training_loop(  N_Epochs, G_model, D_model, D_loss_fn, G_opt, D_opt )
 
-     
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+
 
 We can seen below that the losses are going down for both the Generator and Discriminator. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={GAN losses}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 ******************************
 0 D_real_loss= tensor(0.1157, grad_fn=<BinaryCrossEntropyBackward0>)
@@ -605,21 +628,21 @@ We can seen below that the losses are going down for both the Generator and Disc
 29 D_tricked_loss= tensor(1.2962, grad_fn=<BinaryCrossEntropyBackward0>)
 
      
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+
 
 Using the following function, we can plot the losses. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Plot losses function}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 def plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked):
     
@@ -633,9 +656,19 @@ def plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked):
 
 plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked)
 
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 We can see that the losses of the Generator did not go below the discriminator loss. A good objective would be for them to be equal. 
 
@@ -650,26 +683,26 @@ We can see that the losses of the Generator did not go below the discriminator l
 
 And that is it. The GAN is now trained. We can now proceed to test it and generate a few images. We can do that with the following code segment. 
 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Test GAN and generate images}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 gen_test_img3 = G_model( random_G_vector_input() )
 gen_test_img3 = gen_test_img3.reshape( (28,28) )
 plt.imshow( gen_test_img3.detach().numpy() )
 plt.show()
 
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 I did this several times and the results of the generated images are as follows. This first image looks like a bad zero. 
 
@@ -962,12 +995,26 @@ The conditional GAN  (CGAN) can generate more than random images from a distribu
 \label{RegLin:fig}
 \end{figure}
 
-\section{Summary}
-
+<h1>
+Summary
+</h1>
+	
+<p>
 In this chapter, a description of Generative Adversarial Networks was provided. Some sample code was addressed as well as some applications of GANs. 
 
 
+	
+</p>
 
+
+
+
+
+
+
+
+
+	
 
 
 <h1>Numpy arrays, tensors, and linear algebra</h1>
