@@ -224,6 +224,12 @@ import gym
 	
 
 
+<p>
+
+	
+The frozenLake game can be initialized by creating the env object as can be seen below. This object represents the game and holds all the parameters related to states, 
+	actions, rewards, and current game state. 
+</p>
 
 
 
@@ -231,8 +237,6 @@ import gym
 
 
 
-
-The frozenLake game can be initialized by creating the env object as can be seen below. This object represents the game and holds all the parameters related to states, actions, rewards, and current game state. 
 
 <center>
 <div>
@@ -249,12 +253,16 @@ env = gym.make('FrozenLake-v0')
 	
 
 
-
-
-
+<p>
 
 
 The next step is to initialize the table $ Q $ to all zeros and of size 16x4. Here env.observation\_space.n = 16 and env.action\_space.n = 4.
+
+	
+</p>
+
+
+
 
 <center>
 <div>
@@ -275,14 +283,19 @@ num_episodes = 2000
 	
 
 
+<p>
+
+
+We take 2000 epochs (or episodes) and initialize some parameters lr and y. Each episode represents a game played. We use \textbf{jList} 
+	and \textbf{rList} to collect the number of steps taken per episode and the total reward per episode, respectively.  These are used to collect results of each game. 
+
+
+	
+</p>
 
 
 
 
-
-
-
-We take 2000 epochs (or episodes) and initialize some parameters lr and y. Each episode represents a game played. We use \textbf{jList} and \textbf{rList} to collect the number of steps taken per episode and the total reward per episode, respectively.  These are used to collect results of each game. 
 
 
 
@@ -302,12 +315,15 @@ rList = []
 
 
 
-
-
-
-
-
+<p>
 The following code segment goes over the main loop of the Q-learn algorithm. 
+
+	
+</p>
+
+
+
+
 
 
 
@@ -341,12 +357,15 @@ for i in range(num_episodes):
 
 
 
+<p>
+In the next code segment, the line
 
+
+	
+</p>
 
                 
 
-
-In the next code segment, the line
 
 
 
@@ -366,120 +385,183 @@ for i in range(num\_episodes):
 
 
 
+<p>
 
-
-
-                 
 indicates that we are going to play num\_episodes = 2000 games. During these 2000 tries we will learn the best path to take.  
 
 
 From the main loop we can see that the line 
 
-\begin{center}
-   s = env.reset() 
-\end{center}
+	
+</p>
 
+
+                 
+
+<center>
+   s = env.reset()
+	
+</center>
+ 
+<p>
+
+restarts the game for every episode so we can play it again and assign the initial state to \textbf{s}. The variable \textbf{rAll} adds up the accumulated rewards
+	for this episode. The variables \textbf{d} and \textbf{j} are control variables to indicate if the game has ended and to count the number of steps taken.  
+
+
+The code in the while loop is what allows the algorithm to learn or update the values in the \textbf{Q} table designated by the variable \textbf{Q}. To take the 
+	first step we need to pick an action to follow. We do this with the following lines of code:
+
+	
+</p>
 
                                    
-restarts the game for every episode so we can play it again and assign the initial state to \textbf{s}. The variable \textbf{rAll} adds up the accumulated rewards for this episode. The variables \textbf{d} and \textbf{j} are control variables to indicate if the game has ended and to count the number of steps taken.  
+<center>
+	
+zz = env.action_space.n 
+	
+</center>
 
 
-The code in the while loop is what allows the algorithm to learn or update the values in the \textbf{Q} table designated by the variable \textbf{Q}. To take the first step we need to pick an action to follow. We do this with the following lines of code:
-
-\begin{center}
-    zz = env.action\_space.n 
-\end{center}
-
-
-
+<p>
 and
+	
+</p>
 
-\begin{center}
-a = np.argmax(  Q[s,:]+np.random.randn(1,zz) *(1.0/(i+1))  ) 
-\end{center}
-              
-                                  
 
-The variable \textbf{zz} is the size \textbf{n} of all actions in the game (up, down, left, right) which in this case is 4. The statement Q[s, :] selects the current Q values (rewards) associated with state \textbf{s}. The statement 
+<center>
 
-\begin{center}
-     np.random.randn(1,zz) *(1.0/(i+1))  
-\end{center}
-           
+a = np.argmax(  Q[s,:]+np.random.randn(1,zz) *(1.0/(i+1))  ) 	
+</center>
 
+<p>
+
+
+The variable \textbf{zz} is the size \textbf{n} of all actions in the game (up, down, left, right) which in this case is 4. 
+	The statement Q[s, :] selects the current Q values (rewards) associated with state \textbf{s}. The statement 
+
+	
+</p>    
+
+<center>
+   np.random.randn(1,zz) *(1.0/(i+1))  
+	
+</center>
+
+<p>
 adds randomness to the four Q values for the current state. Basically, you randomly increment the Q values for the current state and then select the highest one with 
 
-\begin{center}
-      np.argmax()
-\end{center}
-                       
-                                        
+
+	
+</p>
+           
+
+<cemter>
+
+  np.argmax()
+	
+</cemter>
+
+<p>
 by selecting the highest Q value you determine what action (a) you take given the current state. 
 
 
-Once the action \textbf{a} is selected, we can proceed to evaluate it in the game to obtain our new state (position) and the reward (did we fall in a hole or advanced to a frozen block). We do this with 
+Once the action "a" is selected, we can proceed to evaluate it in the game to obtain our new state (position) and the reward (did we fall in a hole or
+	advanced to a frozen block). We do this with 
 
+	
+</p>                    
+                                        
 
-\begin{center}
-      s1, r, d, \_ = env.step(a)
-\end{center}
+<center>
+
+	 s1, r, d, _ = env.step(a)
+</center>
+	
+
+<p>
+here, "s1" is the new state (position) and \textbf{r} is the reward. The parameter \textbf{d} indicates end of the game. Given this new information about 
+	the result of our action, we can proceed to update the Q-table with our new results and new knowledge about the state of the game. This is done with the statement 
+	
+</p>
 
                     
+<center>
 
-here, \textbf{s1} is the new state (position) and \textbf{r} is the reward. The parameter \textbf{d} indicates end of the game. Given this new information about the result of our action, we can proceed to update the Q-table with our new results and new knowledge about the state of the game. This is done with the statement 
+	   Q[s,a] = Q[s,a] + lr*(r + y*np.max(Q[s1,:]) - Q[s,a])
+</center>
 
-\begin{center}
-         Q[s,a] = Q[s,a] + lr*(r + y*np.max(Q[s1,:]) - Q[s,a])
-\end{center}
+<p>
+
+In this statement, \textbf{Q[s, a]} contains the current Q value (reward) associated with the state \textbf{s} and the action \textbf{a}. 
+	This is the Bellman equation which can be viewed as
+
+	
+</p>
 
  
     
-In this statement, \textbf{Q[s, a]} contains the current Q value (reward) associated with the state \textbf{s} and the action \textbf{a}. This is the Bellman equation which can be viewed as
-
-\begin{center}
-
-         next\_s\_Q = lr*(r + y*np.max(Q[s1,:]) - Q[s,a])
-
-         Q[s,a] = Q[s,a] + next\_s\_Q
-         
-\end{center}
+<center>
+	  next_s_Q = lr*(r + y*np.max(Q[s1,:]) - Q[s,a])
+<br/>
+         Q[s,a] = Q[s,a] + next_s_Q
+</center>
+       
 
 
-The term next\_s\_Q contains the current reward for state \textbf{s} plus the maximum reward for the next state \textbf{s1}.   The parameters \textbf{lr} and \textbf{y} are weights to control the importance of the next state’s reward when updating the current states reward (Q value). 
+<p>
+The term next_s_Q contains the current reward for state \textbf{s} plus the maximum reward for the next state \textbf{s1}.   
+	The parameters \textbf{lr} and \textbf{y} are weights to control the importance of the next state’s reward when updating the current states reward (Q value). 
 We can think of this parameter 
 
+	
+</p>
 
-\begin{center}
 
-         - Q[s,a] )
-         
-\end{center}
-                            
-                                                 
+<center>
+ - Q[s,a] )
+	
+</center>
+
+        
+<p>
 as a regularization parameter. 
 At this point we are almost done and we can proceed to accumulate our results. The statement 
 
-\begin{center}
+	
+</p>                     
+                                                 
 
-         rAll += r
+<center>
+
+	  rAll += r
+</center>
+
+       
          
-\end{center}
-
-   
+<p>
 accumulates the total rewards. The statement
 
-\begin{center}
+	
+</p>
 
-         s = s1
-         
-\end{center}
 
-          
-          
+<centr>
+
+	 s = s1
+</centr>
+
+        
+<p>
 assigns the current state \textbf{s1} to \textbf{s}. 
 
 The "if" statement in the folowing code listing
 
+
+	
+</p>
+          
+          
 
 <center>
 <div>
@@ -496,22 +578,29 @@ if d == True:
 
 
 
+<p>
+ends the game if \textbf{d} indicates end of game. The statement
 
+	
+</p>
 
 
             
         
-ends the game if \textbf{d} indicates end of game. The statement
+<center>
+    jList.append(j)
+	
+</center>
 
-\begin{center}
+    
+<p>
+accumulates the number of steps taken to reach end of game. The statement
 
-        jList.append(j)
-         
-\end{center}
+	
+</p>
 
                   
 
-accumulates the number of steps taken to reach end of game. The statement
 
 
 <center>
@@ -528,22 +617,33 @@ accumulates the number of steps taken to reach end of game. The statement
          
 
 
-
-                  
+<p>
                    
 appends rewards per game to a list so that they can be viewed later. 
 
 
 That is it. We have finished our discussion of Q-learn with tables on the frozenLake game. Now we can proceed to replace the table with a neural network.
 
+	
+</p>
+                  
+<h1>
+Q-Learning using a Neural Network
+	
+</h1>
 
-\section{Q-Learning using a Neural Network}  
-
-   
-Now that we understand the frozenLake game with a table, we can proceed to replace the table with a neural network. It is important to note here that the weights matrix \textbf{W} in the neural network can be thought of as  representing the \textbf{Q} table. Otherwise, just think of the whole neural network as the table. We give it the states vector (size=16) as input and the network predicts the actions vector (size=4) per state.  
+<p>
+Now that we understand the frozenLake game with a table, we can proceed to replace the table with a neural network. 
+	It is important to note here that the weights matrix \textbf{W} in the neural network can be thought of as  representing the \textbf{Q} table. 
+	Otherwise, just think of the whole neural network as the table. We give it the states vector (size=16) as input and the network predicts the actions 
+	vector (size=4) per state.  
 Let us begin. 
-
+<br />
 First we include the libraries as can be seen below. Notice we now add PyTorch.
+
+	
+</p>
+   
 
 
 <center>
@@ -568,11 +668,14 @@ import torch.optim as optim
 
 
 
+<p>
+
+	We create the game with the env object. 
+
+</p>
 
 
 
-
-We create the game with the env object. 
 
 
 
@@ -590,12 +693,18 @@ env = gym.make('FrozenLake-v1')
 
 
 
+<p>
+Next, we define our familiar neural network classes and functions for the  loss and training. The first Q NN class creates a simple logistic regression 
+	type neural network. Here, the \textbf{W} replaces the \textbf{Q} table. Notice the dimensions of \textbf{W} are 16x4 because we have 16 states in the 
+	game and 4 actions. The \textbf{Qout} tensor (our predicted \textbf{y} in previous chapters) is the result of a matmul operation between \textbf{x} (our states)
+	and \textbf{W} (the weights or Q values in this case). 
+
+	
+</p>
 
 
 
 
-
-Next, we define our familiar neural network classes and functions for the  loss and training. The first Q NN class creates a simple logistic regression type neural network. Here, the \textbf{W} replaces the \textbf{Q} table. Notice the dimensions of \textbf{W} are 16x4 because we have 16 states in the game and 4 actions. The \textbf{Qout} tensor (our predicted \textbf{y} in previous chapters) is the result of a matmul operation between \textbf{x} (our states) and \textbf{W} (the weights or Q values in this case). 
 
 
 
