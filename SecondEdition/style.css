@@ -35,21 +35,14 @@ a:visited { color:#2200AA; text-decoration: none; }
 a:hover   { color:#AA0000; text-decoration: underline; }
 a:active  { color:#FF0000; text-decoration: underline; }
 
-body {
 
-  /* This is a single-line comment */
-    margin-left:   5%;
-    margin-right:  5%;
-    margin-top:    2em;
-    margin-bottom: 5em;
-    font-family: "Lucida Grande", "Verdana", "Arial", sans-serif;
-    font-size: small;
-    line-height: 140%;
-}
 
 table {
     font-size: small;
 }
+
+
+
 
 hr {
     clear: both;
@@ -97,18 +90,70 @@ div.txt {
 /* Navigation table                                                          */
 
 #nav {
-    clear: both;
-    width: 100%;
-    margin-bottom: 2em;
 
-  
+    clear: both;
+    margin-left:    5%;
+     margin-right:  5%;
+    width: 100%;
+
+    margin-bottom: 2em;
+    background-color: #333;
+    position: fixed; /* Set the navbar to fixed position */
+    overflow: hidden;
+    top: 0;          /* Position the navbar at the top of the page */
+
+
+
 }
 
 #nav td {
     text-align: center;
-    width: 13%;
+    width: 20%;
 }
 
+
+.main {
+  margin-top: 40px; /* Add a top margin to avoid content overlay */
+
+  /* This is a single-line comment */
+  margin-left:   5%;
+  margin-right:  5%;
+  /* margin-top:    2em; */
+  margin-bottom: 5em;
+  font-family: "Lucida Grande", "Verdana", "Arial", sans-serif;
+  font-size: large;
+  line-height: 140%;
+
+  
+}
+
+
+/*--------------------------------------------------------------------------*/
+
+/* The navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change background on mouse-over */
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
 
 /*---------------------------------------------------------------------------*/
 /* Calender table                                                            */
@@ -165,4 +210,8 @@ td.off {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+}
+
+textarea {
+   font-size: large;
 }
