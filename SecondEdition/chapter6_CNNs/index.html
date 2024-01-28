@@ -230,14 +230,9 @@ We can use the following libraries
 </p>
 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={CNN libraries}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 import torch
 import numpy as np
@@ -251,8 +246,15 @@ from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_sc
 import torch.optim as optim 
 import torch.nn as nn
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
+
+
+
 
 
 
@@ -260,22 +262,21 @@ import torch.nn as nn
 The first part of the code that needs to be defined is the section used to set the algorithm parameters.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={CNN parameters}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 learning_rate = 0.003
 N_Epochs      = 20
 batch_size    = 32
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
+
+
 
 
 Most of the parameters defined in this section are similar to parameters we have used in previous chapters. A new parameter is the dropout. The dropout is a parameter for a technique first defined by Geoffrey Hinton. Dropout is a technique that helps to perform a better optimization during the weight search. Every iteration during training, the dropout percent of connections (weights) is dropped. 
@@ -285,15 +286,9 @@ Most of the parameters defined in this section are similar to parameters we have
 At the heart of a CNN there are 2 main operations which are the convolution and the maxpool operation. The convolution code can be seen below. As can be seen, it takes images and filters and performs a convolution operation. The strides parameter defines how the filter will slide across the image (e.g. every pixel, every 2 pixels, etc.). Therefore, strides can achieve the same objective and maxpooling. For instance, a stride of 2 can be seen as maxpooling the image by a factor of 2 as well. Both approaches in the literature have been found to achieve similar results. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Convolution and maxpool operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 model =  nn.Sequential(
             
@@ -313,9 +308,18 @@ model =  nn.Sequential(
         
 )
 
+</textarea>
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
+
+
 
 
 
@@ -326,15 +330,9 @@ In the previous code listing, the activation is ReLU, and normalization and drop
 
 To keep things simple here, I will read the MNIST from the datasets module in torchvision. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Read the MNIST data}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 data_path = "data/MNISTdata/"
 
@@ -342,20 +340,22 @@ mnist_train = datasets.MNIST(data_path, train=True,  download=True)
 mnist_test  = datasets.MNIST(data_path, train=False, download=True)
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
+
+
 
 The datasets module also has a nice way of applying filters to the data so that it can be converted to Torch tensors. Many filter can be applied but here I only use the \textbf{Transforms.ToTensor()} which is necessary to convert the whole dataset to torch tensors.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Transformes to convert to torch tensors}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 mnist_train_tr = datasets.MNIST(data_path, train=True, download=False, 
                                             transform=transforms.Compose([
@@ -368,28 +368,37 @@ mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False,
                                             ]))
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
+
+
+
+
+
+
 
 we can now proceed to display an image with the PIL image module
 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Display an image}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 Image.fromarray(  mnist_test_tr.data[337].numpy()  ) 
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
+
+
+
+
+
+
+
 
 which results in the following
 
@@ -403,15 +412,10 @@ which results in the following
 
 It is always a good idea to check the tensor shapes. The following code gives us a shape of [60000, 28, 28] for the train set, and of [10000, 28, 28] for the test set. Torch convolution layers prefer shapes like [10000, 1, 28, 28] instead of like this [10000, 28, 28]. The Dataloader takes care of that so we do not have to change it manually. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Check Tensor shapes}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+<center>
+<div>
+<textarea rows="8" cols="100">
 
 ## mnist_train_tr.data = mnist_train_tr.data.view(60000, 1, 28, 28)
 
@@ -419,42 +423,49 @@ mnist_train_tr.data.shape
 
 mnist_test_tr.data.shape
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+</div>
+</center>
+	
+
+
+
+
+
 
 Here we create the DataLoaders as follows: 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={DataLoaders for MNIST}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="8" cols="100">
 
 batch_size = 32
 
 train_dl  = torch.utils.data.DataLoader(mnist_train_tr, batch_size=batch_size, shuffle=True  ) 
 
-
 test_dl   = torch.utils.data.DataLoader(mnist_test_tr,  batch_size=10000,      shuffle=False ) 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+	
+
+
+
+
+
 
 
 Next, we add our familiar classifications performance function from previous chapters
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Performance metrics function}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="14" cols="100">
 
 def print_metrics_function(y_test, y_pred):
     print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
@@ -466,23 +477,25 @@ def print_metrics_function(y_test, y_pred):
     f1_measure = f1_score(y_true=y_test, y_pred=y_pred, average='weighted')
     print('F1-mesure: %.3f' % f1_measure)
     return f1_measure
-    
+   
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
+
+
+
+ 
+
+
 
 
 Now we are ready to implement our CNN architecture for the MNIST data as follows
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={CNN NN architecture}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="34" cols="100">
 
 class Classifier_CNN(nn.Module):
     
@@ -510,29 +523,28 @@ class Classifier_CNN(nn.Module):
                 nn.Linear(1024, 10),
                 nn.LogSoftmax(dim=1)
         )
- 
- 
-           
+   
     def forward(self, inputs):
             
         return self.model(inputs)
     
     
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
+
+
+
 
 
 Now we can proceed to define our familiar training loop
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={CNN training loop}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 def training_loop( N_Epochs, model, loss_fn, opt  ):
     
@@ -556,22 +568,27 @@ def training_loop( N_Epochs, model, loss_fn, opt  ):
             losses_list.append(  loss  )
             
     return losses_list
+   
+
+</textarea>
+</div>
+</center>
+	
+	
+
+
+
     
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 That is it as far as preparing the data and defining the classes. We are now ready to initialize the core functions and to start the training process. We can do so as follows 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Call the core functions for training}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 model          = Classifier_CNN()
 
@@ -579,23 +596,29 @@ opt            = torch.optim.Adam(    model.parameters(), lr=learning_rate )
 
 loss_fn        = nn.CrossEntropyLoss( )   
 
-my_losses_list = training_loop(  N_Epochs, model, loss_fn, opt  )
+my_losses_list = training_loop(  N_Epochs, model, loss_fn, opt  ) 
+   
+</textarea>
+</div>
+</center>
+	
+	
+
+	
+
+
+
     
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 Running the previous code start the training and we can see the losses here
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The losses during training}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 0  loss= tensor(0.0035, grad_fn=<NllLossBackward0>)
 1  loss= tensor(0.0191, grad_fn=<NllLossBackward0>)
@@ -617,21 +640,24 @@ Running the previous code start the training and we can see the losses here
 17 loss= tensor(0.0002, grad_fn=<NllLossBackward0>)
 18 loss= tensor(0.2447, grad_fn=<NllLossBackward0>)
 19 loss= tensor(0.0643, grad_fn=<NllLossBackward0>)
+   
+</textarea>
+</div>
+</center>
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 
 After training we would like to predict and evaluate the  trained model on the test set. This can be achieved with the following code
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Code to evaluate performance}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 with torch.no_grad():
     for x_real, y_real in test_dl:
@@ -641,20 +667,24 @@ with torch.no_grad():
         vals, indeces = torch.max( y_pred, dim=1  )
         preds = indeces
         print_metrics_function(y_real, preds)
+   
+</textarea>
+</div>
+</center>
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 which gives us
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Performance metrics}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="18" cols="100">
 
 Accuracy: 0.99
 Confusion Matrix:
@@ -671,9 +701,16 @@ Confusion Matrix:
 Precision: 0.989
 Recall: 0.989
 F1-mesure: 0.989
+   
+</textarea>
+</div>
+</center>
+
+
+
+
     
-\end{lstlisting}
-\end{minipage}
+
 
 As can be seen for the previous results, the code performed really well. 
 
@@ -682,15 +719,9 @@ As can be seen for the previous results, the code performed really well.
 Figuring out the tensor shapes after the convolutional and maxpool layers can be challenging. One way to find out what it is is to run a dummy tensor through the CNN architecture and print the shape after all the convolutions. 
 This can be achieved with the following code:
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Tensor shape after convolution layers}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="38" cols="100">
 
 N_batches = 10
 
@@ -720,265 +751,24 @@ print( res_actual_model.shape )
 
 ## torch.Size([10, 800])
     
-\end{lstlisting}
-\end{minipage}
 
-As can be seen, the previous code listing shows an example of how we can determine the shape of our output tensor after the convolutional layers and the flatten operation. We can see that the value is 800 which  is the same size we defined in our CNN architecture after the flatten operation. 
+   
+</textarea>
+</div>
+</center>
 
 
-\section{CNNs for RGB Data with your own images}
+<p>
 
-In the previous section we looked at CNNs for grey scaled data. In this section we apply CNNs to color images. 
+As can be seen, the previous code listing shows an example of how we can determine the shape of our output tensor after the convolutional
+	layers and the flatten operation. We can see that the value is 800 which  is the same size we defined in our CNN architecture after the flatten operation. 
 
-\begin{comment}
 
+	
+</p>
 
-The main change will relate to the fact that the inputs for grey scale are [n, m, 1] whereas inputs for color images are [n, m, 3].
-Next we describe the code. The data can be downloaded from the github. First we add the libraries as usual. 
 
 
-Next we set parameters to remove warnings and to see all values when printing numpy arrays.
- 
-
-
-Here we set the parameters for the loop. Notice that we train for 200,000 epochs. We read the data in batches of 128. 
-
-
-Now it starts to get interesting. We need to set the size of the images. In MNIST our images where of size 28x28x1. In this example we use color images of size 100x100x3 (data available on the github). Given the size of each image, our number of features is 30,000 or 100x100x3. It is important that you are aware that data is fed as tensors into the computational graph. Therefore, the images or tensors may be reshaped from cubes to vectors and vice versa as needed. The number of classes for this data set is 4 given that we are trying to classify between 4 fruits. The last parameter is the dropout. Remember dropout forces the network to use fewer neurons. 
-
-
-
-Now we are ready to read in our data. We use PIL. Put your images in a folder named testA. We can use glob to gather the images from the folder and then PIL to read them in. The images are grouped by label into 4 different folders.  Two list for images and labes are used to store the data. I left the commented out lines so you can play with visualizing the images as you read them in. 
-
-
-
-The way I read the images uses 4 loops for each folder. This could have been done in many different ways. I simly thought this was the clearest approach. 
-
-
-The following reads in data for bananas. 
-
-
-Now we read in pepino jpgs. 
-
-
-Finally, we read in peppers. 
-
-
-After reading the images, we convert the lists to numpy arrays and visualize dimensions.
-
-
-
-You could reshape the images for various reasons. Here is an example of how to do that. Try it. 
-
-After converting the images to numpy arrays, you can save them to file for later use. 
-
-
-For our purposes, I renamed the matrix as your\_mnist so you know this is like mnist would be. Remember the data is now about fruits. 
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-x = np.array([1,2,3,4])
-
-print(x+10)
-print(x-10)
-print(x*10)
-print(x/2)
-print(-x)
-print(x ** 3) 
-print(np.power(4, x)) 
-print(np.log(x))
-print(np.log2(x)) 
-print(np.log10(x) )
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-Remember to always normalize. 
-
-
-Now we perform train and test split as we previously learned. 
-
-
-Here we define the performance metrics function for precision, recall, f-measure, and the confusion matrix. 
-
-
-The plotting function. 
-
-
-Now we define the concolution function with strides equal to 1 and a relu function. Remember that relu removes negative values and looks like a hokey stick. Also, remember relu is not constrained to ranges such as [0..1] or [-1..1] but instead [0..infinity]. Therefore, is has more power to learn because the positive values range is much wider and has more power to learn. 
-
-
-
-The max pooling function. This problem of images that are 100x100x3 results in a max pooling situation where the images have dimensions that are uneven numbers. How do we resolve this? Easily. We use padding=SAME. So when the image is image 25x25 maxpool would give an image that is -> 12.5 x 12.5. Because of padding=same then it is rounded up to 13x13. Problem solved! 
-
-
-
-Now we define the layer function as previously discussed which is used for the fully connected layer. 
-
-
-
-We define the convolutional layer function using our previous conv2d and max pool functions. 
-
-
-
-Next we define the fully connected layer. Notice that the -1 in the reshape allows to infer the size of that dimension.
-
-
-
-Finally, we are ready to define the architecture. This is what you will usually need to figure out depending on your images. So we first reshape each input picture in the batch. Notice that the batch itself is a tensor of n images. 
-
-The shape is equal to 
-
-[-1, size\_image\_x, size\_image\_y, 3 channels (e.g. rgb)]
-
-The resized image for rgb and batches of 128 would be [128, 30000] because there are 128 samples per batch and images are 100x100x3 = 30000. This has to be re-shaped bacause Convolutional layers only take 4 dimensional tensors as     input. 
-
-The -1 infers the number of batches and then we make the 30,000 into 100x100x3. In this first function we start with 16 filters. 
-
-
-
-
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-x = np.array([1,2,3,4])
-
-print(x+10)
-print(x-10)
-print(x*10)
-print(x/2)
-print(-x)
-print(x ** 3) 
-print(np.power(4, x)) 
-print(np.log(x))
-print(np.log2(x)) 
-print(np.log10(x) )
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-
-
-
-
-
-
-
-The next code segment is another version of the previous function. Here we start with 32 filters instead of 16. 
-
-
-
-Finally, in this function we use 3 convolutions instead of 2 like in the previous functions.
-
-
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Numpy math operations}}
-%\lstset{label={lst:code\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-x = np.array([1,2,3,4])
-
-print(x+10)
-print(x-10)
-print(x*10)
-print(x/2)
-print(-x)
-print(x ** 3) 
-print(np.power(4, x)) 
-print(np.log(x))
-print(np.log2(x)) 
-print(np.log10(x) )
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-
-
-
-So, that was the hard part. Now we are ready for the loss function. It is a simple cross entropy as previously described. 
-
-
-
-We train with the Adam optimizer. 
-
-
-
-The standard accuracy function. 
-
-
-
-
-
-Now we are ready for the place holders. Notice that the image cubes are flatten from 3 dimensions to just 1. There are alternatives to this.  
-
-
-
-Now we are ready to call the core functions. 
-
-
-
-Remember this converts from one hot encoding back to a 1 column class vector. 
-
-
-
-
-
-This should be familiar by now. We initialize the session and variables. 
-
-
-Here we one hot encode the labels. Remember that there are 4 fruits so we have 4 classes. 
-
-
-
-Next we calculate the batch processing parameters. 
-
-
-
-
-We can modify the dropout parameter here. 
-
-
-Finally, we made it to the main loop.
-
-
-That is it. 
-
-
-
-
-\end{comment}
 
 <h1>
 
@@ -990,9 +780,6 @@ In this chapter, an implementation of a CNN model for hand written digit identif
 	The code was provided and results of the classification task were also presented and discussed. The CNN used the MNIST data set for inputs and focused
 	on building deep neural networks with several convolution and maxpool layers. The architecture consisted of 2 convolutional layers followed by 1 fully 
 	connected layer of size 1024. 
-
-
-
 	
 </p>
 
@@ -1000,593 +787,6 @@ In this chapter, an implementation of a CNN model for hand written digit identif
 
 
 
-
-
-
-
-
-
-     
-
-
-Next we can define the parameters as follows
-
-
-
-<center>
-<div>
-<textarea rows="7" cols="100">
-
-learning_rate    = 0.003  ## Adam default   ## 0.001
-batch_size       = 32
-N_Epochs         = 30  ##27000  
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-<p>
-We load the MNIST data in a similar way to what we did in previous chapters
-
-	
-</p>
-
-<center>
-<div>
-<textarea rows="16" cols="100">
-
-data_path   = "data/MNISTdata/"
-mnist_train = datasets.MNIST(data_path, train=True, download=True)
-mnist_test = datasets.MNIST(data_path, train=False, download=True)
-
-mnist_train_tr = datasets.MNIST(data_path, train=True, download=False, 
-                                            transform=transforms.Compose([
-                                                transforms.ToTensor()
-                                            ]))
-                                            
-mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False, 
-                                            transform=transforms.Compose([
-                                                transforms.ToTensor()
-                                            ]))
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-     
-
-
-It is a good idea to print the shapes of the tensors before creating the DataLoaders.
-
-<center>
-<div>
-<textarea rows="16" cols="100">
-
-mnist_train_tr.data.shape
-## [60000, 28, 28]
-
-mnist_test_tr.data.shape
-## [10000, 28, 28]
-
-train_dl  = torch.utils.data.DataLoader(mnist_train_tr, batch_size=batch_size, shuffle=True  ) 
-
-test_dl   = torch.utils.data.DataLoader(mnist_test_tr,  batch_size=batch_size, shuffle=False ) 
-
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-     
-
-
-Now we are ready to define the GAN architectures. GANs have a Generator and a Discriminator
-
-In the following code segment we define the architecture for the Generator. Notice that this will be a neural network of size 100x256x784. 
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-class Generator_Net(nn.Module):
-    
-    def __init__(self):
-        super().__init__()
-        
-
-        self.linear1 = nn.Linear(100, 256)
-        self.act1    = nn.LeakyReLU(0.02)
-        self.norm1   = nn.LayerNorm(256)
-        self.linear2 = nn.Linear(256, 784)
-        self.act2    = nn.Sigmoid()
-        self.dropout = nn.Dropout(0.25)
-        
-    def forward(self, rand_input ):
-        
-
-        x      = self.linear1( rand_input )
-        x      = self.act1(x)
-        x      = self.norm1(x) 
-        x      = self.linear2(x)
-        x      = self.act2(x)
-        y_pred = x
-        
-        return y_pred
-
-     
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-I also tried a deeper architecture for the GAN but was not able to get it to learn in 30 epochs as I did with the simple MLP GAN. I am including it here and leave it as a exercise for the reader. 
-
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-
-class Generator_DL_Net(nn.Module):
-    
-    def __init__(self):
-        super().__init__()
-        
-        self.linear1 = nn.Linear(100, 60)
-        self.act1    = nn.LeakyReLU(0.02)
-        self.norm1   = nn.LayerNorm(60)
-        self.linear2 = nn.Linear(60, 120)
-        self.act2    = nn.LeakyReLU(0.02)
-        self.norm2   = nn.LayerNorm(120)
-        self.linear3 = nn.Linear(120, 784)
-        self.act3    = nn.Sigmoid()
-        self.dropout = nn.Dropout(0.2)
-        
-    def forward(self, rand_input ):
-        
-
-        x      = self.linear1( rand_input )
-        x      = self.act1(x)
-        x      = self.norm1(x) 
-        x      = self.dropout(x)
-        x      = self.linear2(x)
-        x      = self.act2(x)
-        x      = self.norm2(x) 
-        x      = self.dropout(x)
-        x      = self.linear3(x)
-        x      = self.act3(x)
-        
-        y_pred = x
-        
-        return y_pred
-
-     
-
-</textarea>
-  
-</div>
-</center>
-	
-
-
-
-
-The architecture for the Discriminator can be seen in the next code segment.
-
-
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-class Discriminator_Net(nn.Module):
-    
-    def __init__(self):
-        super().__init__()
-        
-        self.linear1 = nn.Linear(784, 100)
-        self.act1    = nn.ReLU()
-        self.linear2 = nn.Linear(100, 50)
-        self.act2    = nn.ReLU()
-        self.linear3 = nn.Linear(50, 1)
-        self.act3    = nn.Sigmoid()             ## nn.Softmax(dim=1)
-        self.dropout = nn.Dropout(0.25)
-        
-
-    def forward(self, x):
-        
-        x      = self.linear1(x)
-        x      = self.act1(x)
-        x      = self.dropout(x)
-        x      = self.linear2(x)
-        x      = self.act2(x)
-        x      = self.dropout(x)
-        x      = self.linear3(x)
-        y_pred = self.act3(x)
-        
-        return y_pred
-
-     
-</textarea>
-  
-</div>
-</center>
-	
-
-
-
-
-
-
-Notice that the architecture for this network is 784x100x50x1. Its input is an image vector (real or fake) and its output is one neuron with value 0 or 1. 
-
-The following function can be used to generate seed random noise vectors for the Generator input. For training we want batches of noise vectors.
-
-
-
-<center>
-<div>
-<textarea rows="9" cols="100">
-
-def random_G_batch_vector_input():
-    rand_vec = torch.randn( (batch_size, 100 ) )
-    return rand_vec
-
-    
-</textarea>
-  
-</div>
-</center>
-	
-
-
-
-
-
-
-
-
-
-To generate individual images, we can use the following function to generate seed noise vectors
-
-
-
-<center>
-<div>
-<textarea rows="9" cols="100">
-
-def random_G_vector_input():
-    rand_vec = torch.randn( 100 )
-    return rand_vec
-    
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-
-     
-
-
-The Training function for the GAN is the most complicated we have seen so far. The full code can be seen seen below. As can be seen, we train the discriminator twice and the generator once. The Discriminator looks at a real image and it should predict that it is real (a one). Then the discriminator looks at a generated image (fake) and it should predict that it is a fake (a zero). The discriminator weights should be updated accordingly for these objectives. The final step is to update the weights of the Generator. Here, we want to trick the discriminator. So now the generated image (fake) is given to the Discriminator but we want it to say that it is real (a one). We do this using the loss of the Discriminator but adjust the weights of the Generator. So the Generator weights are updated in such a way that it generates images that trick the Discriminator into predicting that the fake images are true (a one). 
-
-Notice that before training, we need to squeeze and reshape the input \textbf{xb} tensor from [batch, 1, 28, 28] to [batch, 784] . We can do that with the following statements.
-
-<center>
-<div>
-<textarea rows="6" cols="100">
-
-xb = torch.squeeze(xb, dim=1)
-            
-xb = xb.reshape((-1, 784))
-
-    
-</textarea>
-  
-</div>
-</center>
-	
-
-
-<p>
-
-	and the GAN training function is
-</p>
-     
-
-<center>
-<div>
-<textarea rows="35" cols="100">
-
-	
-list_losses_real    = []
-list_losses_fake    = []
-list_losses_tricked = []
-def training_loop(  N_Epochs, G_model, D_model, D_loss_fn, G_opt, D_opt   ):
-    for epoch in range(N_Epochs):
-        for xb, yb in train_dl:              ## xb = [batch, 1, 28, 28]
-            xb = torch.squeeze(xb, dim=1)
-            xb = xb.reshape((-1, 784))
-            #################################################
-            ## G_model.eval()     ## No G training
-            ## gen_img = G_model( random_G_vector_input() )
-            gen_img = G_model( random_G_batch_vector_input() ).detach()
-            ## Train D with real data
-            D_real_y_pred = D_model(  xb  )
-            D_real_loss   = D_loss_fn( D_real_y_pred, torch.ones((batch_size, 1)) )
-            D_opt.zero_grad()
-            D_real_loss.backward()
-            D_opt.step()
-            ## Train D with fake data
-            D_fake_y_pred = D_model(  gen_img  )
-            D_fake_loss   = D_loss_fn( D_fake_y_pred, torch.zeros((batch_size, 1)))
-            D_opt.zero_grad()
-            D_fake_loss.backward()
-            D_opt.step()
-            ## G_model.train()    ## yes G training
-            #################################################
-            ## D_model.eval()     ## No D training
-            ## gen_img = G_model( random_G_vector_input() )
-            gen_img = G_model( random_G_batch_vector_input() )
-            ## Train G with D_loss (need to trick D)
-            D_tricked_y_pred = D_model(  gen_img  )
-            D_tricked_loss   = D_loss_fn( D_tricked_y_pred, torch.ones((batch_size, 1)) )
-            G_opt.zero_grad()
-            D_tricked_loss.backward()
-            G_opt.step()
-            ## D_model.train()    ## yes D training
-        if epoch % 1 == 0:
-            print("******************************")
-            print(epoch, "D_real_loss=", D_real_loss)
-            print(epoch, "D_fake_loss=", D_fake_loss)
-            print(epoch, "D_tricked_loss=", D_tricked_loss)
-            list_losses_real.append(        D_real_loss.detach().numpy()  )
-            list_losses_fake.append(        D_fake_loss.detach().numpy()  )
-            list_losses_tricked.append(  D_tricked_loss.detach().numpy()  )
-            
-
-
-    
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-Finally, we can call the core functions and print the losses during training. 
-
-<center>
-<div>
-<textarea rows="12" cols="100">
-
-G_model     = Generator_Net()
-
-## G_model     = Generator_DL_Net()
-
-D_model     = Discriminator_Net()
-
-## D_loss_fn   = nn.CrossEntropyLoss( )  
-## D_loss_fn   = F.mse_loss
-
-D_loss_fn   = nn.BCELoss()
-
-G_opt       = torch.optim.Adam( G_model.parameters(), lr=learning_rate )
-D_opt       = torch.optim.Adam( D_model.parameters(), lr=learning_rate )
-
-training_loop(  N_Epochs, G_model, D_model, D_loss_fn, G_opt, D_opt )
-
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-We can seen below that the losses are going down for both the Generator and Discriminator. 
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-******************************
-0 D_real_loss= tensor(0.1157, grad_fn=<BinaryCrossEntropyBackward0>)
-0 D_fake_loss= tensor(0.0114, grad_fn=<BinaryCrossEntropyBackward0>)
-0 D_tricked_loss= tensor(7.8405, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-1 D_real_loss= tensor(0.2492, grad_fn=<BinaryCrossEntropyBackward0>)
-1 D_fake_loss= tensor(0.0604, grad_fn=<BinaryCrossEntropyBackward0>)
-1 D_tricked_loss= tensor(5.4396, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-2 D_real_loss= tensor(0.1128, grad_fn=<BinaryCrossEntropyBackward0>)
-2 D_fake_loss= tensor(0.0804, grad_fn=<BinaryCrossEntropyBackward0>)
-2 D_tricked_loss= tensor(4.2457, grad_fn=<BinaryCrossEntropyBackward0>)
-
-...
-
-******************************
-27 D_real_loss= tensor(0.6145, grad_fn=<BinaryCrossEntropyBackward0>)
-27 D_fake_loss= tensor(0.3502, grad_fn=<BinaryCrossEntropyBackward0>)
-27 D_tricked_loss= tensor(1.2594, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-28 D_real_loss= tensor(0.4972, grad_fn=<BinaryCrossEntropyBackward0>)
-28 D_fake_loss= tensor(0.3535, grad_fn=<BinaryCrossEntropyBackward0>)
-28 D_tricked_loss= tensor(1.2053, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-29 D_real_loss= tensor(0.5411, grad_fn=<BinaryCrossEntropyBackward0>)
-29 D_fake_loss= tensor(0.5512, grad_fn=<BinaryCrossEntropyBackward0>)
-29 D_tricked_loss= tensor(1.2962, grad_fn=<BinaryCrossEntropyBackward0>)
-
-     
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-Using the following function, we can plot the losses. 
-
-<center>
-<div>
-<textarea rows="15" cols="100">
-
-def plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked):
-    
-    the_epochs = [i for i in range(len(list_losses_real))]  
-
-    plt.plot(the_epochs, list_losses_real,    label = "real") 
-    plt.plot(the_epochs, list_losses_fake,    label = "fake") 
-    plt.plot(the_epochs, list_losses_tricked, label = "tricked")
-    plt.legend() 
-    plt.show()
-
-plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked)
-
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-
-     
-
-
-We can see that the losses of the Generator did not go below the discriminator loss. A good objective would be for them to be equal. 
-
-	
-  <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/GAN_losses_plot.png" height="400" width="auto">
-      </div>
-
-    </center>	
-
-
-
-And that is it. The GAN is now trained. We can now proceed to test it and generate a few images. We can do that with the following code segment. 
-
-<center>
-<div>
-<textarea rows="15" cols="100">
-
-gen_test_img3 = G_model( random_G_vector_input() )
-gen_test_img3 = gen_test_img3.reshape( (28,28) )
-plt.imshow( gen_test_img3.detach().numpy() )
-plt.show()
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-     
-
-
-I did this several times and the results of the generated images are as follows. This first image looks like a bad zero. 
-
- <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/bad_zero_gan.png" height="400" width="auto">
-      </div>
-
-    </center>
-	
-
-
-
-This next image looks like a better version of the zero.
-
- <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/good_zero_gan.png" height="400" width="auto">
-      </div>
-
-    </center>
-
-
-
-And I believe this looks like a five.
-
-
- <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/good_5_gan.png" height="400" width="auto">
-      </div>
-
-    </center>
-
-
-
-<h1>
-Conditional GANs
-	
-</h1>
-
-<p>
-
-The conditional GAN  (CGAN) can generate more than random images from a distribution. Instead, in the case on MNIST, for example, 
-	it can generate the image of an image given the corresponding label for the image. The architecture for the CGAN can be seen below.
-	
-</p>
-
-
-	 <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/ConditionalGanDiagram.jpg" height="400" width="auto">
-      </div>
-
-    </center>
-
-
-
-<h1>
-Summary
-</h1>
-	
-<p>
-In this chapter, a description of Generative Adversarial Networks was provided. Some sample code was addressed as well as some applications of GANs. 
-
-
-	
-</p>
 
 
 
@@ -1597,5 +797,5 @@ In this chapter, a description of Generative Adversarial Networks was provided. 
 </div>  <!-- for the fixed nav bar -->
 
     
-  </body>
+</body>
 </html>
