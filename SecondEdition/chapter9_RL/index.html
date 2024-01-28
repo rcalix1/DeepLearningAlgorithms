@@ -805,14 +805,12 @@ epsilon       = 0.1       ## 0.2    , 0.01
 
 The optimization is nothing more than the very familiar Gradient Descent (Adam) with a learning rate of 0.001. We instantiate the Q NN MLP model.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Optimizer and Inference model}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 ## model = Q_NN_Net()
 
@@ -820,23 +818,26 @@ model = Q_NN_MLP_Net()
 
 opt = torch.optim.Adam( model.parameters(), lr=learning_rate )
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+  
+</div>
+</center>
+
+
+
+
+
 
 
 
 Finally, we are ready for the main loop which is shown in the next code segment below. 
 
 
+<center>
+<div>
+<textarea rows="25" cols="90">
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The main loop Q MLP NN}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 
 for i in range(num_episodes):
@@ -889,23 +890,25 @@ for i in range(num_episodes):
     rewardsList.append(rAll)         ## reward total per game
     
 
-\end{lstlisting}
-\end{minipage}
+
+
+</textarea>
+  
+</div>
+</center>
+	
+
+
+
 
 I will now proceed to break the main loop into parts to make it easier to describe. 
 As can be seen in the code segment below, we run the main loop 4000 times (\textbf{num\_episodes}) which means that we play 4000 games. Each time we play a game, we reinitialize the board ( s = env.reset() ) and initialize the rewards variable (\textbf{rAll}) to zero. The variable \textbf{j} is the counter for the current step and \textbf{d} is used to determine if the game is over (win or loss). 
 
 
+<center>
+<div>
+<textarea rows="10" cols="90">
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Intialize the game}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
 for i in range(num_episodes):
     
@@ -918,23 +921,28 @@ for i in range(num_episodes):
     if i % 200 == 0:
          print("Game ", i, " of ", num_episodes)
 
-\end{lstlisting}
-\end{minipage}
+
+
+</textarea>
+</div>
+</center>
+
+	
+
+
+
+
 
 
         
 for every game iteration we run the following while loop. This while loop is the main code that helps us to learn the \textbf{Q} values and traverse the board (e.g. play the frozen lake game). 
 
 
+<center>
+<div>
+<textarea rows="20" cols="90">
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The steps for every single game}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
 
 while j < 1000:
         
@@ -967,8 +975,15 @@ while j < 1000:
             break
 
                 
-\end{lstlisting}
-\end{minipage}
+
+
+</textarea>
+</div>
+</center>
+	
+
+
+
 
    
         
@@ -983,71 +998,78 @@ We perform 1000 steps since it should not take more than 1000 steps to traverse 
 After incrementing the steps, we proceed to perform our first model run to train the PyTorch model. Here we predict an action and get Q\_s from the model. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Getting the action given state vector}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 Q_s          = model(  s  ).detach()
 _, max_index = torch.max(Q_s, 0) 
 a            = max_index.item()
    
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+	
+
+
+	
+
+
+
 
 
                     
 The next step is to take the predicted action in \textbf{“a”} and run it through the game. The below statement runs the action through env.step() and this function returns the new state \textbf{s1} which is the new position in the frozen lake grid, \textbf{r} is the reward associated with the step \textbf{s} (for instance r = 0.43) , and \textbf{d} indicates if the game is over (found the cheese or fell in the frozen lake). You know you have lost the game if \textbf{d} is True and if the reward is zero at the same time. To help the model learn, we can assign negative rewards every time that happens. Knowing when to assign rewards is very challenging in Reinforcement Learning. Here, frozen lake is a simple game and using this type of approach is possible. Current research proposes to replace the rewards heuristics with neural networks. One current effective approach is called RLHF which stands for reinforcement learning through human feed-backs.  
 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Running the environment}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 s1, r, d, _, _ = env.step(a)
               
 if d == True and r == 0: 
     r = -1
      
-                
-\end{lstlisting}
-\end{minipage}
+  
+
+</textarea>
+</div>
+</center>
+	
+
+
+
+              
+
 
    
 
 With the new state \textbf{s1}, we proceed to run the PyTorch model again.  Here we run the model again using \textbf{s1}. 
 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Running model with state s1}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 Q_s1      = model(  s1 ).detach()     # detach from graph
 _, maxQ_s1   = torch.max( Q_s1 )  
-target_q  = r + 0.99 * maxQ_s1
+target_q  = r + 0.99 * maxQ_s1   
+  
+
+</textarea>
+</div>
+</center>
+	
+
+
+
+
+
+
 
                
-\end{lstlisting}
-\end{minipage}
+
 
 
 So \textbf{Q\_s1} will now contain the 4 neuron vector with the \textbf{Q} values for all 4 actions given state \textbf{s1}. We grab the max value from \textbf{Q\_s1} (not the index) and use that to calculate \textbf{target\_q} using the Bellman equation.
@@ -1066,17 +1088,9 @@ Interestingly, only one of the 4 values in \textbf{Q\_s1} is updated using the B
 Finally, we do a final update of the PyTorch model by calculating the losses on state \textbf{“s”} and action \textbf{a}.  
 
 
-     
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Run the loss}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 q_pred = model(  s  )[a]   
       
@@ -1085,26 +1099,30 @@ loss = F.smooth_l1_loss( q_pred, target_q )
                 
 opt.zero_grad()
 loss.backward()
-opt.step()
+opt.step()  
+  
+
+</textarea>
+</div>
+</center>
+
+
+
+
+
 
                
-\end{lstlisting}
-\end{minipage}            
+           
 
 
 
 
 Finally, the last peace of code adds up the rewards, assigns the new state \textbf{s1} to \textbf{s}, and checks to see if the game is over. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Final game checks}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 rAll = rAll + r
 j = j + 1
@@ -1112,23 +1130,22 @@ j = j + 1
 s = s1
 if d == True: 
     break
+  
 
-               
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+	
 
            
 
 Once you exit the while loop, the last part is to append the results of the current game to the results lists.  
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The rewards and steps lists are updated}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="7" cols="90">
 
 if d == True and r > 0:
     success_list.append(1)     
@@ -1139,25 +1156,26 @@ else:
            
 ## stepsList.append(j)           ##  steps taken per game
 rewardsList.append(rAll)         ## reward total per game
-               
-\end{lstlisting}
-\end{minipage}
+ 
+  
+
+</textarea>
+</div>
+</center>
+	
+
+
+              
+
 
       
 
 Well, that is it for the algorithm discussion. Finally, we print our results and plot them. 
 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print and plot results}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="90">
 
 print("Percent of succesful episodes: " ,
                       str( sum(rewardsList)/ num_episodes ),  "%")
@@ -1166,9 +1184,15 @@ plt.show()
 plt.plot(stepsList)
 plt.show()
 
+</textarea>
+</div>
+</center>
+	
+
+
+
+
                
-\end{lstlisting}
-\end{minipage}
 
 
 
@@ -1179,15 +1203,10 @@ That is it. We have completed implementing our Q learning algorithm with a neura
 In the previous section we described the code to implement Q-learning with a neural network on the frozen lake game. That was the simplest implementation of it. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The main loop Q NN with randomness}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-epsilon_delta = -(epsilon / num_episodes)
+<center>
+<div>
+<textarea rows="25" cols="90">
+
 for i in range(num_episodes):
     s = env.reset()
     s    = s[0]  ## env returns tuple so select first of tuple
@@ -1229,8 +1248,16 @@ for i in range(num_episodes):
     ## stepsList.append(j)           ##  steps taken per game
     rewardsList.append(rAll)         ## reward total per game
     
-\end{lstlisting}
-\end{minipage}
+
+
+</textarea>
+</div>
+</center>
+	
+
+
+
+
 
 To improve the results, we can add a few lines of additional code which will allow the algorithm to better converge and learn better Q-values. The additions are simple and basically relate to adding randomness to the code. The full version of the code can be seen below. I will additionally discuss how to measure performance with RL.
 
@@ -1239,14 +1266,10 @@ The new lines of code add randomness to the selection of the next action to take
 
 This is reflected in the code segment below. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Select action randomly}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="90">
 
 if (np.random.rand(1) < epsilon): 
     a = env.action_space.sample()
@@ -1255,8 +1278,15 @@ else:
     _, max_index = torch.max(Q_s, 0) 
     a            = max_index.item()
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
+
+
+
 
        
 A random number is obtained and compared to \textbf{epsilon}. If less than \textbf{epsilon}, the action is selected randomly. As the algorithm improves and the Q values are better, the value of \textbf{epsilon} can be adjusted so that action is more often selected with the model and not with the random function.
@@ -1266,52 +1296,54 @@ A random number is obtained and compared to \textbf{epsilon}. If less than \text
    
 The code can be seen here  where  the value of \textbf{“epsilon”} is adjusted.  
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Adjust epsilon}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="5" cols="90">
 
 epsilon = epsilon + epsilon_delta
 
+</textarea>
+</div>
+</center>
+	
+
+
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 That is all it takes to implement randomness. Now we are ready to measure the performance of the RL model using frozen lake. After training, we can perform several calculations to measure performance. 
 
 First let us count the number of successes during the last 100 training games (out of 4000). The following calculation gives us a score of 75\%. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Percentage of sucesses}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="90">
 
 print("Succes for last 100 games: ", sum(success_list[-100:]),  "%")
 
+
+</textarea>
+</div>
+</center>
+
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 We can look at the rewards trend with the following code. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Rewards trend}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="25" cols="90">
 
 ## rewardsList = rewardsList[-20:]
 
@@ -1334,9 +1366,16 @@ plt.scatter(ind_rew, rewardsList)
 ## plt.plot(rewardsList)
 plt.title("Rewards during training")
 plt.show()
+
+</textarea>
+</div>
+</center>
+
+
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 During training, we collected the total reward per each of the 4000 games. Visualising all 4000 rewards can be confusing. However, if we average every 100 rewards in sequence, we can clearly  see that the rewards are going up. One of the goals in RL is for the model to increase its rewards.  
 
@@ -1350,14 +1389,9 @@ During training, we collected the total reward per each of the 4000 games. Visua
 
 Once the model is trained, we want to run it again without training to test its performance. This can be accomplished with the following code 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Run model without training}}
-%\lstset{label={lst:code\\\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="90">
 
 
 stepsList    = [0.0005]
@@ -1393,9 +1427,15 @@ for i in range(test_games):
         success_list.append(0)
     stepsList.append(j)
     
+
+</textarea>
+</div>
+</center>
+	
+
+
      
-\end{lstlisting}
-\end{minipage}
+
 
 After running the evaluation (no training), the model is able to win 79\% of the games it played. 
 
@@ -1407,254 +1447,33 @@ After running the evaluation (no training), the model is able to win 79\% of the
 \label{RegLin:fig}
 \end{figure}
 
-\begin{comment} 
-This is my comment.
-Note that it can span multiple lines.
-This is very useful.
-\end{comment}
+<h1>
+Summary
+</h1>
 
-\section{Summary}
+<p>
 
 
 In this chapter we have discussed the Q learning algorithm as part of the larger topic of Reinforcement Learning using tables and neural networks with randomization. 
 
-
-
-
-
-
-
-
-<h1>Numpy arrays, tensors, and linear algebra</h1>
-    
-<p>
-Linear algebra, numpy arrays, and tensor operations are at the heart of understanding the Transformer architecture. Before you continue, 
-  I strongly recommend that you read and practice the topics in chapter 1, and in particular, the section on linear algebra, numpy arrays, and tensor operations. 
-
-  
-</p>
-
-<h1>
-Attention
-  
-</h1>
-
-<p>
-
-
-
-</p>
-
-    <h1>
-
-      Embeddings
-    </h1>
-
-<p>
-
-Sequences of tokens in a sentence are converted into sequences of IDs. An Embedding approach converts the sequence of ids into a sequence of embeddings. 
-  You will go from a 2d tensor 
-
-  
-</p>
-    
-<p>
-[N_batches, _tokens]
-  <br/>
-  to a 3d tensor of size:
-<br/>
- [N_batches, N_tokens ,   embedding_dimension ]
-  <br/>
-  
- The term N_tokens can also be called  seq_length_max. Here N_batches is the batch size, N_tokens or seq_length_max is 40, and embedding_dimension is 512.
-  The term N_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define
-  a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is 
-  selected arbitrarily like in word2vec. 
-
-  
-</p>
-
-
-
-
-<h1>Masks</h1>
-
-    <p>
-Masks serve several purposes. One is to help ignore the padded values during training. The other goal is to block the given word you want to predict 
-      or future words). This brings up the important aspect of training with Transformers. Transformers predict the last word in a sequence. For example:
-    </p>
-<p>
-
- Given an input in english: "the cat is sleeping"
- 
-</p>
-	  
-<p>
-a Transformer is also given part of the output sentence. In this case:  "el gato esta ?". 
-      The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. 
-	All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
-  
-    </p>
-
-
-<h1>
-Positional Encoding
-  
-</h1>
-
-<p>
-
-  This is the technique that allows you to encode sequence. Transformers are all about being parallel. Their direct competitor is Recurrent Neural Networks (RNNs).
-  RNNs have had several problems in the past. One is that they do not scale well to GPUs and parallel approaches because of their recurrence and dependence on previous
-  steps. The other problem is the famous "vanishing gradients" problem which was addressed by by residuals and LSTMs seem to have addressed this now.  Transformers did
-  away with the type of sequence modeling approach used in RNNs all together so they are very good for parallel approaches. But how do they address or encode the sequence? 
-  Obviously knowing that the word "cat" goes before the word "sleeping" is useful. This is where a technique called positional encoding comes into play. Basically, after 
-  embedding, you have a vector per token of, say, size 512. 
-
-Now, with positional encoding, a function that calculates sines and cosines, is used to create a new vector also of size 512 that represents position (i.e. sequence) of 
-  the tokens. The 2 vectors are added together (embedding + positional_encoding) to get the new inputs to the network. Also, the position vector values are smaller than
-  the embedding vector values so as to not let position dominate. 
-
-</p>
-
- 
-
-<h1>
-Tokens
-</h1>
-    
-<p>
-
-  In a GPT we want to predict the next word given previous words. However, to improve performance, transformer models do not predict the next word. Instead, they 
-  predict the next subword. A good analogy for subword is syllable, although transformer do not use syllables either. The subwords are calculated based on specific 
-  algorithm such as BPE or SentencePiece. This allows transformers to learn to generate new words never seen before. For example, it may have seen 
-<br/>
-The dog is play - ing.
-<br/>
-And by breaking the word into subwords (i.e. play and ing), it can learn to generate new variations of words it never saw before such as
-<br/>
-The lady is iphone - ing.
-<br/>
-We and the Transformer know intuitively what this means.
-<br/>
-The fact is that tokens can be words, syllables, subwords, letters, etc. Subwords through SentencePiece type algorithms just have proven to give the best results. 
-
-</p>
-
-<h1>
-
-Inputs and Outputs
-  
-</h1>
-
-<p>
-    
-So, let us start there. Let's quickly remember our classic example of MNIST supervised classification. In MNIST standard feed forward classification, you have an 
-  input image which is 28x28 and a predicted vector of size 10 for the classes. So, what do the inputs and outputs look like for transformers? For language translation, 
-  they are lists of ids. Each id can represent a word in a sentence. This is best visualized with an example. 
-First, let us look at the classic use case for Transformers. As I said earlier, Transformers have been used extensibly in NLP. And the first example was in language 
-  translation where we have sentence pairs. Such as the following for English-Spanish translation:
-<br/>
-"the cat is sleeping"    -->   which translates to   -- >    "el gato esta durmiendo"
-<br/>
-Therefore, first we need to understand how to encode this for the neural network and then to understand how exactly it is that the network will train and learn. 
-  So, again, before you look into the network's very deep and complex layers, I believe that one needs to  focus on:
-
-  
-</p>
-
-	  <p>
-    <ul>
-    <li> Padding these sequences of ids</li>
-    <li> Taking text sentences and converting them into sequences of ids</li>   
-    </ul>
-	  </p>
-   
-
-
-
- <p>
-
-   Consider that after encoding and padding, your sentences will look like this:
-
- </p>
-
-
-<center>
-<div>
-<textarea rows="8" cols="90">
-
-
-  [ 12110   203     4  3947    29     2   168     2     4    27    
-       68  4333     8  3622  2943  1012     1 12111     0     0     
-        0     0     0     0     0     0     0     0     0     0     
-        0     0     0     0     0     0     0     0     0     0 ]
-
-  
-</textarea>
-  
-</div>
-    </center>
-
-
-
-
-
-
-<p>
-
-	and for the other language
-
-
-</p>
-   
-
-
-
- <center>
-<div>
-<textarea rows="8" cols="90">
-
-  
-[ 12110    13     4  3947    29     2     5    32    36    16  
-   1145     4    58    34  7905    58    25    28   354  2482     
-      3    17    27    28  4395     9  2886     7 12111     0     
-      0     0     0     0     0     0     0     0     0     0 ]
-
-  
-</textarea>
-</div>
-  </center>
-
-
-<h1>
-
-	GPTs
-</h1>
-
-
-
-<p>
-GPTs stand for Generative Pre-trained Transformers. The GPT uses the decoder only part of the Transformer. The input to the decoder varies based on whether you are 
-	training or predicting. If you are training, the input to the decoder is the sentence itself. When training, a mask is needed here to prevent the model from 
-	seeing all the words it is trying to predict. This is called a look ahead mask.
-If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. 
-	The predicted word is then added to the previous tokens and the process is repeated.
-The decoder consists of N (e.g. 6) decoder layers, followed by a fully connected layer.
-
-The full architecture of the decoder can be seen in the following figure. 
 
 	
 </p>
 
 
 
-  <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="800" width="auto">
-      </div>
 
-    </center>
+
+
+
+
+
+
+
+
+
+
+
 
 <p>
 Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m_heads (e.g. 8) parallel 
