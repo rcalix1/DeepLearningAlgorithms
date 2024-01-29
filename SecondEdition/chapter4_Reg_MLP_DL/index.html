@@ -1700,17 +1700,28 @@ train_loop(  N_epochs, model, loss_fn, opt    )
 
 The important aspect is to notice that the structure of the code is mostly maintained and that the only things that change are the architecture definition and the loss function (usually from MSE to Cross entropy).
 
+<h1>
+Reading Data in batches
+	
+</h1>
 
-\subsection{Reading Data in batches}
-
-Earlier in this book, I mentioned that one of the advantages of deep neural networks and PyTorch is that they were designed to process massive amounts of data. Loading millions of records directly into RAM memory would not be suitable for most big data challenges. Instead, to be more efficient we can load data in batches. That is, we can take our data set and divide it into bins of size \textbf{N\_batch\_size}.  
+	<p>
+Earlier in this book, I mentioned that one of the advantages of deep neural networks and PyTorch is that they were designed to process massive amounts of data. 
+		Loading millions of records directly into RAM memory would not be suitable for most big data challenges. Instead, to be more efficient we can load data 
+		in batches. That is, we can take our data set and divide it into bins of size \textbf{N\_batch\_size}.  
 
            
+<br/>
+In the following code section, I will show how to create the batches manually. We need to define the size of each batch (in this case 100 samples) and the 
+		size of the train set file. Then we divide number of samples by number of batches. We can then easily slice out the batches from the data by
+		iterating the \textbf{batch\_n} index. The dimensions are \textbf{sta} for the starting index and \textbf{end} for the ending index. In every 
+		iteration, we select the rows from \textbf{sta} to \textbf{end} (sta:end) and all the columns (:). 
 
-In the following code section, I will show how to create the batches manually. We need to define the size of each batch (in this case 100 samples) and the size of the train set file. Then we divide number of samples by number of batches. We can then easily slice out the batches from the data by iterating the \textbf{batch\_n} index. The dimensions are \textbf{sta} for the starting index and \textbf{end} for the ending index. In every iteration, we select the rows from \textbf{sta} to \textbf{end} (sta:end) and all the columns (:). 
-
-
+<br/>
 PyTorch has tools to do this with Torch \textbf{TensorDataSet} and Torch \textbf{DataLoader} as we previously saw but this is how it works! The code is as follows: 
+
+		
+	</p>
 
 <center>
 <div>
@@ -2019,15 +2030,14 @@ y_pred = nn.Softmax(  y  )
 
 For illustration, the figure below shows the logistic regression neural network for the Iris dataset. 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/logregarchiiris.chp4.300dpi.jpg}
-}
-\caption{Logistic Regression Architecture for the Iris dataset}
-\label{RegLin:fig}
-\end{figure}
 
 
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/logregarchiiris.chp4.300dpi.jpg" height="400" width="auto">
+      </div>
+
+    </center>
 
 So, assuming we are working with the iris dataset, the features are equal to 4 and the classes are equal to 3. The previous figure shows the architecture for a logistic regression model. If you look closely, you can conclude that a logistic regression model is like a neural network with no hidden layers. There are only 2 layers: the input layer and the output layer. A hidden layer would be a layer in between input and output that connects these 2 layers. The number of neurons in one layer and the number of neuron in the next layer determine the size of the weights matrix W. For the Iris example we can see that W results in a matrix that is [4,3] in size. The b vector (bias) has dimension 3 (for the 3 output neurons). That is, there is now a bias for every neuron in the output layer. 
 
@@ -2324,26 +2334,30 @@ In particular, the neural network now has more layers and the more layers it has
 
 Layers in between the input and output layers are called hidden layers and help to represent non-linearity along with activation functions. 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/onelayerNN.ch4.300dpi.jpg}
-}
-\caption{ A 1 layer neural network architecture (MLP)}
-\label{RegLin:fig}
-\end{figure}
+
+
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/onelayerNN.ch4.300dpi.jpg" height="400" width="auto">
+      </div>
+
+    </center>
+
 
 A 1-layer neural network can look like the previous figure and a 2-layer neural network can look like the network in the figure below. As can be seen, we can continue to add layers and this is part of defining the architecture of a deep neural network. In theory, more layers can potentially give a model more power to learn from the data and be better. 
 Notice, however, that this also means that many more parameters need to be estimated (e.g. more weights). Therefore, until recently, this was very expensive to achieve. With the advent of high performance hardware and GPUs, this is now more feasible. 
 
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/twolayerNN.chp4.300dpi.jpg}
-}
-\caption{A 2 layer neural network architecture}
-\label{RegLin:fig}
-\end{figure}
+
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/twolayerNN.chp4.300dpi.jpg" height="400" width="auto">
+      </div>
+
+    </center>
 
 
 \subsection{Intuition of adding more layers to a NN}
@@ -2672,13 +2686,14 @@ plt.show()
 
 From the histogram below we can see that the classes are balanced. 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.55\textheight}{
-    \includegraphics{images/HistogramIris.png}
-}
-\caption{Class Histogram for Iris}
-\label{RegLin:fig}
-\end{figure}
+
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/HistogramIris.png" height="400" width="auto">
+      </div>
+
+    </center>
 
 The shapes can be printed and seen below
 
@@ -3309,13 +3324,14 @@ plt.show()
 
 As can be seen in the following histogram, the data is highly imbalanced. This means that this dataset will be more challenging to model for classification. 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.55\textheight}{
-    \includegraphics{images/wine_quality_histogram.png}
-}
-\caption{Histogram for Wine Quality}
-\label{RegLin:fig}
-\end{figure}
+
+
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/wine_quality_histogram.png" height="400" width="auto">
+      </div>
+
+    </center>
 
 let us first split the data like in the previous section
 
