@@ -2328,67 +2328,60 @@ epsilon = 0.0001
 
 Now we can load the data with Pandas
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Load the data with Pandas}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="40">
 
-path_data = 'iris.csv'
+path_data = "iris.csv"
 
-iris_raw_data = pd.read_csv( path_data, delimiter="," )
+ iris_raw_data = pd.read_csv( path_data, delimiter=",")
+
+	
+</textarea>
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 The labels for Iris are strings. We convert them to integers using Pandas as follows:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Convert labels to integers}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="40">
 
 iris_raw_data.species = iris_raw_data.species.map( {'setosa':0 , 'virginica':1, 'versicolor':2} )
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
 
 We can view the column headings which gives us 
 
 ['sepal\_length', 'sepal\_width', 'petal\_length', 'petal\_width', 'species']
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Column headings}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="6" cols="40">
 
 headers_list = iris_raw_data.columns.values.tolist()
 
 headers_list
+	
+</textarea>
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 We can now convert the Pandas data frame to numpy. Printing the shape gives us (150, 5)
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Convert Pandas to Numpy}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="6" cols="40">
 
 ## Convert Pandas to Numpy
 
@@ -2396,53 +2389,52 @@ iris_raw_data_np = iris_raw_data.to_numpy()
 
 iris_raw_data_np.shape
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+</div>
+</center>
+
+
 
 Now we slice the data for our "X" and "y" data.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Slice X and y}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="40">
 
 X = iris_raw_data_np[:, :-1]
 
-
 y = iris_raw_data_np[:, 4:5]
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
 
 we can convert the data type to integer
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Make sure y is int}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="40">
 
 y = y.astype(int)
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 let us determine the number of labels with np.unique. This give us [0, 1, 2]. There are 3 labels. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Find the unique labels }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="7" cols="40">
 
 the_set = np.unique(y)
 
@@ -2450,19 +2442,18 @@ the_set
 
 len(  the_set  )
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 In classification problems, it is a good idea to determine the class balance or imbalance. Imbalanced dataset are more difficult to model. We will see this with the Wine dataset in the next section. Using a histogram can help us to visualize this. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Plot histogram for classes}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="7" cols="40">
 
 _ = plt.hist(y, bins='auto') 
 
@@ -2470,9 +2461,13 @@ plt.title("Histogram with 'auto' bins for Iris")
 
 plt.show()
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+	
+
 
 From the histogram below we can see that the classes are balanced. 
 
@@ -2486,13 +2481,9 @@ From the histogram below we can see that the classes are balanced.
 
 The shapes can be printed and seen below
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Print X and y shapes}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 print(X.shape)
 
@@ -2501,19 +2492,18 @@ print(y.shape)
 ## (150, 4)
 ## (150, 1)
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 Let us split the data
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Split the data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="20" cols="40">
 
 random_seed = int( random.random() * 100 )     ## 42
 
@@ -2529,19 +2519,18 @@ print(y_test.shape)
 ## (120, 1)
 ## (30, 1)
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 Let us typecast the data to avoid possible errors and then convert to torch tensors. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Typecast the data to avoid possible errors}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="15" cols="40">
 
 X_train = X_train.astype(  np.float32  )
 X_test  = X_test.astype(   np.float32  )
@@ -2554,18 +2543,17 @@ X_test_tr  = torch.from_numpy(X_test)
 y_train_tr = torch.from_numpy(y_train)
 y_test_tr  = torch.from_numpy(y_test)
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 Let us calculate means and standard deviations of the X data for data scaling. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Dara scaling parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 x_means      = X_train_tr.mean(0, keepdim=True ) 
 
@@ -2577,18 +2565,18 @@ print( x_deviations.shape )
 ## [1, 4]
 ## [1, 4]
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
 
 Torch provides a very handy DataLoader that works effieciently with our neural networks. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Create the list for the DataLoader}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="8" cols="40">
 
 ## X_train.shape[0] -> 120
 
@@ -2599,52 +2587,51 @@ iris_test_list  = [  ( X_test_tr[i],   y_test_tr[i].item()   )  for i in range( 
 print(  iris_train_list[:3]   )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
 
 three samples of the data should now look like this
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Cross Entropy Loss function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="40">
 
 [(tensor([5.1000, 3.5000, 1.4000, 0.2000]), 0),
  (tensor([6.9000, 3.2000, 5.7000, 2.3000]), 1),
  (tensor([7.7000, 2.8000, 6.7000, 2.0000]), 1)]
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
 
 The following command creates the DataLoader
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Create the Iris Dataloader}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="40">
 
 train_dl = torch.utils.data.DataLoader(iris_train_list, batch_size=batch_size, shuffle=True)
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 we next create the test DataLoader with batch size equal to 30
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Create test DataLoader}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 ## X_test.shape[0] -> 30
 
@@ -2653,19 +2640,17 @@ all_test_data = X_test.shape[0]
 test_dl  = torch.utils.data.DataLoader(iris_test_list,  batch_size=all_test_data, shuffle=True)
 
 
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 We know define the architecture for the MLP as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={MLP Architecture}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="35" cols="40">
 
 ## MLP
 
@@ -2698,19 +2683,17 @@ class MLP_Net(nn.Module):
         return y_pred
         
 
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 We can try another architecture such as a deep neural network of 2 hidden layers
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Deep learning for Iris}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="40" cols="40">
 
 ## Deep Learning with 2 hidden layers
 
@@ -2747,18 +2730,18 @@ class DL_Net(nn.Module):
         return y_pred
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 The next step is to define the train function. We have seen this before.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Train function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="20" cols="40">
 
 def training_loop( N_Epochs, model, loss_fn, opt  ):
     
@@ -2780,18 +2763,17 @@ def training_loop( N_Epochs, model, loss_fn, opt  ):
             print(epoch, "loss=", loss)
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 Now we call the Core Functions for the MLP. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Core Functions for MLP}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 model      = MLP_Net( x_means, x_deviations  )
 
@@ -2803,20 +2785,19 @@ loss_fn    = nn.CrossEntropyLoss( )
 training_loop(  N_Epochs, model, loss_fn, opt  )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 The torch loss  \textbf{nn.CrossEntropyLoss( )}  is very versatile. It is defined to accept the real labels as integers and does not need them to be onbe hot encoded. 
 
 Training gives us the following losses. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={MLP losses}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="22" cols="40">
 
 0   loss= tensor(1.1073, grad_fn=<NllLossBackward0>)
 50  loss= tensor(0.9858, grad_fn=<NllLossBackward0>)
@@ -2838,18 +2819,18 @@ Training gives us the following losses.
 3950 loss= tensor(0.5525, grad_fn=<NllLossBackward0>)
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 We can use our previously defined funtion to determine classification performance.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Classification performance function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 def print_metrics_function(y_test, y_pred):
     print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
@@ -2861,18 +2842,17 @@ def print_metrics_function(y_test, y_pred):
     print('F1-measure: %.3f' % f1_score(y_true=y_test, y_pred=y_pred, average='weighted'))
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 Finally, we can estimate the performance metrics for the MLP with Iris
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={predict with the model}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 with torch.no_grad():
     for x_real, y_real in test_dl:
@@ -2883,18 +2863,19 @@ with torch.no_grad():
         print_metrics_function(y_real, preds)
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 the performance can be seen below. Notice that the results are very good. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Performance results for MLP and Iris}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
+
 
 Accuracy: 0.97
 Confusion Matrix:
@@ -2906,18 +2887,17 @@ Recall: 0.967
 F1-measure: 0.967
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 We can also try the deep learning architecture
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Core Functions for Deep Learning}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 model      = DL_Net( x_means, x_deviations  )
 
@@ -2929,18 +2909,18 @@ loss_fn    = nn.CrossEntropyLoss( )
 training_loop(  N_Epochs, model, loss_fn, opt  )
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 the training gives us the following losses
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Deep NN losses with Iris}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="20" cols="40">
 
 0   loss= tensor(1.0865, grad_fn=<NllLossBackward0>)
 50  loss= tensor(0.5689, grad_fn=<NllLossBackward0>)
@@ -2965,19 +2945,20 @@ the training gives us the following losses
 3900 loss= tensor(0.5514, grad_fn=<NllLossBackward0>)
 3950 loss= tensor(0.5516, grad_fn=<NllLossBackward0>)
 
+   
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 finally we predict with the DL model on the test set with 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Predict with DL model}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 with torch.no_grad():
     for x_real, y_real in test_dl:
@@ -2989,18 +2970,17 @@ with torch.no_grad():
    
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 The performance metrics can be seen below and they are very good.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Cross Entropy Loss function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 Accuracy: 0.97
 Confusion Matrix:
@@ -3012,8 +2992,11 @@ Recall: 0.967
 F1-measure: 0.967
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 That was hopefully easy and a lot of fun. In the next section we explore a more challenging problem. It looks simple, an yet, helps us to see some of the common problems faced when training deep neural networks on noisy or more difficult data. 
 
@@ -3026,13 +3009,9 @@ I will only include parts of the code that are new or different from the previou
 
 We use the following parameters.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="8" cols="40">
 
 batch_size    = 32
 learning_rate = 0.001 ## 0.001
@@ -3040,38 +3019,35 @@ N_Epochs      = 1000
 
 epsilon = 0.0001
 
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 now we read the Wine quality data 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Read in the Wine quality data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="6" cols="40">
 
 path_data = 'winequality-white.csv'
 
 WINE_raw_data = pd.read_csv( path_data, delimiter=";" )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
 
 we can process the data like we did before
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="8" cols="40">
 
 ## Convert Pandas to Numpy
 
@@ -3082,22 +3058,19 @@ y = WINE_raw_data_np[:, 11:12]
 
 y = y.astype(int)
 
+</textarea>
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 The wine quality data was designed more for regression modeling. To make our classification modeling more interesting, I am going to process the data so we can also use it for classification. Since the predicted label consists of only 7 rating values, it is possible for us to convert into to classification data.
 
 First we print the labels (ratings) from the y vector with the following
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={View unique values in y }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="8" cols="40">
 
 the_set = np.unique(y)
 
@@ -3105,20 +3078,20 @@ the_set
 
 len(  the_set  )
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 which gives us the ratings [3, 4, 5, 6, 7, 8, 9]. There are 7 ratings and these will become our labels. 
 
 Let us visualize the label counts with a histogram using the following code
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Wine quality histogram}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="8" cols="40">
 
 _ = plt.hist(y, bins='auto') 
 
@@ -3126,8 +3099,12 @@ plt.title("Histogram with 'auto' bins for Wine Quality")
 
 plt.show()
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
 
 As can be seen in the following histogram, the data is highly imbalanced. This means that this dataset will be more challenging to model for classification. 
 
@@ -3141,13 +3118,9 @@ As can be seen in the following histogram, the data is highly imbalanced. This m
 
 let us first split the data like in the previous section
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Split the data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="15" cols="40">
 
 random_seed = int( random.random() * 100 )     ## 42
 
@@ -3164,18 +3137,17 @@ print(y_test.shape)
 ## (980, 1)
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 as in the previous section, let us change the data type and conver the numpy arrays to torch tensors. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Fix data type and convert to tensors}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="15" cols="40">
 
 ## fix data type
 
@@ -3190,36 +3162,34 @@ y_train_tr = torch.from_numpy(y_train)
 y_test_tr  = torch.from_numpy(y_test)
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 we now calculate parameters for standardization
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Standardization parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="7" cols="40">
 
 x_means      = X_train_tr.mean(0, keepdim=True ) 
 
 x_deviations = X_train_tr.std( 0, keepdim=True) + epsilon
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 To create the data loader we first need to create a label map. DataLoader does not allow gaps in label sequences. Our wine quality data does not have labels 2 or 1, for instance. So we need to fix this with a label\_map as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Label Maps}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 ## X_train.shape[0] -> 3918
 
@@ -3229,40 +3199,35 @@ To create the data loader we first need to create a label map. DataLoader does n
 label_map         = { 3:0, 4:1, 5:2, 6:3, 7:4, 8:5, 9:6 }
 reverse_label_map = { 0:3, 1:4, 2:5, 3:6, 4:7, 5:8, 6:9 }
 
+</textarea>
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
 
 with the folowing code we can fix the gap issue and create our list for the data loader as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={List for data loader}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="7" cols="40">
 
 wine_train_list = [  ( X_train_tr[i], label_map[ y_train_tr[i].item() ] )  for i in range( X_train.shape[0] ) ]
 
 wine_test_list  = [  ( X_test_tr[i],  label_map[ y_test_tr[i].item()  ] )  for i in range( X_test.shape[0] ) ]
 
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 The following 3 examples show us what these lists look like
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="20" cols="40">
 
 print( wine_train_list[:3] )
-
 
 [(tensor([6.3000e+00, 2.8000e-01, 2.9000e-01, 6.8000e+00, 5.1000e-02, 4.0000e+01,
           1.4300e+02, 9.9374e-01, 3.4300e+00, 5.9000e-01, 1.1000e+01]),
@@ -3274,35 +3239,33 @@ print( wine_train_list[:3] )
           7.8000e+01, 9.9310e-01, 3.1100e+00, 3.8000e-01, 1.0200e+01]),
   3)]
 
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 the train data loader is created with the following statement
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Train data loader for the Wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="8" cols="40">
 
 train_dl = torch.utils.data.DataLoader(wine_train_list, batch_size=batch_size, shuffle=True)
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 we do something similar for the test data loader
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Test data loader}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="8" cols="40">
 
 ## X_test.shape[0] -> 980
 
@@ -3311,20 +3274,19 @@ all_test_data = X_test.shape[0]
 test_dl  = torch.utils.data.DataLoader(wine_test_list,  batch_size=all_test_data, shuffle=True)
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
 
 Once the data is ready, we can proceed to define the architectures and train and evalaute our model. 
 
 The architecture for the MLP is as follows. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={MLP architecture for Wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="30" cols="40">
 
 ## MLP
 
@@ -3358,18 +3320,18 @@ class MLP_Net(nn.Module):
         
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 and the deep learning architecture can also be defined as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={DL architecture for the Wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="30" cols="40">
 
 ## Deep Learning with 2 hidden layers
 
@@ -3406,18 +3368,19 @@ class DL_Net(nn.Module):
         return y_pred
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+
 
 Finally, we proceed to train and evaluate our models. Let us first look at the MLP model
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={MLP for Wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="10" cols="40">
 
 model      = MLP_Net( x_means, x_deviations  )
 
@@ -3429,18 +3392,20 @@ loss_fn    = nn.CrossEntropyLoss( )
 training_loop(  N_Epochs, model, loss_fn, opt  )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
+
 
 the losses for the MLP look as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={losses for MLP and Wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="20" cols="40">
 
 0   loss= tensor(2.0045, grad_fn=<NllLossBackward0>)
 50  loss= tensor(1.7409, grad_fn=<NllLossBackward0>)
@@ -3464,18 +3429,18 @@ the losses for the MLP look as follows
 950 loss= tensor(1.4791, grad_fn=<NllLossBackward0>)
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
 
 From the losses, it can be seen that the  model has trouble training and learning. Let us verify this by running the model on the test set with the following code
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={MLP model on test set for the wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="12" cols="40">
 
 with torch.no_grad():
     for x_real, y_real in test_dl:
@@ -3483,20 +3448,18 @@ with torch.no_grad():
         vals, indeces = torch.max( y_pred, dim=1  )
         preds = indeces
         print_metrics_function(y_real, preds)
+  
+</textarea>
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 Running the classification metrics we see that the model does not learn well. It is likely that the class imbalance is affecting performance. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Performance metrics for MLP and Wine}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="20" cols="40">
 
 Accuracy: 0.52
 Confusion Matrix:
@@ -3509,20 +3472,20 @@ Confusion Matrix:
 Precision: 0.402
 Recall: 0.517
 F1-measure: 0.445
+  
+</textarea>
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
+
 
 we repeat the exercise with the DL architecture
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Train DL with the Wine data.}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="20" cols="40">
 
 model      = DL_Net( x_means, x_deviations  )
 
@@ -3541,19 +3504,20 @@ with torch.no_grad():
         preds = indeces
         print_metrics_function(y_real, preds)
 
+  
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 As can be seen below, the results are not good. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Performance metrics for DL and Wine}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="18" cols="40">
+
 
 Accuracy: 0.52
 Confusion Matrix:
@@ -3566,252 +3530,92 @@ Confusion Matrix:
 Precision: 0.401
 Recall: 0.524
 F1-measure: 0.445
-
-
-\end{lstlisting}
-\end{minipage}
-
-So, that is it. That completes the Wine data discussion for this section. It seems to be a more challenging problem. I encourage the reader to try to improve the results. Consider trying the following:
-
-\begin{itemize}
-    \item Combining classes
-    \item trying different architectures with deeper networks
-    \item over-sampling or under-sampling the data
-\end{itemize}
-
-
-
-
-
-
-<h1>
-
-Summary	
-</h1>
-
-	<p>
-
-	In this chapter, the main topic of deep learning was introduced. The chapter addressed the PyTorch environment and code definitions as well 
-		as theoretical concepts for deep learning. Issues about neural network architecture and performance evaluation were also presented. 
-		Finally, several coding examples using python, Sklearn, numpy, and PyTorch were provided in an incremental fashion for the algorithms of 
-		linear regression, logistic regression, 1-layer neural networks (MLP), and n-layer neural networks (Deep Learning). The next chapters will 
-		\further look at other methods that can be implemented with PyTorch and, in particular, that are more advanced algorithms. 
-
-
-	
-	</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h1>Masks</h1>
-
-    <p>
-Masks serve several purposes. One is to help ignore the padded values during training. The other goal is to block the given word you want to predict 
-      or future words). This brings up the important aspect of training with Transformers. Transformers predict the last word in a sequence. For example:
-    </p>
-<p>
-
- Given an input in english: "the cat is sleeping"
- 
-</p>
-	  
-<p>
-a Transformer is also given part of the output sentence. In this case:  "el gato esta ?". 
-      The Transformer will predict the next word in the sequence which in this case would be "durmiendo" to complete the translation as “el gato esta durmiendo”. 
-	All of this is achieved through the masks to ignore padded values and to only show the partial sentence. 
-  
-    </p>
-
-
-<h1>
-Positional Encoding
-  
-</h1>
-
-<p>
-
-  This is the technique that allows you to encode sequence. Transformers are all about being parallel. Their direct competitor is Recurrent Neural Networks (RNNs).
-  RNNs have had several problems in the past. One is that they do not scale well to GPUs and parallel approaches because of their recurrence and dependence on previous
-  steps. The other problem is the famous "vanishing gradients" problem which was addressed by by residuals and LSTMs seem to have addressed this now.  Transformers did
-  away with the type of sequence modeling approach used in RNNs all together so they are very good for parallel approaches. But how do they address or encode the sequence? 
-  Obviously knowing that the word "cat" goes before the word "sleeping" is useful. This is where a technique called positional encoding comes into play. Basically, after 
-  embedding, you have a vector per token of, say, size 512. 
-
-Now, with positional encoding, a function that calculates sines and cosines, is used to create a new vector also of size 512 that represents position (i.e. sequence) of 
-  the tokens. The 2 vectors are added together (embedding + positional_encoding) to get the new inputs to the network. Also, the position vector values are smaller than
-  the embedding vector values so as to not let position dominate. 
-
-</p>
-
- 
-
-<h1>
-Tokens
-</h1>
-    
-<p>
-
-  In a GPT we want to predict the next word given previous words. However, to improve performance, transformer models do not predict the next word. Instead, they 
-  predict the next subword. A good analogy for subword is syllable, although transformer do not use syllables either. The subwords are calculated based on specific 
-  algorithm such as BPE or SentencePiece. This allows transformers to learn to generate new words never seen before. For example, it may have seen 
-<br/>
-The dog is play - ing.
-<br/>
-And by breaking the word into subwords (i.e. play and ing), it can learn to generate new variations of words it never saw before such as
-<br/>
-The lady is iphone - ing.
-<br/>
-We and the Transformer know intuitively what this means.
-<br/>
-The fact is that tokens can be words, syllables, subwords, letters, etc. Subwords through SentencePiece type algorithms just have proven to give the best results. 
-
-</p>
-
-<h1>
-
-Inputs and Outputs
-  
-</h1>
-
-<p>
-    
-So, let us start there. Let's quickly remember our classic example of MNIST supervised classification. In MNIST standard feed forward classification, you have an 
-  input image which is 28x28 and a predicted vector of size 10 for the classes. So, what do the inputs and outputs look like for transformers? For language translation, 
-  they are lists of ids. Each id can represent a word in a sentence. This is best visualized with an example. 
-First, let us look at the classic use case for Transformers. As I said earlier, Transformers have been used extensibly in NLP. And the first example was in language 
-  translation where we have sentence pairs. Such as the following for English-Spanish translation:
-<br/>
-"the cat is sleeping"    -->   which translates to   -- >    "el gato esta durmiendo"
-<br/>
-Therefore, first we need to understand how to encode this for the neural network and then to understand how exactly it is that the network will train and learn. 
-  So, again, before you look into the network's very deep and complex layers, I believe that one needs to  focus on:
-
-  
-</p>
-
-	  <p>
-    <ul>
-    <li> Padding these sequences of ids</li>
-    <li> Taking text sentences and converting them into sequences of ids</li>   
-    </ul>
-	  </p>
-   
-
-
-
- <p>
-
-   Consider that after encoding and padding, your sentences will look like this:
-
- </p>
-
-
-
-
-
-
-
-
-<p>
-
-	and for the other language
-
-
-</p>
-   
-
-
-
-
-
-
-<p>
-GPTs stand for Generative Pre-trained Transformers. The GPT uses the decoder only part of the Transformer. The input to the decoder varies based on whether you are 
-	training or predicting. If you are training, the input to the decoder is the sentence itself. When training, a mask is needed here to prevent the model from 
-	seeing all the words it is trying to predict. This is called a look ahead mask.
-If you are testing, the input is just the previous words before the word you are trying to predict. You start with a start of sentence token (e.g. <sos>) and predict. 
-	The predicted word is then added to the previous tokens and the process is repeated.
-The decoder consists of N (e.g. 6) decoder layers, followed by a fully connected layer.
-
-The full architecture of the decoder can be seen in the following figure. 
-
-	
-</p>
-
-
-
-  <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="800" width="auto">
-      </div>
-
-    </center>
-
-<p>
-Each decoder layer consists of a decoder multi-head attention layer, followed by a fully connected layer. The attention layers consist of m_heads (e.g. 8) parallel 
-	attention sub layers that are later concatenated. The numbers 6 and 8 are a choice the architect makes.
-
-	
-</p>
-
-
-<h1>
-
-	Teacher Forcing
-</h1>
-	  
-<p>
-You may have already read somewhere (on-line) that the Decoder in the Transformer network predicts one word at a time and that that word is read back as an input in the 
-	next iteration. Also, the network predicts the last word in the sequence of words. But you may think, aren't those last words just padding? Eh? So, what is going on 
-	here? As it turns out, the mechanism of predicting one word at a time and feeding it back as an input in the next iteration is only done during the "testing"
-	phase and it is not done during "training". Instead, during "training" of a decoder we use “Teacher Forcing”.
-Teacher forcing is a technique in auto regressive models where you do not use the predicted outputs of the decoder to feed back as input but instead you use the real data. 
-	This helps the model to learn the correct information instead of its own erroneous predictions (especially at the beginning of training).
-</p>
-
-	  <h1>
-Implementing a GPT in PyTorch from Scratch
-		  
-	  </h1>
-
-	  <p>
-In this section,  I will implement a simple GPT using everything we have learned in this book. The code will be very object oriented for efficiency. That being said, 
-	this GPT is implemented from scratch, works really well, and can be scaled. Thanks to Andrej Karpathy for helping me to better understand the PyTorch 
-		  implementation of a GPT (<a href="https://karpathy.ai">Andrej Karpathy</a>).
-
-For the sake of simplicity I will not use subwords here and instead just use the letters of the English alphabet and a few symbols. The vocabulary of a large GPT such as
-	GPT-4 could be hundreds of thousands of subwords or more. This GPT reads in one text file and trains on it. 
-
-<br/>
-Here, we first input our common python libraries.  
-
-	
-</p>
-
-
-<center>
-<div>
-<textarea rows="8" cols="40">
-
-import torch
-import numpy as np
-import torch.nn as nn
-
-from torch.nn import functional as F
   
 </textarea>
 </div>
   </center>
+
+
+
+
+
+
+
+
+<p>
+So, that is it. That completes the Wine data discussion for this section. It seems to be a more challenging problem. I encourage the reader to try to
+	improve the results. Consider trying the following:
+
+	
+</p>
+
+	
+
+<ul>
+<li>Combining classes</li>
+	<li>trying different architectures with deeper networks</li>
+	<li>over-sampling or under-sampling the data</li>
+	
+</ul>
+	
+
+
+
+
+<h1>
+
+	Summary
+</h1>
+
+
+
+<p>
+
+
+	In this chapter, the main topic of deep learning was introduced. The chapter addressed the PyTorch environment and code definitions as well as 
+	theoretical concepts for deep learning. Issues about neural network architecture and performance evaluation were also presented. Finally, several coding 
+	examples using python,
+	Sklearn, numpy, and PyTorch were provided in an incremental fashion for the algorithms of linear regression, logistic regression, 1-layer neural networks (MLP), 
+	and n-layer neural networks (Deep Learning). 
+	The next chapters will further look at other methods that can be implemented with PyTorch and, in particular, that are more advanced algorithms. 
+</p>
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <p>
