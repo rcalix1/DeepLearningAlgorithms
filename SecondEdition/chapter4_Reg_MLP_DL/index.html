@@ -657,21 +657,26 @@ WINE_raw_data_df = pd.read_csv(path_data, delimiter=";")
 We can print the data with 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={print the wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="100">
+
 print( WINE_raw_data_df )
+	
+</textarea>
+  
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
+
+
+
 
 
 This prints the pandas data frame like so 
+
+
 
 \begin{figure}[H]\centering
 \adjustbox{max height=.30\textheight}{
@@ -683,35 +688,28 @@ This prints the pandas data frame like so
 
 Now we can print the features in the data frame
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={The features in the data frame}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 headers_list = WINE_raw_data_df.columns.values.tolist()
 
 print( headers_list )
+	
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 
 which gives us
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Wine dataset features}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 ['fixed acidity',
  'volatile acidity',
@@ -725,10 +723,14 @@ which gives us
  'sulphates',
  'alcohol',
  'quality']
+	
+</textarea>
+  
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
+
 
 We can also select a subset to focus on 
 
