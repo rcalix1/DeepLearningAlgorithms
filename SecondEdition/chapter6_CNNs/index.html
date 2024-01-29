@@ -419,17 +419,15 @@ Image.fromarray(  mnist_test_tr.data[337].numpy()  )
 </p>
 
 
+ <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/MNIST_IMAGE.png" height="600" width="auto">
+      </div>
+
+    </center>
 
 
 
-
-\begin{figure}[H]\centering
-\adjustbox{max height=.55\textheight}{
-    \includegraphics{images/MNIST_IMAGE.png}
-}
-\caption{An image from MNIST}
-\label{RegLin:fig}
-\end{figure}
 
 It is always a good idea to check the tensor shapes. The following code gives us a shape of [60000, 28, 28] for the train set, and of [10000, 28, 28] for the test set. Torch convolution layers prefer shapes like [10000, 1, 28, 28] instead of like this [10000, 28, 28]. The Dataloader takes care of that so we do not have to change it manually. 
 
