@@ -29,7 +29,7 @@
 
     <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/CNN_architecture.png" height="400" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/CNN_architecture.png" height="600" width="auto">
       </div>
 
     </center>
@@ -185,7 +185,7 @@ The output layer has 10 nodes which represent the 10 classes in the MNIST datase
 
    <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/CNN_architecture.png" height="400" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/CNN_architecture.png" height="600" width="auto">
       </div>
 
     </center>
@@ -253,13 +253,16 @@ import torch.nn as nn
 
 
 
+<p>
 
-
-
-
-
-
+	
 The first part of the code that needs to be defined is the section used to set the algorithm parameters.
+
+</p>
+
+
+
+
 
 
 
@@ -276,14 +279,21 @@ batch_size    = 32
 </center>
 	
 
+<p>
+	
+Most of the parameters defined in this section are similar to parameters we have used in previous chapters. A new parameter is the dropout. 
+	The dropout is a parameter for a technique first defined by Geoffrey Hinton. Dropout is a technique that helps to perform a better optimization during the weight search. 
+	Every iteration during training, the dropout percent of connections (weights) is dropped. 
+
+<br/>
+
+At the heart of a CNN there are 2 main operations which are the convolution and the maxpool operation. The convolution code can be seen below. 
+	As can be seen, it takes images and filters and performs a convolution operation. The strides parameter defines how the filter will slide across
+	the image (e.g. every pixel, every 2 pixels, etc.). Therefore, strides can achieve the same objective and maxpooling. For instance, a stride of 
+	2 can be seen as maxpooling the image by a factor of 2 as well. Both approaches in the literature have been found to achieve similar results. 
 
 
-
-Most of the parameters defined in this section are similar to parameters we have used in previous chapters. A new parameter is the dropout. The dropout is a parameter for a technique first defined by Geoffrey Hinton. Dropout is a technique that helps to perform a better optimization during the weight search. Every iteration during training, the dropout percent of connections (weights) is dropped. 
-
-
-
-At the heart of a CNN there are 2 main operations which are the convolution and the maxpool operation. The convolution code can be seen below. As can be seen, it takes images and filters and performs a convolution operation. The strides parameter defines how the filter will slide across the image (e.g. every pixel, every 2 pixels, etc.). Therefore, strides can achieve the same objective and maxpooling. For instance, a stride of 2 can be seen as maxpooling the image by a factor of 2 as well. Both approaches in the literature have been found to achieve similar results. 
+</p>
 
 
 <center>
@@ -314,21 +324,22 @@ model =  nn.Sequential(
 	
 
 
-
-
-
-
-
-
-
-
-
-The maxpool or stride operation are used to down sample the images. For instance, in the case of the mnist images which have a size of 28x28, every time the images or their filtered equivalents pass through a maxpool function (or use stride), the result is that the image is reduced in size. During the first convolution (convolution layer 1), the filtered images are down sampled from 28x28 to 14x14. In this MNIST example, I will use maxpool which means I also need to set the strive value to one.
-
+<p>
+The maxpool or stride operation are used to down sample the images. For instance, in the case of the mnist images which have a size of 28x28, every time the
+	images or their filtered equivalents pass through a maxpool function (or use stride), the result is that the image is reduced in size. During the first 
+	convolution (convolution layer 1), the filtered images are down sampled from 28x28 to 14x14. In this MNIST example, I will use maxpool which means I also
+	need to set the strive value to one.
+<br/>
 In the previous code listing, the activation is ReLU, and normalization and dropout layers can also be seen. 
 
-
+<br/>
 To keep things simple here, I will read the MNIST from the datasets module in torchvision. 
+
+	
+</p>
+
+
+
 
 <center>
 <div>
@@ -345,11 +356,15 @@ mnist_test  = datasets.MNIST(data_path, train=False, download=True)
 </center>
 
 
+<p>
+
+The datasets module also has a nice way of applying filters to the data so that it can be converted to Torch tensors. Many filter can be applied but here I only use 
+	the \textbf{Transforms.ToTensor()} which is necessary to convert the whole dataset to torch tensors.
+
+	
+</p>
 
 
-
-
-The datasets module also has a nice way of applying filters to the data so that it can be converted to Torch tensors. Many filter can be applied but here I only use the \textbf{Transforms.ToTensor()} which is necessary to convert the whole dataset to torch tensors.
 
 
 
@@ -374,12 +389,15 @@ mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False,
 	
 
 
+<p>
 
-
-
-
-
+	
 we can now proceed to display an image with the PIL image module
+
+</p>
+
+
+
 
 <center>
 <div>
@@ -394,13 +412,16 @@ Image.fromarray(  mnist_test_tr.data[337].numpy()  )
 	
 
 
+<p>
+
+	which results in the following
+
+</p>
 
 
 
 
 
-
-which results in the following
 
 \begin{figure}[H]\centering
 \adjustbox{max height=.55\textheight}{
