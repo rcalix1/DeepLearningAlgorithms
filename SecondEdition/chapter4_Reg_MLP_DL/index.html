@@ -29,7 +29,7 @@
 
     <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_transformer.png" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_transformer.png" height="500" width="auto">
       </div>
 
     </center>
@@ -3580,73 +3580,33 @@ So, that is it. That completes the Wine data discussion for this section. It see
 
 
 
-\begin{comment}
 
-ffdsfdf
-
-\end{comment}
-
-\section{ Summary}
-
-In this chapter, the main topic of deep learning was introduced. The chapter addressed the PyTorch environment and code definitions as well as theoretical concepts for deep learning. Issues about neural network architecture and performance evaluation were also presented. Finally, several coding examples using python, Sklearn, numpy, and PyTorch were provided in an incremental fashion for the algorithms of linear regression, logistic regression, 1-layer neural networks (MLP), and n-layer neural networks (Deep Learning). The next chapters will further look at other methods that can be implemented with PyTorch and, in particular, that are more advanced algorithms. 
-
-
-
-
-
-
-
-<h1>Numpy arrays, tensors, and linear algebra</h1>
-    
-<p>
-Linear algebra, numpy arrays, and tensor operations are at the heart of understanding the Transformer architecture. Before you continue, 
-  I strongly recommend that you read and practice the topics in chapter 1, and in particular, the section on linear algebra, numpy arrays, and tensor operations. 
-
-  
-</p>
 
 <h1>
-Attention
-  
+
+Summary	
 </h1>
 
-<p>
+	<p>
 
-  The Attention mechanism in Transformers is the heart of the whole algorithm. The attention matrix is nothing more than a dot product matrix multiplication 
-  between all the tokens (e.g. words, syllables, subwords, etc.) in a sentence (e.g. the input English sentence). The idea is that, given the input and output, the model learns to correlate the words in
-  the sentence to determine their importance. This is done multiple times and that is why it is called a multi head attention mechanism. 
+	In this chapter, the main topic of deep learning was introduced. The chapter addressed the PyTorch environment and code definitions as well 
+		as theoretical concepts for deep learning. Issues about neural network architecture and performance evaluation were also presented. 
+		Finally, several coding examples using python, Sklearn, numpy, and PyTorch were provided in an incremental fashion for the algorithms of 
+		linear regression, logistic regression, 1-layer neural networks (MLP), and n-layer neural networks (Deep Learning). The next chapters will 
+		\further look at other methods that can be implemented with PyTorch and, in particular, that are more advanced algorithms. 
 
 
-</p>
+	
+	</p>
 
-    <h1>
 
-      Embeddings
-    </h1>
 
-<p>
 
-Sequences of tokens in a sentence are converted into sequences of IDs. An Embedding approach converts the sequence of ids into a sequence of embeddings. 
-  You will go from a 2d tensor 
 
-  
-</p>
-    
-<p>
-[N_batches, _tokens]
-  <br/>
-  to a 3d tensor of size:
-<br/>
- [N_batches, N_tokens ,   embedding_dimension ]
-  <br/>
-  
- The term N_tokens can also be called  seq_length_max. Here N_batches is the batch size, N_tokens or seq_length_max is 40, and embedding_dimension is 512.
-  The term N_tokens (i.e. 40) just establishes the size of the input sentences we wiil allow. Sentences in Transformers are not of variable length. Instead you define
-  a buffer size to hold the sentence. If the sentence is too long, then it is truncated. If the sentence is too short, then the buffer is padded. The embedding size is 
-  selected arbitrarily like in word2vec. 
 
-  
-</p>
+
+
+
 
 
 
@@ -3754,21 +3714,6 @@ Therefore, first we need to understand how to encode this for the neural network
  </p>
 
 
-<center>
-<div>
-<textarea rows="8" cols="90">
-
-
-  [ 12110   203     4  3947    29     2   168     2     4    27    
-       68  4333     8  3622  2943  1012     1 12111     0     0     
-        0     0     0     0     0     0     0     0     0     0     
-        0     0     0     0     0     0     0     0     0     0 ]
-
-  
-</textarea>
-  
-</div>
-    </center>
 
 
 
@@ -3785,26 +3730,6 @@ Therefore, first we need to understand how to encode this for the neural network
 
 
 
- <center>
-<div>
-<textarea rows="8" cols="90">
-
-  
-[ 12110    13     4  3947    29     2     5    32    36    16  
-   1145     4    58    34  7905    58    25    28   354  2482     
-      3    17    27    28  4395     9  2886     7 12111     0     
-      0     0     0     0     0     0     0     0     0     0 ]
-
-  
-</textarea>
-</div>
-  </center>
-
-
-<h1>
-
-	GPTs
-</h1>
 
 
 
@@ -4826,31 +4751,7 @@ The FeedForward class is very straight forward  as can be seen below. It is a si
 
 
 
-<center>
-<div>
-<textarea rows="20" cols="100">
 
-
-class FeedForward(nn.Module):
-
-   def __init__(self, n_embd):         ## 512
-        
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(n_embd, 4 * n_embd),      ## [512, 4*512]
-            nn.ReLU(),
-            nn.Linear(4 * n_embd, n_embd),      ## [4*512, 512]
-            nn.Dropout(dropout),
-        )
-        
-    def forward(self, x):
-        return self.net(x)
-
-  
-</textarea>
-  
-</div>
-    </center>
 
 
 
@@ -4924,16 +4825,6 @@ class Head(nn.Module):
   
 </div>
     </center>
-  
-
-<p>
-
-The sentence and corresponding padding mask are the only inputs to this Attention layer. The output of this Attention mechanism is then passed to a 
-	fully connected layer. The mask must not be part of the computational graph since it is only used for masking. We use the following command to keep it 
-	out of the computational graph. 
-
-
-</p>
 
 
 
@@ -4997,42 +4888,6 @@ Remember that using "nn.Linear" is equivalent to the following:
 
 
 
-
-     <center>
-<div>
-<textarea rows="16" cols="100">
-
-
-Wq = torch.tensor( [batch_size, 512, 64] )
-bq = torch.tensor( [batch_size,  40, 64] )  
-Q  = torch.matmul( x, Wq ) + bq    # Nx40x64
-    
-Wk = torch.tensor( [batch_size, 512, 64] )  
-bk = torch.tensor( [batch_size,  40, 64] )  
-K = torch.matmul(x, Wk) + bk    # Nx40x64
-    
-Wv = torch.tensor( xavier_init( [batch_size, 512, 64] )  )
-bv = torch.tensor( torch.random_normal( [batch_size, 40, 64] )  )
-V = torch.matmul(x, Wv) + bv    # Nx40x64
-
-
-</textarea>
-  
-</div>
-    </center>
-
-
-
-<p>
-
-Once Q, K, and V are defined, the next step is to multiply Q times K. You can think of this as calculating a score of the importance of "token_i" in
-	"x" to all other words in "x".
-
-
-	
-</p>
-
- 
 
 
   
@@ -5167,23 +5022,7 @@ class Head(nn.Module):
 Finally, the following operation is performed which result in a tensor of size [N, 40, 64]. Remember that 8 of these Head output tensors will be concatenated to return 
 	to the original size of [N, 40, 512] (64 * 8 = 512). 
 
-<br/>
-out = nn.matmul(wei, V)    
-<br/>
-    
-The operation looks like the following [N, 40, 40] * [N, 40, 64].
 
-
-So, in summary you calculate the keys, queries, and values which are tensors that map the input \textbf{x} of size [N, 40, 512] to size [N, 40, 64]. We then
-	calculate the scores matrix (wei) which is the Attention mechanism. This is a dot product. We matrix multiply Q with the transpose of K. This results 
-	in a matrix that is size [N, 40, 40].
-
-After calculating the score matrix (wei), we need to mask the values so that we don’t cheat by looking ahead. We apply the look ahead and padding masks. 
-	The mask for look ahead attention happens before the softmax calculation. Notice that the masking is done to the dot_product scores matrix (wei) only. 
-	The mask is multiplied with -1e9 (close to negative infinity). This is done because the mask is summed with the scaled matrix multiplication of Q and K and is 
-	applied immediately before a softmax. The goal is to zero out padded cells, and large negative inputs to softmax are near zero in the output.
-
-<br/>
 	<br/>
 For example, the  softmax ( torch.nn.softmax(a7) ) for “a” defined as follows:
 <br/>
@@ -5226,21 +5065,6 @@ then the softmax operation on b7 (torch.nn.softmax(b7)) should give us
 <br/>
 
 	
-</p>
-
-
-
- 
-
-
-      <center>
-<div>
-<textarea rows="6" cols="100">
-
-<torch.Tensor: shape=(10,), dtype=float32, numpy=
-array([ 0.3096101 , 0.20753784, 0.22936477, 0.25348732, 0. ,0. , 0. , 0. , 0. , 0. ], dtype=float32)>
-
-</textarea>
   
 </div>
     </center>
@@ -5263,22 +5087,6 @@ And that covers all the classes of the NN architecture. We are now ready to inst
  </p>
 
 
-       <center>
-<div>
-<textarea rows="8" cols="100">
-
-
-model   = GPTModel()
-
-m       = model.to(device)
-
-optimizer = torch.optim.Adam(  m.parameters(), lr=learning_rate   )
-
-
-</textarea>
-  
-</div>
-    </center>
 
 
 <p>
