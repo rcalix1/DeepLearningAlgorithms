@@ -124,18 +124,31 @@ import matplotlib.pyplot as plt
   
 
 
+<p>
+In the previous code section, it can be seen that for our deep learning code to work, we only need a few new libraries. The most important new library is Torch. 
+	This of course is the main source of our new code. We will still rely on numpy to efficiently get the data although we can also get data with the
+	statement sklearn.datasets import fetch\_mldata.
+The next important issue in our code to do would be to set some parameters. Deep learning algorithms are iterative in the sense that they load samples 
+	in batches to avoid running out of memory. This is very important as it allows you to load millions of data samples in subsets called batches. 
+	Therefore, we can set up the parameters for batch processing. In the code below, we can see that we want to load batches of 100 samples each. 
+	For a training set of 1,000 samples, we would divide the set into 10 bins of 100 samples each and therefore run 10 batches. 
+Two additional parameters in this code are the learning\_rate and the n\_epochs. The n\_epochs parameter represents the number of times that we will run our main “for” loop. 
+	This is the loop that we will run to provide data to our algorithms for training and testing. At this point, an optimization begins to occur which helps the 
+	supervised learning algorithm to learn from the samples. 
+The learning\_rate value (in this case 0.01) is a very important parameter in the learning algorithm. Simply speaking, it represents the step that is taken in a
+	gradient descent algorithm to find an optimal solution. Think of this like a giant walking over a mountainous region with many peaks and valleys. He is trying to find an optimal location; if the step is too big, the giant could go from peak to peak and skip a valley altogether. On the other hand, if the step is to small the giant may take too long to move in or out of a valley. In terms of PyTorch, the learning rate can affect convergence. 
 
 
+<br/>
+Convergence is the term that means that the iterative algorithm is starting to tend to the optimal solution. The learning\_rate can also be assigned a function instead
+	of just a value. 
+This helps to adjust the learning rate in real time while the algorithm is running. Some researchers have suggested that this type of optimization can provide better 
+	results than just using a fixed value learning rate. 
 
-In the previous code section, it can be seen that for our deep learning code to work, we only need a few new libraries. The most important new library is Torch. This of course is the main source of our new code. We will still rely on numpy to efficiently get the data although we can also get data with the statement sklearn.datasets import fetch\_mldata.
-The next important issue in our code to do would be to set some parameters. Deep learning algorithms are iterative in the sense that they load samples in batches to avoid running out of memory. This is very important as it allows you to load millions of data samples in subsets called batches. Therefore, we can set up the parameters for batch processing. In the code below, we can see that we want to load batches of 100 samples each. For a training set of 1,000 samples, we would divide the set into 10 bins of 100 samples each and therefore run 10 batches. 
-Two additional parameters in this code are the learning\_rate and the n\_epochs. The n\_epochs parameter represents the number of times that we will run our main “for” loop. This is the loop that we will run to provide data to our algorithms for training and testing. At this point, an optimization begins to occur which helps the supervised learning algorithm to learn from the samples. 
-The learning\_rate value (in this case 0.01) is a very important parameter in the learning algorithm. Simply speaking, it represents the step that is taken in a gradient descent algorithm to find an optimal solution. Think of this like a giant walking over a mountainous region with many peaks and valleys. He is trying to find an optimal location; if the step is too big, the giant could go from peak to peak and skip a valley altogether. On the other hand, if the step is to small the giant may take too long to move in or out of a valley. In terms of PyTorch, the learning rate can affect convergence. 
 
+	
+</p>
 
-
-Convergence is the term that means that the iterative algorithm is starting to tend to the optimal solution. The learning\_rate can also be assigned a function instead of just a value. 
-This helps to adjust the learning rate in real time while the algorithm is running. Some researchers have suggested that this type of optimization can provide better results than just using a fixed value learning rate. 
 
 
 
@@ -152,24 +165,31 @@ batch_size    = 100
 </div>
 </center>
 
-
-
+<p>
 Deep learning algorithms in PyTorch consist of a basic structure. Simply put, they have:
 
+	
+</p>
+
+<ul>
+
+	<li>Creating the dataset or DataLoaders</li>
+	<li> Defining the NN architectures (Inference Function)</li>
+	<li>Defining the loss function and optimizer</li>
+	<li>Training the model and adjusting the weights</li>
+</ul>
 
 
-\begin{itemize}
-\item Creating the dataset or DataLoaders
-\item Defining the NN architectures (Inference Function)
-\item Defining the loss function and optimizer
-\item Training the model and adjusting the weights
-\end{itemize}
-
-
-
+<p>
 In the next section I will proceed to further elaborate on this. 
 
-The figure below presents the accuracy plot per epoch of a deep neural net as it is being trained. The x axis represents the epochs over time and the y axis represents the accuracy score. As can be seen, the accuracy is low at first but it starts to improve after a certain number of epochs when the classifier begins to learn and converge.  
+The figure below presents the accuracy plot per epoch of a deep neural net as it is being trained. The x axis represents the epochs over time and the y
+	axis represents the accuracy score. As can be seen, the accuracy is low at first but it starts to improve after a certain number of epochs when the classifier
+	begins to learn and converge.  
+	
+</p>
+
+
 
 
 
@@ -179,14 +199,33 @@ The figure below presents the accuracy plot per epoch of a deep neural net as it
       </div>
     </center>
 
-In this example on the figure, a deep net takes a few epochs to learn how to detect and classify the samples. After about 200 epochs, a deep net of say 2 hidden layers stabilizes and is able to maintain a consistent accuracy score. 
+<p>
+In this example on the figure, a deep net takes a few epochs to learn how to detect and classify the samples. After about 200 epochs, a deep net of say 2 hidden 
+	layers stabilizes and is able to maintain a consistent accuracy score. 
 
-\section{Getting Started with Deep Leaning }
+	
+</p>
+
+	<h1>
+		Getting Started with Deep Leaning
+	</h1>
+
+<p>
+So what’s it all about? Again, my focus here is not to discuss deep learning from the equations point of view or talk about the derivatives. Those are all very 
+	important concepts but can be overwhelming when starting. Instead, I want to help the reader write deep learning code with PyTorch. Then, the reader will, no doubt,
+	have many questions where the theory and fundamentals will help him or her to better understand and use the algorithms. 
+The figures below present some of the challenges that must be addressed when dealing with real data. Real data such as language data from Twitter is highly noisy and 
+	un-balanced. An imbalance in the data means, for example, that 80 \% of the samples belong to 1 class and the remaining 20 \% belong to the other class. 
+	Therefore, training a classifier to, say, perform emotion classification (where data is highly imbalanced) can be a difficult task. In the figure below, 
+	a sample of Twitter data is represented. Each sample in the dataset had multiple features but was compressed into a two dimensional vector for visualization purposes. 
+	
+As can be seen, the data in the figures has a high overlap in the classes and the data is difficult to separate. A linear classifier (the line seen on the graph) 
+	can only separate a small portion of the samples and the majority are not easy to separate in this space. The graph below is available on-line in color. 
+
+	
+</p>
 
 
-So what’s it all about? Again, my focus here is not to discuss deep learning from the equations point of view or talk about the derivatives. Those are all very important concepts but can be overwhelming when starting. Instead, I want to help the reader write deep learning code with PyTorch. Then, the reader will, no doubt, have many questions where the theory and fundamentals will help him or her to better understand and use the algorithms. 
-The figures below present some of the challenges that must be addressed when dealing with real data. Real data such as language data from Twitter is highly noisy and un-balanced. An imbalance in the data means, for example, that 80 \% of the samples belong to 1 class and the remaining 20 \% belong to the other class. Therefore, training a classifier to, say, perform emotion classification (where data is highly imbalanced) can be a difficult task. In the figure below, a sample of Twitter data is represented. Each sample in the dataset had multiple features but was compressed into a two dimensional vector for visualization purposes. 
-As can be seen, the data in the figures has a high overlap in the classes and the data is difficult to separate. A linear classifier (the line seen on the graph) can only separate a small portion of the samples and the majority are not easy to separate in this space. The graph below is available on-line in color. 
 
 
 
@@ -197,8 +236,18 @@ As can be seen, the data in the figures has a high overlap in the classes and th
     </center>
 
 
-So how can we get more of the samples of one class without getting too many of the samples of the other class? Well, the answer is that we could use another type of line for the separation. For instance, instead of using a straight line we could use a curved line. This is why some algorithms are called linear and others are called non-linear. Non-linear algorithms can sometimes create better separations in the data and therefore obtain fewer errors. In the next Figure, an example of this is shown using Support Vector Machines (SVM). SVM methods can sometimes build better non-linear classifiers because of their ability to project data to higher dimensional spaces.  Deep neural networks can be used to learn non-linear models as well. This property of non-linear models can help to obtain better classification accuracy scores. This figure is available on-line in color. 
+<p>
+So how can we get more of the samples of one class without getting too many of the samples of the other class? Well, the answer is that we could use another type 
+	of line for the separation. For instance, instead of using a straight line we could use a curved line. This is why some algorithms are called linear and others 
+	are called non-linear. Non-linear algorithms can sometimes create better separations in the data and therefore obtain fewer errors. In the next Figure, an example
+	of this is shown using Support Vector Machines (SVM). SVM methods can sometimes build better non-linear classifiers because of their ability to project data to
+	higher dimensional spaces.  Deep neural networks can be used to learn non-linear models as well. This property of non-linear models can help to obtain better 
+	classification accuracy scores. This figure is available on-line in color. 
 
+
+	
+</p>
+	
 
 
 
@@ -209,32 +258,65 @@ So how can we get more of the samples of one class without getting too many of t
       </div>
     </center>
 
-The figure above shows an SVM classifier building a non-linear separation line (the curved line in the graph) on the data. It could be expected that a deep neural network could build even better separation boundaries and that different architectures could give different results. This takes us to the very important aspect of deep learning architecture. 
-Deep learning architecture is where we define the parameters such as layers and neurons that define a deep neural network. You could think of this as the way that you construct the line that you want to build and use. We will discuss this in the next sections but it is important to know that you can define many deep learning architectures.
+<p>
+The figure above shows an SVM classifier building a non-linear separation line (the curved line in the graph) on the data. It could be expected that a deep neural network 
+	could build even better separation boundaries and that different architectures could give different results. This takes us to the very important aspect of deep 
+	architecture. 
+Deep learning architecture is where we define the parameters such as layers and neurons that define a deep neural network. You could think of this as the way that you
+	construct the line that you want to build and use. We will discuss this in the next sections but it is important to know that you can define many deep learning
+	architectures.
 
-\section{Deep Leaning Definition}
+	
+</p>
 
+	<h1>
+Deep Leaning Definition
+		
+	</h1>
+	
 
-Deep learning systems are neural networks with many layers. As such, the more layers they have the deeper they are considered to be. In the next sections, I will begin to discuss neural networks. I will focus mostly on intuition when talking about neural networks. I will use linear regression and logistic regression constructs to define them. We can also think of deep neural nets as functions and this will become very useful as we start to program our code. Additional discussions of deep learning theory can be found in many other books such as “Fundamentals of Deep Learning: Designing Next-Generation Machine Intelligence” by Nikhil Buduma and Nicholas Locascio and Deep Learning by Goodfellow et al. (2016).
+<p>
 
-\section{PyTorch Basics}
- 
-The main idea with the implementation of deep neural networks in PyTorch is that you need to define a computational graph and run your code through this graph on the CPU (s) or GPU (s). 
+Deep learning systems are neural networks with many layers. As such, the more layers they have the deeper they are considered to be. In the next sections, 
+	I will begin to discuss neural networks. I will focus mostly on intuition when talking about neural networks. I will use linear regression and logistic 
+	regression constructs to define them. We can also think of deep neural nets as functions and this will become very useful as we start to program our code. 
+	Additional discussions of deep learning theory can be found in many other books such as “Fundamentals of Deep Learning: Designing Next-Generation 
+	Machine Intelligence” by Nikhil Buduma and Nicholas Locascio and Deep Learning by Goodfellow et al. (2016).
+	
+</p>
 
+	<h1>
 
+		PyTorch Basics
+	</h1>
+
+<p>
+The main idea with the implementation of deep neural networks in PyTorch is that you need to define a computational graph and run your code through this graph on the
+	CPU (s) or GPU (s). 
+
+<br/>
 Here are some of the main aspects of PyTorch to be aware of:
 
+	
+</p>
+ 
+<ul>
+<li>PyTorch is object oriented</li>
+	<li>Tensors are multidimensional arrays</li>
+	<li>PyTorch variables are memory buffers that contain these tensors</li>
+	<li>We call elements from PyTorch by referencing the object torch as such: torch.nn</li>
+	<li> In PyTorch you need to define a graph and then run it</li>
+	
+	
+</ul>
 
-\begin{itemize}
-\item PyTorch is object oriented
-\item Tensors are multidimensional arrays 
-\item PyTorch variables are memory buffers that contain these tensors
-\item We call elements from PyTorch by referencing the object torch as such: torch.nn
-\item In PyTorch you need to define a graph and then run it
-\end{itemize}
-
-
+<p>
 It is now time to write some PyTorch code. Here let us add 2 numbers with PyTorch.
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -255,15 +337,20 @@ res = model(a, b)
 </center>
 
 
+<p>
+
+	
+In this code we initialize 2 variables "a" and "b" as torch tensors, and add them together. . What is important to note here is that whenever you reference 
+	an object in PyTorch with torch, such as initializing the variable "a", you are actually adding elements or nodes to a graph. 
+	The graph can be seen in the following figure.
+
+</p>
 
 
 
 
 
 
-
-
-In this code we initialize 2 variables $ a $ and $ b $ as torch tensors, and add them together. . What is important to note here is that whenever you reference an object in PyTorch with torch, such as initializing the variable a, you are actually adding elements or nodes to a graph.  The graph can be seen in the following figure.
 
 
  <center>
@@ -273,14 +360,24 @@ In this code we initialize 2 variables $ a $ and $ b $ as torch tensors, and add
     </center>
 
 
-
-
+<p>
 In this case, the command adds the 2 numbers together. The answer for this after printing the results should be 42.
 
-\section{ Loading your Data into your PyTorch code}
+	
+</p>
 
+<h1>
+Loading your Data into your PyTorch code
+	
+</h1>
 
-Loading the data can actually be somewhat complicated in PyTorch. One of the issues is that you need to convert the data, say from something like the below example, to another format using one-hot encoding for the labels. This can sometimes be complicated and can cause you problems when writing your algorithms. 
+	<p>
+Loading the data can actually be somewhat complicated in PyTorch. One of the issues is that you need to convert the data, say from something like the below example, 
+		to another format using one-hot encoding for the labels. This can sometimes be complicated and can cause you problems when writing your algorithms. 
+
+		
+	</p>
+
 
 <center>
 <div>
@@ -305,12 +402,18 @@ class,f1,f2,f3,f4
 	    
 
 
+<p>
+Here, we are looking at the iris data set. The first column represents the annotated class. The IRIS dataset has 3 classes (0, 1, and 2). 
+	The other 4 columns represent the features per each sample. The code provided below will show how to read the data. 
+In the code below, we assume that the data is contained in the file iris.csv (available at the book github). We can use the numpy loadtxt() function to obtain 
+	the data and to load it into a numpy matrix. Notice that the file has a header for the class and the 4 features. We can easily remove the header by using 
+	the parameter skiprows=1 in the numpy.loadtxt() function. 
+
+	
+</p>
 
 
 
-
-Here, we are looking at the iris data set. The first column represents the annotated class. The IRIS dataset has 3 classes (0, 1, and 2). The other 4 columns represent the features per each sample. The code provided below will show how to read the data. 
-In the code below, we assume that the data is contained in the file iris.csv (available at the book github). We can use the numpy loadtxt() function to obtain the data and to load it into a numpy matrix. Notice that the file has a header for the class and the 4 features. We can easily remove the header by using the parameter skiprows=1 in the numpy.loadtxt() function. 
 
 <center>
 <div>
@@ -331,11 +434,18 @@ y = Matrix_data[:,  0]
 </center>
 
 
+<p>
 
-
-In the previous code we can slice the class column into the \textbf{y} variable and the rest of the columns into the \textbf{X} variable. Notice that we are following the SKlearn approach from the previous chapters. PyTorch has its own approaches but I have used SKlearn here for the sake of simplicity. When slicing a 2-D matrix (matrix[i, j] ) we specify the number of rows with \textbf{“i”} and the number of columns with \textbf{“j”}. We can also specify ranges by doing the following: matrix[2:5, :]. The “:” on the “j” index indicates select all columns. If we wanted to select from a list of column indices we could do the following: X=Matrix\_data[:, [1,2,3,5,6]].
+	In the previous code we can slice the class column into the \textbf{y} variable and the rest of the columns into the \textbf{X} variable. 
+	Notice that we are following the SKlearn approach from the previous chapters. PyTorch has its own approaches but I have used SKlearn here for the sake of 
+	simplicity. When slicing a 2-D matrix (matrix[i, j] ) we specify the number of rows with \textbf{“i”} and the number of columns with \textbf{“j”}. 
+	We can also specify ranges by doing the following: matrix[2:5, :]. The “:” on the “j” index indicates select all columns. If we wanted to select from a
+	list of column indices we could do the following: X=Matrix\_data[:, [1,2,3,5,6]].
 
 Now we can split the data.
+
+
+</p>
 
 
 <center>
@@ -356,10 +466,15 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 
 
+<p>
+Similarly to the previous chapters, we can now split the data from \textbf{X} and \textbf{y} to obtain the train and test sets: X\_train, X\_test, y\_train, y\_test. 
+	As can be seen in the previous code segment, these data sets are now ready for one-hot encoding. Only the labels need to be one-hot encoded. The code for 
+	performing the one hot-encoding step is below. The one-hot encoding function and process was defined in the previous chapter. 
 
 
+	
+</p>
 
-Similarly to the previous chapters, we can now split the data from \textbf{X} and \textbf{y} to obtain the train and test sets: X\_train, X\_test, y\_train, y\_test. As can be seen in the previous code segment, these data sets are now ready for one-hot encoding. Only the labels need to be one-hot encoded. The code for performing the one hot-encoding step is below. The one-hot encoding function and process was defined in the previous chapter. 
 
 
 
@@ -376,13 +491,20 @@ y_test_onehot  = convertOneHot_data2(y_test)
 </div>
 </center>
 	    
+<p>
+
+In the code above we take the labels in y\_train and y\_test and pass them through our one-hot encoding function to produce the new 
+	variables y\_train\_onehot and y\_test\_onehot. You can visualize the new one-hot encoded vectors by running print y\_train\_onehot[:20,:] for the first 20
+	samples. 
+
+<br />
+The next step in the process is to scale the X data. I suggest running your data with scaling and without to compare the performance of your model. 
+	Convergence of your deep learning algorithm and model results can be better with scaled data. In this case we can use SKlearn’s scaling module 
+	StandardScaler() to perform this task. 
 
 
-In the code above we take the labels in y\_train and y\_test and pass them through our one-hot encoding function to produce the new variables y\_train\_onehot and y\_test\_onehot. You can visualize the new one-hot encoded vectors by running print y\_train\_onehot[:20,:] for the first 20 samples. 
-
-
-The next step in the process is to scale the X data. I suggest running your data with scaling and without to compare the performance of your model. Convergence of your deep learning algorithm and model results can be better with scaled data. In this case we can use SKlearn’s scaling module StandardScaler() to perform this task. 
-
+	
+</p>
 
 <center>
 <div>
@@ -403,16 +525,22 @@ X_test_normalized  = sc.transform(X_test)
 	    
 
 
+<p>
+
+As can be seen in the above code segment, we only need to scale the X data. We can fit a model with the train set and then use that model to scale 
+	both the X\_train and X\_test sets. 
+
+Now that our data is ready, we want to save some information about the dimensions of the data sets in a couple of variables "A" and "B". This can be 
+	very helpful for code re-usability. We will store the number of features in "A" and the number of classes in "B". 
+
+To obtain these values, we can use the .shape[z] function available to numpy arrays. In the code below we can see an example of how to get this value 
+	for "A". In this case, “z” represents the matrix dimension (number 0 for rows ,and number 1 for columns). 
+
+	
+</p>
 
 
 
-
-
-As can be seen in the above code segment, we only need to scale the X data. We can fit a model with the train set and then use that model to scale both the X\_train and X\_test sets. 
-
-Now that our data is ready, we want to save some information about the dimensions of the data sets in a couple of variables "A" and "B". This can be very helpful for code re-usability. We will store the number of features in "A" and the number of classes in "B". 
-
-To obtain these values, we can use the .shape[z] function available to numpy arrays. In the code below we can see an example of how to get this value for "A". In this case, “z” represents the matrix dimension (number 0 for rows ,and number 1 for columns). 
 
 
 
@@ -452,45 +580,75 @@ print("num samples test", samples_in_test)
 
 
 
+<p>
+
+	At this point, we have completed most of the pre-processing steps and we are ready to define the learning algorithms. 
+	This is where we define neural network architecture, the cost functions to be used, and the functions to predict results for given test samples. 
+	In the next section, I will implement a linear regression algorithm in PyTorch. After that, I will extend the linear regression framework to build a 
+	logistic regression model and later a deep architecture neural network model.
+
+</p>
 
 
 
+<h1>
+Linear Regression
+	
+</h1>
 
 
+<p>
+Linear regression refers to a model for predicting any kind of magnitude (such as housing prices, sales prices, ages, etc.) instead of just 
+	classes (e.g. happy vs. sad, etc.). In the next subsections will cover the theory, intuition, and implementation in PyTorch code. 
 
-At this point, we have completed most of the pre-processing steps and we are ready to define the learning algorithms. This is where we define neural network architecture, the cost functions to be used, and the functions to predict results for given test samples. In the next section, I will implement a linear regression algorithm in PyTorch. After that, I will extend the linear regression framework to build a logistic regression model and later a deep architecture neural network model.
+	
+</p>
 
-\section{Linear Regression}
-
-
-Linear regression refers to a model for predicting any kind of magnitude (such as housing prices, sales prices, ages, etc.) instead of just classes (e.g. happy vs. sad, etc.). In the next subsections will cover the theory, intuition, and implementation in PyTorch code. 
-
-\subsection{Theory and Intuition of Linear Regression}
-
-
+<h1>
+Theory and Intuition of Linear Regression
+	
+</h1>
+	
+<p>
 Two important aspects to consider are the inference equation and the loss function. 
 
-\begin{itemize}
-    \item Linear regression inference equation
-    \item Linear regression loss functions
-\end{itemize}
+	
+</p>
 
 
-
-In linear regression, multiple variables and coefficients are combined to form an equation that can be used to fit a particular data set.  The fitting process involves an optimization approach that minimizes the Least Squares Error. 
-
-The coefficients or weights for each variable are useful in determining the contribution of each variable to the fitted model of the data.  The definition of the least squares error function can be seen in the function below (also known as MSE)
-
-\begin{center}
-    $ E = \frac{1}{n} \sum_{i = 0}^{n} (y_i - (  x * x_i + b  ))^2 $
-\end{center}
+<ul>
+<li>Linear regression inference equation</li>
+	<li>Linear regression loss functions</li>
+</ul>
 
 
+	<p>
 
-Where $ n $ represents the number of samples. 
+		In linear regression, multiple variables and coefficients are combined to form an equation that can be used to fit a particular data set. 
+		The fitting process involves an optimization approach that minimizes the Least Squares Error. 
+<br/>
+The coefficients or weights for each variable are useful in determining the contribution of each variable to the fitted model of the data.  
+		The definition of the least squares error function can be seen in the function below (also known as MSE)
+
+	</p>
+
+<center>
+ $ E = \frac{1}{n} \sum_{i = 0}^{n} (y_i - (  x * x_i + b  ))^2 $
+	
+</center>
+
+<p>
+Where "n" represents the number of samples. 
+
+<br/>
+In linear regression, a line is fitted to the dataset in feature space by minimizing the sum of errors. That is to say, the sum of the error 
+	distances between the values in the predicted line and the real values are estimated (see figure below). 
 
 
-In linear regression, a line is fitted to the dataset in feature space by minimizing the sum of errors. That is to say, the sum of the error distances between the values in the predicted line and the real values are estimated (see figure below). 
+	
+</p>
+
+
 
 
      <center>
@@ -501,71 +659,111 @@ In linear regression, a line is fitted to the dataset in feature space by minimi
 
 
 
+<p>
+In the equation below, the term $ \Biggl \langle \bullet, \bullet \biggr \rangle $ denotes the dot product in the input space
+	between $ w $ and $  x $. Here, $ x $ is the input vector, $ w $ is the weight vector, and $ b $ is the bias. 
+
+	
+</p>
+
+<center>
+
+	$  f(x) = \Biggl \langle w, x \biggr \rangle + b  $
+</center>
+
+<p>
+This simple equation defines the linear regression and the parameters that must be learned given the training data. With this theoretical framework I will 
+	now proceed to describe how to code this with PyTorch.
+The linear regression model is implemented in the code below. The purpose of the code below is to be simple and to show how a linear
+	regression algorithm can be implemented in python using PyTorch.
+
+<br/>
+
+For our example, we are going to assume a very simple regression problem for housing prices. We are going to have 1 input (1 feature $ x_1 $ ) in our samples
+	(the size of the house) and we will predict 1 output value $ y $ (the cost of the house). Therefore, we will have an equation as such: 
+
+	
+</p>
 
 
+<center>
 
-In the equation below, the term $ \Biggl \langle \bullet, \bullet \biggr \rangle $ denotes the dot product in the input space between $ w $ and $  x $. Here, $ x $ is the input vector, $ w $ is the weight vector, and $ b $ is the bias. 
-
-\begin{center}
-$  f(x) = \Biggl \langle w, x \biggr \rangle + b  $
-\end{center}
-
-This simple equation defines the linear regression and the parameters that must be learned given the training data. With this theoretical framework I will now proceed to describe how to code this with PyTorch.
-The linear regression model is implemented in the code below. The purpose of the code below is to be simple and to show how a linear regression algorithm can be implemented in python using PyTorch.
-
-
-
-For our example, we are going to assume a very simple regression problem for housing prices. We are going to have 1 input (1 feature $ x_1 $ ) in our samples (the size of the house) and we will predict 1 output value $ y $ (the cost of the house). Therefore, we will have an equation as such: 
-
-\begin{center}
-$ y = w_1 * x_1 + b $
-\end{center}
-
-We will need to solve this equation by learning the values of $ w_1 $ and $ b  $ (the parameters) given the training data in $ x_1 $ and $ y $. 
-
+	$ y = w_1 * x_1 + b $
+</center>
+	
+<p>
+	We will need to solve this equation by learning the values of $ w_1 $ and $ b  $ (the parameters) given the training data in $ x_1 $ and $ y $. 
+<br/>
 For an equation with 2 input features such as 
+	   
+</p>
 
-\begin{center}
-$ y = w_1 * x_1 + w_2 * x_2 + b $
-\end{center}
+
+
+<center>
+
+	$ y = w_1 * x_1 + w_2 * x_2 + b $
+</center>
+	
+<p>
 
 we can show it in diagram form as can be seen in the figure. 
 
+
+	
+</p>
 
 
 
  <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/linearregressionarchitecture.chp4.300dpi.jpg" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/linearregressionarchitecture.chp4.300dpi.jpg" height="400" width="auto">
       </div>
     </center>
 
-As shown in the previous equation, a linear regression is an equation made up of 3 main elements: x, w, and b. The x value holds the training data (features), w represents the weights per feature, and b is the offset value (bias) learned by the model. These values are directly coded into our algorithm using PyTorch. 
+<p>
+
+	As shown in the previous equation, a linear regression is an equation made up of 3 main elements: x, w, and b. The x value holds the training data
+	(features), w represents the weights per feature, and b is the offset value (bias) learned by the model. These values are directly coded into our algorithm using
+	PyTorch. 
+
+<br/>
+
+The  2 variables, W and b, are variables that define the prediction equation. They are the parameters to be learned. All examples in this book will use these
+	variables whether we are defining logistic regression or deep neural nets. W and b are matrices (tensors) whose dimensions need to be defined.
+	This is where we start to define the architecture of our models. In this case, the dimensions are [1,1] for W and just [1] for b. In the case of W the
+	dimension is [1, 1] because it is for a model with 1 feature ( $ x_1 $) and 1 output value (the predicted housing price y). Think of W as a matrix that
+	connects one layer to the next. In this case, we are connecting the inputs to the outputs.
 
 
 
-The  2 variables, W and b, are variables that define the prediction equation. They are the parameters to be learned. All examples in this book will use these variables whether we are defining logistic regression or deep neural nets. W and b are matrices (tensors) whose dimensions need to be defined. This is where we start to define the architecture of our models. In this case, the dimensions are [1,1] for W and just [1] for b. In the case of W the dimension is [1, 1] because it is for a model with 1 feature ( $ x_1 $) and 1 output value (the predicted housing price y). Think of W as a matrix that connects one layer to the next. In this case, we are connecting the inputs to the outputs.
 
-
-
-
+             <br/>       
                     
-                    
-Okay, so now that we have defined the variables, the next step is to define the equation and define the cost function to learn the parameters (e.g. the weights). To do that, we use the following section of code. This is one of the most important parts of deep learning programming. 
-
+Okay, so now that we have defined the variables, the next step is to define the equation and define the cost function to learn the parameters
+	(e.g. the weights). To do that, we use the following section of code. This is one of the most important parts of deep learning programming. 
+<br/>
 In the next section we proceed to train a linear regression model for a wine quality dataset using PyTorch. 
 
+</p>
+	
 
+<h1>
+Linear Regression model for wine quality data
+	
+</h1>
 
-\subsection{Linear Regression model for wine quality data}
-
-
-In this section a linear regression model is trained with PyTorch for a Wine Quality Dataset. Our Wine Quality dataset can also be used in a classification example since the \textbf{y} values are discrete and consist of the values [0, 1, 2, 3, 4, 5]. These represent the wine quality rating from 0 to 6.
-
+<p>
+In this section a linear regression model is trained with PyTorch for a Wine Quality Dataset. Our Wine Quality dataset can also be used in a 
+	classification example since the \textbf{y} values are discrete and consist of the values [0, 1, 2, 3, 4, 5]. These represent the wine quality rating from 0 to 6.
+<br/>
 The data can be used to illustrate the differences between regression and classificatio modeling.
 
-
+<br/>
 We first add some of our common libraries. 
+	
+</p>
+
 
 <center>
 <div>
@@ -591,11 +789,14 @@ from sklearn.metrics import r2_score
 	 
 
 
-
-
-
-
+<p>
 The following are the main libraries to define neural network architectures in PyTorch
+
+	
+</p>
+
+
+
 
 
 <center>
@@ -614,9 +815,12 @@ import torch.optim as optim
 
 
 
+<p>
 
-
+	
 Next, the parameters are set. These include the learning rate, the number or epochs, and the batch size. 
+
+</p>
 
 <center>
 <div>
@@ -652,9 +856,12 @@ WINE_raw_data_df = pd.read_csv(path_data, delimiter=";")
 </center>
 
 
-
-
+<p>
 We can print the data with 
+
+
+	
+</p>
 
 
 <center>
@@ -671,22 +878,26 @@ print( WINE_raw_data_df )
 
 
 
+<p>
+
+	This prints the pandas data frame like so 
 
 
-
-This prints the pandas data frame like so 
-
+</p>
 
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.30\textheight}{
-    \includegraphics{images/wine_in_pandas_frame.png}
-}
-\caption{Wine data in pandas data frame }
-\label{RegLin:fig}
-\end{figure}
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/wine_in_pandas_frame.png" height="400" width="auto">
+      </div>
+</center>
 
+<p>
 Now we can print the features in the data frame
+
+	
+</p>
+
 
 <center>
 <div>
@@ -702,10 +913,13 @@ print( headers_list )
 </center>
 
 
+<p>
 
-
-
+	
 which gives us
+</p>
+
+
 
 <center>
 <div>
@@ -734,14 +948,9 @@ which gives us
 
 We can also select a subset to focus on 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={A subset}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 headers_list2 = [ 'density',
  'pH',
@@ -750,93 +959,89 @@ headers_list2 = [ 'density',
  'quality']
 
 print( headers_list2 )
+	
+</textarea>
+  
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 
 
 which should give us
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Printed selected features}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 ['density', 'pH', 'sulphates', 'alcohol', 'quality']
 
+	
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
 
 To print a correlation matrix and perform some data science we can run the following
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Code to print correlation matrix}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 cm = np.corrcoef(   WINE_raw_data_df[ headers_list ].values.T  ) 
 
 hm = heatmap(cm, row_names=headers_list, column_names=headers_list, figsize=(20,10))
 
+	
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 
 This gives us the figure as follows
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.60\textheight}{
-    \includegraphics{images/wine_correlation_matrix.png}
-}
-\caption{Wine data correlation matrix }
-\label{RegLin:fig}
-\end{figure}
+
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/wine_correlation_matrix.png" height="400" width="auto">
+      </div>
+</center>
+
+
 
 The key is that rows and columns with values very close to zero have no correlation, whereas rows and columns with values close to one (either positive or negative) have strong correlation. 
 
 
 Now we can proceed to process the data and convert from pandas to Numpy.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Convert pandas wine data to numpy}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 WINE_raw_data_np = WINE_raw_data_df.to_numpy()
 
 print( WINE_raw_data_np )
+	
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 this will print the numpy array as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Wine data as numpy }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 array([[ 7.  ,  0.27,  0.36, ...,  0.45,  8.8 ,  6.  ],
        [ 6.3 ,  0.3 ,  0.34, ...,  0.49,  9.5 ,  6.  ],
@@ -846,29 +1051,31 @@ array([[ 7.  ,  0.27,  0.36, ...,  0.45,  8.8 ,  6.  ],
        [ 5.5 ,  0.29,  0.3 , ...,  0.38, 12.8 ,  7.  ],
        [ 6.  ,  0.21,  0.38, ...,  0.32, 11.8 ,  6.  ]])
 
+	
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 
 If we print the shape we can see it is (4898, 12)
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Print shape}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 print( WINE_raw_data_np.shape ) 
+	
+</textarea>
+  
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 Now we proceed to slice the wine data into \textbf{x} and \textbf{y} which gives the dimensions 
@@ -879,14 +1086,9 @@ y = (4898, 1)
 
 With this we know we have 11 features and one predicted value 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={slice wine data into x and y}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 X = WINE_raw_data_np[:, :-1]
 
@@ -895,24 +1097,21 @@ y = WINE_raw_data_np[:, 11:12]
 print( X.shape )
 
 print( y.shape)
+	
+</textarea>
+  
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 
 
 printing the y numpy vector gives us
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={The y numpy vector}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 array([[6.],
        [6.],
@@ -921,21 +1120,20 @@ array([[6.],
        [6.],
        [7.],
        [6.]])
+	
+</textarea>
+  
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
+
 
 I like to split the data randomly every time I train the model. By doing this, I get to see the performance variation. I usually call this a "poor man's ten fold cross validation". I can achieve it quite simply by doing the following:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Random split}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 random_seed =   int( random.random() * 100 )   ## 42
 
@@ -947,22 +1145,21 @@ print( y_train.shape)
 print( y_test.shape)
 
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+  
+</div>
+</center>
+	
+
 
 
 
 after the split you can get the following shapes
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Shapes after the split}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 (3918, 11)
 (980,  11)
@@ -970,8 +1167,14 @@ after the split you can get the following shapes
 (980,   1)
 
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+  
+</div>
+</center>
+
+
+
 
 Sometimes, torch can give you strange errors. One common one relates to the data type being size 64 when it torch wants it to be 32 such as:
 
@@ -979,14 +1182,9 @@ dtype('float64')
 
 You can check and change the type like this in numpy array and then change to PyTorch tensors
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Correct data type error}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 print( y_test.dtype ) 
 
@@ -999,9 +1197,12 @@ y_test  = y_test.astype(  np.float32  )
 print( y_test.dtype ) 
 
 
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 
@@ -1009,14 +1210,9 @@ after this, the data type should be set to 32.
 
 Now we are ready to convert to PyTorch.
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={From numpy to torch}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 X_train_tr = torch.from_numpy(  X_train  )
 X_test_tr  = torch.from_numpy(  X_test   )
@@ -1024,74 +1220,82 @@ y_train_tr = torch.from_numpy(  y_train  )
 y_test_tr  = torch.from_numpy(  y_test   )
 
 
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
-
+<p>
 In general, deep learning data likes to be scaled. 
-
+<br/>
 There are two main types of scaling which both have worked well for me. Generally speaking, I have used standardization. They are:  
 
-\begin{itemize}
-\item standardization
-\item normalization
-\end{itemize}
+	
+</p>
+<ul>
+	<li>standardization</li>
+	<li>normalization/li>
+</ul>
 
+<p>
 In this example we will standardize by first calculating the data means and standard deviations as can be seen below. The epsilon helps to avoid divide by zero errors. 
+	
+</p>
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Means and Standard deviations}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 x_means      = X_train_tr.mean(0, keepdim=True)
 x_deviations = X_train_tr.std( 0, keepdim=True) + epsilon
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+  
+</div>
+</center>
+	
+
+
 
 
 These can be viewed, for instance, by printing x\_means and we get 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={The means for standardization}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 tensor([[6.8566e+00, 2.7671e-01, 3.3420e-01, 6.3712e+00, 4.5989e-02, 3.5417e+01,1.3811e+02, 9.9402e-01, 3.1890e+00, 4.8992e-01, 1.0511e+01]])
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+  
+</div>
+</center>
+
+
+
 
 
 As we saw in the previous chapters, deep learning algorithms are so complex now that using object oriented approaches whenever possible helps to better understand what is going on. In this case we load the data into the torch object "DataLoader" like the code below. the "shuffle" parameter handles randomizing the data as batches are read into the torch model during training. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Torch Dataset and DataLoader}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 train_ds = TensorDataset( X_train_tr, y_train_tr  )
 
 train_dl = DataLoader( train_ds, batch_size, shuffle=True   )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
 
 
 
@@ -1105,14 +1309,9 @@ Notice there are no hidden layers or activation functions.
 
 In the following code segment, we define the linear regression architecture. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Linear Regression NN architecture}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 ## Linear Regression
 
@@ -1136,21 +1335,19 @@ class LinRegNet(nn.Module):
         
         return y_pred
 
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 Now, we should be ready to train the model. First we want to define a training function we can re-use. The function has 2 "for" loops. one loop is to repeat the process based on the number of epochs. The second "for" loop is to read the $ xb $ and $ yb $ data in batches from our DataLoader named "train\_dl". Here, $ xb $ is run through the model to predict $ y\_pred $. The predicted value is compared to the real value in $ yb $ to calculate the loss. This loss is what we minimize according to the definition of the loss function. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={NN training function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="16" cols="100">
 
 def train_loop(N_epochs, model, loss_fn, opt):
     
@@ -1167,9 +1364,12 @@ def train_loop(N_epochs, model, loss_fn, opt):
         if epoch % 20 == 0:
             print( epoch, "loss=", loss)
 
+	
+</textarea>
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
 
 
 
@@ -1177,23 +1377,21 @@ The following 3 commands from our training function zero out the grads buffer, p
 
 If you noticed, the training function takes arguments for the optimization object and the loss function object. These will be described shortly. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Calculate gradients and update the weights}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 opt.zero_grad()
 loss.backward()
 opt.step()
 
+	
+</textarea>
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
+
 
 Now we can invoke the core functions and instantiate the "Adam" optimizer and the loss function. Two important items to notice are that the weights from the model are passed to the optimizer with 
 
@@ -1211,14 +1409,9 @@ Now we can invoke the core functions and instantiate the "Adam" optimizer and th
 
 Now we are ready to call the core functions
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Call the core functions}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+	<center>
+<div>
+<textarea rows="12" cols="100">
 
 model = LinRegNet(x_means, x_deviations)
 
@@ -1229,21 +1422,19 @@ loss_fn = F.mse_loss
 train_loop(  N_epochs, model, loss_fn, opt    )
 
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+</div>
+</center>
+
+
 
 
 Running the training loop begins the training process and should give us the following output. Notice that the loss is going down. That is the desirable objective. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Losses output during training }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 0   loss= tensor(28.6100, grad_fn=<MseLossBackward0>)
 20  loss= tensor(0.3579, grad_fn=<MseLossBackward0>)
@@ -1257,8 +1448,12 @@ Running the training loop begins the training process and should give us the fol
 180 loss= tensor(0.3839, grad_fn=<MseLossBackward0>)
 
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+</div>
+</center>
+	
+
 
 Now we are ready to evaluate our trained model on the test set. Printing the shape of the predicted tensor gives us .
 The score is measured with the $ R^2 $ also known as the coefficient of determination. This gives us a size of (980, 1) and the metric as follows: 
@@ -1267,14 +1462,9 @@ Testing $ R^2 $:  0.3152
 
 The result should be close to 1 to be considered a good result. In future sections we can try better architectures than just linear regression. This is an especially difficult problem to model with regression so the modeling will be challenging but will give us a good dataset to practice on. The code: 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Evaluate model on test set }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 y_pred_test = model( X_test_tr  )
 
@@ -1286,22 +1476,19 @@ print(  "Testing R**2: ",
         )  
 )
 
+	
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
 
 
 With the following code we can use the model to predict $ y $ given our $ x $ input vectors of size 11. The predicted torch tensors need to be detached and converted to numpy for further manipulation. This is a common practice when using Torch. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Code to Print predicted values}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 list_preds = []
 list_reals = []
@@ -1316,18 +1503,20 @@ for i in range(len(X_test_tr)):
     list_reals.append(  np_real[0]   )
 
 
-\end{lstlisting}
-\end{minipage}
+
+	
+</textarea>
+</div>
+</center>
+	
+
 
 The previous code results in the following output. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={The predicted test values }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 **********************************
 pred, real
@@ -1349,10 +1538,13 @@ pred, real
 pred, real
 (6.5844297, 7.0)
 
+	
+</textarea>
+</div>
+</center>
+	
 
 
-\end{lstlisting}
-\end{minipage}
 
 
 
@@ -1360,15 +1552,9 @@ A nice visualization technique to assess our model is to plot together  the pred
 
 In our graph below we see 2 colors and this shows that the model did not learn so well. The code to do this is as follows:
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Plot real and predicted test outputs}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 plt.figure(figsize=(13,4))
 
@@ -1382,8 +1568,16 @@ plt.legend()
 plt.savefig("PredVsRealPlot", dpi=300)
 
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+	
+</textarea>
+</div>
+</center>
+
+
+
 
 
 and the plot is as follows: 
@@ -1395,12 +1589,16 @@ and the plot is as follows:
 
  <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/LinRegRealVsPred.png" height="700" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/LinRegRealVsPred.png" height="400" width="auto">
       </div>
     </center>
 	
 
-\section{Linear Regression to Logistic Regression and Neural Nets}
+	<h1>
+
+		Linear Regression to Logistic Regression and Neural Nets
+	</h1>
+
 
 
 In this section, we are going to modify and extend our code from the linear regression model so that we can implement logistic regression, one-layer neural nets, and deeper neural networks of multiple layers (Deep Learning). In the following code sections I will make some modifications so that the new models can be implemented easily. 
