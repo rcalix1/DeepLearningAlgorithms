@@ -427,9 +427,14 @@ Image.fromarray(  mnist_test_tr.data[337].numpy()  )
     </center>
 
 
+<p>
+It is always a good idea to check the tensor shapes. The following code gives us a shape of [60000, 28, 28] for the train set, and of [10000, 28, 28]
+	for the test set. Torch convolution layers prefer shapes like [10000, 1, 28, 28] instead of like this [10000, 28, 28]. The Dataloader takes care of that so
+	we do not have to change it manually. 
 
+	
+</p>
 
-It is always a good idea to check the tensor shapes. The following code gives us a shape of [60000, 28, 28] for the train set, and of [10000, 28, 28] for the test set. Torch convolution layers prefer shapes like [10000, 1, 28, 28] instead of like this [10000, 28, 28]. The Dataloader takes care of that so we do not have to change it manually. 
 
 
 <center>
@@ -449,11 +454,14 @@ mnist_test_tr.data.shape
 	
 
 
+<p>
+
+	Here we create the DataLoaders as follows: 
 
 
+</p>
 
 
-Here we create the DataLoaders as follows: 
 
 
 
@@ -474,12 +482,16 @@ test_dl   = torch.utils.data.DataLoader(mnist_test_tr,  batch_size=10000,      s
 	
 
 
+<p>
+
+
+	Next, we add our familiar classifications performance function from previous chapters
+
+</p>
 
 
 
 
-
-Next, we add our familiar classifications performance function from previous chapters
 
 
 <center>
@@ -506,11 +518,14 @@ def print_metrics_function(y_test, y_pred):
 
 
  
-
-
-
-
+<p>
 Now we are ready to implement our CNN architecture for the MNIST data as follows
+
+	
+</p>
+
+
+
 
 <center>
 <div>
@@ -553,11 +568,14 @@ class Classifier_CNN(nn.Module):
 </center>
 	
 
+<p>
+
+	Now we can proceed to define our familiar training loop
+
+</p>
 
 
 
-
-Now we can proceed to define our familiar training loop
 
 
 
@@ -597,12 +615,16 @@ def training_loop( N_Epochs, model, loss_fn, opt  ):
 
 
 
+ <p>
+
+	
+That is it as far as preparing the data and defining the classes. We are now ready to initialize the core functions and to start the training process. 
+	 We can do so as follows 
+ 
+ </p>   
     
-    
 
 
-
-That is it as far as preparing the data and defining the classes. We are now ready to initialize the core functions and to start the training process. We can do so as follows 
 
 
 <center>
@@ -624,15 +646,18 @@ my_losses_list = training_loop(  N_Epochs, model, loss_fn, opt  )
 	
 
 	
+<p>
 
-
-
-    
-    
-
-
-
+	
 Running the previous code start the training and we can see the losses here
+
+</p>
+
+
+    
+    
+
+
 
 
 <center>
@@ -667,11 +692,14 @@ Running the previous code start the training and we can see the losses here
 
 
 
-    
+<p>
+
+	After training we would like to predict and evaluate the  trained model on the test set. This can be achieved with the following code
+
+</p> 
 
 
 
-After training we would like to predict and evaluate the  trained model on the test set. This can be achieved with the following code
 
 
 <center>
@@ -694,10 +722,13 @@ with torch.no_grad():
 
 
 
-    
+    <p>
+
+	 which gives us
+   
+    </p>
 
 
-which gives us
 
 
 
@@ -727,16 +758,24 @@ F1-mesure: 0.989
 
 
 
-
-    
-
-
+<p>
 As can be seen for the previous results, the code performed really well. 
 
-\subsection{Figuring out the tensor shapes after the convolution layers}
+	
+</p>
+    
 
+<h1>
+
+	Figuring out the tensor shapes after the convolution layers
+</h1>
+
+<p>
 Figuring out the tensor shapes after the convolutional and maxpool layers can be challenging. One way to find out what it is is to run a dummy tensor through the CNN architecture and print the shape after all the convolutions. 
 This can be achieved with the following code:
+	
+</p>
+
 
 <center>
 <div>
@@ -770,8 +809,6 @@ print( res_actual_model.shape )
 
 ## torch.Size([10, 800])
     
-
-   
 </textarea>
 </div>
 </center>
