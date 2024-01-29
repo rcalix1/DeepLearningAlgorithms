@@ -1621,25 +1621,24 @@ In linear regression we were training to predict any kind of real valued number.
 For classification modeling, where we predict discrete classes (also called labels), we will usually have the real labels and the predicted labels. Our models will predict the labels and we will need ways of comparing them to the real labels. The following function is a way to evaluate the actual or real classes per sample (y\_real) against the predicted classes (y\_pred) per sample in a test set. We can compare the two sets of one-hot encoded labels with torch.eq() to measure the accuracy.
 The torch.eq() function returns a vector of boolean values that compares the values in two tensors of equal dimensions as can be seen in the following code listing:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Torch.eq}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+<center>
+<div>
+<textarea rows="10" cols="100">
 
-y\_pred = [1, 2, 3]   
+y_pred = [1, 2, 3]   
                         
-y\_real = [0, 1, 3]
+y_real = [0, 1, 3]
 
 torch.eq(x, y)   =>    [False, False, True]   or  [0, 0, 1]
 
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-
-\end{lstlisting}
-\end{minipage}
 
 The loss functions vary for regression and classification. Classification uses Cross Entropy losss (defined later) and Regression uses Mean Squared Error usually (described earlier).
 
@@ -1654,14 +1653,9 @@ The loss functions vary for regression and classification. Classification uses C
 So, now we are ready to once again define our model architecture, and define the loss and training functions.  This is where the magic will happen and where the code will be specific to the algorithm and architecture being defined. Since this will vary based on model and output type we want to predict, each algorithm will be addressed in its own section later. For now, I will simply define how we can instantiate the architectures. For example, in the next code section I have the core function calls for logistic regression.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Call the core functions for logistic regression}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 model = LogisticRegNet()
 
@@ -1671,22 +1665,21 @@ loss_fn = F.cross_entropy
 
 train_loop(  N_epochs, model, loss_fn, opt    )
 
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
 
 
 If we were defining a deep neural network (with several layers), we can define the function calls as follows (below). 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Call the core functions for Deep Learning}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 model = DeepLearningNet()
 
@@ -1696,9 +1689,13 @@ loss_fn = F.cross_entropy
 
 train_loop(  N_epochs, model, loss_fn, opt    )
 
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
 
 
 The important aspect is to notice that the structure of the code is mostly maintained and that the only things that change are the architecture definition and the loss function (usually from MSE to Cross entropy).
@@ -1715,13 +1712,9 @@ In the following code section, I will show how to create the batches manually. W
 
 PyTorch has tools to do this with Torch \textbf{TensorDataSet} and Torch \textbf{DataLoader} as we previously saw but this is how it works! The code is as follows: 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Creating batches manually}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 batch_size = 100
 
@@ -1737,17 +1730,32 @@ for i in range(n_epochs):
              X_train[sta:end, :],
              y_train[sta:end, :] 
         )
+  
+</textarea>
+  
+</div>
+</center>
+	
+<h2>
+What is Number of Epochs?	
+</h1>
 
-\end{lstlisting}
-\end{minipage}
+<p>
+The previous code section focuses on the training phase in the main loop. This section has 2 nested loops for training. The first one is to train the model
+	for \textbf{n\_epochs}. This allows us to set how many times we want to run the optimization of the model to learn the parameters (i.e. the weight vectors). 
+	Stop here and think about this for a second and contemplate what this means. If we set \textbf{n\_epochs} to 100,000, then it means that the loop will show 
+	the same data to the model during training a total of 100,000 times! The data is usually randomized or shuffled each time but still. The model sees the 
+	data 100,000 (again and again). Do humans need that many times to learn something? We should think about this.
 
-\subsection{What is Number of Epochs?}
-
-The previous code section focuses on the training phase in the main loop. This section has 2 nested loops for training. The first one is to train the model for \textbf{n\_epochs}. This allows us to set how many times we want to run the optimization of the model to learn the parameters (i.e. the weight vectors). Stop here and think about this for a second and contemplate what this means. If we set \textbf{n\_epochs} to 100,000, then it means that the loop will show the same data to the model during training a total of 100,000 times! The data is usually randomized or shuffled each time but still. The model sees the data 100,000 (again and again). Do humans need that many times to learn something? We should think about this.
-
+	
+</p>
 
 
-\section{Logistic Regression}
+<h1>
+
+	Logistic Regression
+</h1>
+
 
 Before we look at the deep neural nets, it is a good idea to look at logistic regression. Logistic regression is still a linear classifier but deep neural nets can build on the ideas of logistic regression. So, basically here we will use all the code we have developed so far. The only main difference is that now we will re-define the code for:
 
@@ -1972,14 +1980,9 @@ This function takes the y values as inputs (called logit scores), which represen
 
 In python we can test this as follows:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={The Softmax }}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 import numpy as np
 
@@ -1989,27 +1992,30 @@ sum_of_exps = sum(exps)
 softmax     = [ j/sum_of_exps  for j in exps ] 
 
 print( sum(softmax) )
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 In the next code segment, the inference function for logistic regression is defined in PyTorch. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={The Softmax Inference function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 y = torch.matmul(x, W) + b
 y_pred = nn.Softmax(  y  )
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 For illustration, the figure below shows the logistic regression neural network for the Iris dataset. 
 
@@ -2101,14 +2107,9 @@ One important thing to mention is that I have noticed that this model does not a
            
 This line of code helps because some values in the process become NaN (Not a Number) and the clipping in the function addresses the problem. This approach of writing out the cost function or equations is not always the most optimal but I have shown it here for contrast between linear regression and logistic regression. A better approach is to use PyTorch built-in cost functions for Cross Entropy calculations. Future code for deep neural networks will abstract this by using the built-in functions. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Cross Entropy loss with equations}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 def loss(y_pred, y_real):
     y_pred2 = torch.clip_by_value(y_pred, 1e-10, 1.0)
@@ -2116,26 +2117,29 @@ def loss(y_pred, y_real):
     xentropy = -torch.reduce_sum( dot_product, reduction_indices=[1] ) 
     loss = torch.reduce_mean( xentropy )
     return loss
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
 
 
 The following statement is where we invoke the multi-class cross entropy loss function.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Multi-Class Cross Entropy Function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 dot_product = y_real * torch.log( y_pred2 )
+  
+</textarea>
+  
+</div>
+</center>
 
 
-\end{lstlisting}
-\end{minipage}
 
 
 
@@ -2210,15 +2214,9 @@ In this section, I will show the architecture to implement a simple logistic reg
 
 The architecture for the inference NN is as follows:
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Logistic Regression NN architecture for Iris}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 class Logistic_Regression_Net(nn.Module):
     
@@ -2235,27 +2233,31 @@ class Logistic_Regression_Net(nn.Module):
         y_pred = self.act1(  x  )
         
         return y_pred
+  
+</textarea>
+  
+</div>
+</center>
+	
 
 
-\end{lstlisting}
-\end{minipage}
 
 
 Notice that the model has 4 neurons in the input layer, and 3 output neurons for the 3 labels. The loss functions can be one of several versions of Cross Entropy such as
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Logistic Regression Loss function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 loss_fn = nn.CrossEntropyLoss( )
 
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
 
 Everything else should be the same as in the Linear Regression code. 
 
@@ -2263,15 +2265,9 @@ Everything else should be the same as in the Linear Regression code.
 
 The architecture for the inference NN is as follows:
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Logistic Regression NN architecture for the Wine Quality data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="18" cols="100">
 
 class Logistic_Regression_Net(nn.Module):
     
@@ -2289,26 +2285,32 @@ class Logistic_Regression_Net(nn.Module):
         
         return y_pred
 
+  
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 Notice that the model has 11 neurons in the input layer, and 6 output neurons for the 6 labels. The loss functions can be one of several versions of Cross Entropy such as
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Logistic Regression Loss function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 loss_fn = nn.CrossEntropyLoss( )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
 
 Everything else should be the same as in the Linear Regression code. 
 
@@ -2355,14 +2357,9 @@ We have defined so much of the code already that there really isn’t much left 
 The architecture for an MLP is as follows:
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={MLP Architecture for the Wine Quality data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="22" cols="100">
 
 class MLP_Net_Net(nn.Module):
     
@@ -2384,40 +2381,41 @@ class MLP_Net_Net(nn.Module):
         
         return y_pred
 
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
 
 
 Notice that the model has 11 neurons in the input layer, 8 neuron in the hidden layer, and 6 output neurons for the 6 labels in the output layer. ReLU activation is used on the hidden layer, and Softmax is used on the output layer. The loss functions can be one of several versions of Cross Entropy such as
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Cross Entropy Loss function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 loss_fn = nn.CrossEntropyLoss( )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+
+
+	
+
 
 Everything else should be the same
 
 The architecture for the deep neural network is as follows:
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Deep Neural Network with 2 Hidden layers for the Wine Quality data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="24" cols="100">
 
 class Deep_Neural_Net_Net(nn.Module):
     
@@ -2444,25 +2442,30 @@ class Deep_Neural_Net_Net(nn.Module):
         return y_pred
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+
+
 
 
 Notice that the model has 11 neurons in the input layer, 15 neurons in the first hidden layers, 8 neurons in the second hidden layer, and 6 neurons in the last output layer. The loss functions can be one of several versions of Cross Entropy such as
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Cross Entropy Loss function}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 loss_fn = nn.CrossEntropyLoss( )
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
 
 Everything else should be the same. 
 
@@ -2477,13 +2480,10 @@ Let us get started.
 
 First we load the libraries. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Libraries}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="19" cols="100">
 
 import numpy as np
 import torch
@@ -2501,18 +2501,18 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_score
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+
 
 Now we set the parameters.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 batch_size    = 16
 learning_rate = 0.003        ## 0.001
@@ -2520,9 +2520,12 @@ N_Epochs      = 4000
 
 epsilon = 0.0001
 
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 Now we can load the data with Pandas
 
@@ -3816,1104 +3819,8 @@ So, that is it. That completes the Wine data discussion for this section. It see
 
 
 
-<p>
-
-	In the following code segment we can set the parameters as we have done before.
-
-</p>
-	
-
-
-<center>
-<div>
-<textarea rows="20" cols="70">
-
-
-torch.manual_seed(256)
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-block_size        = 40      ## N tokens in sequence
-batch_size        = 64 
-max_iters         = 6000
-eval_interval     = 500     
-learning_rate     = 0.0003
-eval_iters        = 300
-vocab_size        = 65
-
-## every id for a given token is embedded to vector of this size
-n_embd            = 512                  
-n_head            = 8         ## 8 attention heads
-n_layer           = 6         ## 6 eoncoder layers
-dropout           = 0.2
   
-</textarea>
-</div>
-    </center>
-
-      
-<p>
-
-Now we proceed to read the text data to train on. 
-
-	
-</p>
-
-
-
-<center>
-<div>
-<textarea rows="10" cols="80">
-
-
-text = ''
-
-input_file2 = 'AdventureHuckFinn.txt'
-
-with open(input_file2, 'r', encoding='utf-8') as f:
-    text = f.read()
-  
-</textarea>
-  
-</div>
-    </center>
-
-<p>
-After reading the text file, we can look at the information about it with the following code. 
-
-	
-</p>
-
-
-
-
-<center>
-<div>
-<textarea rows="8" cols="80">
-
-print("length of data in letter or characters")
-len(text)
-
-list(set(text))
-  
-</textarea>
-  
-</div>
- </center>
-
-
-
-  <p>
-With the previous code we can look at the length of the text and type of characters. The length of data in letters or characters is 2,365,132, for instance. 
-	  The characters can be seen in the next code listing. 
-
-
-	  
-  </p>
-
-
-
-
-
-<center>
-<div>
-<textarea rows="10" cols="130">
-
-
-['u', 'v', 'W', "'", '$', 'I', 'Q', 'L', ',', 'Y', 'w', 'D', 'e', 'P', 'h', 'z', 'F', 'n', 'l', 'T', '-', 'q',
- '&', 'p', '3', 'r', 'j', 'X', '!', 's', 'A', 'H', '\n', 'O', '.', ':', 'S', 'K', 'C', 'N', 'E', 'Z', ' ', 'd', 
- 'y', 'x', 'c', 'f', ';', '?', 'B', 'g', 'o', 'G', 'V', 'R', 't', 'i', 'm', 'M', 'k', 'b', 'a', 'U', 'J']
-
- 
-</textarea>
-  
-</div>
-    </center>
-
-
-<p>
-With the following code we can calculate the size of the vocabulary which is 65 and can print the tokens as a string. 
-
-		
-</p>
-
-
-  
-<center>
-<div>
-<textarea rows="15" cols="100">
-
-the_chars  = sorted(     list(set(text))     )
-
-vocab_size = len( the_chars )      ## 65
-
-print(  len(the_chars)  )
-
-print(  ''.join(the_chars)  )
-
-## The printed oputput
-## !$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-
- 
-  
-</textarea>
-</div>
-    </center>
-
-<p>
-The tokens need to be converted into IDs. We can use a dictionary and reverse dictionary for this like so. This was previously shown in the word2vec code description. 
-	These are called the tokenizer. 
-	
-</p>
-
-
- 
-<center>
-<div>
-<textarea rows="5" cols="60">
-
-   stoi = { ch:i for i, ch in enumerate(the_chars) }
-   itos = { i:ch for i, ch in enumerate(the_chars) }
-  
-</textarea>
-  
-</div>
-</center>
-  
-
-<p>
-We can now print the dictionary (string to int ) and reverse dictionary (int to string). 	
-</p>
-
-
-
-<center>
-<div>
-<textarea rows="5" cols="60">
-
-print( stoi )
-print( itos )
-  
-</textarea>
-  
-</div>
-</center>
-
-<p>
-The string to int dictionary will give us	
-</p>
-
-
-
-<center>
-<div>
-<textarea rows="30" cols="85">
-
-
-{'\n': 0,
- ' ': 1,
- '!': 2,
- '$': 3,
- '&': 4,
- "'": 5,
- ',': 6,
- '-': 7,
- '.': 8,
- '3': 9,
- ':': 10,
- ';': 11,
- '?': 12,
- 'A': 13,
- 'B': 14,
- 'C': 15,
- 'D': 16,
- 'E': 17,
- ...
- }
-
-</textarea>
-  
-</div>
-    </center>
-  
-
-<p>
-and the int to string dictionary will give us
-
-	
-</p>
-
-
-
-<center>
-<div>
-<textarea rows="30" cols="85">
-
-
-{0: '\n',
- 1: ' ',
- 2: '!',
- 3: '$',
- 4: '&',
- 5: "'",
- 6: ',',
- 7: '-',
- 8: '.',
- 9: '3',
- 10: ':',
- 11: ';',
- 12: '?',
- 13: 'A',
- 14: 'B',
- 15: 'C',
- 16: 'D',
- 17: 'E',
- ...
- }
-
-  
-</textarea>
-  
-</div>
-    </center>
-  
-
-<p>
-
-	
-Now we need to define an encoding tokenizer called "encode" so we can convert string to integer.
-
-</p>
-
-
-
-<center>
-<div>
-<textarea rows="5" cols="100">
-
-encode = lambda s: [ stoi[c]          for c in s   ] 
-
-encode("bahh")
-
-
-</textarea>
-  
-</div>
-    </center>
-  
-
-<p>
-Encoding from the sheep language "bahh" with the tokenizer encoder gives [40, 39, 46, 46].
-<br/>
-We do the same for the tokenizer decode to decoder from integer to strings as follows: 
-
-	
-</p>
-
-
-<center>
-<div>
-<textarea rows="5" cols="100">
-
-decode = lambda l: ''.join(   itos[i] for i in l   )    
-
-decode([40, 39, 46, 46])
-
-
-</textarea>
-  
-</div>
-    </center>
-
-
-
-<p>
-Using the function decode([40, 39, 46, 46]) gives us our sheep tokens back which are  'bahh'.
-
-Now we need to encode the text from our book and convert it to a Torch tensor. The code for that is as follows: 
-
-	
-</p>
-
-
-
-
-   <center>
-<div>
-<textarea rows="10" cols="100">
-
-
-data = torch.tensor(   encode(text), dtype=torch.long   )
-
-print( data )
-
-  
-</textarea>
-  
-</div>
-    </center>
-  
-<p>
-
-Printing the encoded data in the Torch tensor gives us:  
-<br/>
-<br/>
-tensor([18, 47, 56,  ..., 45,  8,  0])
-<br/>
-<br/>
-
-We now proceed to split the data into train and text. We do that next by slicing the data torch tensor with $ n $.
-
-	
-</p>
-
-
-
-<center>
-<div>
-<textarea rows="10" cols="100">
-
-n          = int(   0.9*len(data)   )
-
-train_data = data[:n]
-val_data   = data[n:]
-
-  
-</textarea>
-  
-</div>
-    </center>
-
-  
-<p>
-The next step is to create a function to read the data so we can train the GPT. We will use a function to get the data in batches. The code can be seen in the
-	  next code listing.
-
-
-	
-</p>
-
-
-
-<center>
-<div>
-<textarea rows="20" cols="100">
-
-def get_batch(split):
-    if split == "train":
-        data = train_data
-    else:
-        data = val_data
-        
-    ix = torch.randint(   len(data) - block_size, (batch_size,)   )
     
-    x  = torch.stack(    [  data[   i : i+block_size ]     for i in ix ]    ) 
-    y  = torch.stack(    [  data[ i+1 : i+1+block_size ]   for i in ix ]    )
-    
-    x, y = x.to(device), y.to(device)
-
-    return x, y
-
-  
-</textarea>
-</div>
-    </center>
-
-  <p>
-
-To better understand the previous function, I will create a simple example with smaller values for the batch size and the M\_tokens parameter. 
-	  This will help to illustrate what is going on on this function. 
-<br/>
-A GPT is a very deep neural network. To train it you need inputs ( "x" ) and outputs ( "y" ).  Inputs and outputs are matrices of the
-	  same size [batch_size, N_tokens]. They are basically several sentences as rows (batch_size) with N_tokens (i.e. 40) as columns for each sentence.  
-<br/>
-The same sentence is selected for "x" and "y" . They are the same sentence but "y" is shifted by one from "x".
-<br/>
-For our example, we can slice batches of 4 with a sentence sequence length of 16. The torch.randint function helps us to select random starting points for the 4 sentences
-	  from the text. Printing the variable "ix" from the code below gives us the following 4 starting points in the text. 
-<br/>
-tensor([   213173, 989153, 193174, 874116   ])
-
-	  
-  </p>
-
-
-
-
-    <center>
-<div>
-<textarea rows="15" cols="100">
-
-
-temp_batch_size = 4
-temp_block_size = 16
-
-## select random starting points for the 4 sentences
-ix = torch.randint(   
-            len(data) - block_size, 
-            (temp_batch_size,)   
-)
-
-print( ix )
-
-  
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-<p>
-Given the four index position (13173, 989153, 193174, 874116), we can see what Tokenizer IDs are stored there with the following code listing. The "for" loop gives us: 
-<br/>
-tensor(59), tensor(43), tensor(58), tensor(17)
-
-
-
-	
-</p>
-
-
-
-
-
-
-
-
-    <center>
-<div>
-<textarea rows="5" cols="100">
-
-
-for index_temp in ix:
-    print(  data[index_temp]  )
-
-
-
-</textarea>
-  
-</div>
-    </center>
-
-
-
-<p>
-
-Now with these 4 index positions we can proceed to slice out the four sentences of size 16 from the torch data tensor. Remember that we hold IDs for the tokens and not 
-	the actual letter in this tensor. This gives us 4 pairs of (x, y). Notice that "y" is shfted by one from "x". 
-
-  
-	
-</p>
-
-
-
-
-<center>
-<div>
-<textarea rows="15" cols="100">
-
-x  = torch.stack(    
-    [ data[   i : i+  temp_block_size ]   for i in ix ] 
-    
-) 
-
-y  = torch.stack(    
-    [ data[ i+1 : i+1+ temp_block_size ]  for i in ix ]    
-)
-
-print(x)
-print(y)
-  
-
-  
-</textarea>
-  
-</div>
-    </center>
-  
-
-
-<p>
-
-Printing "x"and "y" gives us our "x" batch of size [4, 16] and our shifted "y" batch of size [4, 16] as can be seen below.
-	
-</p>
-
-
-
-
-
- 
-
-
-<p>
-
-
-And that is how you get and process the data to train a GPT. This is sometimes called data wrangling. More detail about data wrangling is provided later in the chapter.
-
-Now we proceed to define the loss function. In this function we evaluate the model by predicting and comparing the predictions to the real values. The difference is the 
-	loss as can be seen below. 
-
-
-	
-</p>
-
-
-
-
-
-
-
-  <center>
-<div>
-<textarea rows="20" cols="100">
-
-
-@torch.no_grad()    ## for efficient processing
-def estimate_loss():
-    out = {}
-    model.eval()   ## set to no training
-    for split in ['train', 'val']:
-        losses = torch.zeros(eval_iters)
-        for k in range(eval_iters):
-            X, Y = get_batch(split)
-            logits, loss = model(X, Y)
-            losses[k] = loss.item()
-        out[split] = losses.mean()
-    model.train()  ## back to training
-    return out
-
-
-  
-</textarea>
-  
-</div>
-    </center>
-  
-
-
-<p>
-
-
-
-
-I will now proceed to describe the architecture of the decoder (GPT). 
-
-
-	
-</p>
-
-
-
-
-<h1>
-Architecture of the GPT or Decoder
-	
-</h1>
-	  
-<p>
-As can be seen in the following figure, the decoder starts with inputs that go in sequentially into N (e.g. 6) decoder layers, and then a feed forward layer to predict 
-	the logit for the given token in the vocabulary. Each decoder layer has the exact same architecture and consists of multi-head attention layers, feed forward layers, 
-	and performance improvement steps such as batch normalizations, residuals, dropouts, etc. Remember that the encoder is not used for the GPT.
-
-
-</p>
-
-
-  <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/full_decoder_gpt.png" height="700" width="auto">
-      </div>
-
-    </center>
-	  
-
-<p>
-
-In the following code segment we can see the class to instantiate the whole decoder with all 6 decoder layers and the last feed forward layer. 
-
-	
-</p>
-
-
-  <center>
-<div>
-<textarea rows="30" cols="130">
-
-
-class GPTModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)   ## [65, 512]
-        self.pos_emb_table = nn.Embedding(block_size, n_embd)     ## [block, 512]
-        
-        self.blocks = nn.Sequential(
-                *[   Block(n_embd, n_head=n_head) for _ in range(n_layer)    ]
-        )
-        
-        self.ln_f    = nn.LayerNorm(  n_embd    )        
-        self.lm_ffw_head = nn.Linear(n_embd, vocab_size)  ## [512, 65] # FFW Layer
-        
-    def forward(self, idx, targets=None):
-        B, T = idx.shape     ## (Batch, 40)
-        ## ids and targets are both (B, T) tensors of integers
-        
-        tok_emb = self.token_embedding_table(idx)      
-        pos_emb = self.pos_emb_table(torch.arange(T, device=device))  
-        
-        x = tok_emb + pos_emb    ## [B, T, E] or [64, 40, 512]
-
-        ## This is the architecture
-        x = self.blocks(  x  )   ## (B, T, E)        
-        x = self.ln_f(    x  )   ## (B, T, E)   ## norm
-        logits = self.lm_ffw_head(x)         ## [B, 40, 65] 
-        
-        if targets is None:
-            loss = None
-        else:
-            B, T, E  = logits.shape
-            logits  = logits.view( B*T, E)
-            targets = targets.view(B*T)
-            loss    = F.cross_entropy(logits, targets)
-        return logits, loss
-        
-    def generate(self, idx, max_new_tokens):    ## idx is (B, T)
-        for _ in range(max_new_tokens):
-            ## crop idx to the last block_size tokens
-            idx_cond = idx[:, -block_size:]
-            logits, loss = self(idx_cond)    ## ## get preds
-            logits = logits[:, -1, :]    ## focus on last one (B, E)
-            probs = F.softmax(logits, dim= -1)    ## (B, E) get probs
-            idx_next = torch.multinomial(probs, num_samples=1)     ## (B, 1) selected
-            idx = torch.cat(  (idx, idx_next), dim=1  )   ## (B, T+1) append sample to running sequence
-        return idx
-            
-
-  
-
-  
-</textarea>
-  
-</div>
-    </center>
-  
-
-<p>
-The GPTmodel class consists of 3 functions. They are init, forward, and generate. We initialize the embedding and positional encoding object in init. 
-
-The following code is what instantiates the 6 decoder layers in sequence where the outputs from one decoder layer become the inputs of another decoder layer. 
-
-
-
-	
-</p>
-
-
-
-  <center>
-<div>
-<textarea rows="6" cols="100">
-
-self.blocks = nn.Sequential(
-                *[   Block(n_embd, n_head=n_head) for _ in range(n_layer)    ]
-        )
-
-
-</textarea>
-  
-</div>
-    </center>
-
-
-  
-
-
-<p>
-
-The final 2 lines of code in the init function define a normalization and the feed forward layer to predict the logits (i.e. the tokens).
-<br/>
-The second function is the forward funtion which is where we actually define the architecture from inputs to outputs through the entire deep neural network of the decoder.
-<br/>
-First we take "idx" (the data as ids) an pass it through the embedding layer. This gives us "tok_emb". Remember that the token embedding are learned by 
-	Transformers during the training. After that we create the positional encoding table. The encoded "tok_emb" does not go through this object. 
-	Instead "pos_emb" is added to "tok_emb". Sequence was established when "pos_emb" was instantiated. Adding them gives us "x" which
-	goes into  the main architecture as can be seen below
-
-
-	
-</p>
-
-
-
-
-
-
-<center>
-<div>
-<textarea rows="7" cols="100">
-
-
-x      = self.blocks(  x  )      ## (B, T, E)        
-x      = self.ln_f(    x  )      ## (B, T, E)   norm
-logits = self.lm_ffw_head(x)     ## [B, 40, 65] 
-
-
-</textarea>
-  
-</div>
-    </center>
-
-
-
-<p>
-Finally, the generate function invokes the model defined through forward to generate text auto-regressively. 
-<br/>
-The GPTmodel class used a Block class to define the the decoder layers. We can now define that class. Block needs "n_embd" which is the embedding
-	dimension (e.g. 512), and "n_head" which is the number of Attention heads we will use (e.g. 8). We need to 
-	calculate the "head_size" by dividing "n_embd" by "n_head". For our example this should be
-
-</p>
-	<center>
-<p>
-
- 64 = 512 / 8 
-		
-	</p>
-	</center>
-	
-<p>
-
-Here it might help to look at a diagram of the decoder layer.
-
-
-	
-</p>
-	
-
-
- <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/Decoder_Layer_gpt.png" height="700" width="auto">
-      </div>
-
-    </center>
-
-
-<p>
-
-As can be seen we need a Multi-Head Attention layer followed by a FeedForward layer. Two normalizations (ln1, ln2) can also be performed. 
-	
-</p>
-
-
-
-  
-<center>
-<div>
-<textarea rows="20" cols="100">
-
-
-class Block(nn.Module):
-    
-    def __init__(self, n_embd, n_head):     ## (512, 8)
-        super().__init__()
-        head_size = n_embd // n_head        ## 64
-        self.sa   = MultiHeadAttention(n_head, head_size)
-        self.ffwd = FeedForward( n_embd)    ## 512
-        self.ln1  = nn.LayerNorm(n_embd)
-        self.ln2  = nn.LayerNorm(n_embd)
-        
-    def forward(self, x):
-        x = x + self.sa(     self.ln1(x)      )
-        x = x + self.ffwd(   self.ln2(x)      )
-        return x
-
-  
-</textarea>
-  
-</div>
-    </center>
-  
-
-
-
-
-<p>
-
-The Block class uses 2 more classes which are Multi-Head Attention and FeedForward. We can now proceed to define these. 
-<br/>
-We can first define the Multi-Head class as follows
-
-
-	
-</p>
-
-
-
-
- 
-
-
-<center>
-<div>
-<textarea rows="16" cols="100">
-
-
-class MultiHeadAttention(nn.Module):
-
-    def __init__(self, num_heads, head_size):    ## (8, 64)
-        super().__init__()
-        self.heads = nn.ModuleList(  [ Head(head_size) for _ in range(num_heads) ] )
-        self.proj  = nn.Linear(n_embd, n_embd)   ## 512, 512
-        self.dropout = nn.Dropout(dropout)
-    
-    def forward(self, x):
-        out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
-        out = self.proj(  out   )
-        out = self.dropout(   out   )
-        return out
-
-  
-</textarea>
-  
-</div>
-    </center>
-
-
-
-
-<p>
-
-
-The Masked multi-head attention layer is done N\_head times (e.g. 8) in parallel and the results are concatenated. This concatenated result is added to the original 
-	after mapping it through one more layer and a Residual can also be used.
-
-The 2 key aspects are the instantiation of 8 heads which are parallel and independent of each other using "nn.ModuleList"as can be seen in the next code listing
-
-
-
-	
-</p>
-
-
-
-
-
-
-   <center>
-<div>
-<textarea rows="6" cols="100">
-
-
-self.heads = nn.ModuleList(  [ Head(head_size) for _ in range(num_heads) ] )
-
-
-</textarea>
-  
-</div>
-    </center>
-  
-
-
-<p>
-
-and the concatenation of the 8 head Heads of size 64 to create a new tensor of size 512 ( 64 * 8 = 512).
-
-
-	
-</p>
-
-
-
-
- 
-
-
-   <center>
-<div>
-<textarea rows="4" cols="100">
-
-out = torch.cat(   [ h(x) for h in self.heads ], dim = -1   )
-
-</textarea>
-  
-</div>
-    </center>
-
-
-<p>
-
-	
-The FeedForward class is very straight forward  as can be seen below. It is a simple linear layer followed by a non-linearity. 
-
-
-
-</p>
-
-
-
-
-
-
-
-
-
-<p>
-
-Finally, the Multi-Head Attention class use the Head class where the Attention mechanism is defined. The  next code segment is probably the most important in
-	terms of the power of Transformers. It defines the Attention layer. Here we define the Attention Head class. 
-
- 
-
-	
-</p>
-
-
-
-
-    <center>
-<div>
-<textarea rows="30" cols="100">
-
-
-class Head(nn.Module):
-
-    def __init__(self, head_size):
-        super().__init__()
-        
-        self.key   = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
-        self.query = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
-        self.value = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
-
-        tril_def = torch.tril( torch.ones(block_size, block_size) )  ## [40, 40]
-        
-        self.register_buffer(
-                  'tril', 
-                  tril_def
-               )
-        
-        self.dropout = nn.Dropout(dropout)
-
-    def forward(self, x):
-        
-        B, T, E = x.shape   ## [batch_size, 40, 512]
-        
-        k = self.key(   x )            ## k = (B, T, 64)
-        q = self.query( x )            ## q = (B, T, 64)
-
-        E2 = 64     ## I think this is 64 and not 512
-        ## (B, T, E) @ (B, E, T)  -> (B, T, T)
-        wei = q @ k.transpose(-2, -1) * E2 ** -0.5        
-        
-        wei = wei.masked_fill(
-                      self.tril[:T, :T] == 0, 
-                      float('-inf')
-        )   
-        
-        ## (B, T, T)
-        wei = F.softmax( wei, dim= -1 )         ## (B, T, T)
-        wei = self.dropout(   wei   )
-        
-        ## perform weighted aggregation of values
-        
-        v   = self.value(  x  )   ## x = (B, 40, E)
-        out = wei @ v             ## (B, T, T) @ (B, T, 64) -> (B, T, 64)
-        
-        return out
-  
-
-  
-</textarea>
-  
-</div>
-    </center>
-
-
-
-
-
-
-   <center>
-<div>
-<textarea rows="4" cols="100">
-
-self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
-
-</textarea>
-  
-</div>
-    </center>
-
-
-<p>
-
-
-The Attention mechanism uses K, Q, and V to compute the Attention scores. The values are computed from the original "x" input. The intuition is that the sentence 
-	is compared with itself and that is why the comparison or scores matrix will result in size [N_tokens, N_tokens] (e.g. [40, 40]). This is accomplished with 
-	the following code:
-
-	
-</p>
-
-
-
-
-<center>
-<div>
-<textarea rows="7" cols="100">
-
-
-self.key   = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
-self.query = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
-self.value = nn.Linear(n_embd, head_size, bias=False)  ## [512, 64]
-
-
-</textarea>
-  
-</div>
-    </center>
-  
-
-
-<p>
-
-
-The input "x" is of size [N, 40, 512] and the "look_ahead_mask" is of size [N_batches, 40, 40].
-
-
-Remember that using "nn.Linear" is equivalent to the following:
-
-
-	
-</p>
-
-
-
-
-
-
-  
-     <center>
-<div>
-<textarea rows="17" cols="100">
-
-
-## (B, T, 64) @ (B, E, 64)  -> (B, T, T)
-
-wei = q @ k.transpose(-2, -1) * E ** -0.5        
-        
-wei = wei.masked_fill(
-        self.tril[:T, :T] == 0, 
-        float('-inf')
-)   
-        
-## (B, T, T)
-wei = F.softmax( wei, dim= -1 )         ## (B, T, T)
-wei = self.dropout(   wei   )
-
-
 </textarea>
   
 </div>
@@ -5266,20 +4173,7 @@ And that concludes the discussion on GPTs.
 
 
 
-
-
-	<h1>
-Encoder Only Models
-		
-	</h1>
-
-<p>
-The encoder has 6 sub-layers called encoder layers. Each encoding layer has a Multi-Head Attention layer followed by a standard fully connected feed forward layer. 
-	The input to the encoder goes through all these layers in the encoder and it is converted into an encoder output. The input to the encoder and the output of 
-	the encoder have the same dimensions. For instance, here, the input to the encoder would be the English sentence. 
-
-The attention layer consists of 8 parallel Attention sub layers that are later concatenated. The intuition is that each of these 8 layers can learn something new and 
-	different. So this gives more capacity to the network. The input to the encoder goes through all these layers in the encoder and is converted into an encoder output. 
+acity to the network. The input to the encoder goes through all these layers in the encoder and is converted into an encoder output. 
 
 The next code segment shows the standard encoder architecture code. Notice it is almost exactly like the GPT (decoder) code. The only difference is in the last layer.
 	The pure Encoder does not need to predict words. Instead, it takes sentences and converts them to embeddings. In this case of size [B, 40, 512]. 
