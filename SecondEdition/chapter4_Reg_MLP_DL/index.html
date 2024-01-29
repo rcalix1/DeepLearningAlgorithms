@@ -34,32 +34,7 @@
 
     </center>
 
-<p>
-Transformers are the latest step in the evolution of deep learning. As is necessary with progress, newer deep learning algorithms are also much more complicated, with 
-	  deeper and more resource intensive networks. The Transformer is the best example of this. 
-Transformers are, for me, the first algorithm I was not able to run on a laptop when using a significantly large data set. They truly require a machine learning “war machine”.
-	  Lots of GPU power and memory, etc. The algorithms are much more complicated, as you will see, and the networks are very deep. 
 
-
-
-Transformers are one of the new innovations in NLP since 2017. They were first made popular by the paper “Attention Is All You Need” by  (Vaswani et al.). 
-	  They are very interesting and seem to be very powerful. Currently, they are better than  Recurrent Neural Networks (RNNs) for NLP because they parallelize better 
-	  and because of the Attention mechanism. 
-So far, Transformers have been used to develop very impressive implementations such as BERT (Devlin et al. 2018), and GPT-3 (Radford et al. 2019), and most notably, chatGPT 
-	  from OpenAI, as of this writing. ChatGPT in particular seems to be very good at language understanding. Transformers have also been applied to language translation,
-	  question answering, document summarization, automatic code generation, text generation, etc. 
-
-In general, something like chatGPT requires at least 2 steps. One step is called the Pre-Training process and the other step is called fine tuning. Basically, a Transformer
-	  network is trained on all the data you have (e.g. all text data in the world). This process requires massive amounts of computing and can be very expensive. 
-	  The most notable pre-trained GPTs include: GPT-3, GPT-4, and LlaMa models, to name a few. The next step is to fine tune the model. Once the fine tuning is 
-	complete, you have options such as adding more neural net layers after the transformer and freezing the already pre-trained weights. 
-	Or you can just keep training the transformer for a specific task and have all the weights be changed. 
-	The amount of fine tuning data does not need to be as large as the data for pre-training. In fact, it can be orders of magnitude smaller. 
-
-Okay, let’s get started.
-
-	
-</p>
 
 
 
@@ -86,42 +61,44 @@ Okay, let’s get started.
     </center>
     
 
-
-<h1>Main Ideas of the Transformer</h1>
+<h1>
+Deep Learning: Starting at the beginning
+	
+</h1>
 
 
 <p>
-So, where does one start with Transformers? The Transformer is complex and it involves several ideas to make it work correctly. In this section I will present the main 
-    ideas first with some relevant code. Understanding these concepts or steps really well before venturing to write the code for the Transformers is really important. 
-    It will save you time in the long run. So now, let us proceed to discuss these topics. In the next sections I will start discussing the code for GPTs, BERTs, the full 
-    Encoder Decoder transformer architecture, and a few other subjects. 
 
-As can be seen in the previous figure, the original Transformer consisted of an Encoder and a Decoder layer. 
+In this chapter, I will introduce the topic of deep learning. My goal here is to help students and practitioners alike to get started with deep learning. 
+	In particular, I want them to be able to get data and pre-process it for deep learning, load it on their programs, perform classification tasks, and 
+	evaluate their results.  I will discuss some aspects of the theory providing as much intuition as possible. For this task, I will use Linux, Python, Sklearn,
+	and the PyTorch framework. I will also discuss some aspects of using GPU based hardware by the end of the book. 
+For most of my sample code, I used the conda environment. I installed the PyTorch framework following the instructions in the main PyTorch website (https://www.PyTorch.org/ ).
+	
 
-  
+	
 </p>
 
-
-\chapter{Deep Learning: Starting at the beginning}
-
-
-In this chapter, I will introduce the topic of deep learning. My goal here is to help students and practitioners alike to get started with deep learning. In particular, I want them to be able to get data and pre-process it for deep learning, load it on their programs, perform classification tasks, and evaluate their results.  I will discuss some aspects of the theory providing as much intuition as possible. For this task, I will use Linux, Python, Sklearn, and the PyTorch framework. I will also discuss some aspects of using GPU based hardware by the end of the book. 
-For most of my sample code, I used the conda environment. I installed the PyTorch framework following the instructions in the main PyTorch website (https://www.PyTorch.org/ ).
-
-\section{Things to know about the code }
-
-As in the previous section with sklearn, I have included the libraries first. Notice, that I use as many sklearn libraries as possible and only use the PyTorch module when absolutely necessary. The goal, again, is to help the reader to best capture the PyTorch concepts by simplification. Once your skills improve with deep learning frameworks, you will be able to more easily replace sklearn modules with alternative PyTorch modules.
+<h1>
+Things to know about the code
+	
+</h1>
 
 
+	<p>
+As in the previous section with sklearn, I have included the libraries first. Notice, that I use as many sklearn libraries as possible and only use the PyTorch
+		module when absolutely necessary. The goal, again, is to help the reader to best capture the PyTorch concepts by simplification. Once your skills 
+		improve with deep learning frameworks, you will be able to more easily replace sklearn modules with alternative PyTorch modules.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Libraries}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+		
+	</p>
+
+
+
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 import torch
 import numpy as np
@@ -139,10 +116,13 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score, f1_score 
 import pandas as pd
 import matplotlib.pyplot as plt
+  
+</textarea>
+  
+</div>
+</center>
+  
 
-
-\end{lstlisting}
-\end{minipage}
 
 
 
@@ -159,22 +139,20 @@ This helps to adjust the learning rate in real time while the algorithm is runni
 
 
 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Parameters}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 learning_rate = 0.01 
 n_epochs      = 27000         #1000 
 batch_size    = 100
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 Deep learning algorithms in PyTorch consist of a basic structure. Simply put, they have:
 
@@ -258,15 +236,9 @@ Here are some of the main aspects of PyTorch to be aware of:
 
 It is now time to write some PyTorch code. Here let us add 2 numbers with PyTorch.
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Adding 2 numbers with PyTorch}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 a = torch.tensor(  [10]   )
 b = torch.tensor(  [32]  )
@@ -276,9 +248,18 @@ def model(a, b):
     return a + b
     
 res = model(a, b)
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
+
 
 
 
@@ -301,15 +282,9 @@ In this case, the command adds the 2 numbers together. The answer for this after
 
 Loading the data can actually be somewhat complicated in PyTorch. One of the issues is that you need to convert the data, say from something like the below example, to another format using one-hot encoding for the labels. This can sometimes be complicated and can cause you problems when writing your algorithms. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Iris data}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 class,f1,f2,f3,f4 
 1.0,6.1,2.8,4.7,1.2 
@@ -322,24 +297,24 @@ class,f1,f2,f3,f4
 2.0,6.9,3.1,5.1,2.3 
 1.0,6.2,2.2,4.5,1.5 
 1.0,5.8,2.7,3.9,1.2
+  
+</textarea>
+  
+</div>
+</center>
+	    
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
 
 Here, we are looking at the iris data set. The first column represents the annotated class. The IRIS dataset has 3 classes (0, 1, and 2). The other 4 columns represent the features per each sample. The code provided below will show how to read the data. 
 In the code below, we assume that the data is contained in the file iris.csv (available at the book github). We can use the numpy loadtxt() function to obtain the data and to load it into a numpy matrix. Notice that the file has a header for the class and the 4 features. We can easily remove the header by using the parameter skiprows=1 in the numpy.loadtxt() function. 
 
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Iris data slicing}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 f_numpy = open("data/iris.csv",'r')
 
@@ -349,23 +324,23 @@ Matrix_data = numpy.loadtxt(f_numpy, delimiter=",", skiprows=1)
 
 X = Matrix_data[:, 1:4]
 y = Matrix_data[:,  0]
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
 
 In the previous code we can slice the class column into the \textbf{y} variable and the rest of the columns into the \textbf{X} variable. Notice that we are following the SKlearn approach from the previous chapters. PyTorch has its own approaches but I have used SKlearn here for the sake of simplicity. When slicing a 2-D matrix (matrix[i, j] ) we specify the number of rows with \textbf{“i”} and the number of columns with \textbf{“j”}. We can also specify ranges by doing the following: matrix[2:5, :]. The “:” on the “j” index indicates select all columns. If we wanted to select from a list of column indices we could do the following: X=Matrix\_data[:, [1,2,3,5,6]].
 
 Now we can split the data.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Train test split}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 X_train, X_test, y_train, y_test = train_test_split(
               X, 
@@ -373,26 +348,35 @@ X_train, X_test, y_train, y_test = train_test_split(
               test_size=0.20, 
               random_state=42
 )
+  
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
 
 Similarly to the previous chapters, we can now split the data from \textbf{X} and \textbf{y} to obtain the train and test sets: X\_train, X\_test, y\_train, y\_test. As can be seen in the previous code segment, these data sets are now ready for one-hot encoding. Only the labels need to be one-hot encoded. The code for performing the one hot-encoding step is below. The one-hot encoding function and process was defined in the previous chapter. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={One hot function in use}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 y_train_onehot = convertOneHot_data2(y_train)
 y_test_onehot  = convertOneHot_data2(y_test)
 
+  
+</textarea>
+  
+</div>
+</center>
+	    
 
-\end{lstlisting}
-\end{minipage}
 
 In the code above we take the labels in y\_train and y\_test and pass them through our one-hot encoding function to produce the new variables y\_train\_onehot and y\_test\_onehot. You can visualize the new one-hot encoded vectors by running print y\_train\_onehot[:20,:] for the first 20 samples. 
 
@@ -400,14 +384,9 @@ In the code above we take the labels in y\_train and y\_test and pass them throu
 The next step in the process is to scale the X data. I suggest running your data with scaling and without to compare the performance of your model. Convergence of your deep learning algorithm and model results can be better with scaled data. In this case we can use SKlearn’s scaling module StandardScaler() to perform this task. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Scaling}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="8" cols="100">
 
 sc = StandardScaler()
 
@@ -416,8 +395,15 @@ sc.fit(X_train)
 X_train_normalized = sc.transform(X_train)
 X_test_normalized  = sc.transform(X_test)
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+</center>
+	    
+
+
+
 
 
 
@@ -430,18 +416,10 @@ To obtain these values, we can use the .shape[z] function available to numpy arr
 
 
 
-    
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in 
-\lstset{frame=lines}
-\lstset{caption={Print feature parameters}}
-%%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 # features (A) and classes (B)
 # A = number of features
@@ -465,9 +443,17 @@ print("num samples train", samples_in_train )
 
 print("num samples test", samples_in_test)
 
+  
+</textarea>
+  
+</div>
+</center>  
 
-\end{lstlisting}
-\end{minipage}
+
+
+
+
+
 
 
 
@@ -581,14 +567,9 @@ The data can be used to illustrate the differences between regression and classi
 
 We first add some of our common libraries. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Common Libraries}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 import numpy as np
 import torch
@@ -602,67 +583,75 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
 from sklearn.metrics import r2_score
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+  
+</div>
+</center>
+	 
+
+
+
+
+
 
 The following are the main libraries to define neural network architectures in PyTorch
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={PyTorch NN specific libraries}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-\end{lstlisting}
-\end{minipage}
+  
+</textarea>
+</div>
+</center>
+
+
+
+
 
 
 Next, the parameters are set. These include the learning rate, the number or epochs, and the batch size. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={NN parameters}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="8" cols="100">
 
 batch_size    = 16
 learning_rate = 0.0003
 N_epochs      = 200        ## 1000
 
 epsilon = 0.0001
+  
+</textarea>
+</div>
+</center>
 
-
-\end{lstlisting}
-\end{minipage}
-
+<p>
 
 Now we read the data:
+	
+</p>
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Read in the Wine data}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 path_data = 'winequality-white.csv'
 
 WINE_raw_data_df = pd.read_csv(path_data, delimiter=";")
 
+  
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 
 We can print the data with 
@@ -4427,35 +4416,7 @@ Printing "x"and "y" gives us our "x" batch of size [4, 16] and our shifted "y" b
 
 
 
-  <center>
-<div>
-<textarea rows="20" cols="100">
-
-
-x = 
-tensor([
-[59, 58,  1, 15, 50, 39, 56, 43, 52, 41, 43, 12,  1, 39, 52, 42],
-[43, 56,  1, 24, 59, 41, 43, 52, 58, 47, 53,  8,  0,  0, 24, 33],
-[58, 46, 53, 59, 45, 46, 58, 57,  6,  1, 39,  1, 50, 43, 45, 47],
-[17, 37, 10,  0, 32, 56, 59, 50, 63,  6,  1, 57, 47, 56,  6,  1]])
-
-y = 
-tensor([
-[58,  1, 15, 50, 39, 56, 43, 52, 41, 43, 12,  1, 39, 52, 42,  1],
-[56,  1, 24, 59, 41, 43, 52, 58, 47, 53,  8,  0,  0, 24, 33, 15],
-[46, 53, 59, 45, 46, 58, 57,  6,  1, 39,  1, 50, 43, 45, 47, 53],
-[37, 10,  0, 32, 56, 59, 50, 63,  6,  1, 57, 47, 56,  6,  1, 47]])
-
-
-  
-</textarea>
-  
-</div>
-    </center>
-  
-
-
-
+ 
 
 
 <p>
