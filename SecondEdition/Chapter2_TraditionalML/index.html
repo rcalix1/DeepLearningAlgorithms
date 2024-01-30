@@ -25,7 +25,7 @@
 
 <div class="main">    <!-- for the fixed nav bar -->
 
-<h1>Chapter  - Generative Adversarial Networks (GANs)</h1>
+<h1>Chapter 2 - Traditional Machine Learning</h1>
 
     <center>
       <div>
@@ -105,6 +105,935 @@ Autoencoders
 	
 </h1>
 
+
+
+\chapter{Traditional Machine Learning}
+
+
+
+In this chapter, I will address some of the general machine learning topics. I will use python, numpy, and the Sklearn library to provide example code on how to use the different models and other tools. I will quickly move through logistic regression to arrive at other algorithms. Much of what we learn from using the SKlearn kit can be integrated with PyTorch to make your deep learning code more powerful and modular. That way, you will be able to re-use your code for many different tasks. I will not focus on the theory of machine learning algorithms. There are many books on the theory of machine learning algorithms so instead I will concentrate on the practical aspects of using them in Python.  
+
+\textbf{ \underline{Objective:}} To understand Traditional Machine Learning techniques.
+
+
+
+
+
+
+Machine Learning (ML) is essential for automated systems to make decisions and to infer new knowledge about the world. This section describes some of the most important traditional methodologies currently in use in the field of machine learning. Machine learning approaches can be divided into supervised learning (such as Support Vector Machines) and unsupervised learning (such as K-means clustering). Within supervised approaches, the learning methodologies can be divided based on whether they predict a class or a magnitude, into classification and regression models, respectively. An additional categorization for these methods depends on whether they use sequential or non-sequential data. 
+
+
+Classifiers are machine learning approaches that produce as an output a specific class given some input features. Important classifiers include Support Vector Machines (Burges 1998) commonly implemented using LibSVM (Chang and Lin, 2001), Naïve Bayes, artificial neural networks, deep learning based neural networks, decision trees, random forests, and the k-nearest neighbor classifier ( \babelEN{\cite{wittenRef}} ). 
+
+Regression models are those that produce a real valued number instead of class such as the price or square footage of a house. 
+
+In their simplest form, deep learning based methods are simply neural nets with more layers. Deep learning methods have made a big impact in the field of machine learning in recent years. In particular, they are very important because, given enough computational power, they can automatically learn the optimal features to be used in a ML model. In the past, learning what features to use required using humans to engineer the features. This issue has now been alleviated somewhat by deep learning.
+Additionally, artificial neural networks are models that can handle non-linearly separable data. In theory, this capability allows them to model data that may be more difficult to infer. 
+
+
+\section{Code Issues}
+
+Before we begin, I want to address some issues about the code. First, I have tried to be consistent with other programmers of machine learning in Python. We will be using many libraries to implement the models. In particular, I selected to use the SKlearn library since it is very powerful and widely use. 
+
+In general, I only introduce enough SKlearn code for us to know how to integrate it with PyTorch in our deep learning endeavors. For a more in-depth discussion of SKlearn, I highly recommend the book “Python Machine Learning” by Sebastian Raschka. I have tried to be consistent with the conventions used in that book so that both books can be used together. 
+
+So now, getting back to the code, here is an example of some of the most important libraries that we can use for our machine learning code.
+
+
+
+
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Libraries}}
+%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+import numpy as np
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split 
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score
+from matplotlib.colors import ListedColormap
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score, f1_score 
+
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn import decomposition
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+
+
+
+
+As you may imagine the SKlearn library is the main library which contains most of the traditional machine learning tools we will discuss in this chapter. The numpy library is essential for efficient matrix and linear algebra operations. For those with experience with MatLab, I can say that numpy is a way of performing linear algebra operations in python similar to how they are done in MatLab. This makes the code more efficient in its implementation and faster as well.  The datasets library seen above helps to obtain standard corpora. You can use it to obtain annotated data like Fisher’s iris data set, for instance.
+
+
+From sklearn.cross\_validation we can import train\_test\_split which is used to create splits in a data matrix such as 70 percent for training purposes and 30 percent for testing purposes. From sklearn.preprocessing we can import the StandardScaler module which helps to scale  data. We will use functions such as these to scale our data for the PyTorch based models. Deep learning algorithms can improve significantly when data is properly scaled. So, it is recommended to do this.  
+We will use the sklearn.metrics module for performance evaluation of the classifiers. I will show that this module can be used with SKlearn models and with PyTorch models. Again, this will help to more easily understand deep learning since we don’t have to use the more complex and very verbose PyTorch functions. 
+
+The main metrics used for classification models are:
+
+\begin{itemize}
+\item accuracy\_score
+\item recall\_score
+\item f1\_score
+\item precision\_score
+\item confusion\_matrix
+\end{itemize}
+
+The main metrics used for regression models are:
+
+\begin{itemize}
+\item coefficient of determination ($ R^2 $)
+\item RMSE
+\end{itemize}
+
+
+
+
+Two more very important libraries are matplotlib.pyplot and pandas. The matplotlib.pyplot library is very useful for visualization of data and results, and the pandas library is very useful for pre-processing. The pandas library can be very useful to pre-process large data sets in very fast and very efficient ways.
+There are some parameters that are sometimes useful to set in your code. The code sample below shows the use of np.set\_printoptions. The function is used to print all values in a numpy array. This can be useful when trying to visualize the contents of a large data set. 
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Print options}}
+%%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+## set parameters
+
+np.set_printoptions(threshold=np.inf) 
+
+## print all values in numpy array
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+
+Let us assume that our data is stored in the matrix X. The code segment below uses the function train\_test\_split. This function is used to split a data set (in this case X) into 4 sets which are X\_train, X\_test, y\_train, y\_test. These are the 4 sets that will be used by the traditional or the deep learning models. The sets that start with X hold the data (feature vectors) and the sets that start with y hold the labels per sample (e.g. $ y_1 $ for the first feature vector, $ y_2 $ for the second feature vector, and so on). 
+The values test\_size=0.01 and random\_state=42 in the function are parameters that define the split. The value 0.01 makes a train set that has 99 percent of all samples while the test set has 1 percent of all samples. In contrast test\_size=0.20 would mean that there is a 80 \% and 20 \% split. The random\_state=42 allows you to always get the same random data since the seed is defined as 42.
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Split the data}}
+%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=48)
+
+## k-folds cross validation all goes in train sets (hence 0.01) 
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+To call all the functions or models you can employ the following approach.  Here we have defined 5 common models. Notice that each one gets the 4 data sets obtained from the percentage split. Notice also that the data files have a \_normalized added to their name. 
+
+
+
+This is a good standard approach used by programmers to indicate that this data has been scaled. The next chapter addresses scaling. Here you run X\_train through a scaler function to obtain X\_train\_normalized. The labels (y) are not scaled, in this case.
+
+
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Sklearn ML models}}
+%%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+logistic_regression_rc(X_train_normalized, y_train, X_test_normalized, y_test)
+
+svm_rc(X_train_normalized, y_train, X_test_normalized, y_test) 
+
+random_forest_rc(X_train, y_train, X_test, y_test) 
+
+knn_rc(X_train_normalized, y_train, X_test_normalized, y_test) 
+
+multilayer_perceptron_rc(X_train_normalized, y_train, X_test_normalized, y_test)
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+Before we talk about the models, let us address performance evaluation. Performance evaluation will help you to determine how good your classifier is given an annotated test data set.
+
+\section{Object Oriented Programming}
+
+Object oriented programming will be used extensively in this book to implement our deep learning algorithms. 
+As is necessary with progress, the algorithms are  more complicated, with deeper and more resource intensive networks. This is best exemplified by one of the newest deep learning algorithms: The Transformer. The algorithms are much more complicated. A little bit too much in fact and the programming languages are starting to abstract too much of the code. 
+I have found that a simple solution to this was to write everything in an object oriented fashion. This way you are still defining the classes from scratch but you can also build far more complicated algorithms thanks to traditional object oriented programming techniques. A GPT can nicely be built with a reasonable amount of lines of code if leveraging object oriented programming techniques. 
+
+The following code segment includes a simple example of a class format we will use extensively throughout this book.
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={object Oriented Programming}}
+%%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+class LinRegNet(nn.Module):
+
+    ## init the class
+    def __init__(self):
+    
+        super().__init__()
+        
+        self.linear1 = nn.Linear(11, 1)
+    
+    ## perform inference
+    def forward(self, x):
+        
+        y_pred = self.linear1(x)
+        
+        return y_pred
+
+\end{lstlisting}
+\end{minipage}
+
+\section{Performance Evaluation }
+
+As previously stated, performance evaluation depends on whether we are doing classification or regression. 
+
+\subsection{Regression Performance Evaluation}
+
+The main metrics used for regression models are:
+
+\begin{itemize}
+\item coefficient of determination ($ R^2 $)
+\item RMSE
+\end{itemize}
+
+The most important regression evaluation metric is $ R^2 $. The range goes from 0-1 and 1 means that you have a good model. Generally, I have used sklearn metrics to evaluate regression models. The code can be seen in the following code listing: 
+
+
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Print statistics - Regression}}
+%%%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+## coefficient of determination (R**2)
+from sklearn.metrics import r2_score
+
+print(  
+      r2_score( y_pred.detach().numpy(), y_test.numpy()    )
+)
+
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+\subsection{Classification Performance Evaluation}
+
+The main metrics used for classification models are:
+
+\begin{itemize}
+\item accuracy\_score
+\item recall\_score
+\item f1\_score
+\item precision\_score
+\item confusion\_matrix
+\end{itemize}
+
+Evaluation of the performance of your classifiers is extremely important. The SKlearn kit provides very good modules to address this issue. In particular, evaluation often involves measuring accuracy, precision, recall, and f-measure. 
+The best way to understand these metrics is to think of a confusion matrix. Confusion matrices show how many elements from a class are correctly and incorrectly classified. 
+
+
+For example, take the following:
+
+
+
+\begin{figure}[H]\centering
+\adjustbox{max height=.55\textheight}{
+    \includegraphics{images/ch2\_metrics\_table.png}
+}
+\caption{Performance errors}
+\label{RegLin:fig}
+\end{figure}
+
+
+Given this table, we can calculate accuracy as
+
+\begin{center}
+    $     accuracy = (a+d) / (a + b + c + d)   $
+\end{center}
+          
+
+
+precision is
+
+\begin{center}
+    precision = a / (a + c)
+\end{center}
+
+
+                
+
+
+the recall metric can be computed as follows
+
+\begin{center}
+       recall = a / (a + b) 
+\end{center}
+
+
+              
+
+
+Finally, the f measure which is a harmonic average of recall and precision can be computed as follows
+
+\begin{center}
+        F = (2 * (precision*recall)) / (precision + recall)  
+\end{center}
+
+
+The sample code to obtain these metrics is provided below.
+
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Print statistics - Classification}}
+%%%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_score
+
+def print_metrics_function(y_test, y_pred):
+    print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
+    confmat = confusion_matrix(y_true=y_test, y_pred=y_pred)
+    print("Confusion Matrix:")
+    print(confmat)
+    print('Precision: %.3f' % precision_score(y_true=y_test, y_pred=y_pred, average='weighted'))
+    print('Recall: %.3f' % recall_score(y_true=y_test, y_pred=y_pred, average='weighted'))
+    print('F1-measure: %.3f' % f1_score(y_true=y_test, y_pred=y_pred, average='weighted'))
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+
+
+The code above shows a function to print the performance metric statistics. Notice that two sets are provided which are y\_pred and y\_test. The y\_test data set contains the original annotated labels. The y\_pred data set contains the labels predicted by your classifier. Each of the metric functions such as \textbf{f1\_score} and \textbf{recall\_score} uses these 2 data sets to calculate the respective metric. 
+
+
+\subsection{Plotting Performance}
+
+
+In the following code segment we can see the function plot\_metric\_per\_epoch() which can be used to plot metric value every N values. For this to work, you store the metric values in a list such as precision\_scores\_list and then proceed to plot these values using the matplot library. 
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Plotting Performance}}
+%%%%\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+def plot_metric_per_epoch( precision_scores_list ):
+    x_epochs = []
+    y_performance= []
+    for i, val in enumerate(precision_scores_list):
+        x_epochs.append(i)
+        y_performance.append(val)
+    plt.scatter(x_epochs, y_performance,s=50,c='lightgreen', marker='s', label='score')
+    plt.xlabel('epoch')
+    plt.ylabel('score')
+    plt.title('Score per epoch')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+\end{lstlisting}
+\end{minipage}
+
+
+The output should look like the following figure. 
+
+
+\begin{figure}[H]\centering
+\adjustbox{max height=.40\textheight}{
+    \includegraphics{images/plot_performance_ch2.png}
+}
+\caption{Performance per epoch example}
+\label{RegLin:fig}
+\end{figure}
+
+
+\section{Optimization}
+
+
+Before we begin to discuss some of the machine learning algorithms, I should say something about optimization. Optimization is a key process in machine learning. Basically, any supervised learning algorithm needs to learn a prediction equation given a set of annotated data. This prediction function usually has a set of parameters that must be learned. However, the question is “how do you learn these parameters?”
+
+
+
+The answer is that you do so through: 
+
+\begin{center}
+    \textbf{optimization}
+
+\end{center}
+
+
+In its simplest form, optimization consists of trying a set of parameters with your model and seeing what result they give you. If the result is not good, the optimization algorithm needs to decide if you should decrease the values of the parameters or increase the values of the parameters. 
+
+In general, you do this in a loop (increasing and decreasing) until you find an optimal set of parameters. But one of the questions to answer here is: do the values go up or down? Well, as it turns out, there are methodologies based on calculus that help you to make this decision. 
+
+Let us try to picture this with a graph (below). 
+
+
+
+
+\begin{figure}[H]\centering
+\adjustbox{max height=.90\textheight}{
+    \includegraphics{images/optimizationgraph.chapt2.3.300dpi.jpg}
+}
+\caption{Optimization graph}
+\label{RegLin:fig}
+\end{figure}
+
+
+
+
+    
+
+
+The above graph represents an optimization problem. The y axis represents the cost (or penalty) of using a given parameter. The x axis represents the value of the parameter (w) being used at the given iteration. The curve represents the behavior that the function being used to minimize the cost will follow for every value of parameter w. 
+
+As shown in the graph, the optimal value for the curve is found where the star is located (i.e where the value of cost is at a minimum). So, somehow the optimization algorithm needs to travel through the function and arrive at the position indicated by the star. 
+
+At that point, the value of “w” reduces the cost and finds the best solution. Instead of trying all values of “w” at random, the algorithm can make educated guesses about which direction to follow (up or down). To do this, we can use calculus to calculate the derivative of the function at a given point. This will allow us to determine the slope at that point. In the case of the graph, this represents the tangent line to the curve if we calculate the derivative at point w. If we calculate the slope at the position of the star symbol, then the slope is zero because the tangent at that point is parallel to the x axis. The slope at the point “w” will be positive. Based on this result, we can tell the direction we want to take for parameter w (decrease or increase). This type of optimization is called gradient descent and is very important in machine learning and deep learning. There are several approaches to implement gradient descent and this is just the simplest explanation for conceptual purposes. We can write the algorithm for this technique as follows:
+
+
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Print statistics}}
+%%% \lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+old_x = 0
+new_x = 4 
+step_size = 0.01 
+precision = 0.00001
+
+def function_derivative(x):
+    return 3*x ** 2 – 6*x
+
+while absolute_value(new_x – old_x) > precision: 
+    old_x= new_x
+    new_x = old_x – step_size * function_derivative(old_x) 
+        
+print(“result is: ”, new_x)
+
+
+
+\end{lstlisting}
+\end{minipage}
+
+In the previous code example we assume a function of 
+
+                  $   f() =  x^3 - 3 x^2 + 7    $
+
+that needs to be optimized for parameter x. We will need the value of the derivative for each point x. 
+The derivative for f() is:
+
+               $          f '() = 3 x^2 - 6x   $
+
+So, the parameter x can be calculated in a loop using the derivative function which will determine the direction to follow when increasing or decreasing the parameter x.
+
+
+
+\section{Logistic Regression}
+
+
+Logistic regression is a simple algorithm that is often used by practitioners of machine learning because it can obtain good results. Logistic regression is a linear function much like linear regression which predicts the probability of a sample belonging to a given class. Logistic regression uses another optimization function instead of the standard least squares cost function used in linear regression. 
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={Log Reg}}
+%% \lstset{label={lst:code\_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+def logistic_regression_rc(X_train_normalized, y_train, X_test_normalized, y_test):
+    from sklearn.linear_model import LogisticRegression
+    lr = LogisticRegression(C=1000.0, random_state=0) lr.fit(X_train_normalized, y_train)
+    y_pred = lr.predict(X_test_normalized) print_stats_percentage_train_test( "log re", y_test, y_pred)
+
+\end{lstlisting}
+\end{minipage}
+
+The predicted values from a standard regression approach are now passed through a sigmoid function that basically maps the output to a probability range scale between 0 and 1. The code below provides an example of how to use the logistic regression function with SKlearn. Later, we will implement this logistic regression function again with PyTorch. 
+
+
+
+In the previous function, the train and test sets are provided for the model to be trained and tested. In SKlean most steps are abstracted. In contrast, PyTorch will allow us to define more steps such as the cost function, optimization, and inference equation and other aspects. In the function logistic\_regression\_rc, first you initialized a logistic regression object (lr) and then you train and test it with the functions lr.fit and lr.predict. The final step is to measure performance using the previously described function print\_stats\_percentage\_train\_test. Most classifiers are implemented in the same way with SKlearn. In the next section, I will demonstrate how this is done for a neural network in Sklearn.
+
+\section{Neural Networks}
+
+Neural networks are very complex systems that take a long time to train. Therefore, the use of them in SKlearn may not be recommended except for the smallest of data sets.  The code is shown here for contrast purposes with later implementations of neural networks in PyTorch. In the next chapters, we will focus on how to do this in PyTorch and how to create networks of multiple layers.
+
+
+
+In the code below we can see that everything is very similar to the previous logistic regression implementation. The new changes appear in the definition of the clf multilayer object. Here, the parameter hidden\_layer\_sizes=(100,100) means that the architecture of the network consists of 2 hidden layers with 100 neurons each. A parameter such as (200,  ) would mean that the network has 1 hidden layer with 200 neurons.
+
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={NN in sklear}}
+%%% \lstset{label={lst:code\_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+def multilayer_perceptron_rc(X_train_normalized, y_train, X_test_normalized, y_test):
+
+    from sklearn.neural_network import MLPClassifier clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(100,100), random_state=1) 
+    
+    clf.fit(X_train_normalized, y_train)
+    y_pred = clf.predict(X_test_normalized) 
+    
+    print_stats_percentage_train_test("multilayer perceptron", y_test, y_pred)
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+
+
+\section{KNN}
+
+The k-nearest neighbor (KNN) classifier is a popular algorithm that I always like to use. It requires very little parameter tuning and can be easily implemented. Here, the code is implemented in mupy becasue of its simplicity. 
+The n\_neighbors parameter is the k. In this case, the k closest samples are selected. 
+
+
+In the next code listing, you can see all the code needed to run KNN. Wow! Pretty short right? This code splits our data into \textbf{train} and \textbf{test} sets. Then grabs every sample in the test set and compares it to every sample in the train set. For each test sample, we get all distances between the test samples and all train samples. We then rank them and select the top \textbf{K} distances. Finally, we assign the majority class associated for the top 5 distances. That is it!
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={The whole KNN code}}
+%%% \lstset{label={lst:code\_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+                
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.tri as tri
+From pyodide.http import open_url
+
+def euclidean_distance(v1, v2):
+    return np.sqrt( np.sum(   (v1 - v2)**2   )   )
+
+def predict(test_x):
+    k = 5
+    distances = [ euclidean_distance(test_x , x)  for x in X_train    ]
+    k_neighbor_indices = np.argsort(distances)[:k]
+    labels = [ y_train[i]  for i in k_neighbor_indices  ]
+    labels_np = np.array( labels  )
+    pred = int( np.mean(labels_np)  )
+    return pred
+
+url1 = ("https://rcalix1.github.io/Build-Fun-AI-Projects-that-Run-on-the-Web/volume-1-pyscript-and-knn/chapter3/knn/iris.csv")
+    
+iris_pd = pd.read_csv(open_url(url1))
+iris_pd['species'] = iris_pd['species'].replace({'setosa':0, 'versicolor':1 , 'virginica':2})
+iris_np = iris_pd.to_numpy()
+
+np.random.shuffle(iris_np)
+
+X_train   = iris_np[1:130, :4]
+y_train   = iris_np[1:130,  4]
+X_test    = iris_np[130:150, :4]
+y_test    = iris_np[130:150, 4]
+
+def my_gen_function():
+    accum_res = ""
+    for i, test_x in enumerate( X_test ):
+        the_pred = predict(test_x)
+        
+       
+my_gen_function() 
+
+\end{lstlisting}
+\end{minipage}
+
+
+The next code segment includes  a function called the Euclidean distance as can be seen in the next code listing. 
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={Euclidean Distance}}
+%%% \lstset{label={lst:code\_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+def euclidean\_distance(v1, v2):
+    return np.sqrt( np.sum(   (v1 - v2)**2   )   )
+
+        
+
+\end{lstlisting}
+\end{minipage}
+
+This is the function that measures the distance between 2 points in a vector space. These 2 point need to have the same size but the size can be of any dimension. For instance, for our Iris data, every point has 4 features. So in the code the 2 points v1 and v2 would be of size 4 each. However, we could also have points (samples) of many more dimensions. For instance, points with 100 features. So in this case v1 and v2 would both need to have size 100. But the cool thing is that the function for distance calculation would still work. That is the power of Numpy. 
+
+
+
+The name Euclidean distance comes from a Greek philosopher named Euclid. He is best known for putting together one of the earliest books on geometry. The book was so good for its time that the type of mathematics it discussed became known as Euclidean geometry.
+
+So, where does this magical Euclidean distance function come from? Would you believe that it is related to an idea one of the great Greek philosophers (Pytagoras) is credited with? Pytagoras was before Euclid and is credited with coming up with the Pythagorean Theorem (bubble in the figure). 
+
+
+\begin{figure}[H]\centering
+\adjustbox{max height=.55\textheight}{
+    \includegraphics{images/Pythagoras.jpg}
+}
+\caption{Pythagoras}
+\label{RegLin:fig}
+\end{figure}
+
+
+
+The theorem states that given a triangle (see figures), the sum of the areas of the two squares on the legs (a and b in green) equals the area of the square on the hypotenuse (c in green). 
+
+If you look closely at the figure below, you can see that I have written down the connection between Pythagoras' theorem, and the euclidean function we used in our code. 
+
+\begin{figure}[H]\centering
+\adjustbox{max height=.55\textheight}{
+    \includegraphics{images/mathPythagoras.jpg}
+}
+\caption{Pythagorean Theorem and the distance function}
+\label{RegLin:fig}
+\end{figure}
+
+Now, with some of the math history out of the way, let us continue with our code description. In the next code section we can see the KNN \textbf{predict} function. Actually, the \textbf{predict} function is the actual KNN algorithm. I will describe it in detail next. The variable \textbf{test\_x} is the sample in question. Say, one Iris test sample with 4 features (\textbf{[x1, x2, x3, x4]}). The next line of code:
+
+\begin{center}
+    distances = [ euclidean\_distance(test\_x , x)  for x in X\_train    ]
+
+\end{center}
+
+calculates all the distances between \textbf{test\_x} and all the training samples. The way this statement is written is called a list comprehension in Python. The \textbf{"for x"} part of the statement means that each sample in the train set is grabbed and passed to the \textbf{euclidean\_distance} function along with the test sample. Both points are passed to the Euclidean equation and the distance between them is returned. This is done for every training sample and in the end, the list \textbf{"distances"} contains all the measured distances. 
+
+
+
+The next statement:
+
+\textbf{k\_neighbor\_indices = np.argsort(distances)[:k]}
+
+takes all the distances and, using \textbf{np.argsort()}, sorts them. Then we slice the sorted vector with \textbf{[:k]}. This slicing only returns the indeces for the k smallest distances. The indeces are assigned to the variable named \textbf{k\_neighbor\_indices}. One important note is that argsort returns only the indeces in the vector and not the values themselves. Since the indeces in the \textbf{"X"} data and \textbf{"y"} labels are aligned, then we can use these same indeces to extract the corresponding labels from \textbf{"y"}. And that is exactly what we do with the following statement:
+
+\textbf{labels = [ y\_train[i]  for i in k\_neighbor\_indices  ]}
+
+Finally, the list \textbf{labels} is converted into a Numpy array of the labels which are numbers, and the mean of them is calculated. That is it. You have found the label.
+
+
+
+
+
+
+Wasn't that easy. We have described the whole KNN algorithm. Wow! 
+
+
+
+\section{Support Vector Machines (SVM)}
+ 
+Before Deep Neural Networks, SVM was one of the most important ML algorithms. SVM is an example of a theoretically well founded machine learning algorithm. And for this reason it has always been very well respected by machine learning practitioners. This is in contrast to neural networks which haven’t always been considered as very strong on their theoretical framework. As an example, in the rest of this chapter I will discuss SVM’s framework and then provide example code to implement an SVM with SKlearn. 
+Support Vector Machines is a binary classification method based on statistical learning theory which maximizes the margin that separates samples from two classes (Burges 1998; Cortes 1995). This supervised learning machine provides the option of evaluating the data under different spaces through Kernels that range from simple linear to Radial Basis Functions [RBF] (\babelEN{\cite{chang2001Ref}}; Burges 1998; Cortes 1995). Additionally, its wide use in the field of machine learning research and ability to handle large feature spaces makes it an attractive tool for many applications. 
+Statistical Learning Theory (SLT) methods assume prediction models that can be ascribed a confidence characteristic. They are based on the fact that both structural and empirical risks are minimized. The expected risk can be calculated based on the empirical risk that is present in the data with the associated upper and lower bounds. 
+
+
+
+The code for SVM can be seen in the next code listing. 
+
+\begin{minipage}{\linewidth}
+\lstset{language=Python}
+\lstset{showstringspaces=false}  %% remove weird symbol in spaces
+\lstset{frame=lines}
+\lstset{caption={SVM}}
+%%% \lstset{label={lst:code\_direct}}
+\lstset{basicstyle=\footnotesize}
+\begin{lstlisting}[backgroundcolor = \color{white}]
+
+def svm_rc(X_train_normalized, y_train, X_test_normalized, y_test):             
+    from sklearn.svm import SVC
+    #svm = SVC(kernel='linear', C=1.0, random_state=0)
+    svm = SVC(kernel='rbf', random_state=0, gamma=0.0010, C=32) svm.fit(X_train_normalized, y_train)
+    y_pred = svm.predict(X_test_normalized) print_stats_percentage_train_test("svm (rbf)", y_test, y_pred)
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+
+In SVM, the maximization of the margin is based on the training samples that are closest to the optimal line (also known as support vectors). Because the method tries to maximize the margin between the samples of two classes under a set of constraints, it ultimately becomes an optimization problem to find the maximum separation band. The function that represents the margin is quadratic and can be solved using quadratic programming techniques with Lagrange operators.  
+
+
+    
+
+
+Non-linearly separable cases can be solved by mapping the initial set of features to a higher feature space by way of a Kernel Trick. This will provide higher freedom in separating the data in higher dimensional space. The Kernel trick takes advantage of the fact that SVMs do not need to know the mapping function because this is expressed as the dot product of the input data. 
+                                                      
+Since most real world data includes outliers and noise, a soft margin approach can be introduced in the model to allow for some errors to occur. This softening of the margin is achieved by introducing an error term where the cost represents the penalty for each error
+
+
+
+
+
+
+Unlike this beautifully well-defined algorithm, neural networks and deep neural networks are not always considered to be so well founded in a theory. Instead, over the years they have been considered as a type of technique with a black box framework. Because of this, many practitioners have at times disregarded neural networks and deep neural networks. However, since the early 2000s, deep neural networks have started to defeat all other techniques on challenge after challenge across the machine learning landscape. As such, both academia and industry have noticed and great interest has developed for these techniques. 
+
+Similarly to the previous algorithms, SVM has the same structure as others in SKlearn. It includes a parameter kernel which can be used to set kernels such as linear or rbf. The rbf kernel requires the parameters of cost and gamma. These values are usually data dependent and require parameter tuning.
+
+
+
+\section{Regression Trees and XGBoost}
+ 
+There are several approaches to fit models to regression data. Three important ones are linear regression, regression trees, and neural networks. The next section discusses regression and regression trees leading up to XGBoost. 
+
+
+\subsection{Regression Trees}
+
+As previously indicated, regression trees (\cite{RegressionTreesTorgo2017}) can fit nonlinear data. Regression trees are a type of decision tree in which the predicted values are not discrete classes but instead are real valued numbers. The key concept here is to use the features from the samples to build a tree. The nodes in the tree are decision points leading to leaves. The leaves contain values that are used to determine the final predicted regression value. 
+
+\begin{comment}
+
+For example, if a selected feature ranges from 0 to 255, a threshold value, such as 115, can be selected to decide which child node of the parent node should be moved to. In the simplest case, each parent node in a regression tree has two child nodes. Once the selected feature's threshold is established, this cut off is used to help select the output regression value. In the simplest case, the child node on the left can accumulate all the output values that correspond to the  values below the threshold for the given feature. 
+Concurrently, the right node collects those above the threshold. Simply averaging values in each node can give an initial predicted value. However, this method is not the best solution. The goal in training  regression trees is to try multiple thresholds and select the ones that provide the best results. Through iterative optimization and comparison of predicted values to real values, optimal regression trees can be obtained. 
+
+Regression trees start from the top and work their way down to the leaf nodes. Leaf nodes are used to select output values. Nonleaf nodes are typically decision nodes based on the optimal threshold for the range of values in that feature. The key question is how to select the optimal features to use and their optimal threshold value for a given node. 
+
+How are features and thresholds selected? One simple way is to iteratively try different thresholds and then try predicting an output value with each regression tree model candidate. For each predicted output for a given tree candidate, the approach compares the predicted value to the real value and selects the candidate that minimizes the errors. In the context of regression trees, the difference between the real and the predicted values is called the residual. This loss function is very similar to the minimum squared errors (MSE) loss function. In this case, the objective goal is to minimize these residuals. 
+
+
+
+\begin{equation}
+J = \sum_{i=1}^n (real_i - pred_i)^2
+\end{equation}
+
+
+Given a set of output values in a node, each will be tried iteratively, and the sum of squares residual will be calculated for all the threshold candidates. Once the optimized threshold is calculated, the process can be repeated by adding new nodes. When a node can no longer be split, the process stops, and it is called a \emph{leaf}. Overfitting can be an issue with regression trees. To reduce the possibility of overfitting, rules are used to stop adding nodes once some criteria have been met. As an example, if a node does not have enough samples to calculate an average, perhaps if there are less that 30 samples for this node, the nodes will stop splitting. 
+
+Another key question is the selection of features to use for the decision node. Intuitively, the process is fairly logical and simple. For each feature, the optimal threshold will be calculated as previously described. Then, of the $n$ feature candidates, the one that minimizes the residuals will be selected. 
+
+\subsection{AdaBoost}
+
+AdaBoost (Adaptive Boosting) is a more advanced version of the standard regression trees algorithm \cite{AdaBoostRefFreund}. In AdaBoost, trees are created with a fixed size, which are called \emph{stumps}. They can be restricted to stumps of just two levels, for instance. Some stumps have more weight than others when predicting the final value. Order is important in AdaBoost. One important characteristic in AdaBoost is that errors are considered and given more importance when creating subsequent stumps. 
+
+In AdaBoost, the training samples have weights to indicate importance. As the process advances, the weights are updated. Initially, all samples have the same weight, and all weights add up to one. During training, the weight for the stump is calculated by determining the accuracy between the predicted and the real values. 
+The stump weight is equal to the sum of the weights of all the badly (poorly) predicted samples. The weight importance is also known as the \emph{amount of say} ($w_{import}$) and is calculated as follows:
+
+\begin{linenomath}
+\begin{equation}
+w_{import}  = \frac{1}{2} \log{\frac{1-Error}{Error}},
+\end{equation}
+\end{linenomath}
+
+where $Error$ represents the total number of errors. 
+
+In the next iteration, the data sample weights need to be adjusted. Samples that have caused errors in the model have their weights increased. The other samples get their weights decreased. 
+
+The formula to increase the weights for error samples is as follows: 
+
+
+
+\begin{equation}
+w   = w \times e^{   w_{import}   }.   
+\end{equation}
+
+
+To decrease the weights for nonerror samples the formula is as follows:
+
+
+\begin{equation}
+w   = w \times e^{   -w_{import}   }.   
+\end{equation}
+
+
+After updating the weights for the data samples, the weights are normalized to add up to 1. 
+
+In the next iteration, a new data set is created that contains more copies of the samples that have the highest error weights. These samples can be duplicated. A special random selection algorithm is used to select these samples. Although random, the algorithm favors the selection of samples with higher error weights. 
+
+Once the new training data set is created, weights are reassigned to each sample of the new data set. The new data set is the same size as the original data set. All the weights are set to be the same again, and the process begins again. The point is that penalized samples in the previous iteration are duplicated more in the new data set. 
+
+This method is how a model learns the AdaBoost stumps and their weights. Then, the model can predict with all these stumps, but the learned weights are considered when making a prediction. 
+
+\subsection{Gradient Boost}
+
+AdaBoost, as previously described, builds small stumps with weights. Gradient boost (as compared with AdaBoost) builds subtrees that can have one node or more \cite{GradientBoosting2001}. But, the nodes are added iteratively. The final gradient boost tree is a linear combination of subtrees. 
+
+The first node in the linear combination of subtrees is simply one node that predicts the average of all regression outputs for the training data. The algorithm then continues additively adding subtrees. The next subtree is based on the errors from the first tree, such as the errors made in the tree that only has one node predicting the average of the $ y $ output values in the training data.
+
+The errors are the differences between predicted and real output values. As previously described, the gradient boost tree is a linear combination of subtrees (see Equation 5). The first node predicts the average regression output, but subsequent subtrees predict residuals. These residuals are added to the initial average node and adjust the output value. The residuals are differences between predicted and real values. Similar to previously described regression trees, the residuals are assigned to nodes in the tree based on how they minimize errors. 
+
+\begin{equation}
+y = subtree_{0} + lr \times subtree_{1} + lr \times subtree_{2} + lr \times subtree_{3}, 
+\end{equation}
+
+where $ subtree_{0}  $ predicts the average output, and all other subtrees predict residuals. 
+
+
+To prevent overfitting, a learning rate ( $  lr $ ) is assigned (which is a scaling factor) to the subtrees to control the effect of the residuals on the final regression output.
+
+Every iteration, the new tree is used to predict new output values, and these values are compared with the real values. The difference is the residuals. These residuals are used to create the new subtree  for the next iteration. Once the residuals for an iteration are calculated, a new subtree can be created. The process involves ranking the residuals. This process continues until a stopping criteria is reached. The learning rate is usually 0.1. 
+
+\end{comment}
+
+\subsection{XGBoost}
+
+The XGBoost \cite{ref-proceeding-xgboost-chen} techniques represents an improvement over other regression techniques like gradient boosting. It has new algorithms and approaches for generating  the regression tree. It also has several optimizations that improve the speed and performance by which it can learn and process data. As of 2023, XGBoost can outperform many ML techniques including neural networks for tabular data.
+
+\begin{comment}
+
+XGBoost has some similar characteristics to gradient boosting. The first node always predicts 0.5 instead of the average, as with gradient boosting. Also similar to gradient boosting, XGBoost fits a regression tree to calculate residuals with each subtree. Unlike gradient boosting, XGBoost has its own algorithm to build the regression tree. Formally, XGBoost \cite{ref-proceeding-xgboost-chen} can be defined as follows.
+
+For a given data set, a so called tree ensemble model uses $K$ additive functions to predict the regression output and is denoted as follows.
+
+\begin{equation}
+\hat{y}_{i} = \sum_{k=1}^K f_k(X_i), 
+\end{equation}
+
+where $f_k \in F$. The symbol $F$ is the space of regression trees. Each $f_k$ corresponds to an independent subtree. Each regression subtree contains an output value on each leaf. This value is represented by $ w $. For  a given sample, the decision rules in the tree are used to find the respective leaves and calculate the final prediction. This prediction is obtained by summing up the output values in the corresponding leaves. To learn the set of functions used in the regression tree, the following loss function must be minimized. 
+
+\begin{equation}
+J = [ \sum_{i=1}^n L(y_i, \hat{y}_i)] + \frac{1}{2} \lambda (\lVert w \rVert)^2 + \Upsilon T,  
+\end{equation}
+
+where $L(y_i, \hat{y}_i)$ is a type of MSE measuring the difference between the real and predicted values, and the term $ \Upsilon T     $ is used to control the number of terminal nodes. This process is called pruning, and it is part of the optimization objective. The term $    \frac{1}{2} \lambda (\lVert w \rVert)^2  $ is a regularization parameter. It represents the output value $w$ and helps to smooth the learned values. Also, $ \lambda $ is a scaling factor. Setting the regularization parameters to zero makes the loss function become the same as the traditional gradient tree boosting loss.
+
+The XGBoost "tree ensemble" model includes functions used as parameters and as such cannot be optimized using typical optimization methods. Instead, the model is trained in an additive manner. Formally \cite{ref-proceeding-xgboost-chen}, let $\hat{y}_i^{(t)} $ be the prediction of the instance $i$ at iteration $t$. The new $ f_t $ (i.e., subtree) will need to be added to minimize the loss as follows: 
+
+\begin{equation}
+J^{(t)} = [ \sum_{i=1}^n L(y_i, \hat{y}_i^{t-1} + f_t(x_i))] + \frac{1}{2} \lambda (\lVert w \rVert)^2 + \Upsilon T.  
+\end{equation}
+
+This means that an $f_t $ (subtree) must be added "greedily", which results in the most improvement to this model based on the loss. So, in XGBoost, given a node with residuals, the goal is to find output values for this node that create a subtree that minimizes the loss function. The term $ \frac{1}{2} \lambda (\lVert w \rVert)^2  $  can be written as $ \frac{1}{2} \lambda O_{value}^2  $. The term $    O_{value}^2 $ represents the output value. 
+
+Optimization in XGBoost is somewhat different in practice from optimization with neural networks. In neural networks, derivatives are taken for gradients during the epochs in the training process, and then Stochastic Gradient Descent with back propagation is done. In contrast, in XGBoost, a loss has to be calculated and minimized theoretically; but in practice, the derivatives (gradients) are always the general equation of adding the residuals and dividing by the total. So, in essence, no derivative calculation occurs during training. Unlike neural networks, XGBoost uses the same overall design for every single model, and the model only has to calculate the derivative once (on paper) and we know that it will work for all of the models created. In contrast, every neural network can have a different design (such as having different numbers of weights, hidden layers, neurons, activations, and loss functions).  Therefore, the neural network based optimization always requires the calculation of the gradient for each model during each training epoch. So, in general, by minimizing the loss function with the derivative once, general XGBoost equations are obtained, which are used to build the tree. And this derivation gives the general formulas. This objective can be optimized in a general setting. Derivation and simplification give general equations. 
+
+In normal circumstances, it is not possible to enumerate all the possible tree structures. Instead, a greedy algorithm that starts from a single leaf and iteratively adds branches to the tree is used. As such, the process to create the tree is as follows.
+
+In essence, different subtree candidates must be tried, and the one that optimizes the loss function should be selected. 
+During the learning process, the tree starts with one node and tries to add more subtrees with optimal node and threshold configurations. The approach needs a way to score the subtree candidates to select the best one. Each subtree gets scored using the "gain" value. The "gain" value for a subtree candidate is calculated from other values associated with each of the nodes that make up that subtree candidate.  Once "similarity" scores for each node in the subtree candidate are obtained, they are used to calculate the "gain" of that particular split of the nodes in the subtree. This "gain" equation is used to evaluate the split candidates. For example, assuming nodes left and right for a root node, the "gain" can be calculated as follows:
+
+\begin{equation}
+gain = left\_sim\_score + right\_sim\_socre - root\_sim\_score.
+\end{equation}
+
+The "gain" score helps to determine the correct threshold. For other threshold cutoffs, other gains can be calculated and the optimal one selected. So, the threshold that gave the largest "gain" is used. If a node only has one residual, then that is it, and it is a leaf. 
+
+
+
+The "gain" depends on "similarity" scores. The process to create a set of subtree candidates needs these "similarity" scores and is as follows. For each node in a subtree candidate, a quality score or "similarity" score is calculated from all the residuals in the node. The "similarity" score function is as follows:
+
+\begin{equation}
+sim\_score = \frac{(sum\_of\_residuals)^2}{number\_of\_residuals + \lambda},
+\end{equation}
+
+
+where the residuals are summed first and then squared. The symbol $  \lambda $ is a regularization parameter. 
+
+Once the "similarity" score is calculated, the node should be split into two child nodes. The residuals are grouped into these nodes. Because the threshold for the node is not known, the feature is iteratively split from its lowest value to its highest values in the range. Here, however, XGBoost uses an optimized technique called \emph{percent quantiles} to select the threshold. Residuals that belong to less than the threshold go on the left node, and residuals that belong to more than the threshold go on the right node. Once again, the similarity scores are calculated for each of the two left and right nodes. 
+
+The optimal subtree candidate is selected using the "similarity" score and the "gain" score as previously described. Once the best candidate is selected, the next step is to calculate its output values for the leaf nodes. The output values are also governed by the loss function, and the formula for them can be derived from it, as shown in Equation 11. So, for a given subtree structure, the optimal $ w_j$ of leaf $j$ can be computed as
+
+
+\begin{equation}
+ O_{value} = \frac{sum\_of\_residuals}{number\_of\_residuals + \lambda}.
+\end{equation}
+
+
+ 
+This step completes the tree building process. Now, the tree can be used to predict $ y $ similarly to how this is done with gradient boosting. 
+
+\begin{equation}
+y = subtree_{0} + lr \times subtree_{1} + lr \times subtree_{2} + lr \times subtree_{3}, 
+\end{equation}
+
+where $ subtree_{0}  $ predicts 0.5, and all other subtrees predict residuals that get added together but are scaled based on the learning rate $ lr $. 
+
+\end{comment}
+
+ 
+
+\section{The t-test for Machine Learning}
+ 
+Sometimes we want to compare between several machine learning algorithms using the previously discussed metrics (precision, recall, f-measure). The standard approach is to run 10-fold cross validation and look at the results. However, a more robust approach is to use a t-test. By definition, the t-test compares the mean or averages of 2 populations to determine how different the populations are from each other. 
+
+\begin{comment}
+
+sdsdsdsd
+ddfdf
+
+\end{comment}
+
+\section{Summary}
+
+In this chapter, an overview of some of the main traditional topics of supervised machine learning was provided. In particular, the following machine learning algorithms were presented: logistic regression, KNN, Support Vector Machines, and neural networks. Code examples of their implementation using the SKlearn toolkit or numpy  were presented and discussed. Additionally, issues related to classifier performance were also addressed. The next chapter will focus on issues related to data and data pre-processing that apply to both traditional machine learning as well as deep learning.
+
+
+
+ 
+
+
+
+	
 <p>
 
 Autoencoders are a type of compression method where a neural network learns how to represent a vector of size “m” into a vector of size “n” where m >> n. 
