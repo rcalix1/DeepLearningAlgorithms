@@ -2545,7 +2545,7 @@ Now we can load the data with Pandas
 
 <center>
 <div>
-<textarea rows="4" cols="40">
+<textarea rows="4" cols="100">
 
 path_data = "iris.csv"
 
@@ -2562,7 +2562,7 @@ The labels for Iris are strings. We convert them to integers using Pandas as fol
 
 <center>
 <div>
-<textarea rows="4" cols="40">
+<textarea rows="4" cols="100">
 
 iris_raw_data.species = iris_raw_data.species.map( {'setosa':0 , 'virginica':1, 'versicolor':2} )
 
@@ -2580,7 +2580,7 @@ We can view the column headings which gives us
 
 <center>
 <div>
-<textarea rows="6" cols="40">
+<textarea rows="6" cols="100">
 
 headers_list = iris_raw_data.columns.values.tolist()
 
@@ -2596,7 +2596,7 @@ We can now convert the Pandas data frame to numpy. Printing the shape gives us (
 
 <center>
 <div>
-<textarea rows="6" cols="40">
+<textarea rows="6" cols="100">
 
 ## Convert Pandas to Numpy
 
@@ -2615,7 +2615,7 @@ Now we slice the data for our "X" and "y" data.
 
 <center>
 <div>
-<textarea rows="4" cols="40">
+<textarea rows="4" cols="100">
 
 X = iris_raw_data_np[:, :-1]
 
@@ -2633,7 +2633,7 @@ we can convert the data type to integer
 
 <center>
 <div>
-<textarea rows="4" cols="40">
+<textarea rows="4" cols="100">
 
 y = y.astype(int)
 
@@ -2649,7 +2649,7 @@ let us determine the number of labels with np.unique. This give us [0, 1, 2]. Th
 
 <center>
 <div>
-<textarea rows="7" cols="40">
+<textarea rows="7" cols="100">
 
 the_set = np.unique(y)
 
@@ -2668,7 +2668,7 @@ In classification problems, it is a good idea to determine the class balance or 
 
 <center>
 <div>
-<textarea rows="7" cols="40">
+<textarea rows="7" cols="100">
 
 _ = plt.hist(y, bins='auto') 
 
@@ -2699,7 +2699,7 @@ The shapes can be printed and seen below
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 print(X.shape)
 
@@ -2719,7 +2719,7 @@ Let us split the data
 
 <center>
 <div>
-<textarea rows="20" cols="40">
+<textarea rows="20" cols="100">
 
 random_seed = int( random.random() * 100 )     ## 42
 
@@ -2746,7 +2746,7 @@ Let us typecast the data to avoid possible errors and then convert to torch tens
 
 <center>
 <div>
-<textarea rows="15" cols="40">
+<textarea rows="15" cols="100">
 
 X_train = X_train.astype(  np.float32  )
 X_test  = X_test.astype(   np.float32  )
@@ -2769,7 +2769,7 @@ Let us calculate means and standard deviations of the X data for data scaling.
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 x_means      = X_train_tr.mean(0, keepdim=True ) 
 
@@ -2792,7 +2792,7 @@ Torch provides a very handy DataLoader that works effieciently with our neural n
 
 <center>
 <div>
-<textarea rows="8" cols="40">
+<textarea rows="8" cols="100">
 
 ## X_train.shape[0] -> 120
 
@@ -2814,7 +2814,7 @@ three samples of the data should now look like this
 
 <center>
 <div>
-<textarea rows="5" cols="40">
+<textarea rows="5" cols="100">
 
 [(tensor([5.1000, 3.5000, 1.4000, 0.2000]), 0),
  (tensor([6.9000, 3.2000, 5.7000, 2.3000]), 1),
@@ -2832,7 +2832,7 @@ The following command creates the DataLoader
 
 <center>
 <div>
-<textarea rows="5" cols="40">
+<textarea rows="5" cols="100">
 
 train_dl = torch.utils.data.DataLoader(iris_train_list, batch_size=batch_size, shuffle=True)
 
@@ -2847,7 +2847,7 @@ we next create the test DataLoader with batch size equal to 30
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 ## X_test.shape[0] -> 30
 
@@ -2866,7 +2866,7 @@ We know define the architecture for the MLP as follows
 
 <center>
 <div>
-<textarea rows="35" cols="40">
+<textarea rows="35" cols="100">
 
 ## MLP
 
@@ -2909,7 +2909,7 @@ We can try another architecture such as a deep neural network of 2 hidden layers
 
 <center>
 <div>
-<textarea rows="40" cols="40">
+<textarea rows="40" cols="100">
 
 ## Deep Learning with 2 hidden layers
 
@@ -2957,7 +2957,7 @@ The next step is to define the train function. We have seen this before.
 
 <center>
 <div>
-<textarea rows="20" cols="40">
+<textarea rows="20" cols="100">
 
 def training_loop( N_Epochs, model, loss_fn, opt  ):
     
@@ -2989,7 +2989,7 @@ Now we call the Core Functions for the MLP.
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 model      = MLP_Net( x_means, x_deviations  )
 
@@ -3013,7 +3013,7 @@ Training gives us the following losses.
 
 <center>
 <div>
-<textarea rows="22" cols="40">
+<textarea rows="22" cols="100">
 
 0   loss= tensor(1.1073, grad_fn=<NllLossBackward0>)
 50  loss= tensor(0.9858, grad_fn=<NllLossBackward0>)
@@ -3046,7 +3046,7 @@ We can use our previously defined funtion to determine classification performanc
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 def print_metrics_function(y_test, y_pred):
     print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
@@ -3068,7 +3068,7 @@ Finally, we can estimate the performance metrics for the MLP with Iris
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 with torch.no_grad():
     for x_real, y_real in test_dl:
@@ -3090,7 +3090,7 @@ the performance can be seen below. Notice that the results are very good.
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 
 Accuracy: 0.97
@@ -3113,7 +3113,7 @@ We can also try the deep learning architecture
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 model      = DL_Net( x_means, x_deviations  )
 
@@ -3136,7 +3136,7 @@ the training gives us the following losses
 
 <center>
 <div>
-<textarea rows="20" cols="40">
+<textarea rows="20" cols="100">
 
 0   loss= tensor(1.0865, grad_fn=<NllLossBackward0>)
 50  loss= tensor(0.5689, grad_fn=<NllLossBackward0>)
@@ -3174,7 +3174,7 @@ finally we predict with the DL model on the test set with
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 with torch.no_grad():
     for x_real, y_real in test_dl:
@@ -3196,7 +3196,7 @@ The performance metrics can be seen below and they are very good.
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 Accuracy: 0.97
 Confusion Matrix:
@@ -3227,7 +3227,7 @@ We use the following parameters.
 
 <center>
 <div>
-<textarea rows="8" cols="40">
+<textarea rows="8" cols="100">
 
 batch_size    = 32
 learning_rate = 0.001 ## 0.001
@@ -3245,7 +3245,7 @@ now we read the Wine quality data
 
 <center>
 <div>
-<textarea rows="6" cols="40">
+<textarea rows="6" cols="100">
 
 path_data = 'winequality-white.csv'
 
@@ -3263,7 +3263,7 @@ we can process the data like we did before
 
 <center>
 <div>
-<textarea rows="8" cols="40">
+<textarea rows="8" cols="100">
 
 ## Convert Pandas to Numpy
 
@@ -3286,7 +3286,7 @@ First we print the labels (ratings) from the y vector with the following
 
 <center>
 <div>
-<textarea rows="8" cols="40">
+<textarea rows="8" cols="100">
 
 the_set = np.unique(y)
 
@@ -3307,7 +3307,7 @@ Let us visualize the label counts with a histogram using the following code
 
 <center>
 <div>
-<textarea rows="8" cols="40">
+<textarea rows="8" cols="100">
 
 _ = plt.hist(y, bins='auto') 
 
@@ -3337,7 +3337,7 @@ let us first split the data like in the previous section
 
 <center>
 <div>
-<textarea rows="15" cols="40">
+<textarea rows="15" cols="100">
 
 random_seed = int( random.random() * 100 )     ## 42
 
@@ -3364,7 +3364,7 @@ as in the previous section, let us change the data type and conver the numpy arr
 
 <center>
 <div>
-<textarea rows="15" cols="40">
+<textarea rows="15" cols="100">
 
 ## fix data type
 
@@ -3389,7 +3389,7 @@ we now calculate parameters for standardization
 
 <center>
 <div>
-<textarea rows="7" cols="40">
+<textarea rows="7" cols="100">
 
 x_means      = X_train_tr.mean(0, keepdim=True ) 
 
@@ -3406,7 +3406,7 @@ To create the data loader we first need to create a label map. DataLoader does n
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 ## X_train.shape[0] -> 3918
 
@@ -3426,7 +3426,7 @@ with the folowing code we can fix the gap issue and create our list for the data
 
 <center>
 <div>
-<textarea rows="7" cols="40">
+<textarea rows="7" cols="100">
 
 wine_train_list = [  ( X_train_tr[i], label_map[ y_train_tr[i].item() ] )  for i in range( X_train.shape[0] ) ]
 
@@ -3442,7 +3442,7 @@ The following 3 examples show us what these lists look like
 
 <center>
 <div>
-<textarea rows="20" cols="40">
+<textarea rows="20" cols="100">
 
 print( wine_train_list[:3] )
 
@@ -3482,7 +3482,7 @@ we do something similar for the test data loader
 
 <center>
 <div>
-<textarea rows="8" cols="40">
+<textarea rows="8" cols="100">
 
 ## X_test.shape[0] -> 980
 
@@ -3503,7 +3503,7 @@ The architecture for the MLP is as follows.
 
 <center>
 <div>
-<textarea rows="30" cols="40">
+<textarea rows="30" cols="100">
 
 ## MLP
 
@@ -3548,7 +3548,7 @@ and the deep learning architecture can also be defined as follows
 
 <center>
 <div>
-<textarea rows="30" cols="40">
+<textarea rows="30" cols="100">
 
 ## Deep Learning with 2 hidden layers
 
@@ -3597,7 +3597,7 @@ Finally, we proceed to train and evaluate our models. Let us first look at the M
 
 <center>
 <div>
-<textarea rows="10" cols="40">
+<textarea rows="10" cols="100">
 
 model      = MLP_Net( x_means, x_deviations  )
 
@@ -3622,7 +3622,7 @@ the losses for the MLP look as follows
 
 <center>
 <div>
-<textarea rows="20" cols="40">
+<textarea rows="20" cols="100">
 
 0   loss= tensor(2.0045, grad_fn=<NllLossBackward0>)
 50  loss= tensor(1.7409, grad_fn=<NllLossBackward0>)
@@ -3657,7 +3657,7 @@ From the losses, it can be seen that the  model has trouble training and learnin
 
 <center>
 <div>
-<textarea rows="12" cols="40">
+<textarea rows="12" cols="100">
 
 with torch.no_grad():
     for x_real, y_real in test_dl:
@@ -3676,7 +3676,7 @@ Running the classification metrics we see that the model does not learn well. It
 
 <center>
 <div>
-<textarea rows="20" cols="40">
+<textarea rows="20" cols="100">
 
 Accuracy: 0.52
 Confusion Matrix:
@@ -3702,7 +3702,7 @@ we repeat the exercise with the DL architecture
 
 <center>
 <div>
-<textarea rows="20" cols="40">
+<textarea rows="20" cols="100">
 
 model      = DL_Net( x_means, x_deviations  )
 
@@ -3733,7 +3733,7 @@ As can be seen below, the results are not good.
 
 <center>
 <div>
-<textarea rows="18" cols="40">
+<textarea rows="18" cols="100">
 
 
 Accuracy: 0.52
