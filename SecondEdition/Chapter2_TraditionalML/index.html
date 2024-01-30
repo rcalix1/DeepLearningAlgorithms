@@ -131,14 +131,14 @@ So now, getting back to the code, here is an example of some of the most importa
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Libraries}}
-%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+
+
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 import numpy as np
 from sklearn import datasets
@@ -155,12 +155,11 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn import decomposition
 
-\end{lstlisting}
-\end{minipage}
-
-
-
-
+	
+</textarea>
+  
+</div>
+</center>
 
 
 
@@ -193,49 +192,47 @@ The main metrics used for regression models are:
 Two more very important libraries are matplotlib.pyplot and pandas. The matplotlib.pyplot library is very useful for visualization of data and results, and the pandas library is very useful for pre-processing. The pandas library can be very useful to pre-process large data sets in very fast and very efficient ways.
 There are some parameters that are sometimes useful to set in your code. The code sample below shows the use of np.set\_printoptions. The function is used to print all values in a numpy array. This can be useful when trying to visualize the contents of a large data set. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print options}}
-%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+<center>
+<div>
+<textarea rows="8" cols="100">
+	
 ## set parameters
 
 np.set_printoptions(threshold=np.inf) 
 
 ## print all values in numpy array
 
-\end{lstlisting}
-\end{minipage}
-
-
-
+	
+</textarea>
+  
+</div>
+</center>
 
 Let us assume that our data is stored in the matrix X. The code segment below uses the function train\_test\_split. This function is used to split a data set (in this case X) into 4 sets which are X\_train, X\_test, y\_train, y\_test. These are the 4 sets that will be used by the traditional or the deep learning models. The sets that start with X hold the data (feature vectors) and the sets that start with y hold the labels per sample (e.g. $ y_1 $ for the first feature vector, $ y_2 $ for the second feature vector, and so on). 
 The values test\_size=0.01 and random\_state=42 in the function are parameters that define the split. The value 0.01 makes a train set that has 99 percent of all samples while the test set has 1 percent of all samples. In contrast test\_size=0.20 would mean that there is a 80 \% and 20 \% split. The random\_state=42 allows you to always get the same random data since the seed is defined as 42.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Split the data}}
-%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+<center>
+<div>
+<textarea rows="10" cols="100">
+	
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=48)
 
 ## k-folds cross validation all goes in train sets (hence 0.01) 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
 
-\end{lstlisting}
-\end{minipage}
-
-
+	
+</textarea>
+  
+</div>
+</center>
+	
 
 To call all the functions or models you can employ the following approach.  Here we have defined 5 common models. Notice that each one gets the 4 data sets obtained from the percentage split. Notice also that the data files have a \_normalized added to their name. 
 
@@ -245,15 +242,12 @@ This is a good standard approach used by programmers to indicate that this data 
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Sklearn ML models}}
-%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+<center>
+<div>
+<textarea rows="14" cols="100">
+	
 logistic_regression_rc(X_train_normalized, y_train, X_test_normalized, y_test)
 
 svm_rc(X_train_normalized, y_train, X_test_normalized, y_test) 
@@ -264,10 +258,11 @@ knn_rc(X_train_normalized, y_train, X_test_normalized, y_test)
 
 multilayer_perceptron_rc(X_train_normalized, y_train, X_test_normalized, y_test)
 
-\end{lstlisting}
-\end{minipage}
-
-
+	
+</textarea>
+  
+</div>
+</center>
 
 Before we talk about the models, let us address performance evaluation. Performance evaluation will help you to determine how good your classifier is given an annotated test data set.
 
@@ -279,15 +274,10 @@ I have found that a simple solution to this was to write everything in an object
 
 The following code segment includes a simple example of a class format we will use extensively throughout this book.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={object Oriented Programming}}
-%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 class LinRegNet(nn.Module):
 
@@ -304,9 +294,13 @@ class LinRegNet(nn.Module):
         y_pred = self.linear1(x)
         
         return y_pred
+	
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
 
 \section{Performance Evaluation }
 
@@ -325,14 +319,12 @@ The most important regression evaluation metric is $ R^2 $. The range goes from 
 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print statistics - Regression}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 ## coefficient of determination (R**2)
 from sklearn.metrics import r2_score
@@ -340,12 +332,12 @@ from sklearn.metrics import r2_score
 print(  
       r2_score( y_pred.detach().numpy(), y_test.numpy()    )
 )
-
-
-\end{lstlisting}
-\end{minipage}
-
-
+	
+</textarea>
+  
+</div>
+</center>
+	
 
 \subsection{Classification Performance Evaluation}
 
@@ -407,15 +399,12 @@ Finally, the f measure which is a harmonic average of recall and precision can b
 The sample code to obtain these metrics is provided below.
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print statistics - Classification}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+
+
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_score
@@ -429,11 +418,11 @@ def print_metrics_function(y_test, y_pred):
     print('Recall: %.3f' % recall_score(y_true=y_test, y_pred=y_pred, average='weighted'))
     print('F1-measure: %.3f' % f1_score(y_true=y_test, y_pred=y_pred, average='weighted'))
 
-\end{lstlisting}
-\end{minipage}
-
-
-
+	
+</textarea>
+  
+</div>
+</center>
 
 
 The code above shows a function to print the performance metric statistics. Notice that two sets are provided which are y\_pred and y\_test. The y\_test data set contains the original annotated labels. The y\_pred data set contains the labels predicted by your classifier. Each of the metric functions such as \textbf{f1\_score} and \textbf{recall\_score} uses these 2 data sets to calculate the respective metric. 
@@ -444,14 +433,11 @@ The code above shows a function to print the performance metric statistics. Noti
 
 In the following code segment we can see the function plot\_metric\_per\_epoch() which can be used to plot metric value every N values. For this to work, you store the metric values in a list such as precision\_scores\_list and then proceed to plot these values using the matplot library. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Plotting Performance}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+
+<center>
+<div>
+<textarea rows="17" cols="100">
 
 def plot_metric_per_epoch( precision_scores_list ):
     x_epochs = []
@@ -466,10 +452,14 @@ def plot_metric_per_epoch( precision_scores_list ):
     plt.legend()
     plt.grid()
     plt.show()
+	
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
-
+	
 
 The output should look like the following figure. 
 
@@ -528,16 +518,9 @@ As shown in the graph, the optimal value for the curve is found where the star i
 
 At that point, the value of “w” reduces the cost and finds the best solution. Instead of trying all values of “w” at random, the algorithm can make educated guesses about which direction to follow (up or down). To do this, we can use calculus to calculate the derivative of the function at a given point. This will allow us to determine the slope at that point. In the case of the graph, this represents the tangent line to the curve if we calculate the derivative at point w. If we calculate the slope at the position of the star symbol, then the slope is zero because the tangent at that point is parallel to the x axis. The slope at the point “w” will be positive. Based on this result, we can tell the direction we want to take for parameter w (decrease or increase). This type of optimization is called gradient descent and is very important in machine learning and deep learning. There are several approaches to implement gradient descent and this is just the simplest explanation for conceptual purposes. We can write the algorithm for this technique as follows:
 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Print statistics}}
-%%% \lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="17" cols="100">
 
 old_x = 0
 new_x = 4 
@@ -554,9 +537,14 @@ while absolute_value(new_x – old_x) > precision:
 print(“result is: ”, new_x)
 
 
+	
+</textarea>
+  
+</div>
+</center>
+	
 
-\end{lstlisting}
-\end{minipage}
+
 
 In the previous code example we assume a function of 
 
@@ -576,22 +564,22 @@ So, the parameter x can be calculated in a loop using the derivative function wh
 
 Logistic regression is a simple algorithm that is often used by practitioners of machine learning because it can obtain good results. Logistic regression is a linear function much like linear regression which predicts the probability of a sample belonging to a given class. Logistic regression uses another optimization function instead of the standard least squares cost function used in linear regression. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Log Reg}}
-%% \lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 def logistic_regression_rc(X_train_normalized, y_train, X_test_normalized, y_test):
     from sklearn.linear_model import LogisticRegression
     lr = LogisticRegression(C=1000.0, random_state=0) lr.fit(X_train_normalized, y_train)
     y_pred = lr.predict(X_test_normalized) print_stats_percentage_train_test( "log re", y_test, y_pred)
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+  
+</div>
+</center>
+	
+
 
 The predicted values from a standard regression approach are now passed through a sigmoid function that basically maps the output to a probability range scale between 0 and 1. The code below provides an example of how to use the logistic regression function with SKlearn. Later, we will implement this logistic regression function again with PyTorch. 
 
@@ -607,14 +595,9 @@ Neural networks are very complex systems that take a long time to train. Therefo
 
 In the code below we can see that everything is very similar to the previous logistic regression implementation. The new changes appear in the definition of the clf multilayer object. Here, the parameter hidden\_layer\_sizes=(100,100) means that the architecture of the network consists of 2 hidden layers with 100 neurons each. A parameter such as (200,  ) would mean that the network has 1 hidden layer with 200 neurons.
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={NN in sklear}}
-%%% \lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 def multilayer_perceptron_rc(X_train_normalized, y_train, X_test_normalized, y_test):
 
@@ -625,8 +608,14 @@ def multilayer_perceptron_rc(X_train_normalized, y_train, X_test_normalized, y_t
     
     print_stats_percentage_train_test("multilayer perceptron", y_test, y_pred)
 
-\end{lstlisting}
-\end{minipage}
+
+	
+</textarea>
+  
+</div>
+</center>
+	
+
 
 
 
@@ -640,16 +629,10 @@ The n\_neighbors parameter is the k. In this case, the k closest samples are sel
 
 In the next code listing, you can see all the code needed to run KNN. Wow! Pretty short right? This code splits our data into \textbf{train} and \textbf{test} sets. Then grabs every sample in the test set and compares it to every sample in the train set. For each test sample, we get all distances between the test samples and all train samples. We then rank them and select the top \textbf{K} distances. Finally, we assign the majority class associated for the top 5 distances. That is it!
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={The whole KNN code}}
-%%% \lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-                
+<center>
+<div>
+<textarea rows="45" cols="100">
+         
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -689,28 +672,31 @@ def my_gen_function():
        
 my_gen_function() 
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+  
+</div>
+</center>
+	
+
 
 
 The next code segment includes  a function called the Euclidean distance as can be seen in the next code listing. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Euclidean Distance}}
-%%% \lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 def euclidean\_distance(v1, v2):
     return np.sqrt( np.sum(   (v1 - v2)**2   )   )
 
-        
+	
+</textarea>
+  
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
+
 
 This is the function that measures the distance between 2 points in a vector space. These 2 point need to have the same size but the size can be of any dimension. For instance, for our Iris data, every point has 4 features. So in the code the 2 points v1 and v2 would be of size 4 each. However, we could also have points (samples) of many more dimensions. For instance, points with 100 features. So in this case v1 and v2 would both need to have size 100. But the cool thing is that the function for distance calculation would still work. That is the power of Numpy. 
 
@@ -783,14 +769,9 @@ Statistical Learning Theory (SLT) methods assume prediction models that can be a
 
 The code for SVM can be seen in the next code listing. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={SVM}}
-%%% \lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="10" cols="100">
 
 def svm_rc(X_train_normalized, y_train, X_test_normalized, y_test):             
     from sklearn.svm import SVC
@@ -798,8 +779,13 @@ def svm_rc(X_train_normalized, y_train, X_test_normalized, y_test):
     svm = SVC(kernel='rbf', random_state=0, gamma=0.0010, C=32) svm.fit(X_train_normalized, y_train)
     y_pred = svm.predict(X_test_normalized) print_stats_percentage_train_test("svm (rbf)", y_test, y_pred)
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+  
+</div>
+</center>
+
+
 
 
 
@@ -1488,27 +1474,7 @@ We can seen below that the losses are going down for both the Generator and Disc
 
 Using the following function, we can plot the losses. 
 
-<center>
-<div>
-<textarea rows="15" cols="100">
 
-def plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked):
-    
-    the_epochs = [i for i in range(len(list_losses_real))]  
-
-    plt.plot(the_epochs, list_losses_real,    label = "real") 
-    plt.plot(the_epochs, list_losses_fake,    label = "fake") 
-    plt.plot(the_epochs, list_losses_tricked, label = "tricked")
-    plt.legend() 
-    plt.show()
-
-plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked)
-
-
-</textarea>
-  
-</div>
-</center>
 
 
 
