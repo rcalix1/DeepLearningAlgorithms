@@ -29,7 +29,7 @@
 
     <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/ch5_word_embeddings.png" height="400" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/word2vec.chp5.300dpi.jpg" height="400" width="auto">
       </div>
 
     </center>
@@ -154,13 +154,9 @@ The following example shows how LSA can be used to plot and capture the relation
 The code to perform the LSA analysis using the SKlearn kit can be seen in the following code segments. It is assumed that you receive a list of text documents or paragraphs in the python list 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={LSA code functions}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="8" cols="100">
 
 list_of_texts = []
 
@@ -169,8 +165,13 @@ model = lsa.fit(tfidfMatrix)
 Similarity = np.asarray(np.asmatrix(dtm_lsa) *  
                              np.asmatrix(dtm_lsa_test_sample).T )
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+	
+
+
 
 
            
@@ -184,13 +185,9 @@ This similarity metric can help to determine which documents are close to each o
 
 The full code can be seen here
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={LSA code functions}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="25" cols="100">
 
 vectorizer = CountVectorizer(min_df=1, stop_words='english') 
 vec        = vectorizer.fit(list_of_texts)
@@ -219,8 +216,10 @@ print( pd.DataFrame(
                  ) 
 )
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
 
 
 
@@ -298,8 +297,9 @@ and the weight matrix (W) would look like the following.
 In the next example we can see each word and its vector representation assuming a hidden layer of 6 neurons.
 
 
-
-
+<center>
+<div>
+<textarea rows="20" cols="100">
 
 xanax,-0.0214805,-0.121305,0.145779,-0.126096,-0.114934,-0.0642776 
 
@@ -317,6 +317,14 @@ feel,-0.00441388,0.0416924,-0.146706,0.000622775,-0.0609331,-0.0442516
 
 got,-0.120518,-0.0410703,-0.0321787,0.0545667,-0.069366,0.101827
 
+
+</textarea>
+</div>
+</center>
+
+
+
+
 One of the important observations Mikolov et al. made about the word2vec space is that semantic relationships can be discovered by performing vector arithmetic. For instance, given enough data, the following vector arithmetic may be discovered: 
 
 \begin{center}
@@ -326,14 +334,9 @@ king + man – queen = woman
 
 The following code segment shows a simple way of performing vector arithmetic, assuming you have a dictionary of vectors. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Vector arithmetic}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="30" cols="100">
 
 dictionaryWordsToVectors = {} 
 
@@ -372,8 +375,14 @@ result_vector = a + c
 result_word = findClosestWordToThisVector_list( a )
 
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+
+	
+
+
 
 
 \section{Word2vec code}
@@ -381,16 +390,9 @@ result_word = findClosestWordToThisVector_list( a )
 In this section, I will explain some aspects of the word2vec code proposed by Mikolov et. al (2014). I do recommend that you use the available word2vec code from the PyTorch foundation or the one posted on the github repository. That being said, I always wanted to understand word2vec and I am sure you are interested in understanding it as well. Therefore, here I will go over certain parts of the code and try to clarify aspects of it. Generally speaking, I would say that the word2vec code has 2 main components. One component is non deep learning related and the other is the deep learning architecture. Most algorithms we have discussed so far usually are straight forward when it comes to obtaining the data (X) and the labels (y). As such, the focus and challenge has been in the deep learning architecture itself. Given that we have mainly looked at supervised learning algorithms, our data was simple. Feature vectors of images, for instance, and their annotated one-hot encoded labeles. Word2vec is different though. Word2vec is an unsupervised or semi-supervised learning algorithm so there are no annotated labels. Instead, we need to learn mappings (distributed vector representations) from the co-occurrence of things such as terms in a text. This process of getting the initial train data is more difficult. Remember that we said in the previous section that the inputs and outputs of the model are the one-hot encoded words from a large vocabulary. 
 Okay, so here we go. The best way to understand this process of obtaining the $ X  $ and $ y $ is with an example. The first thing we need is some libraries and parameters which can be seen in the below code section. 
 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Word2vec Libraries}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 import collections
 import math
@@ -404,8 +406,12 @@ import torch
 
 vocabulary_size = 55000
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+	
+
 
 
 Next, let us assume that we have a very very large text like the following named “text8”:
@@ -417,14 +423,9 @@ Next, let us assume that we have a very very large text like the following named
 The first step is is to convert this very large text into a list of words. To achieve this we can use a PyTorch command. 
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Word2vec Read in the text}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="15" cols="100">
 
 # Read the data into a list of strings
 
@@ -433,8 +434,11 @@ words = torch.compat.as_str( f.read() ).split()
 
 print('Data size', len(words))
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
+
 
 Our variable \textbf{words} now contains the text in the form of a list. 
 
@@ -452,23 +456,20 @@ The next step is to perform a frequency count of the terms in the list \textbf{w
 
 As can expected, the most frequent terms are “the”, “of”, etc. The variable "UNK" will be used to count infrequent words. That is, not all words will be used as part of the vocabulary. For example, out of 100,000 words, the 55,000 most frequent words could be selected to form the vocabulary. As a result, the remaining 45,000 infrequent words would not be part of the vocabulary and would be counted as unknown words. The variable vocabulary size must be manually set. The code to perform the count can be seen below. 
 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Perform the frequency count}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+	<center>
+<div>
+<textarea rows="7" cols="100">
 
 count = [['UNK', -1]] 
 
 count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+
 
 
 
@@ -483,21 +484,20 @@ dictionary = {'and': 3, 'of': 2, 'the': 1, 'UNK': 0}
     
 The code to create the dictionary is provided below. Notice that it uses the previously created frequency counts to assign the keys in ascending order from most frequent to least frequent. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Assign keys in Dictionary}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+	<center>
+<div>
+<textarea rows="6" cols="100">
 
 dictionary = dict()
 for word, _ in count:
     dictionary[word] = len(dictionary)
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+</div>
+</center>
+	
+
 
 
 
@@ -519,22 +519,22 @@ then data now looks like this
 
 where in dictionary we have
 
-
-	
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Values in Dictionary}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	<center>
+<div>
+<textarea rows="6" cols="100">
 
 dictionary["Cat"]    = 3 
 dictionary["hello"]  = 17 
 dictionary["tree"]   = 53
 
-\end{lstlisting}
-\end{minipage}
+	
+</textarea>
+</div>
+</center>
+	
+
+	
+
 
 The code to accomplish this is as follows:
 
