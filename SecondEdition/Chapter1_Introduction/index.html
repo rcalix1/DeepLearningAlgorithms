@@ -65,84 +65,173 @@
 
 <h1>
 
-	Generative Adversarial Networks
+	Introduction
 </h1>
 
 
+<p>
 
-
-
-\chapter{Introduction}
-
-
-
-
-This book is very sequential and I recommend that you start from chapter 1 and read sequentially, especially if you are new to deep learning. If you are experienced in deep learning, then you can probably skip around the chapters. In this book I will discuss some aspects of the theory of deep learning while providing as much intuition as possible. I will use Linux or mac or windows, python, Sklearn, and PyTorch. 
-Chapter 1 will briefly discuss some of the background required or recommended for deep learning. In chapter 2, I will address some of the general machine learning topics. This will be a brief review of some of the traditional (non-deep learning based) machine learning (ML) algorithms for context. I will introduce the Sklearn library to provide code examples on how to use the different ML models and other tools. I will quickly move through regression to arrive at other algorithms. There are many books on the theory of these traditional machine learning algorithms (Witten and Frank, etc.); so, instead of discussing the theory, I will concentrate on the practical aspects of using the machine learning algorithms in Python. More importantly, I will show how Sklearn can later be used with PyTorch for deep learning. Finally, I will discuss evaluation tasks and performance metrics.  
-In chapter 3, I will address the very important issue of the data and data pre-processing. To me and most practitioners, data collection and data processing are some of the most important issues in machine learning/deep learning. There are many issues that must be addressed when dealing with data. These include: getting the data, cleaning data, pre-processing data, building a corpus and annotating it, performing inter-annotator agreement analysis, etc. Some of these issues will be discussed in chapter 3. In chapter 4, I will introduce the topic of deep learning for the first time and, in particular, how to create deep neural networks. My goal here is to help students and practitioners alike to better understand the modeling pipeline. In particular, I want the reader to be able to get data and pre-process it in the appropriate format for deep learning. This chapter also covers how to load data to your program, and how to perform simple modeling tasks with plain vanilla deep neural networks of 2 or more hidden layers. 
-
-\begin{comment}
-In chapter 5, I will discuss semantic vector spaces. I will discuss the vector space model and then address latent semantic analysis (LSA). I will also address the newer vector space based models such as Word2vec. Again, the focus will be on the intuition. Many companies today base their products on these very simple but powerful semantic spaces. There are many different types of vector space based models that have been used to represent data. However, the exciting aspect is that now deep learning methods allow you to process massive amounts of data so it can be represented by these vector spaces. In chapter 6, I will discuss Convolutional Neural Networks (CNNs). This chapter covers one of the most powerful techniques in deep learning. I will discuss how to implement simple CNNs with 2 convolutional layers for 2D image processing, as well as more complex CNNs for RGB data. In chapter 7, I will discuss Recurrent Neural Networks (RNNs). This chapter covers one of the most powerful techniques in deep learning for natural language processing. I will discuss how to implement simple RNNs in this chapter and how they can be applied to natural language processing (NLP). In chapter 8, I will discuss Generative Adversarial Networks (GNNs). This chapter covers one of the most interesting new techniques in deep learning. I will discuss aspects of GANs as well as some of the code. In chapter 9, I will discuss Re-inforcement Learning. This chapter covers an amazing technique in machine learning now enhanced by deep learning that has been applied extensively to AI and games. I will discuss aspects of Q-Learning as well as some of the code. This chapter will rely on Python Gym which is a set of games that can be implemented using the Python language. In this chapter, I also show how to create your own environment to interface Q learning with game engines or simulators. 
-
-\end{comment}
-
-
-
-In the last chapters I  will introduce you to the very broad topic of Transformers and the mechanism of Attention. This is one of the latest developments in deep learning as of 2017. Transformers are very powerful and offer a lot of promise for NLP. Finally, in the final chapter, I will discuss some final loose ends as well as present my final thoughts and conclusions.  
-My goal for this book is to present intuition over equations and to use code to convey how things work. This is how I like to learn. To quote Richard Feynman: “What I cannot create, I do not understand”. Some equations can still be useful, however, so I will use them when appropriate. Additionally, all the code used in this book can be obtained from GitHub at https://github.com/rcalix1 and any other complimentary materials about the book such as some of the figures in color can be obtained from the book website at www.rcalix.com.
-
+This book is very sequential and I recommend that you start from chapter 1 and read sequentially, especially if you are new to deep learning. 
+	If you are experienced in deep learning, then you can probably skip around the chapters. In this book I will discuss some aspects of the theory 
+	of deep learning while providing as much intuition as possible. I will use Linux or mac or windows, python, Sklearn, and PyTorch. 
+Chapter 1 will briefly discuss some of the background required or recommended for deep learning. In chapter 2, I will address some of the general machine learning topics. 
+	\This will be a brief review of some of the traditional (non-deep learning based) machine learning (ML) algorithms for context. I will introduce the Sklearn 
+	library to provide code examples on how to use the different ML models and other tools. I will quickly move through regression to arrive at other algorithms.
+	There are many books on the theory of these traditional machine learning algorithms (Witten and Frank, etc.); so, instead of discussing the theory, I will 
+	concentrate on the practical aspects of using the machine learning algorithms in Python. More importantly, I will show how Sklearn can later be used with
+	PyTorch for deep learning. Finally, I will discuss evaluation tasks and performance metrics.  
+In chapter 3, I will address the very important issue of the data and data pre-processing. To me and most practitioners, data collection and data processing are some 
+	of the most important issues in machine learning/deep learning. There are many issues that must be addressed when dealing with data. These include: getting 
+	the data, cleaning data, pre-processing data, building a corpus and annotating it, performing inter-annotator agreement analysis, etc. Some of these issues
+	will be discussed in chapter 3. In chapter 4, I will introduce the topic of deep learning for the first time and, in particular, how to create deep neural networks. 
+	My goal here is to help students and practitioners alike to better understand the modeling pipeline. In particular, I want the reader to be able to get data 
+	and pre-process it in the appropriate format for deep learning. This chapter also covers how to load data to your program, and how to perform simple modeling
+	\tasks with plain vanilla deep neural networks of 2 or more hidden layers. 
 
 	
-\section{Setting up your Environment}
+</p>
 
-In this section I will discuss how to set up your environment to get started with deep learning programming. The 2 main environments I will discuss are using Anaconda, and building the hardware with a CPU and GPU.
 
-\subsection{Anaconda}
+<p>
 
-I recommend you use Anaconda. It can be installed on Linux, windows, or mac and works exceptionally well. Go to www.anaconda.org and download the software from there You will then create your anaconda environment and install most of your libraries using "pip". 
+	
+In the last chapters I  will introduce you to the very broad topic of Transformers and the mechanism of Attention. This is one of the latest developments in 
+	deep learning as of 2017. Transformers are very powerful and offer a lot of promise for NLP. Finally, in the final chapter, I will discuss some final 
+	loose ends as well as present my final thoughts and conclusions.  
+My goal for this book is to present intuition over equations and to use code to convey how things work. This is how I like to learn. To quote Richard Feynman:
+	“What I cannot create, I do not understand”. Some equations can still be useful, however, so I will use them when appropriate. Additionally, all the
+	code used in this book can be obtained from GitHub at https://github.com/rcalix1 and any other complimentary materials about the book such as some of 
+	the figures in color can be obtained from the book website at www.rcalix.com.
+
+</p>
+
+
+<h1>
+Setting up your Environment
+
+	
+</h1>
+
+<p>
+In this section I will discuss how to set up your environment to get started with deep learning programming. The 2 main environments I will discuss are using
+	Anaconda, and building the hardware with a CPU and GPU.
+
+	
+</p>
+
+<h1>
+Anaconda
+	
+</h1>
+
+	<p>
+I recommend you use Anaconda. It can be installed on Linux, windows, or mac and works exceptionally well. Go to www.anaconda.org and download the software from 
+		there You will then create your anaconda environment and install most of your libraries using "pip". 
 
 You can get the detailed instructions to install PyTorch from (www.PyTorch.org ) and for Sklearn from (http://scikit-learn.org/ ). 
 
-To get the best out of deep learning using deep architectures and massive amounts of data you will need to use a GPU enabled machine. I suggest using the cloud or building your own GPU box.
+To get the best out of deep learning using deep architectures and massive amounts of data you will need to use a GPU enabled machine. I suggest using the
+		cloud or building your own GPU box.
 
-\subsection{Setting up your Environment with a Physical Box}
-
-If you want to build a physical box, I will give you some of the specifications of a machine I have used for this code. In general, the more powerful the machine the better it will be at processing large amounts of data. Here are the specifications I have used:
-
-\begin{itemize}
-    \item A GPU GeForce RTX2080 Ti or better (H100)
-    \item A CPU such as the AMD 12 CORE
-    \item Power supply EVGA SuperNOVA 1600 W P2 220
-    \item Motherboard for multiple GPU and CPU
-    \item More than 64 GB of RAM (DDR4)
-    \item SSD hard drive 2 TB
-    \item A case with cooling
-\end{itemize}
+		
+	</p>
 
 
+<h1>
+Setting up your Environment with a Physical Box
+	
+</h1>
+	
+<p>
+If you want to build a physical box, I will give you some of the specifications of a machine I have used for this code. In general, the more powerful the machine 
+	the better it will be at processing large amounts of data. Here are the specifications I have used:
 
-The total cost for 1 device with just 1 CPU and 1 GPU may be between $4,500 and $5,500. I think it is no longer feasible to build your GPU at these prices. So looking into the cloud is important. But as of today, I can still use my PC with one GPU (in 2023).
+	
+</p>
 
-\section{Background}
+<ul>
+        <li>A GPU GeForce RTX2080 Ti or better (H100)</li>
+	<li>A CPU such as the AMD 12 CORE</li>
+	<li>Power supply EVGA SuperNOVA 1600 W P2 220</li>
+	<li>Motherboard for multiple GPU and CPU</li>
+	<li>More than 64 GB of RAM (DDR4)</li>
+	<li>SSD hard drive 2 TB</li>
+	<li>A case with cooling</li>
+
+	
+</ul>
+
+<p>
+The total cost for 1 device with just 1 CPU and 1 GPU may be between $4,500 and $5,500. I think it is no longer feasible to build your GPU at these prices. 
+	So looking into the cloud is important. But as of today, I can still use my PC with one GPU (in 2023).
+
+	
+</p>
+
+<h1>
+
+	Background
+</h1>
+	
+<p>
 
 
+So, what background should you have to get the best out of deep learning? This is a question that often comes up and it is very important. Depending on what 
+	you will do in deep learning I would recommend a course in statistics that covers probability and linear regression, programming up to data structures with
+	python and C/C++, a course in optimization, and a course on linear algebra. Sometimes a course in computer graphics using something like openGL where you have 
+	to manipulate meshes via linear algebra operations can also be very helpful to visualize and better understand matrices and vectors. Of all of these, matrix
+	and vector operations from linear algebra are absolutely essential for writing algorithms from scratch. The name Tensor in PyTorch means matrix of any dimension. 
+	So, even the name reminds you of the importance of linear algebra for deep learning. While this is not a linear algebra book, I will provide in the next sections 
+	a quick introduction to the topic and some useful code examples that might help you later as you progress through the different deep learning algorithms. 
+	For a better treatment of linear algebra and optimization I recommend “Linear Algebra and Optimization for Machine Learning: A Textbook” by Charu C. Aggarwal
+	or Gilbert Strang's books.
 
-So, what background should you have to get the best out of deep learning? This is a question that often comes up and it is very important. Depending on what you will do in deep learning I would recommend a course in statistics that covers probability and linear regression, programming up to data structures with python and C/C++, a course in optimization, and a course on linear algebra. Sometimes a course in computer graphics using something like openGL where you have to manipulate meshes via linear algebra operations can also be very helpful to visualize and better understand matrices and vectors. Of all of these, matrix and vector operations from linear algebra are absolutely essential for writing algorithms from scratch. The name Tensor in PyTorch means matrix of any dimension. So, even the name reminds you of the importance of linear algebra for deep learning. While this is not a linear algebra book, I will provide in the next sections a quick introduction to the topic and some useful code examples that might help you later as you progress through the different deep learning algorithms. For a better treatment of linear algebra and optimization I recommend “Linear Algebra and Optimization for Machine Learning: A Textbook” by Charu C. Aggarwal or Gilbert Strang's books.
+	
+</p>
 
-\section{Companion GitHub Code and YouTube videos}
+<h1>
+
+	Companion GitHub Code and YouTube videos
+</h1>
+
+<p>
 
 All companion GitHub Code and YouTube videos can be found here: 
+	
+</p>
 
-https://github.com/rcalix1/DeepLearningAlgorithms
+	<ul>
+<li><a href="https://github.com/rcalix1/DeepLearningAlgorithms">link</a></li>
+		
+	</ul>
 
-\section{Numpy Arrays, Tensors, and Linear Algebra}
+<h1>
 
-In this section, I will present some of the most useful techniques used in this book, or in the deep learning field as a whole, for dealing with data. In general, we want to be very efficient in our processing of the data so we do not use python lists and “for” loops. Instead, we use Numpy arrays and tensors. These are treated as vectors and matrices in linear algebra. And more generally are referred to as tensors. The advantage of this approach is that we can perform a lot of linear algebra based math operations like the matrix multiplication, the transpose, etc. on our data using python’s Numpy or PyTorch libraries. 
-The best way to learn about this approach is to do a series of exercises. I will start with examples of Numpy array operations and then move to tensor operations with PyTorch. Along the way I will point out some terminology or concepts from linear algebra. 
+	Numpy Arrays, Tensors, and Linear Algebra
+</h1>
 
-\subsection{Numpy Arrays}
- 
+<p>
+In this section, I will present some of the most useful techniques used in this book, or in the deep learning field as a whole, for dealing with data. 
+	In general, we want to be very efficient in our processing of the data so we do not use python lists and “for” loops. Instead, we use Numpy arrays and tensors. 
+	These are treated as vectors and matrices in linear algebra. And more generally are referred to as tensors. The advantage of this approach is that we can perform 
+	\a lot of linear algebra based math operations like the matrix multiplication, the transpose, etc. on our data using python’s Numpy or PyTorch libraries. 
+The best way to learn about this approach is to do a series of exercises. I will start with examples of Numpy array operations and then move to tensor operations with
+	PyTorch. Along the way I will point out some terminology or concepts from linear algebra. 
+
+	
+</p>
+
+	<h1>
+
+		Numpy Arrays
+	</h1>
+
+<p>
 Okay, so let’s get started. First we need to import the numpy and PyTorch libraries. 
+
+	
+</p>
+ 
 
 
 <center>
@@ -159,13 +248,16 @@ import torch
 </center>
 
 
-
-
+<p>
 Once we import the libraries we can start writing some code. Let’s begin with some warm up examples using numpy. 
 
 
-
+<br/>
 To declare an array in numpy we can write
+
+	
+</p>
+
 
 <center>
 <div>
