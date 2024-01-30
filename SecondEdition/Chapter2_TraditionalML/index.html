@@ -473,14 +473,13 @@ def plot_metric_per_epoch( precision_scores_list ):
 
 The output should look like the following figure. 
 
+<center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/plot_performance_ch2.png" height="400" width="auto">
+      </div>
+	
 
-\begin{figure}[H]\centering
-\adjustbox{max height=.40\textheight}{
-    \includegraphics{images/plot_performance_ch2.png}
-}
-\caption{Performance per epoch example}
-\label{RegLin:fig}
-\end{figure}
+
 
 
 \section{Optimization}
@@ -1481,45 +1480,6 @@ training_loop(  N_Epochs, G_model, D_model, D_loss_fn, G_opt, D_opt )
 
 We can seen below that the losses are going down for both the Generator and Discriminator. 
 
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-******************************
-0 D_real_loss= tensor(0.1157, grad_fn=<BinaryCrossEntropyBackward0>)
-0 D_fake_loss= tensor(0.0114, grad_fn=<BinaryCrossEntropyBackward0>)
-0 D_tricked_loss= tensor(7.8405, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-1 D_real_loss= tensor(0.2492, grad_fn=<BinaryCrossEntropyBackward0>)
-1 D_fake_loss= tensor(0.0604, grad_fn=<BinaryCrossEntropyBackward0>)
-1 D_tricked_loss= tensor(5.4396, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-2 D_real_loss= tensor(0.1128, grad_fn=<BinaryCrossEntropyBackward0>)
-2 D_fake_loss= tensor(0.0804, grad_fn=<BinaryCrossEntropyBackward0>)
-2 D_tricked_loss= tensor(4.2457, grad_fn=<BinaryCrossEntropyBackward0>)
-
-...
-
-******************************
-27 D_real_loss= tensor(0.6145, grad_fn=<BinaryCrossEntropyBackward0>)
-27 D_fake_loss= tensor(0.3502, grad_fn=<BinaryCrossEntropyBackward0>)
-27 D_tricked_loss= tensor(1.2594, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-28 D_real_loss= tensor(0.4972, grad_fn=<BinaryCrossEntropyBackward0>)
-28 D_fake_loss= tensor(0.3535, grad_fn=<BinaryCrossEntropyBackward0>)
-28 D_tricked_loss= tensor(1.2053, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-29 D_real_loss= tensor(0.5411, grad_fn=<BinaryCrossEntropyBackward0>)
-29 D_fake_loss= tensor(0.5512, grad_fn=<BinaryCrossEntropyBackward0>)
-29 D_tricked_loss= tensor(1.2962, grad_fn=<BinaryCrossEntropyBackward0>)
-
-     
-
-</textarea>
-  
-</div>
-</center>
-
 
 
 
@@ -1563,7 +1523,6 @@ We can see that the losses of the Generator did not go below the discriminator l
       <div>
         <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/GAN_losses_plot.png" height="400" width="auto">
       </div>
-
     </center>	
 
 
