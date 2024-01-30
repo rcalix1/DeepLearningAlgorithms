@@ -91,6 +91,8 @@ In chapter 5, I will discuss semantic vector spaces. I will discuss the vector s
 In the last chapters I  will introduce you to the very broad topic of Transformers and the mechanism of Attention. This is one of the latest developments in deep learning as of 2017. Transformers are very powerful and offer a lot of promise for NLP. Finally, in the final chapter, I will discuss some final loose ends as well as present my final thoughts and conclusions.  
 My goal for this book is to present intuition over equations and to use code to convey how things work. This is how I like to learn. To quote Richard Feynman: “What I cannot create, I do not understand”. Some equations can still be useful, however, so I will use them when appropriate. Additionally, all the code used in this book can be obtained from GitHub at https://github.com/rcalix1 and any other complimentary materials about the book such as some of the figures in color can be obtained from the book website at www.rcalix.com.
 
+
+	
 \section{Setting up your Environment}
 
 In this section I will discuss how to set up your environment to get started with deep learning programming. The 2 main environments I will discuss are using Anaconda, and building the hardware with a CPU and GPU.
@@ -142,22 +144,21 @@ The best way to learn about this approach is to do a series of exercises. I will
  
 Okay, so let’s get started. First we need to import the numpy and PyTorch libraries. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-    \lstset{caption={Libraries}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 import numpy as np
 import matplotlib.pyplot as plt 
 import torch
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+
 
 
 Once we import the libraries we can start writing some code. Let’s begin with some warm up examples using numpy. 
@@ -166,21 +167,19 @@ Once we import the libraries we can start writing some code. Let’s begin with 
 
 To declare an array in numpy we can write
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-    \lstset{caption={Declare an array}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 a = np.array([4,5,2,6,8]) 
 print(a)
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+
 
 
 This results in
@@ -2997,70 +2996,24 @@ This is very useful.
 
 
 
-
-
-\section{Conclusion}
-
-This concludes chapter 1. In it, I described a lot of the background on the tools and the development environment needed, as well as many math operations with tensors.
-
-
-	
-<p>
-
-In this section of the book I will cover Generative Adversarial Networks (GANs). Generative Adversarial Networks (GANs) (Goodfellow et al. 2014) are 
-	a first attempt at creating generative models.  In the context of games, GANs are modeled as a two player adversarial games. One of the biggest challenges
-	faced with supervised learning is annotating the data. We cannot annotate automatically and without annotations we cannot train our learning models. But what 
-	if we could substitute the annotation of the data for something else? For instance, what if we could model the annotation task as a game or use other previous
-	knowledge about the world as labels. These ideas are one of the main motivations for GANs. 
-GANs are deep neural networks that consist of a generator network connected to a discriminator network. The discriminator network has training data and the generator 
-	network only has random or noise data as input. GANs are essentially 2 player games where one player (the generator) creates synthetic data samples, while the 
-	second player (the discriminator) takes the generated sample and performs a classification. 
-This classification is performed to determine if the synthetic sample is similar to the distribution of the discriminator's training data. Since both networks are 
-	connected, the deep neural network (GAN) can learn to generate better synthetic samples with the help of the discriminator’s feedback. Basically, the discriminator 
-	tells the generator how to adjust its weights to produce better synthetic samples. 
-<br />
-Generative Adversarial Networks are methods that use 2 deep neural networks to interact with each other and generate data. Its formulation is consistent with 2 player
-	adversarial game frameworks. One of the 2 algorithms (or networks) tries to learn a data distribution and produce new samples similar to the samples in 
-	the real data (the generator). The second algorithm (the discriminator) is a classifier that tries to determine if the new samples generated by the generative 
-	algorithm are fake or real. These 2 algorithms work together to achieve an optimal outcome of producing better output samples from the Generator. 
-
-<br />
-The generator in a GAN is based on Auto-encoders. Therefore, before looking at GANs, we will look at the Auto-encoder
-	
-</p>
-
 <h1>
-Autoencoders
+Conclusion
 	
 </h1>
 
 <p>
-
-Autoencoders are a type of compression method where a neural network learns how to represent a vector of size “m” into a vector of size “n” where m >> n. 
-	Here, the input and output vectors in the network are the original sample and the reproduced sample and the hidden layer of the network is the new
-	compressed representation of the input vector. The objective function minimizes the difference/distance between the original input sample and the reproduced 
-	output sample.  
-	
-</p>
-
-<h1>
-Original GAN
-	
-</h1>
-
-<p>
-The original GAN consists of a generator and a Discriminator and was proposed in a 2014 paper by Ian Goodfellow. The general architecture of the GAN can be seen
-	in the figure below.
+This concludes chapter 1. In it, I described a lot of the background on the tools and the development environment 
+	needed, as well as many math operations with tensors.
 
 	
 </p>
 
-  <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/ganNN.300dpi.jpg" height="400" width="auto">
-      </div>
 
-    </center>	
+
+	
+
+
+ 	
 
 
 
@@ -3126,18 +3079,7 @@ Next we can define the parameters as follows
 
 
 
-<center>
-<div>
-<textarea rows="7" cols="100">
 
-learning_rate    = 0.003  ## Adam default   ## 0.001
-batch_size       = 32
-N_Epochs         = 30  ##27000  
-
-</textarea>
-  
-</div>
-</center>
 
 
 
