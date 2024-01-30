@@ -657,13 +657,16 @@ reverse_dictionary = dict( zip(
 
 
 
-
-
-
-
-For the variable \textbf{reverse\_dictionary}, the keys are now in the place of words and words in place of the keys. The order is now ascending from 0, 1, 2, etc. This will help to "look up" words by key and speed up retrieval. 
-
+<p>
+	For the variable \textbf{reverse_dictionary}, the keys are now in the place of words and words in place of the keys. 
+	The order is now ascending from 0, 1, 2, etc. This will help to "look up" words by key and speed up retrieval. 
+<br/>
 We can print the most common words with the following code:
+
+
+</p>
+
+
 
 
 
@@ -685,49 +688,76 @@ print(  'Sample data',
 </div>
 </center>
 
-
-
+<p>
 Okay, after all of this we are now ready to generate a batch of \textbf{x} data, and a batch of labels \textbf{y}. To do this we will use a function called 
 
-\begin{center}
-  \textbf{ generate\_batch() }
-\end{center}
 
-                                                   
+	
+</p>
+
+
+<center>
+
+	\textbf{ generate\_batch() }
+</center>
+
+<p>
+Since we are training a word2vec model we know that \textbf{x} is a list of one-hot encoded word vector, and \textbf{y} is also a list of one-hot encoded vectors.
+	Intuitively, each sample in \textbf{x} should look like this
+
+	
+</p>                                                   
                                                            
-Since we are training a word2vec model we know that \textbf{x} is a list of one-hot encoded word vector, and \textbf{y} is also a list of one-hot encoded vectors. Intuitively, each sample in \textbf{x} should look like this
 
-\begin{center}
-   Cat = [0,0,1,0,…]
-\end{center}
 
-                   
+<center>
+
+  Cat = [0,0,1,0,…]
+	
+</center>
+
+	
+  <p>
+
+	And each sample in \textbf{y} should look like this
+
+  
+  </p>                 
                     
-And each sample in \textbf{y} should look like this
-
-\begin{center}
-     Dog=[0,1,0,0,…]
-\end{center}
-
-                      
-                        
-In fact, our dictionary already created the encoding for all words in the vocabulary. So, if our vocabulary contains 55,000 terms, then the dimensionality of our one hot encoded word vectors is 55,000. If a word such as “house” has key 513 in dictionary, then to encode it we create an all zeros vector of size 55,000 where only the position 513 has a value 1 and the rest are zeros. 
-Using the previously created objects (words, counts, data, dictionary, reverse\_dictionary) we can now proceed to generate batches. 
 
 
+	<center>
+
+		 Dog=[0,1,0,0,…]
+	</center>
+
+	<p>
+
+In fact, our dictionary already created the encoding for all words in the vocabulary. So, if our vocabulary contains 55,000 terms, then the dimensionality of our 
+		one hot encoded word vectors is 55,000. If a word such as “house” has key 513 in dictionary, then to encode it we create an all zeros vector of 
+		size 55,000 where only the position 513 has a value 1 and the rest are zeros. 
+Using the previously created objects (words, counts, data, dictionary, reverse_dictionary) we can now proceed to generate batches. 
+
+<br/>
 
 
-The main idea is that we will create pairs of words (\textbf{$w_i$}, \textbf{$y_i$}). We will take a window of size \textbf{window\_size} (for instance 3) and we will create the vectors. We want to capture context in our training set (X,y). Therefore, we need a way to record the co-occurrence of words. 
-
+The main idea is that we will create pairs of words (\textbf{$w_i$}, \textbf{$y_i$}). We will take a window of size \textbf{window_size} (for instance 3) 
+		and we will create the vectors. We want to capture context in our training set (X,y). Therefore, we need a way to record the co-occurrence of words. 
+<br/>
 For example, in a loop, we iterate through the words in a sentence  and create a list of the words. 
-
+<br/>
 We want to take an input like this
-
+<br/>
  
 words = ["anarchism", "originated", "as", "a", "term", "of", "abuse", "first", "used", ...]
-
+<br/>
 and convert it into something like this
 
+
+		
+	</p>
+                      
+                        
 
 
  <center>
@@ -747,20 +777,27 @@ Etc.
 </div>
 </center>
 
-
-
+<p>
 We do this by passing  a window of size \textbf{k} (in this case of size 3) over each word. We grab the current word, and the \textbf{v} words to its right and left. 
 
-
+<br/>
 From each triplet extracted via the window approach such as
 
-\begin{center}
-     [originated, as, a]
-\end{center}
+	
+</p>
 
+
+
+<center>
+[originated, as, a]
+	
+</center>
+
+<p>
 we can obtain pairs of words which become the \textbf{x} and \textbf{y} samples. The word pairs can now look like the following
 
-
+	
+</p>
 
 
 
@@ -781,55 +818,74 @@ as  -> a
 </center>
 
 
+<p>
 
-
-By performing this process we have learned that the word “as” co-occurs with the word “originated” and that the word "as" also co-occurs with the “a”. We can expand the size of the window to capture more context (i.e. more word pairs). 
-
+By performing this process we have learned that the word “as” co-occurs with the word “originated” and that the word "as" also co-occurs with the “a”. 
+	We can expand the size of the window to capture more context (i.e. more word pairs). 
+<br/>
 Now we can proceed to one-hot encode the word “as” 
 
-\begin{center}
+	
+</p>
 
+
+<center>
  $x_i$: as = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,…]
     
-\end{center}
-
+	
+</center>
        
-
+<p>
 and the word “originated” is also one-hot encoded as follows
 
-\begin{center}
+	
+</p>
 
-    $y_i$: originated = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,…]
+
+<center>
+	
+  $y_i$: originated = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,…]
     
-\end{center}
-
+	
+</center>
      
+<p>
 
 These 2 vectors can now be used to train the Word2vec model which has a simple 1 hidden layer architecture as can be seen in the following illustration 
+	
+</p>
 
-\begin{center}
+<center>
 
-    $x_i$        -------     hidden         ------   $y_i$
-    
-\end{center}
+	    $x_i$        -------     hidden         ------   $y_i$
+</center>
+	
 
-  
-or 
 
-\begin{center}
+ <p>
 
-   as     ---------     hidden        ------   originated
-    
-\end{center}
+or 	 
+ </p> 
 
-   
 
-The previously described process can be performed with the following code contained in the function generate\_batch()
+<center>
+  as     ---------     hidden        ------   originated
+	
+</center>
+	
+
+
+ <p>
+
+The previously described process can be performed with the following code contained in the function generate_batch()
+	 
+ </p>  
+
 
 
 <center>
 <div>
-<textarea rows="27" cols="100">
+<textarea rows="30" cols="100">
 
 
 data_index = 0
@@ -871,24 +927,35 @@ def generate_batch(batch_size, num_skips, skip_window):
 
 
 
+<p>
+The variable \textbf{data_index} is very important and is necessary to keep track of the current position in the initial input document. 
+
+So,  if the buffer is centered on the word “term” for the below sentence example
+
+	
+</p>
 
 
 
-The variable \textbf{data\_index} is very important and is necessary to keep track of the current position in the initial input document. 
+<center>
 
-So,  if the buffer is centered on the word \textbf{“term”} for the below sentence example
+	["anarchism", "originated", "as", "a", \textbf{"term"}, "of", "abuse", ...]
 
-\begin{center}
+</center>
+	
 
-["anarchism", "originated", "as", "a", \textbf{"term"}, "of", "abuse", ...]
 
-\end{center}
+<p>
+then the window buffer will contain the terms \textbf{[a, term, of]} and data\_index is equal to 4. Again, we can use the following code to visualize the
+	results of using generate_batch().
 
-then the window buffer will contain the terms \textbf{[a, term, of]} and data\_index is equal to 4. Again, we can use the following code to visualize the results of using generate\_batch().
+	
+</p>
+	
 
 <center>
 <div>
-<textarea rows="15" cols="100">
+<textarea rows="20" cols="100">
 
 print("generate batch does this")
 print("given the data like this")
@@ -919,10 +986,13 @@ print(labels)
 	    
 
 
-
-
-
+<p>
 The output of the previous code looks like this
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -967,19 +1037,28 @@ And these are the labels "ys"
 </center>
 
 
-
-
+<p>
 
 So we finally have our \textbf{xs} and \textbf{ys} which we can use in our neural network model. 
-
+<br/>
 So \textbf{xs} is
-
-\begin{center}
-    [ 3084,  3084,    12,   12,    6,    6,  195,  195 ]
-\end{center}
+	
+</p>
 
 
-And \textbf{ys} is
+
+
+<center>
+
+	  [ 3084,  3084,    12,   12,    6,    6,  195,  195 ]
+</center>
+	
+
+<p>
+And "ys" is
+	
+</p>
+
 
 
 <center>
@@ -1003,15 +1082,19 @@ And \textbf{ys} is
 
 
 
+<p>
 
+Notice that \textbf{xs} and \textbf{ys} are not currently one-hot encoded. This part can be done using built PyTorch functions. The one-hot encoding
+	part for the word vectors can be done in the inference and loss functions of the network architecture. 
 
-
-
-Notice that \textbf{xs} and \textbf{ys} are not currently one-hot encoded. This part can be done using built PyTorch functions. The one-hot encoding part for the word vectors can be done in the inference and loss functions of the network architecture. 
-
-
+<br/>
 
 Finally, keep in mind that the \textbf{generate\_batch()} function is called from the main loop of your PyTorch code. For example like this:
+	
+</p>
+
+
+
 
 <center>
 <div>
@@ -1033,13 +1116,17 @@ for step in xrange(num_steps):
 </div>
 </center>
 	    
+<p>
 
-
+	
 Wow! All of that just to get the data for \textbf{xs} and \textbf{ys}. 
 
 
+<br/>
+Now that we have our data \textbf{X (xs)} and \textbf{y (ys)}, we are ready for define the neural network architecture for Word2vec.
+	Word2vec (skip gram model) requires a set of variables to define the parameters of the algorithm. The variables can be seen in the below code section. 
 
-Now that we have our data \textbf{X (xs)} and \textbf{y (ys)}, we are ready for define the neural network architecture for Word2vec. Word2vec (skip gram model) requires a set of variables to define the parameters of the algorithm. The variables can be seen in the below code section. 
+</p>
 
 <center>
 <div>
@@ -1062,15 +1149,19 @@ num_sampled    = 64   # Number of negative examples to sample
 </div>
 </center>
 	    
-
-
-
-
-Once we have our parameter set and the data, we can proceed to define the architecture for the neural network (NN). For the NN definition we need to  create an embedding matrix called \textbf{"embeddings"} of size [vocabulary\_size, embedding\_size]. For this example, it is [ 55000, 128].
+<p>
+	Once we have our parameter set and the data, we can proceed to define the architecture for the neural network (NN). 
+	For the NN definition we need to  create an embedding matrix called \textbf{"embeddings"} of size [vocabulary\_size, embedding\_size]. For this
+	example, it is [ 55000, 128].
 
 The Embedding size is the number of dimensions of our embedding space (in this case 128). We can use a PyTorch embedding "look up" table for this.  
 
 The function \textbf{nn.Embedding} is a function that returns vectors of size \textbf{embedding\_size} given the provided input words in train\_inputs (\textbf{x}). 
+
+</p>
+
+
+
 
 <center>
 <div>
@@ -1104,16 +1195,19 @@ class word2vec_Net(nn.Module):
 
 
 </textarea>
-  
 </div>
 </center>
 	    
 
+<p>
+We can  define the loss function using NCE which is a method called Noise Contrastive Estimation or try other loss such as cross entropy. 
+	The core functions can be seen in the following code listing.
+
+	
+</p>
 
 
 
-
-We can  define the loss function using NCE which is a method called Noise Contrastive Estimation or try other loss such as cross entropy. The core functions can be seen in the following code listing.
 
 <center>
 <div>
@@ -1132,73 +1226,150 @@ optimizer = torch.optim.Adam(  m.parameters(), lr=learning_rate   )
 </center>
 	    
 
-
-
-
+<p>
 That is it!! This concludes the Word2vec algorithm discussion.
 
-\section{Knowledge Enhanced Vector Spaces}
+	
+</p>
 
 
 
-In this section, I will discuss how distributed vector representations can be expanded to include knowledge about the world such as common sense knowledge (\babelEN{\cite{havasiRef}}). This can be referred to as knowledge enhanced vector spaces. In the previous section, we described word2vec. However, as of this writing, there are several distributed vector representation techniques such as Word2vec (Mikolov et al 2013), FastText (\babelEN{\cite{bojanowskiRef}}), and WordRank  (\babelEN{\cite{ji2015Ref}}). These distributed vectors can be enhanced with knowledge based vector space representations. 
-While the methods of distributed word embeddings have been extensively used, they still lack an ability to obtain true understanding from text. Some believe that prior knowledge of the words is required and not just their co-occurrence in large unlabeled data sets. Attention mechanisms have significantly improved the process of creating word embeddings. This can be seen in the Transformer models (see future chapters).
 
+<h1>
+Knowledge Enhanced Vector Spaces
+	
+</h1>
 
-Knowledge vector spaces can be added to traditional co-occurrence vector spaces to better represent the text samples. Techniques for combining multiple distributed vector representations have been addressed in works such as  (\babelEN{\cite{gartenRef}}). Essentially, Garten et al. (2015) argues that different vector spaces can simply be concatenated to each other. That is, for 2 vector spaces for the word \textbf{“w”}, which are $w_1$ = [a, b, c] and $w_2$ = [d, e], a new vector space can be created as $w_3$ = [a, b, c, d, e]. If the resulting vector space gets too big, dimensionality reduction techniques (such as PCA, SVD, autoencoders) can be used to further compress the data.
+<p>
 
-One particular problem with word embeddings and natural language processing in general  (\babelEN{\cite{ling2017Ref}}) is that a lot of information is missing when performing the analysis whether supervised or unsupervised. We as humans, when  reading a sentence, do not just rely on the co-occurrence between words to derive meaning from the text. 
-In fact, the meaning is derived from our previous knowledge of the individual words and their context and how they fit in the world. We know things about things and how they make us feel. Most modern word embeddings approaches lack this knowledge. 
-Ling et al. 2017 argues that prior knowledge is important in natural language processing tasks. Therefore, methodologies to enhance the way text is represented are needed. In particular, representations that aren't just based on co-occurrence (e.g. Word2vec), but that are also based on a knowledge vector space for each word. These knowledge based and co-occurrence based vector spaces will serve as the features used to represent the samples. These features can then be used for unsupervised pattern discovery. 
+In this section, I will discuss how distributed vector representations can be expanded to include knowledge about the world such as common sense
+	knowledge (\babelEN{\cite{havasiRef}}). This can be referred to as knowledge enhanced vector spaces. In the previous section, we described word2vec. 
+	However, as of this writing, there are several distributed vector representation techniques such as Word2vec (Mikolov et al 2013), 
+	FastText (\babelEN{\cite{bojanowskiRef}}), and WordRank  (\babelEN{\cite{ji2015Ref}}). These distributed vectors can be enhanced with knowledge based 
+	vector space representations. 
+While the methods of distributed word embeddings have been extensively used, they still lack an ability to obtain true understanding from text. Some believe
+	that prior knowledge of the words is required and not just their co-occurrence in large unlabeled data sets. Attention mechanisms have significantly 
+	improved the process of creating word embeddings. This can be seen in the Transformer models (see future chapters).
 
+<br/>
+Knowledge vector spaces can be added to traditional co-occurrence vector spaces to better represent the text samples. Techniques for combining multiple 
+	distributed vector representations have been addressed in works such as  (\babelEN{\cite{gartenRef}}). Essentially, Garten et al. (2015) argues 
+	that different vector spaces can simply be concatenated to each other. That is, for 2 vector spaces for the 
+	word \textbf{“w”}, which are $w_1$ = [a, b, c] and $w_2$ = [d, e], a new vector space can be created as $w_3$ = [a, b, c, d, e]. If the resulting 
+	vector space gets too big, dimensionality reduction techniques (such as PCA, SVD, autoencoders) can be used to further compress the data.
+<br/>
+One particular problem with word embeddings and natural language processing in general  (\babelEN{\cite{ling2017Ref}}) is that a lot of information is 
+	missing when performing the analysis whether supervised or unsupervised. We as humans, when  reading a sentence, do not just rely on the co-occurrence
+	between words to derive meaning from the text. 
+In fact, the meaning is derived from our previous knowledge of the individual words and their context and how they fit in the world. We know things about things 
+	and how they make us feel. Most modern word embeddings approaches lack this knowledge. 
+Ling et al. 2017 argues that prior knowledge is important in natural language processing tasks. Therefore, methodologies to enhance the way text is represented 
+	are needed. In particular, representations that aren't just based on co-occurrence (e.g. Word2vec), but that are also based on a knowledge vector space for 
+	each word. These knowledge based and co-occurrence based vector spaces will serve as the features used to represent the samples. These features can then be used
+	for unsupervised pattern discovery. 
 
+<br/>
 
-In Ling et al. (2017) the authors propose the learning of word embeddings based on co-occurrence of words and based on the semantic similarity between words in a given knowledge base. They adjust their word embedding models by modifying the cost function of the model. In essence, the cost function now includes 2 optimization objectives instead of just one. The first optimization objective is the one related to the co-occurrence of words (such as  in Word2vec). The difference is that now the second objective includes the regularization objective related to the  similarity of the words in the knowledge base. 
+In Ling et al. (2017) the authors propose the learning of word embeddings based on co-occurrence of words and based on the semantic similarity between words in a 
+	given knowledge base. They adjust their word embedding models by modifying the cost function of the model. In essence, the cost function now includes 2 
+	optimization objectives instead of just one. The first optimization objective is the one related to the co-occurrence of words (such as  in Word2vec).
+	The difference is that now the second objective includes the regularization objective related to the  similarity of the words in the knowledge base. 
+<br/>
+The authors in (\babelEN{\cite{lilu2017Ref}}) propose to create affective word embeddings to enhance words in a vector space. Their approach proposes a vector 
+	space for each word consisting of orthogonal axes for valence, arousal, potency, etc. Therefore, each word is represented as vectors of these axes. 
+	Their methodology learned the values for each axis using a regression model. First, they built a word embedding model based on co-occurrence metrics. 
+	Then, they annotated a seed set of words to indicate their given valence, intensity, or other affect level. Finally, with this annotated data, they trained
+	a regression model that was used to predict the affect axis values for all new words. In this way they learned affective vector spaces. 
 
-The authors in (\babelEN{\cite{lilu2017Ref}}) propose to create affective word embeddings to enhance words in a vector space. Their approach proposes a vector space for each word consisting of orthogonal axes for valence, arousal, potency, etc. Therefore, each word is represented as vectors of these axes. Their methodology learned the values for each axis using a regression model. First, they built a word embedding model based on co-occurrence metrics. Then, they annotated a seed set of words to indicate their given valence, intensity, or other affect level. Finally, with this annotated data, they trained a regression model that was used to predict the affect axis values for all new words. In this way they learned affective vector spaces. 
+<br/>
+In a knowledge vector space, each word is represented by a set of features that form the vector space. These features will represent well-known characteristics 
+	about each word that can be used when processing text to obtain higher understanding of it. For example, the word “depressed” represents a state of a person. 
+	Therefore, this word in a knowledge based vector space could be represented by additional words such as: medical state, mental issue, physical issue, related
+	to feelings, physical entity, etc. The word can then be represented as a feature vector using binary values or real valued numbers in a scale from 0-1. 
+	The following is a possible representation of the vector. Constructing the knowledge vector spaces is an important task that, in some cases, will be performed
+	automatically and semi-manually but that may require validation by human annotators.
+	
+</p>
 
+<center>
 
-In a knowledge vector space, each word is represented by a set of features that form the vector space. These features will represent well-known characteristics about each word that can be used when processing text to obtain higher understanding of it. For example, the word “depressed” represents a state of a person. Therefore, this word in a knowledge based vector space could be represented by additional words such as: medical state, mental issue, physical issue, related to feelings, physical entity, etc. The word can then be represented as a feature vector using binary values or real valued numbers in a scale from 0-1. The following is a possible representation of the vector. Constructing the knowledge vector spaces is an important task that, in some cases, will be performed automatically and semi-manually but that may require validation by human annotators.
-
-\begin{center}
-  Depressed = [1, 1, 0, 1, 0, etc.]
+	  Depressed = [1, 1, 0, 1, 0, etc.]
     
-\end{center}
+</center>
+	
 
-          
 
-The representation of this knowledge is very important and will be useful for feature extraction and representation. It will also be useful for pattern discovery via unsupervised learning methods. 
-A more advanced approach to add knowledge into word embeddings is to use additional optimization criteria in the cost functions of the word embedding models (Ling et al. 2017). For example, at a very high level, the criteria in a word embedding model may be to optimize the probability of predicting a word given a context of words such as:
+  <p>
+The representation of this knowledge is very important and will be useful for feature extraction and representation. It will also be useful for pattern discovery 
+	  via unsupervised learning methods. 
+A more advanced approach to add knowledge into word embeddings is to use additional optimization criteria in the cost functions of the word embedding models 
+	  (Ling et al. 2017). For example, at a very high level, the criteria in a word embedding model may be to optimize the probability of predicting a word 
+	  given a context of words such as:
 
-\begin{center}
+	  
+  </p>        
 
+
+
+<center>
     $ J = armax \quad P(w_t | w_{t-1}, w_{t+1}) $
 
-\end{center}
+	
+</center>
+	
 
+<p>
+
+	
+To add knowledge, the objective function can be extended by adding a regularization parameter that accounts for knowledge such as the distance between the word and 
+	other context words in a knowledge base. Based on this, the objective function could be re-written as:
+
+
+</p>
            
 
-To add knowledge, the objective function can be extended by adding a regularization parameter that accounts for knowledge such as the distance between the word and other context words in a knowledge base. Based on this, the objective function could be re-written as:
+<center>
 
-\begin{center}
-
-$ J = armax \quad P(w_t | w_{t-1}, w_{t+1}) - u * D_k(w_t , [w_{t-1}, w_{t+1}]) $
+	$ J = armax \quad P(w_t | w_{t-1}, w_{t+1}) - u * D_k(w_t , [w_{t-1}, w_{t+1}]) $
     
-\end{center}
-
-   
-
-where $D_k$ is some knowledge based distance function and \textbf{u} is a cost parameter. There are many different parameters that can be explored to adjust these models. The parameters include: different knowledge bases, different distance metrics ($D_k$), different ways of representing distance in the knowledge bases (e.g. distance between nodes), different optimization functions and costs, and different word embeddings models (Word2vec, FastText, WordRank, etc.). 
+</center>	
 
 
+  <p>
+where $D_k$ is some knowledge based distance function and \textbf{u} is a cost parameter. There are many different parameters that can be 
+	  explored to adjust these models. The parameters include: different knowledge bases, different distance metrics ($D_k$), different
+	  ways of representing distance in the knowledge bases (e.g. distance between nodes), different optimization functions and costs, and different 
+	  word embeddings models (Word2vec, FastText, WordRank, etc.). 
 
-\section{Deep Gramulator}
+	  
+  </p> 
 
 
-The deep gramulator approach is a combination of the well proven principles of the gramulator (as previously defined) with the abilities of word embedding techniques such as word2vec. 
-As previously defined, the gramulator is a feature extraction technique used particularly in natural language processing. The main idea is that, for a 2 class problem, you want to extract features (e.g. words) that are very frequent in 1 class but infrequent in the other. This helps to better discriminate between the classes. The downside of this approach, however, is that it needs a lot of annotated or labeled data to extract the grams or words from each class that are infrequent in the opposite class. Assuming that the grams are representative of the entire population; then, it can be expected that a classifier will have good performance in the classification task. So the problem is how to get these optimal sets of grams when we do not have that much annotated data. Here, word embeddings can help. As previously mentioned, word embeddings can use the co-occurrence of words in a large data set of documents to create a vector space that can represent some aspects of this relationship. 
-Combining these two frameworks, the gramulator and word embeddings, we can naturally develop the deep gramulator which can be used to find grams from large amounts of un-labeled data by using a small set of annotated text. The algorithm creates the vector space with both text sets (labeled and un-labeled) and then proceeds to find the closest grams from un-labeled texts to the grams of labeled texts. In this case, from a set of originally labeled grams, an expanded set can be obtained. For example, given a 2 class problem, we can use a small set of grams that are very frequent in class 1 but infrequent in class 2, to find more terms in the unlabeled data that might be related to class 1. As a result, you can obtain an expanded set of grams. 
 
+<h1>
+
+	Deep Gramulator
+</h1>
+<p>
+
+
+The deep gramulator approach is a combination of the well proven principles of the gramulator (as previously defined) with the abilities of word embedding techniques
+	such as word2vec. 
+As previously defined, the gramulator is a feature extraction technique used particularly in natural language processing. The main idea is that, for a 2 class problem, 
+	you want to extract features (e.g. words) that are very frequent in 1 class but infrequent in the other. This helps to better discriminate between the classes. 
+	The downside of this approach, however, is that it needs a lot of annotated or labeled data to extract the grams or words from each class that are infrequent 
+	in the opposite class. Assuming that the grams are representative of the entire population; then, it can be expected that a classifier will have good performance
+	in the classification task. So the problem is how to get these optimal sets of grams when we do not have that much annotated data. Here, word embeddings can help. 
+	As previously mentioned, word embeddings can use the co-occurrence of words in a large data set of documents to create a vector space that can represent some aspects 
+	of this relationship. 
+Combining these two frameworks, the gramulator and word embeddings, we can naturally develop the deep gramulator which can be used to find grams from large amounts of
+	un-labeled data by using a small set of annotated text. The algorithm creates the vector space with both text sets (labeled and un-labeled) and then proceeds to 
+	find the closest grams from un-labeled texts to the grams of labeled texts. In this case, from a set of originally labeled grams, an expanded set can be obtained. 
+	For example, given a 2 class problem, we can use a small set of grams that are very frequent in class 1 but infrequent in class 2, to find more terms in the
+	unlabeled data that might be related to class 1. As a result, you can obtain an expanded set of grams. 
+
+</p>
+	
 <h1>
 
 	Summary
@@ -1216,604 +1387,6 @@ In this chapter, the topic of semantic vector spaces was presented as well as it
 	
 </p>
 
-
-
-
-
-
-	    
-
-	
-
-
-
-
-
-
-
-
-
-     
-
-
-Next we can define the parameters as follows
-
-
-
-<center>
-<div>
-<textarea rows="7" cols="100">
-
-learning_rate    = 0.003  ## Adam default   ## 0.001
-batch_size       = 32
-N_Epochs         = 30  ##27000  
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-<p>
-We load the MNIST data in a similar way to what we did in previous chapters
-
-	
-</p>
-
-<center>
-<div>
-<textarea rows="16" cols="100">
-
-data_path   = "data/MNISTdata/"
-mnist_train = datasets.MNIST(data_path, train=True, download=True)
-mnist_test = datasets.MNIST(data_path, train=False, download=True)
-
-mnist_train_tr = datasets.MNIST(data_path, train=True, download=False, 
-                                            transform=transforms.Compose([
-                                                transforms.ToTensor()
-                                            ]))
-                                            
-mnist_test_tr  = datasets.MNIST(data_path, train=False, download=False, 
-                                            transform=transforms.Compose([
-                                                transforms.ToTensor()
-                                            ]))
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-     
-
-
-It is a good idea to print the shapes of the tensors before creating the DataLoaders.
-
-<center>
-<div>
-<textarea rows="16" cols="100">
-
-mnist_train_tr.data.shape
-## [60000, 28, 28]
-
-mnist_test_tr.data.shape
-## [10000, 28, 28]
-
-train_dl  = torch.utils.data.DataLoader(mnist_train_tr, batch_size=batch_size, shuffle=True  ) 
-
-test_dl   = torch.utils.data.DataLoader(mnist_test_tr,  batch_size=batch_size, shuffle=False ) 
-
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-     
-
-
-Now we are ready to define the GAN architectures. GANs have a Generator and a Discriminator
-
-In the following code segment we define the architecture for the Generator. Notice that this will be a neural network of size 100x256x784. 
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-class Generator_Net(nn.Module):
-    
-    def __init__(self):
-        super().__init__()
-        
-
-        self.linear1 = nn.Linear(100, 256)
-        self.act1    = nn.LeakyReLU(0.02)
-        self.norm1   = nn.LayerNorm(256)
-        self.linear2 = nn.Linear(256, 784)
-        self.act2    = nn.Sigmoid()
-        self.dropout = nn.Dropout(0.25)
-        
-    def forward(self, rand_input ):
-        
-
-        x      = self.linear1( rand_input )
-        x      = self.act1(x)
-        x      = self.norm1(x) 
-        x      = self.linear2(x)
-        x      = self.act2(x)
-        y_pred = x
-        
-        return y_pred
-
-     
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-I also tried a deeper architecture for the GAN but was not able to get it to learn in 30 epochs as I did with the simple MLP GAN. I am including it here and leave it as a exercise for the reader. 
-
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-
-class Generator_DL_Net(nn.Module):
-    
-    def __init__(self):
-        super().__init__()
-        
-        self.linear1 = nn.Linear(100, 60)
-        self.act1    = nn.LeakyReLU(0.02)
-        self.norm1   = nn.LayerNorm(60)
-        self.linear2 = nn.Linear(60, 120)
-        self.act2    = nn.LeakyReLU(0.02)
-        self.norm2   = nn.LayerNorm(120)
-        self.linear3 = nn.Linear(120, 784)
-        self.act3    = nn.Sigmoid()
-        self.dropout = nn.Dropout(0.2)
-        
-    def forward(self, rand_input ):
-        
-
-        x      = self.linear1( rand_input )
-        x      = self.act1(x)
-        x      = self.norm1(x) 
-        x      = self.dropout(x)
-        x      = self.linear2(x)
-        x      = self.act2(x)
-        x      = self.norm2(x) 
-        x      = self.dropout(x)
-        x      = self.linear3(x)
-        x      = self.act3(x)
-        
-        y_pred = x
-        
-        return y_pred
-
-     
-
-</textarea>
-  
-</div>
-</center>
-	
-
-
-
-
-The architecture for the Discriminator can be seen in the next code segment.
-
-
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-class Discriminator_Net(nn.Module):
-    
-    def __init__(self):
-        super().__init__()
-        
-        self.linear1 = nn.Linear(784, 100)
-        self.act1    = nn.ReLU()
-        self.linear2 = nn.Linear(100, 50)
-        self.act2    = nn.ReLU()
-        self.linear3 = nn.Linear(50, 1)
-        self.act3    = nn.Sigmoid()             ## nn.Softmax(dim=1)
-        self.dropout = nn.Dropout(0.25)
-        
-
-    def forward(self, x):
-        
-        x      = self.linear1(x)
-        x      = self.act1(x)
-        x      = self.dropout(x)
-        x      = self.linear2(x)
-        x      = self.act2(x)
-        x      = self.dropout(x)
-        x      = self.linear3(x)
-        y_pred = self.act3(x)
-        
-        return y_pred
-
-     
-</textarea>
-  
-</div>
-</center>
-	
-
-
-
-
-
-
-Notice that the architecture for this network is 784x100x50x1. Its input is an image vector (real or fake) and its output is one neuron with value 0 or 1. 
-
-The following function can be used to generate seed random noise vectors for the Generator input. For training we want batches of noise vectors.
-
-
-
-<center>
-<div>
-<textarea rows="9" cols="100">
-
-def random_G_batch_vector_input():
-    rand_vec = torch.randn( (batch_size, 100 ) )
-    return rand_vec
-
-    
-</textarea>
-  
-</div>
-</center>
-	
-
-
-
-
-
-
-
-
-
-To generate individual images, we can use the following function to generate seed noise vectors
-
-
-
-<center>
-<div>
-<textarea rows="9" cols="100">
-
-def random_G_vector_input():
-    rand_vec = torch.randn( 100 )
-    return rand_vec
-    
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-
-     
-
-
-The Training function for the GAN is the most complicated we have seen so far. The full code can be seen seen below. As can be seen, we train the discriminator twice and the generator once. The Discriminator looks at a real image and it should predict that it is real (a one). Then the discriminator looks at a generated image (fake) and it should predict that it is a fake (a zero). The discriminator weights should be updated accordingly for these objectives. The final step is to update the weights of the Generator. Here, we want to trick the discriminator. So now the generated image (fake) is given to the Discriminator but we want it to say that it is real (a one). We do this using the loss of the Discriminator but adjust the weights of the Generator. So the Generator weights are updated in such a way that it generates images that trick the Discriminator into predicting that the fake images are true (a one). 
-
-Notice that before training, we need to squeeze and reshape the input \textbf{xb} tensor from [batch, 1, 28, 28] to [batch, 784] . We can do that with the following statements.
-
-<center>
-<div>
-<textarea rows="6" cols="100">
-
-xb = torch.squeeze(xb, dim=1)
-            
-xb = xb.reshape((-1, 784))
-
-    
-</textarea>
-  
-</div>
-</center>
-	
-
-
-<p>
-
-	and the GAN training function is
-</p>
-     
-
-<center>
-<div>
-<textarea rows="35" cols="100">
-
-	
-list_losses_real    = []
-list_losses_fake    = []
-list_losses_tricked = []
-def training_loop(  N_Epochs, G_model, D_model, D_loss_fn, G_opt, D_opt   ):
-    for epoch in range(N_Epochs):
-        for xb, yb in train_dl:              ## xb = [batch, 1, 28, 28]
-            xb = torch.squeeze(xb, dim=1)
-            xb = xb.reshape((-1, 784))
-            #################################################
-            ## G_model.eval()     ## No G training
-            ## gen_img = G_model( random_G_vector_input() )
-            gen_img = G_model( random_G_batch_vector_input() ).detach()
-            ## Train D with real data
-            D_real_y_pred = D_model(  xb  )
-            D_real_loss   = D_loss_fn( D_real_y_pred, torch.ones((batch_size, 1)) )
-            D_opt.zero_grad()
-            D_real_loss.backward()
-            D_opt.step()
-            ## Train D with fake data
-            D_fake_y_pred = D_model(  gen_img  )
-            D_fake_loss   = D_loss_fn( D_fake_y_pred, torch.zeros((batch_size, 1)))
-            D_opt.zero_grad()
-            D_fake_loss.backward()
-            D_opt.step()
-            ## G_model.train()    ## yes G training
-            #################################################
-            ## D_model.eval()     ## No D training
-            ## gen_img = G_model( random_G_vector_input() )
-            gen_img = G_model( random_G_batch_vector_input() )
-            ## Train G with D_loss (need to trick D)
-            D_tricked_y_pred = D_model(  gen_img  )
-            D_tricked_loss   = D_loss_fn( D_tricked_y_pred, torch.ones((batch_size, 1)) )
-            G_opt.zero_grad()
-            D_tricked_loss.backward()
-            G_opt.step()
-            ## D_model.train()    ## yes D training
-        if epoch % 1 == 0:
-            print("******************************")
-            print(epoch, "D_real_loss=", D_real_loss)
-            print(epoch, "D_fake_loss=", D_fake_loss)
-            print(epoch, "D_tricked_loss=", D_tricked_loss)
-            list_losses_real.append(        D_real_loss.detach().numpy()  )
-            list_losses_fake.append(        D_fake_loss.detach().numpy()  )
-            list_losses_tricked.append(  D_tricked_loss.detach().numpy()  )
-            
-
-
-    
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-Finally, we can call the core functions and print the losses during training. 
-
-<center>
-<div>
-<textarea rows="12" cols="100">
-
-G_model     = Generator_Net()
-
-## G_model     = Generator_DL_Net()
-
-D_model     = Discriminator_Net()
-
-## D_loss_fn   = nn.CrossEntropyLoss( )  
-## D_loss_fn   = F.mse_loss
-
-D_loss_fn   = nn.BCELoss()
-
-G_opt       = torch.optim.Adam( G_model.parameters(), lr=learning_rate )
-D_opt       = torch.optim.Adam( D_model.parameters(), lr=learning_rate )
-
-training_loop(  N_Epochs, G_model, D_model, D_loss_fn, G_opt, D_opt )
-
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-We can seen below that the losses are going down for both the Generator and Discriminator. 
-
-<center>
-<div>
-<textarea rows="25" cols="100">
-
-******************************
-0 D_real_loss= tensor(0.1157, grad_fn=<BinaryCrossEntropyBackward0>)
-0 D_fake_loss= tensor(0.0114, grad_fn=<BinaryCrossEntropyBackward0>)
-0 D_tricked_loss= tensor(7.8405, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-1 D_real_loss= tensor(0.2492, grad_fn=<BinaryCrossEntropyBackward0>)
-1 D_fake_loss= tensor(0.0604, grad_fn=<BinaryCrossEntropyBackward0>)
-1 D_tricked_loss= tensor(5.4396, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-2 D_real_loss= tensor(0.1128, grad_fn=<BinaryCrossEntropyBackward0>)
-2 D_fake_loss= tensor(0.0804, grad_fn=<BinaryCrossEntropyBackward0>)
-2 D_tricked_loss= tensor(4.2457, grad_fn=<BinaryCrossEntropyBackward0>)
-
-...
-
-******************************
-27 D_real_loss= tensor(0.6145, grad_fn=<BinaryCrossEntropyBackward0>)
-27 D_fake_loss= tensor(0.3502, grad_fn=<BinaryCrossEntropyBackward0>)
-27 D_tricked_loss= tensor(1.2594, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-28 D_real_loss= tensor(0.4972, grad_fn=<BinaryCrossEntropyBackward0>)
-28 D_fake_loss= tensor(0.3535, grad_fn=<BinaryCrossEntropyBackward0>)
-28 D_tricked_loss= tensor(1.2053, grad_fn=<BinaryCrossEntropyBackward0>)
-******************************
-29 D_real_loss= tensor(0.5411, grad_fn=<BinaryCrossEntropyBackward0>)
-29 D_fake_loss= tensor(0.5512, grad_fn=<BinaryCrossEntropyBackward0>)
-29 D_tricked_loss= tensor(1.2962, grad_fn=<BinaryCrossEntropyBackward0>)
-
-     
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-Using the following function, we can plot the losses. 
-
-<center>
-<div>
-<textarea rows="15" cols="100">
-
-def plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked):
-    
-    the_epochs = [i for i in range(len(list_losses_real))]  
-
-    plt.plot(the_epochs, list_losses_real,    label = "real") 
-    plt.plot(the_epochs, list_losses_fake,    label = "fake") 
-    plt.plot(the_epochs, list_losses_tricked, label = "tricked")
-    plt.legend() 
-    plt.show()
-
-plot_GAN_losses(list_losses_real, list_losses_fake, list_losses_tricked)
-
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-
-     
-
-
-We can see that the losses of the Generator did not go below the discriminator loss. A good objective would be for them to be equal. 
-
-	
-  <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/GAN_losses_plot.png" height="400" width="auto">
-      </div>
-
-    </center>	
-
-
-
-And that is it. The GAN is now trained. We can now proceed to test it and generate a few images. We can do that with the following code segment. 
-
-<center>
-<div>
-<textarea rows="15" cols="100">
-
-gen_test_img3 = G_model( random_G_vector_input() )
-gen_test_img3 = gen_test_img3.reshape( (28,28) )
-plt.imshow( gen_test_img3.detach().numpy() )
-plt.show()
-
-</textarea>
-  
-</div>
-</center>
-
-
-
-
-
-     
-
-
-I did this several times and the results of the generated images are as follows. This first image looks like a bad zero. 
-
- <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/bad_zero_gan.png" height="400" width="auto">
-      </div>
-
-    </center>
-	
-
-
-
-This next image looks like a better version of the zero.
-
- <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/good_zero_gan.png" height="400" width="auto">
-      </div>
-
-    </center>
-
-
-
-And I believe this looks like a five.
-
-
- <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/good_5_gan.png" height="400" width="auto">
-      </div>
-
-    </center>
-
-
-
-<h1>
-Conditional GANs
-	
-</h1>
-
-<p>
-
-The conditional GAN  (CGAN) can generate more than random images from a distribution. Instead, in the case on MNIST, for example, 
-	it can generate the image of an image given the corresponding label for the image. The architecture for the CGAN can be seen below.
-	
-</p>
-
-
-	 <center>
-      <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/ConditionalGanDiagram.jpg" height="400" width="auto">
-      </div>
-
-    </center>
-
-
-
-<h1>
-Summary
-</h1>
-	
-<p>
-In this chapter, a description of Generative Adversarial Networks was provided. Some sample code was addressed as well as some applications of GANs. 
-
-
-	
-</p>
 
 
 
