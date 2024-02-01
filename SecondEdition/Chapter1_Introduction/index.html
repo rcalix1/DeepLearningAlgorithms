@@ -531,11 +531,14 @@ b = np.linspace(0, 1, 20) print(b)
 </center> 
 
 
-
-
-
-
+<p>
 The output looks like this
+	
+</p>
+
+
+
+
 
     
 <center>
@@ -601,6 +604,7 @@ b = np.random.random((4, 4)) print(b)
 
 	</p>
 
+	
 <center>
 <div>
 <textarea rows="5" cols="100">
@@ -615,88 +619,85 @@ b = np.random.normal(0, 1, (4,4)) print(b)
 
 
 
-
-
+<p>
 And the data looks like this where we get a 4x4 matrix of random data with mean 0 and standard deviation 1. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Random data with distribution output}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
 
-    [[ 0.82064949 -0.95219825 -1.27123377 -1.01187383]
+
+<center>
+<div>
+<textarea rows="7" cols="100">
+
+   [[ 0.82064949 -0.95219825 -1.27123377 -1.01187383]
      [ 0.44419588  0.17695603 -0.75775624 -0.14476445]
      [ 0.59233303  1.27530445  0.77260354 -0.80240966]
      [-0.58009786 -1.04106833 -1.27650071  0.28198804]]
-   
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
 
-
-
-
+	<p>
 Sometimes when doing linear algebra operations you need special matrices like the identity matrix. You can generate this matrix with numpy using the following code:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The identity matrix}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+		
+	</p>
+
+<center>
+<div>
+<textarea rows="6" cols="100">
 
 ## indentity matrix
 
 b = np.eye(5) 
 print(b)
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
 
-The previous code generates a 5x5 identity matrix like the following
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The identity matrix output}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
- 
-       [[1. 0. 0. 0. 0.]
+<p>
+
+	The previous code generates a 5x5 identity matrix like the following
+
+</p>
+
+<center>
+<div>
+<textarea rows="9" cols="100">
+
+      [[1. 0. 0. 0. 0.]
         [0. 1. 0. 0. 0.]
         [0. 0. 1. 0. 0.]
         [0. 0. 0. 1. 0.]
         [0. 0. 0. 0. 1.]]
       
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
+
+<p>
+Okay. So, now let’s practice generating some matrices and looking at their dimensions. 
+
+	
+</p>
 
 
   
+<center>
+<div>
+<textarea rows="12" cols="100">
 
-
-Okay. So, now let’s practice generating some matrices and looking at their dimensions. 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Generate matrices}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
- 
 b1 = np.random.randint(20, size=6)
 b2 = np.random.randint(20, size=(3,4)) 
 b3 = np.random.randint(20, size=(2,4,6))
@@ -707,49 +708,49 @@ print("b2 dims ", b2.ndim)
 print("b3 shape ", b3.shape) 
 print("b2 size ", b2.size) 
 print("data type of b3 ", b3.dtype)
-      
+  
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
 
+
+<p>
 The previous code generates the following matrices with dimensions:
-
+<br/>
+<br/>	
 A matrix of size [3, 3]
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Matrix of size (3, 4)}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
 
- 
+
+<center>
+<div>
+<textarea rows="5" cols="100">
+
    [[ 7 13 16 13]
     [11  6 17 11]
     [ 0 12  6  4]]
-      
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+	
 
-    
-       
-
-
+<p>
 A matrix of size [2, 4, 6]
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Matrix of size (2, 4, 6)}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
 
- 
+    
+<center>
+<div>
+<textarea rows="15" cols="100">
+
           [[[12 10 15  3 14  4]
             [ 9  7  4  0 16 10]
             [11 16  9  0  5 12]
@@ -760,25 +761,24 @@ A matrix of size [2, 4, 6]
             [ 9  3  4  4  7  0]
             [15  1  4 12 10 17]
             [ 9 14  1 14 19  8]]]
-      
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
-     
 
+
+<p>
 Knowing how to index a Numpy array is very important. Here we have an example of how to extract values by index.
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Indexing}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
 
- 
+     
+<center>
+<div>
+<textarea rows="10" cols="100">
+
 ## indexing
 a = np.array([1, 3, 2, 5] , dtype='float32' ) 
 
@@ -786,47 +786,42 @@ print(a)
 print("first ", a[0])
 print("third ", a[2])
 print("last ", a[-1]) print("before last ", a[-2])
-      
+    
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
-
-
+<p>
 The results of the previous indexing examples are as follows:
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Indexing results}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
 
- 
+<center>
+<div>
+<textarea rows="8" cols="100">
+
     [1. 3. 2. 5.]
     First value  1.0
     Third value  2.0
     Last value  5.0
     before last  value 2.0
-      
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
- 
+
+<p>
 We can also do indexing on 2D matrices as follows:  
 
+	
+</p>
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Indexing on 2D matrices}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ <center>
+<div>
+<textarea rows="14" cols="100">
 
 ## indexing
 a = np.array([
@@ -837,24 +832,22 @@ a = np.array([
             
 print(a)
 print("first ", a[0,0])
-print("last ", a[2, -1])     
+print("last ", a[2, -1])  
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
 
+<p>
+	The previous indexing examples give us the following results for the given matrix
+
+</p>
 
 
-The previous indexing examples give us the following results for the given matrix
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Indexing on 2D matrices - results}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ <center>
+<div>
+<textarea rows="14" cols="100">
 
     [[ 1  2  3  4]
      [ 5  6  7  8]
@@ -865,25 +858,24 @@ The previous indexing examples give us the following results for the given matri
     first  1
     last  12
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+
+
+<p>
+
+One important concept when dealing with numpy arrays or tensors is slicing. Slicing helps us to extract slices of data from a  
+	matrix like extracting 2 middle column vectors in a matrix. The following are some examples of slicing
+
+	
+</p>
     
 
 
-
-   
-
-
-One important concept when dealing with numpy arrays or tensors is slicing. Slicing helps us to extract slices of data from a  matrix like extracting 2 middle column vectors in a matrix. The following are some examples of slicing
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Examples of Slicing}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ <center>
+<div>
+<textarea rows="14" cols="100">
 
 ## slicing
 x = np.arange(15)
@@ -894,30 +886,36 @@ print("even indeces ", x[::2] )
 print("uneven indeces ", x[1::2]) ## starts at 1
 print("reverse ", x[::-1] ) ## step value is negative starts at last element
 
-\end{lstlisting}
-\end{minipage}
+
+</textarea>
+</div>
+</center>
+   
 
 
-
+<p>
 Given a Numpy array “x” with 15 values
 
 
-\begin{center}
-[ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
-\end{center}
+	
+</p>
 
- 
+
+<center>
+[ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+	
+</center>
+
+<p>
+
 
 The previous code gives us the following slicing results 
+	
+</p>
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Examples of Slicing - output}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="14" cols="100">
 
 first 4 elemets   [0 1 2 3]
 all after 3       [ 3  4  5  6  7  8  9 10 11 12 13 14]
@@ -927,25 +925,23 @@ reverse           [14 13 12 11 10  9  8  7  6  5  4  3  2  1  0]
       
 
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
 
 
- 
+	<p>
+
+		Slicing a sub matrix from a larger matrix can be done as follows
+
+	</p>
 
 
 
-Slicing a sub matrix from a larger matrix can be done as follows
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Slicing a sub matrix from a larger matrix}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ <center>
+<div>
+<textarea rows="8" cols="100">
 
 ## slicing
 a = np.array([[1, 2, 3, 4],
@@ -954,20 +950,24 @@ a = np.array([[1, 2, 3, 4],
 print(a)
 print(a[:2,:2])
 
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
 
+
+
+<p>
 Here, from a 3x4 matrix, we get a 2x2 matrix after slicing. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Slicing a sub matrix from a larger matrix - output}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
+
+
+
+ <center>
+<div>
+<textarea rows="13" cols="100">
 
 ## input
 
@@ -980,833 +980,55 @@ Here, from a 3x4 matrix, we get a 2x2 matrix after slicing.
      [[1 2]
       [5 6]]
 
+</textarea>
+</div>
+</center>
 
-\end{lstlisting}
-\end{minipage}
-   
 
-\begin{comment} 
-
-Whenever we want the last value of a matrix, vector, or tensor, we can just use the -1 index. For example, 
-
-
-
-
-From the previous code, we have a 3x4 matrix
-   
-    [[ 1  2  3  4]
-     [ 5  6  7  8]
-     [ 9 10 11 12]]
-
-After slicing it with the following indexing scheme 
-     
-    a[:-1,:-1]
-
-we get a 2x3 matrix by not including the last column and last row
-    
-    [[1 2 3]
-     [5 6 7]]
-     
-    
-Another example of slicing with the -1 index is 
-
-
-
-From a matrix like this 
-
-
-   
-    [[ 1  2  3  4]
-     [ 5  6  7  8]
-     [ 9 10 11 12]]
-
-     
-We slice with
-
-    a[:-1,:-2]
-
-
-and get a 2x2 matrix
-    
-    [[1 2]
-     [5 6]]
-   
-
-
-Sometimes, especially with Transformers in language translation, we want to shift a sentence or line of data to the left or right to better align it or disalign it with another sentence or line. This can be done as follows 
-
-
-
-Notice that here we just combine slicing with the -1 (last) index to create shifting. The result is as follows
-Given an input
-  
-       input            [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
-
-
-after shifting we get 
-
-                     
-       shift right   [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13]
-       shift left     [ 1  2  3  4  5  6  7  8  9 10 11 12 13 14]
-       
-
-Slicing is very useful to extract column vectors, for example. 
-
-
-
-With the previous code, we can slice the second column (column 1)
-    
-    [[ 1  2  3  4]
-     [ 5  6  7  8]
-     [ 9 10 11 12]]
-     
-And get  
-    
-    [ 2  6 10]
-   
-
-We can also extract row vectors from a matrix
-
-
-
-For a 3x4 matrix
-
-       [[ 1  2  3  4]
-        [ 5  6  7  8]
-        [ 9 10 11 12]]
-        
-
-We can extract row 1
-
-       
-       [5 6 7 8]
-      
-
-By slicing with
-
-        a[1, :]
-
-
-Slicing in numpy does not copy to a new array but instead it still modifies the original array. To copy  and create a new matrix you may want to use .copy() like so
-
-
-
-
-After slicing the matrix of size 3x4 with a[:2, :2]
-
-   
-          [[ 1  2  3  4]
-           [ 5  6  7  8]
-           [ 9 10 11 12]]
-
-We get 
-           
-          [[1 2]
-           [5 6]]
-
-We then assign a new value to this new sliced matrix with the following expression new\_a[0,0] = 42 
-           
-          [[42  2  3  4]
-           [ 5  6  7  8]
-           [ 9 10 11 12]]
-
-Now if we print the original matrix “a”, notice that the the first value has also been changed to 42. 
-  
-          [[42  2  3  4]
-           [ 5  6  7  8]
-           [ 9 10 11 12]]
-           
-        
-
-Once you start getting into complex deep learning algorithms like CNNs, you will start using reshape operations. Here is an example of how to use reshape.
-
-
-
-
-Notice here how we reshape from a vector of size [1, 10] to a matrix of size 3x3 as can be seen below
-
- 
-            [1 2 3 4 5 6 7 8 9]
-
-            
-            [[1 2 3]
-             [4 5 6]
-             [7 8 9]]
-             
-%%% here 
-
-Besides using the reshaping operation, we can sometimes us np.newaxis. the np.newaxis function is critical when we wish to make a row vector into a column vector. The np.newaxis function is used extensibly in numpy and PyTorch for broadcasting operation. An example of creating a new axis can be seen in the code below
-
-
-
-
-
-
-The previous code example results in the following output
-
-
-    [
-        [
-           [
-              [ 1  2  3  4]
-           ]
-        ]
-        [
-           [
-              [ 5  6  7  8]
-           ]
-        ]
-        [
-           [
-              [ 9 10 11 12]
-           ]
-        ]
-    ]
-    
-    
-Notice here the double set of square brackets
-
-    
-               reshape as row vector with reshape  [[1 2 3 4 5]]
-               reshape as row vector with newaxis  [[5 5 5 5 5]]
-               
-
-To make a column vector we use [:, np.newaxis]
-
- 
-               reshape as column vector with newaxis
-               [[5]
-                [5]
-                [5]
-                [5]
-                [5]]
-                
-
-
-In this operation 
-
-
-            m[:, np.newaxis, np.newaxis, :]
-
-
-we reshape a matrix of size 3x4 into a matrix of size [3, 1, 1, 4]
-
-
-
-                reshape matrix  m[:, np.newaxis, np.newaxis, :] with newaxis
-               [[[[ 1  2  3  4]]]
-                [[[ 5  6  7  8]]]
-                [[[ 9 10 11 12]]]]
-              
-    
-    
-Another important numpy array or tensor technique is concatenation. Natural Language Processing (NLP) approaches use concatenation extensively on auto-regressive models, for example, for language translation. 
-In the following code example we see how we can use concatenation with the numpy function np.concatenate
-
-
-
-
-
-
-Here we can concatenate the following 3 numpy arrays 
-
-            a =      [1 2 3 4]
-            b =      [5 6 7 8]
-            c =      [ 9 10 11]
-
-and obtain 
-                  
-                  concatenate a with b                 [1 2 3 4 5 6 7 8]
-                  concatenate a with b with c      [ 1  2  3  4  5  6  7  8  9 10 11]
-                
-       
-
-An example of concatenation with matrices can be seen below. Notice the use of axis 0 to indicate on what dimension to concatenate
-
-
-We take the following 2 matrices
-
-    
-                    [[1 2 3]
-                     [4 5 6]
-                     [7 8 9]]
-
-                     
-                    [[10 11 12]
-                     [13 14 14]
-                     [16 17 18]]
-
-
-And concatenate them on axis 0
-       
-                    m1 m2 concat axis 0
-
-                    [[ 1  2  3]
-                     [ 4  5  6]
-                     [ 7  8  9]
-                     [10 11 12]
-                     [13 14 14]
-                     [16 17 18]]
-                   
-         
-You can concatenate on axis=1 like so
-
-
-
-
-Concatenating the matrices m1 and m2 
-
-  
-                       [[1 2 3]
-                        [4 5 6]
-                        [7 8 9]]
-                        
-                       [[10 11 12]
-                        [13 14 14]
-                        [16 17 18]]
-
-                        
-
-
-On axis 1 gives us a new matrix of size 3x6
-
-                       m1 m2 concat axis 1
-                       [[ 1  2  3 10 11 12]
-                        [ 4  5  6 13 14 14]
-                        [ 7  8  9 16 17 18]]
-                        
-
-Another approach to concatenation is to use vstack and hstack.
-
-
-Using vstack and hstack on the following 2 matrices
-
- 
-                          [[1 2 3]
-                           [4 5 6]
-                           [7 8 9]]
-
-                           
-                          [[10 11 12]
-                           [13 14 14]
-                           [16 17 18]]
-
-
-
-Gives you the following for vstack
-                           
-                           vstack
-                          [[ 1  2  3]
-                           [ 4  5  6]
-                           [ 7  8  9]
-                           [10 11 12]
-                           [13 14 14]
-                           [16 17 18]]
-
-
-And the following for hstack
-                       
-                           hstack
-                          [[ 1  2  3 10 11 12]
-                           [ 4  5  6 13 14 14]
-                           [ 7  8  9 16 17 18]]
-                      
-
-Obviously, having data means that you want to perform many kinds of math operations on this data. The following are some examples of some of the most common operations. 
-
-
-
-
-
-The results of the previous math operations are as follows
-
-            [1 2 3 4]
-            x + 10  [11 12 13 14]
-            x - 10  [-9 -8 -7 -6]
-            x * 10  [10 20 30 40]
-            x / 2  [0.5 1.  1.5 2. ]
-            -x  [-1 -2 -3 -4]
-            x ** 3 [ 1  8 27 64]
-            4^x [  4  16  64 256]
-            np.log(x)  [0.         0.69314718 1.09861229 1.38629436]
-            np.log2(x) [0.        1.        1.5849625 2.       ]
-            np.log10(x) [0.         0.30103    0.47712125 0.60205999]
-                        
-
-Trigonometric functions like sines and cosines are also available in numpy as can be seen here:
-
-
-Here we generate a numpy array of size 10
-
-  
-[0.         0.44444444 0.88888889 1.33333333 1.77777778 2.22222222
-                2.66666667 3.11111111 3.55555556 4.        ]
-
-
-As an example, we can then use np.sin to calculate our corresponding sine values
-
-                
-np.sin
-[ 0.          0.42995636  0.77637192  0.9719379   0.9786557   0.79522006
-            0.45727263  0.03047682 -0.40224065 -0.7568025 ]
-                           
-
-
-Aggregates in numpy are ways in which you can perform an operation and reduce the result. Much like torch.reduce\_sum()  in PyTorch. A numpy example of aggregate operations can be seen below
-
-
-The result of applying numpy aggregate functions gives us the following:
-
- 
-            [1 2 3 4 5]
-            np.add.reduce(x)  =  15
-            np.multiply.reduce(x)  =  120
-            np.sum(x)  =  15
-            np.min(x)  =  1
-            np.max(x)  =  5
-                              
-
-Sometimes it is useful to extract minimums and maximums of values across dimensions. We can do that in numpy with np.min, np.sum, etc. For example:
-
-
-
-Here for the following matrix 
-
-   
-                                  [[ 1  2  3  4]
-                                   [ 5  6  7  8]
-                                   [ 9 10 11 12]
-                                   [13 14 15 16]]
-
-
-We can get the sum of the matrix and min values across different dimensions.
-
-
-                m.sum()   =  136
-                np.min(m, axis=0)  =  [1 2 3 4]
-                np.min(m, axis=1)  =  [ 1  5  9 13]
-                np.min(m, axis=-1)  (-1 is last item) =  [ 1  5  9 13]
-                                  
-
-Broadcasting
-
-One extremely useful concept in numpy and PyTorch is “Broadcasting”. Here are some examples. Broadcasting allows you to perform an operation element wise between matrices and vectors when all we want is the smaller numpy array to be repeated.
-
-
-
-The results of our previous code can be seen here. Broadcasting is best understood with examples. Deep learning algorithms such as Transformers rely heavily on broadcasting. Learn it well. In this example, we have a matrix “m”
-
-   
-     m
-    [[1. 1. 1.]
-     [1. 1. 1.]
-     [1. 1. 1.]]
-
-
-And a vector “a”
-
-     
-     a
-    [0 1 2]
-
-
-We can broadcast add “a” to “m” and get. 
-    
-    m + a
-    [[1. 2. 3.]
-     [1. 2. 3.]
-     [1. 2. 3.]]
-
-
-If we make “a” into a column vector. 
-
-
-     
-    a[:, np.newaxis]
-    [[0]
-     [1]
-     [2]]
-
-
-We can broadcast add the new column vector “a” to matrix “m” like so 
-
-     
-    m + a
-    [[1. 1. 1.]
-     [2. 2. 2.]
-     [3. 3. 3.]]
-    
-
-
-We can also broadcast 2 vectors and have them be multiplied to get a matrix like so
-
-
-
-Here we have row vector v1 
-
-  
-    [1 1 1]
-
-
-And column vector v2 
-
-
-    [[0]
-     [1]
-     [2]]
-
-     
-We can then perform a broadcast add between v1 and v2 
-
-
-    v1 + v2
-    [[1 1 1]
-     [2 2 2]
-     [3 3 3]]
-
-     
-
-And a broadcast matrix multiply. This multiply is element-wise. 
-
-
-    v1 * v2
-
-    [[0 0 0]
-     [1 1 1]
-     [2 2 2]]
-   
-
-The previous multiplication with broadcasting element wise would look like this.
-
-     [1   1   1]          [0   0    0]               [0 0 0]
-     [1   1   1]     *   [1   1    1]       =      [1 1 1]
-     [1   1   1]          [2   2    2]               [2 2 2]
-
-
-Another example
-
-
-
-
-
-
-
-Given v1
-
-       [[1]
-        [1]
-        [1]]
-
-
-
-Given v2
-
-        
-       [0 1 2]
-
-
-
-
-We can perform an element wise sum
-       
-       v1 + v2
-       [[1 2 3]
-        [1 2 3]
-        [1 2 3]]
-
-This sum is equivalent to
-
-     [1   1   1]          [0   1    2]               [1 2 3]
-     [1   1   1]     +   [0   1    2]       =      [1 2 3]
-     [1   1   1]          [0   1    2]               [1 2 3]
-
-The element wise multiplication results in
- 
-
-       v1 * v2
-
-       [[0 1 2]
-        [0 1 2]
-        [0 1 2]]
-    
-
-
-Which would look like this
-
-     [1   1   1]          [0   1    2]               [0 1 2]
-     [1   1   1]     *   [0   1    2]       =      [0 1 2]
-     [1   1   1]          [0   1    2]               [0 1 2]
-
-Masks
-Masks are a very important technique in NLP. We apply Boolean logic to vectors and matrices to identify certain values like all the values that are zero. Here we can see an example of how to create masks using Boolean logic. 
-
-
-Given matrix “m”
-
-        [[ 1  2  3  4]
-         [ 5  6  7  8]
-         [ 9 10 11 12]
-         [13 14 15 16]]
-
-We can apply the following Boolean expressions 
-         
-        m < 5
-        [[ True  True  True  True]
-         [False False False False]
-         [False False False False]
-         [False False False False]]
-         
-        m > 11
-        [[False False False False]
-         [False False False False]
-         [False False False  True]
-         [ True  True  True  True]]
-         
-        m == 14
-        [[False False False False]
-         [False False False False]
-         [False False False False]
-         [False  True False False]]
-         
-        np.equal(m, 13)
-        [[False False False False]
-         [False False False False]
-         [False False False False]
-         [ True False False False]]
-         
-        np.equal(m, 13)
-        [[False False False False]
-         [False False False False]
-         [False False False False]
-         [ True False False False]]
-         
-        np.sum(m < 12, axis=1)
-        how many values less than 12 in each row?
-        [[4]
-         [4]
-         [3]
-         [0]]
-         
-        m[m < 8]
-        [1 2 3 4 5 6 7]
-      
-
-A more detailed form of indexing is called fancy indexing. These are some examples of fancy indexing or slicing
-
-
-
-Now let us look at some of the results. For the matrix m
-
-          [[ 1  2  3  4]
-           [ 5  6  7  8]
-           [ 9 10 11 12]
-           [13 14 15 16]]
-
-We can define a set of indeces and perform the following slicing operation
-           
-          row = np.array(  [0, 1, 2] )
-          col = np.array(  [0, 1, 2] )
-          
-           m[row,col]
-          [ 1  6 11]
-
-
-
-
-
-
-We can also do the following
-          
-          m[2:, [0, 2]]
-          [[ 9 11]
-           [13 15]]
-
-
-Here, a slightly more complex broadcasting example is presented
-
-
-
-
-
-
-
-
-
-
-Given the following matrix
-    
-    [[ 1  2]
-     [ 3  4]
-     [ 5  6]
-     [ 7  8]
-     [ 9 10]
-     [11 12]
-     [13 14]
-     [15 16]
-     [17 18]
-     [19 20]]
-
-    
-We can reshape if with
-
-m1 = m[:, np.newaxis, :]  ## for broadcasting
-
-the shape is now
-
-     
-    (10, 1, 2)
-
-And it looks like this
-    
-    
-    [[[ 1  2]]
-     [[ 3  4]]
-     [[ 5  6]]
-     [[ 7  8]]
-     [[ 9 10]]
-     [[11 12]]
-     [[13 14]]
-     [[15 16]]
-     [[17 18]]
-     [[19 20]]]
-     
-We can create a new matrix m2 from the original m with 
-     
-
-m2 = m[np.newaxis, :,:]  ## for broadcasting
-
-
-
-
-
-
-this gives us a new shape
-
-
-print(m2.shape)
-
-
-    (1, 10, 2)
-    
-
-And m2 looks like this 
-
-    
-    [[[ 1  2]
-      [ 3  4]
-      [ 5  6]
-      [ 7  8]
-      [ 9 10]
-      [11 12]
-      [13 14]
-      [15 16]
-      [17 18]
-      [19 20]]]
-      
-
-Now we can perform the following operations with
-
-
-diff = (m1 - m2)**2
-print(diff.shape)
-print("  diff = (m1 - m2)**2 ")
-print(diff)
-print("np.sum(diff, axis=-1)")
-print(np.sum(diff, axis=-1))
-
-
-
-and get the following results 
-
-
-    (10, 10, 2)
-    
-    
-
-
-
-
-
-
-
-      diff = (m1 - m2)**2
-    [[[  0   0]
-      [  4   4]
-      [ 16  16]
-      [ 36  36]
-      [ 64  64]
-      [100 100]
-      [144 144]
-      [196 196]
-      [256 256]
-      [324 324]]
-    ...
-    
-     [[324 324]
-      [256 256]
-      [196 196]
-      [144 144]
-      [100 100]
-      [ 64  64]
-      [ 36  36]
-      [ 16  16]
-      [  4   4]
-      [  0   0]]]
-      
-      
-      
-
-    np.sum(diff, axis=-1)
-    [[  0   8  32  72 128 200 288 392 512 648]
-     [  8   0   8  32  72 128 200 288 392 512]
-     [ 32   8   0   8  32  72 128 200 288 392]
-     [ 72  32   8   0   8  32  72 128 200 288]
-     [128  72  32   8   0   8  32  72 128 200]
-     [200 128  72  32   8   0   8  32  72 128]
-     [288 200 128  72  32   8   0   8  32  72]
-     [392 288 200 128  72  32   8   0   8  32]
-     [512 392 288 200 128  72  32   8   0   8]
-     [648 512 392 288 200 128  72  32   8   0]]
-
-\end{comment}
-
+<p>
 That concludes are quick introduction to Numpy arrays. Now we are ready to move on to PyTorch operations on tensors. 
 
-\subsection{Tensor Operations with PyTorch}
+	
+</p>
 
+
+<h1>
+Tensor Operations with PyTorch
+	
+</h1>
+	
+<p>
 In this section, we will now look at some special tensor operations and how they can be done with the PyTorch framework. 
-
+<br/>
+	<br/>
 First we call the PyTorch library. 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Libraries}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
+
+ <center>
+<div>
+<textarea rows="5" cols="100">
 
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
- 
+
+<p>
 Let us begin our discussion of tensor operations with some simple examples defining tensors in PyTorch. 
 
+	
+</p>
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Defining Torch Tensors}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+ 
+<center>
+<div>
+<textarea rows="12" cols="100">
 
 a_tr = torch.ones(5)
 
@@ -1818,23 +1040,25 @@ a_tr[2]  =  1456.0
 
 print(  a_tr  )
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
+<p>
 Our previous code creates a torch tensor of size 5 and we then the third value to 1456.0. 
+<br/>
+
+The function torch.argmax() is a PyTorch function that returns the index of the largest value across the axis of a tensor.
+	For example, in the code below we select the index for the highest values. As can be seen in the code listing answer1 is equal to 2, 
+	and answer2 is equal to [2, 0]. 
+
+	
+</p>
 
 
-The function torch.argmax() is a PyTorch function that returns the index of the largest value across the axis of a tensor. For example, in the code below we select the index for the highest values. As can be seen in the code listing answer1 is equal to 2, and answer2 is equal to [2, 0]. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Torch.argmax}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
+<center>
+<div>
+<textarea rows="12" cols="100">
 
 answer1 = torch.argmax( [35, 4, 72, 2] )     
 
@@ -1846,1276 +1070,68 @@ answer2 = torch.argmax( [  [23, 32, 49],
 
 ## answer2  =    [2, 0]
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
 
+<p>
 Squeezing and reshaping are very important operations in PyTorch. Let us look at an example. Here, we create a dummy tensor of size [64, 1, 28, 28]
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Create a Torch tensor}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
 
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 batch_dummy_torch = torch.rand(64, 1, 28, 28)    
 batch_dummy_torch.shape
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
 
 
+<p>
 to convert it to a size [64,  28, 28] we can use the \textbf{torch.squeeze} function as follows
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Torch squeeze}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
+
+
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 batch_dummy_torch = torch.squeeze(batch_dummy_torch, dim=1)
 batch_dummy_torch.shape
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+</div>
+</center>
+	
 
-Now we will proceed to reshape the part of the tensor that is 28x28 into just one dimension equal to 784. We can do that witht the follwing code which will return a tensor of size [64, 784]
+<p>
+Now we will proceed to reshape the part of the tensor that is 28x28 into just one dimension equal to 784. We can do that witht the 
+	follwing code which will return a tensor of size [64, 784]
+
+	
+</p>
 
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{frame=lines}
-\lstset{caption={Torch reshape}}
-%%\lstset{label={lst:code\_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 batch_dummy_torch = batch_dummy_torch.reshape((-1, 784))
 batch_dummy_torch.shape
 
-\end{lstlisting}
-\end{minipage}
-
-\begin{comment}
-
-After running the previous code, our tensors look like this
-
-The tensor “mat” is a 2x2 tensor
-
-    mat
-      [[10 20]
-       [30 40]]
-
-
-
-    
-
-The tensor “scalar” is a value of one called a scalar
-       
-      scalar
-      [5]
-
-The tensor one\_d is a 1x2 tensor 
-      
-      one\_d
-      [2 2]
-
-
-
-
-
-The tensor “two_d” is a 2x1 tensor
-      
-
-
-      two_d
-      [[3]
-       [3]]
-       
-
-
-We can multiply a matrix with a scalar like so. The PyTorch function torch.multiply performs an element wise multiplication. 
-
-
-
-The previous operation gives us
-
-        sess.run(torch.multiply(mat,scalar))
-
-      [[ 50 100]
-       [150 200]]
-
-This element wise multiplication is equivalent to
-      [10  20]    *   [5  5 ]    =   [ 50 100]
-      [30  40]         [5  5 ]         [150 200]
-
-
-Now we perform a broadcast multiplication with a 1x2 array between the matrix “mat” and one_d
-
-
-
-This operation results in
-        sess.run(torch.multiply(mat,one_d))
-      [[20 40]
-       [60 80]]
-
-This element wise multiplication is equivalent to
-      [10  20]    *   [2  2 ]    =   [ 20  40]
-      [30  40]         [2  2 ]         [ 60  80]
-
-Finally, we perform a broadcast multipliy (element wise) betwee the matrix “mat” and a column vector of size 2x1
-
-
-
-Which results is
-       
-       
-         sess.run(torch.multiply(mat,two_d))
-      [[ 30  60]
-       [ 90 120]]
-
-
-
-
-
-This element wise multiplication is equivalent to
-
-      [10  20]    *   [3  3 ]    =   [ 30  60]
-      [30  40]         [3  3 ]         [ 90  120]
-
-PyTorch can take a numpy array and convert it into a PyTorch tensor like so
-
-
-When you print it, it will look like this
-
- Tensor("Const_4:0", shape=(5,), dtype=float64)
-
-
-Another example
-
-
-Which gives us
-
-    [ 1.   5.5  3.  11.  30. ]
-    
-       5.5
-
-
-
-
-We can also convert numpy matrices into tensors in PyTorch like so
-
-
-The resulting tensor looks like this 
-
-    [[  1.    5.5   3.   15.   20. ]
-     [ 10.   22.   30.    4.   50. ]
-     [ 60.   70.   83.   90.  101. ]]
-
-
-In PyTorch torch.multiply(a,b) is identical to a*b. The function torch.multiply(X, Y) does element-wise multiplication so that
-
-     [1 2]     [1 3]         [1 6]
-     [3 4]  .  [2 1]   =   [6 4]
-
-whereas torch.matmul does a matrix multiplication so that
-
-     [1 0]     [1 3]        [1 3]
-     [0 1]  .  [2 1]   =   [2 1]
-    
-Using torch.matmul(X, X, transpose_b=True) means that you are calculating X . X^T where ^T indicates the transposition of the matrix and . is the matrix multiplication.
-
-The following are some examples of matrix element wise multiplication with torch.multiply vs. matrix multiplication with matmul()
-
-
-
-Given 2 matrics a and b
-a = torch.constant([[1, 2],
-                          [3, 4]])
-                 
-b = torch.constant([[1, 1],
-                         [1, 1]])
-
-Performing torch.add gives us 
-    [[2 3]
-     [4 5]]
-
-This is equivalent to
-     [1  2]    +   [1  1]    =   [2 3]
-     [3  4]         [1  1]          [4 5]
-
-Now, when we perform an element wise multiplication with torch.multiply as follows
-
-print(sess.run(   torch.multiply(a, b)    ))
-
-we get 
-
-    [[1 2]
-     [3 4]]
-
-This is torch.multiply operation is equivalent to the following 
-
-     [1  2]    *   [1  1]    =    [1 2]
-     [3  4]         [1  1]          [3 4]
-
-Finally, the torch.matmul operation performs a matrix multiplication
-
-print(sess.run(   torch.matmul(a, b)      ))
-
-which results in 
-     
-     [3 3]
-     [7 7]
-
-This is torch.matmul operation is equivalent to the following 
-
-     [1  2]       .      [1  1]    =    [3 3]
-     [3  4]              [1  1]          [7 7]
-
-     
-
-In numpy, you use .dot() or np.matmul() for matrix multiplication. 
-
-
-Other important functions in PyTorch that you will use a lot for deep learning can be seen below. Let us look at an example.
-
-Given a matrix c
-
-
-
-Which looks like this
-
-     [[ 4.  5.]
-      [10.  1.]]
-      
-
-You can find the largest value in the matrix using torch.reduce_max() like so. This is a similar concept to aggregates in numpy
-
-
-
-
-The result of torch.reduce_max is
-
-      sess.run(     torch.reduce_max(c)    )
-     10.0
-
-
-
-Instead, if we want the index of the largest value we can use the torch.argmax(). 
-
-
-The argmax function gives us the following indeces 
-
-       sess.run(    torch.argmax(c)   )
-
-     [1 0]
-     
-For row 1 and column 0.
-
-Finally, the softmax function is very important and is widely used in deep learning.
-
-
-The results are as follows
-
-    
-       sess.run(    torch.nn.softmax(c)    )
-     [[2.6894143e-01 7.3105860e-01]
-      [9.9987662e-01 1.2339458e-04]]
-
-
-
-
-A few other commonly used utility functions in PyTorch, with examples, are shown next. The following PyTorch functions are commonly used in deep learning and throughout this.
-
-torch.one_hot()
-PyTorch provide a function for one-hot encoding which is:
-
-                                                        torch.one_hot()
-
-This function takes a y vector and converts it to the one-hot encoded version. For example:
-
-
-
-Another example of one hot encoding can be see here
-
-
-
-torch.reduce_mean()
-
-The function torch.reduce_mean() is a built-in PyTorch function that takes as input a tensor and computes the mean of the elements across the dimensions of a given tensor. So, it returns a reduced tensor. For example, given:
-                                  x = torch.constant(  [[1, 1] , [2, 2]]   )
-we can get the following:
-                              all = torch.reduce_mean(x)         =>           # 1.5
-                              all = torch.reduce_mean(x, 0)     =>           # [1.5, 1.5]
-                              all = torch.reduce_mean(x, 1)     =>           # [1, 2]
-
-torch.reduce_sum()
-
-The function torch.reduce_sum() computes the sum of the elements across dimensions of a tensor. For example:
-
-
-
-torch.argmax()
-
-The function torch.argmax() is a PyTorch function that returns the index of the largest value across the axis of a tensor. 
-
-
-For example, 
-
-     answer = torch.argmax([35, 4, 72, 2])      =>           2
-                         
-you can also define an axis like so
-
-    answer = torch.argmax( [  [23, 32, 49],
-                                                              [45,    1,  12]  )
-The previous function returns    =>    [2, 0]
-
-
-
-torch.equal() 
-
-The torch.equal() function returns a vector of boolean values that compares the values in two tensors of equal dimensions. 
-For example, given:
-
-                                                  x = [1, 2, 3]   
-                                                  y = [0, 1, 3]
-torch.equal(x, y)      =>      [False, False, True]   or  [0, 0, 1]
-
-
-
-
-torch.reshape()
-The function torch.reshape is a very important function in PyTorch that is widely used. 
-
-tensor 't' is [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-tensor 't' has shape [9]
-
-torch.reshape(t, [3, 3]) ==> [[1, 2, 3],
-                                     [4, 5, 6],
-                                     [7, 8, 9]]
-
-
-PyTorch has many other functions to calculate dimensions, shapes, and ranks. These are crucial when building deep neural networks from scratch. Some examples can be seen below. 
-
-
-
-The output of these functions is as follows
-    
-    Type of every element: <dtype: 'float32'>
-    
-    Shape of tensor: (3, 2, 4, 5)
-    
-    Elements along axis 0 of tensor: 3
-    
-    Elements along the last axis of tensor: 5
-
-Torch also uses Broadcasting extensively. Understand this well by practicing a lot of examples possibly beyond this book. Broadcasting applies to elementwise multiplications with torch.multiply or *. Given that broadcasting can be best understood through examples, I will provide a few examples to better illustrate its use. 
-
-
-
-Given the following tensors 
-
-    
-   x =  [1 2 3]
-    
-   y =  2
-    
-   z = [2 2 2]
-
-we can perform the following element wise multiplication 
-
-    
-    sess.run(torch.multiply(x, 2))
-
-and get
-
-    [2 4 6]
-
-
-An element wise multiplication betwee x and y 
-
-    sess.run(x * y)
-
-gives us
-
-    [2 4 6]
-
-
-And finally for this example, a matrix multiplication between x and z 
-    
-    
-    sess.run(x * z)
-
-
-results in 
-
-    [2 4 6]
-
-
-Did you notice that they all result in the same output. Why? Hint: the answer has to do with broadcasting. 
-
-Here is yet another example of broadcasting. Hopefully, you are starting to get the idea that broadcasting is really important. In particular, it is widely used in deep learning algorithms that require the use of masks like in Transformers.  
-
-
-See if you can work this out by hand. 
-
-
-
-
-The result looks like this
-
-    [1 2 3]
-    
-     2
-     
-     [2 2 2]
-     
-     Tensor("Reshape:0", shape=(3, 1), dtype=int32)
-     [[1]
-      [2]
-      [3]]
-      
-      
-     Tensor("range:0", shape=(4,), dtype=int32)
-     [1 2 3 4]
-     
-          
-     Tensor("Mul_7:0", shape=(3, 4), dtype=int32)
-     [[ 1  2  3  4]
-      [ 2  4  6  8]
-      [ 3  6  9 12]]
-
-
-
-This concludes a quick introduction to tensor operations with PyTorch. You will certainly encounter a lot of this and much more in your journey through machine learning and deep learning. Don’t forget to close the session.
-
-
-
-As I recommended earlier, for a better treatment of linear algebra and optimization I recommend the book “Linear Algebra and Optimization for Machine Learning: A Textbook” by Charu C. Aggarwal.
-
-\section{Summary}
-
-
-In this chapter (chapter 1), I have discussed the basic outline of the book and the environment setup to get started with PyTorch and deep learning. I have also provided a brief introduction to numpy arrays, tensors, linear algebra operations commonly used in deep learning. The next chapter (chapter 2) will provide a quick introduction to machine learning using the Sklearn tool kit. Whenever prudent, the traditional machine learning techniques will be discussed and compared or contrasted to deep learning approaches.
-   
-
-
-
-In chapter 3, I will address the very important issue of the data and data pre- processing. To me and most practitioners, data collection and data processing are some of the most important issues in machine learning/deep learning. There are many issues that must be addressed when dealing with data. These include: getting the data, cleaning data, pre-processing data, building a corpus and annotating it, performing inter-annotator agreement analysis, etc. Some of these issues will be discussed in chapter 3. In chapter 4, I will introduce the topic of deep learning for the first time and, in particular, how to create deep neural networks. My goal here
-
-
-\textbf{ \underline{Objective:}} To be able to build an AI tool that runs on the web.
-
-
-is to help students and practitioners alike to better understand the computational graph. In particular, I want the reader to be able to get data and pre-process it in the appropriate format for deep learning. This chapter also covers how to load data to your program, and how to perform simple classification tasks with plain vanilla deep neural networks of 2 or more hidden layers. 
-
-In chapter 5, I will discuss semantic vector spaces. I will discuss the vector space model and then address latent semantic analysis (LSA). I will also address the newer vector space based models such as Word2vec. Again, the focus will be on the intuition. Many companies today base their products on these very simple but powerful semantic spaces. There are many different types of vector space based models that have been used to represent data. However, the exciting aspect is that now deep learning methods allow you to process massive amounts of data so it can be represented by these vector spaces. In chapter 6, I will discuss Convolutional Neural Networks (CNNs). This chapter covers one of the most powerful techniques in deep learning. I will discuss how to implement simple CNNs with 2 convolutional layers for 2D image processing, as well as more complex CNNs for RGB data. In chapter 7, I will discuss Recurrent Neural Networks (RNNs). This chapter covers one of the most powerful techniques in deep learning for natural language processing. I will discuss how to implement simple RNNs in this chapter and how they can be applied to natural language processing (NLP). In chapter 8, I will discuss Generative Adversarial Networks (GNNs). This chapter covers one of the most interesting new techniques in deep learning. I will discuss aspects of GANs as well as some of the code. In chapter 9, I will discuss Re-inforcement Learning. This chapter covers an amazing technique in machine learning now enhanced by deep learning that has been applied extensively to AI and games. I will discuss aspects of Q-Learning as well as some of the code. This chapter will rely on Python Gym which is a set of games that can be implemented using the
-
-
-\begin{figure}[H]\centering
-\adjustbox{max height=.55\textheight}{
-    \includegraphics{images/coverDONEclx.jpg}
-}
-\caption{Cover}
-\label{RegLin:fig}
-\end{figure}
-
-
-Python language. In this chapter, I also show how to create your own environment to interface Q learning with game engines or simulators. Chapter 10 will introduce you to the very broad topic of Transformers and the mechanism of Attention. This is one of the latest developments in deep learning as of 2017. Transformers are very powerful and offer a lot of promise for NLP. Finally, in the final chapter, I will discuss some final loose ends as well as present my final thoughts and conclusions.
-
-
-e want to be very efficient in our processing of the data so we do not use python lists and “for” loops. Instead, we use numpy arrays and tensors. These are treated as vectors and matrices in linear algebra. And more generally are referred to as tensors. The advantage of this approach is that we can perform a lot of linear algebra based
-
-math operations like the matrix multiplication, the transpose, etc on our data using python’s numpy or PyTorch libraries.
-The best way to learn about this approach is to do a series of exercises. I will start with examples of numpy array operations and then move to tensor operations with PyTorch. Along the way I will point out some terminology or concepts from linear algebra.
-
-
-\subsection{Numpy Arrays}
-
-Okay, so let’s get started. First we need to import the numpy and PyTorch libraries.
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-import numpy as np
-import matplotlib.pyplot as plt 
-import PyTorch as tf
-   
-
-\end{lstlisting}
-\end{minipage}
-
-Once we import the libraries we can start writing some code. Let’s begin with some warm up examples using numpy.
-To declare an array in numpy we can write
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-a = np.array([4,5,2,6,8]) 
-print(a)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-This results in 
-
-
-
- 
-
-
-
-
-
-
-
-The previous code gives us a numpy array with 10 values in the range from 1 to 28 with a step of size 3.
-
-[1 4 7 10 13 16 19 22 25 28]
-
-The function linspace is another way of generating numpy arrays with data in them. Here we generate 20 data points from 0 to 1 spaced by a step size of around 0.05.
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-b = np.linspace(0, 1, 20) 
-print(b)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-The output looks like this
-
-[0. 0.05263158 0.10526316 0.15789474 0.21052632 0.26315789 0.31578947 0.36842105 0.42105263 0.47368421 0.52631579 0.57894737 0.63157895 0.68421053 0.73684211 0.78947368 0.84210526 0.89473684 0.94736842 1. ]
-
-Yet another useful function is np.random.random
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-b = np.random.random((4, 4)) 
-print(b)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-With this function we can generate random data like the following. Here we have a 4x4 matrix with random values.
-
-[[0.52467069 0.68216617 0.79782109 0.33720887]
-
-[0.67956722 0.04082517 0.31311017 0.72985649] 
-
-[0.64533659 0.83448976 0.37986602 0.60524177] 
-
-[0.98868748 0.36999339 0.33000013 0.04157917]]
-
-For random data with a mean of 0 and standard deviation of 1 we can write
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-## mean 0 and standard deviation 1
-
-b = np.random.normal(0, 1, (4,4)) 
-print(b)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-And the data looks like this where we get a 4x4 matrix of random data with mean 0 and standard deviation 1.
-
-[[ 0.82064949 -0.95219825 -1.27123377 -1.01187383] 
-
-[ 0.44419588 0.17695603 -0.75775624 -0.14476445] 
-
-[ 0.59233303 1.27530445 0.77260354 -0.80240966] 
-
-[-0.58009786 -1.04106833 -1.27650071 0.28198804]]
-
-Sometimes when doing linear algebra operations you need special matrices like the identity matrix. You can generate this matrix with numpy using the following code:
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-## indentity matrix
-b = np.eye(5)
-print(b)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-The previous code generates a 5x5 identity matrix loke the following
-
-[[1. 0. 0. 0. 0.] 
-[0. 1. 0. 0. 0.] 
-[0. 0. 1. 0. 0.] 
-[0. 0. 0. 1. 0.]
-[0. 0. 0. 0. 1.]]
-
-Okay. So, now let’s practice generating some matrices and looking at their dimensions.
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-b1 = np.random.randint(20, size=6)
-b2 = np.random.randint(20, size=(3,4))
-b3 = np.random.randint(20, size=(2,4,6))
-print(b2)
-print(b3)
-print("b2 dims ", b2.ndim) 
-print("b3 shape ", b3.shape) 
-print("b2 size ", b2.size) 
-print("data type of b3 ", b3.dtype)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-The previous code generates the following matrices with dimensions: A matrix of size [3, 3]
-
-[[ 7 13 16 13] 
-
-[11 61711] 
-
-[012 6 4]]
-
-A matrix of size [2, 4, 6]
-
-[[[121015 314 4]
-
-[9 7 4 01610]
-
-[1116 9 0 512]
-
-[412 6 9 3 5]]
-
-
-and 
-
-[[717 518 015] 
-
-[9 3 4 4 7 0] 
-
-[15 1 4121017] 
-
-[914 11419 8]]]
-
-We can use the methods ndim, shape, size, dtype to look at the properties of our matrices like so
-
-
-
-
-b2 dims 2
-b3 shape (2, 4, 6)
-b2 size 12
-data type of b3 int64
-Knowing how to index a numpy array is very important. Here we have an example of how to extract values by index.
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-## indexing
-a = np.array([1, 3, 2, 5] , dtype='float32' ) 
-print(a)
-print("first ", a[0])
-print("third ", a[2])
-print("last ", a[-1]) 
-print("before last ", a[-2])
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-The results of the previous indexing examples are as follows:
-
-[1. 3. 2. 5.]
-
-First value 1.0 Third value 2.0
-Last value 5.0 before last value 2.0
-We can also do indexing on 2D matrices as follows:
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-## indexing
-a = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] )
-print(a)
-print("first ", a[0,0])
-print("last ", a[2, -1])
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-The previous indexing examples give us the following results for the give matrix
-
-[[1 2 3 4]
-
-[5 6 7 8]
-
-[ 9 10 11 12]]
-
-We get the forst and las values
-first 1 last 12
-One important concept when dealing with numpy arrays or tensors is slicing. Slicing helps us to extract slices of data from a matrix like extracting 2 middle column vectors in a matrix. The following are some examples of slicing
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-## slicing
-x = np.arange(15)
-print(x)
-print("first 4 elemets ", x[:4])
-print("all after 3 ", x[3:])
-print("even indeces ", x[::2] )
-print("uneven indeces ", x[1::2]) ## starts at 1
-print("reverse ", x[::-1] ) ## step value is negative starts at last element
-   
-
-\end{lstlisting}
-\end{minipage}
-
-Given a numpy array “x” with 15 values
-
-[0 1 2 3 4 5 6 7 8 91011121314]
-The previous code gives us the following slicing results
-first 4 elemets
-allafter3
-evenindeces
-unevenindeces [1 3 5 7 91113]
-reverse [1413121110 9 8 7 6 5 4 3 2 1 0]
-[0 1 2 3]
-[3 4 5 6 7 8 91011121314] [0 2 4 6 8101214]
-Slicing a sub matrix from a larger matrix can be done as follows
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-## slicing
-a = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] ) 
-print(a[:2,:2])
-   
-
-\end{lstlisting}
-\end{minipage}
-
-Here, from a 3x4 matrix
-
-[[1 2 3 4] 
-
-[5 6 7 8]
-
-[ 9 10 11 12]]
-
-we get a 2x2 matrix after slicing
-
-[[1 2]
-
-[5 6]]
-
-Whenever we want the last value of a matrix, vector, or tensor, we can just use the -1 index. For example,
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-a = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] )
-print(a) 
-print("a[:-1,:-1]") 
-print(a[:-1,:-1])
-   
-
-\end{lstlisting}
-\end{minipage}
-
-From the previous code, we have a 3x4 matrix
-
-[[1 2 3 4]
-
-[5 6 7 8]
-
-[ 9 10 11 12]]
-
-After slicing it with the following indexing scheme a[:-1,:-1]
-we get a 2x3 matrix by not including the last column and last row
-
-[[1 2 3]
-
-[5 6 7]]
-
-Another example of slicing with the -1 index is
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-a = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] )
-print(a) 
-print("a[:-1,:-2]")
-print(a[:-1,:-2])
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-From a matrix like this
-
-[[1 2 3 4] 
-
-[5 6 7 8]
-
-
-[ 9 10 11 12]]
-
-
-We slice with a[:-1,:-2]
-and get a 2x2 matrix
-
-
-[[1 2] 
-
-[5 6]]
-
-
-Sometimes, especially with Transformers in language translation, we want to shift a sentence or line of data to the left or right to better align it or disalign it with another sentence or line. This can be done as follows
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-## shifting
-x = np.arange(15)
-print(x)
-print("shift right ", x[:-1] ) print("shift left ", x[1:] )
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-Notice that here we just combine slicing with the -1 (last) index to create shifting. The result is as follows
-Given an input
-input [ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14]
-
-
-after shifting we get
-
-shiftright [012345678910111213]
-shiftleft [1 2 3 4 5 6 7 8 91011121314]
-
-Slicing is very useful to extract column vectors, for example.
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-a = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] )
-
-print(a)
-print("column 1 ")
-print(a[:, 1])
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-With the previous code, we can slice the second column (column 1)
-
-[[1 2 3 4] 
-
-[5 6 7 8]
-
-[ 9 10 11 12]]
-
-And get
-
-[2 610]
-
-We can also extract row vectors from a matrix
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-a = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] )
-print(a) 
-print("row 1 ") 
-print(a[1, :])
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-For a 3x4 matrix
-
-[[1 2 3 4] 
-
-[5 6 7 8]
-
-[ 9 10 11 12]]
-
-We can extract row 1 [5 6 7 8]
-By slicing with a[1, :]
-Slicing in numpy does not copy to a new array but instead it still modifies the original array. To copy and create a new matrix you may want to use .copy() like so
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-a = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] )
-new_a = a[:2, :2] 
-print(a) 
-print(new_a) 
-new_a[0,0] = 42 
-print(a)
-new_a2 = a[:2, :2].copy() 
-new_a2[0,0] = 17 
-print(a)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-After slicing the matrix of size 3x4 with a[:2, :2]
-
-[[1 2 3 4] 
-
-[5 6 7 8]
-
-[ 9 10 11 12]]
-
-We get
-
-[[1 2] 
-
-[5 6]]
-
-We then assign a new value to this new sliced matrix with the following expression new\_a[0,0] = 42
-
-[[42 2 3 4]
-
-[5 6 7 8]
-
-[ 9 10 11 12]]
-
-Now if we print the original matrix “a”, notice that the the first value has also been changed to 42.
-
-[[42 2 3 4]
-
-[5 6 7 8]
-
-
-[ 9 10 11 12]]
-
-Once you start getting into complex deep learning algorithms like CNNs, you will start using reshape operations. Here is an example of how to use reshape.
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-a = np.arange(1, 10)
-b = a.reshape( (3,3) ) print(a)
-print(b)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-Notice here how we reshape from a vector of size [1, 10] to a matrix of size 3x3 as can be seen below
-
-[1 2 3 4 5 6 7 8 9]
-
-[[1 2 3] 
-
-[4 5 6] 
-
-[7 8 9]]
-
-Besides using the reshaping operation, we can sometimes us np.newaxis. the np.newaxis function is critical when we wish to make a row vector into a column vector. The np.newaxis function is used extensibly in numpy and PyTorch for broadcasting operation. An example of creating a new axis can be seen in the code below
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-
-v =np.array( [1,2,3,4,5] ) v1=np.array( [5,5,5,5,5] )
-m = np.array([[1, 2, 3, 4], [5, 6, 7, 8],
-[9, 10, 11, 12]] )
-print("reshape as row vector with reshape ", v.reshape( (1,5) )) 
-print("reshape as row vector with newaxis ", v1[np.newaxis, :] ) 
-print("reshape as column vector with newaxis ")
-print( v1[:, np.newaxis] )
-print(" reshape matrix m[:, np.newaxis, np.newaxis, :] with newaxis ") 
-
-print( m[:, np.newaxis, np.newaxis, :] )
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-The previous code example results in the following output
-
-
-[
-[
-[
-[1 2 3 4]
-] ]
-[
-[
-[5 6 7 8] ]
-] [
-] ]
-]
-
-
-Notice here the double set of square brackets
-
-reshape as row vector with reshape [[1 2 3 4 5]] reshape as row vector with newaxis [[5 5 5 5 5]]
-
-To make a column vector we use [:, np.newaxis]
-
-reshape as column vector with newaxis 
-
-[[5]
-
-[5] [5] [5] [5]]
-
-In this operation
-m[:, np.newaxis, np.newaxis, :]
-
-we reshape a matrix of size 3x4 into a matrix of size [3, 1, 1, 4]
-reshape matrix m[:, np.newaxis, np.newaxis, :] with newaxis [[[[1 2 3 4]]]
-[[[5 6 7 8]]] [[[ 9 10 11 12]]]]
-
-Another important numpy array or tensor technique is concatenation. Natural Language Processing (NLP) approaches use concatenation extensively on auto- regressive models, for example, for language translation.
-
-In the following code example we see how we can use concatenation with the numpy function np.concatenate
-
-
-
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Hello World code}}
-\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
-
-a = np.array([1,2,3,4])
-b = np.array([5,6,7,8])
-c = np.array([9,10,11])
-ab = np.concatenate( [a, b] ) 
-abc = np.concatenate( [a, b, c] )
-print(a) 
-print(b) 
-print(c)
-print("concatenate a with b ", ab) 
-print("concatenate a with b with c", abc)
-   
-
-\end{lstlisting}
-\end{minipage}
-
-
-
-
-
- 
-This is my comment.
-Note that it can span multiple lines.
-This is very useful.
-\end{comment}
+</textarea>
+</div>
+</center>
+	
 
 
 
