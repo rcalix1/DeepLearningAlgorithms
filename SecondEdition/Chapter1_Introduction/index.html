@@ -29,7 +29,7 @@
 
     <center>
       <div>
-        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/MLpipeline.png" height="400" width="auto">
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/MLpipeline.png" height="500" width="auto">
       </div>
 
     </center>
@@ -75,7 +75,7 @@ This book is very sequential and I recommend that you start from chapter 1 and r
 	If you are experienced in deep learning, then you can probably skip around the chapters. In this book I will discuss some aspects of the theory 
 	of deep learning while providing as much intuition as possible. I will use Linux or mac or windows, python, Sklearn, and PyTorch. 
 Chapter 1 will briefly discuss some of the background required or recommended for deep learning. In chapter 2, I will address some of the general machine learning topics. 
-	\This will be a brief review of some of the traditional (non-deep learning based) machine learning (ML) algorithms for context. I will introduce the Sklearn 
+	This will be a brief review of some of the traditional (non-deep learning based) machine learning (ML) algorithms for context. I will introduce the Sklearn 
 	library to provide code examples on how to use the different ML models and other tools. I will quickly move through regression to arrive at other algorithms.
 	There are many books on the theory of these traditional machine learning algorithms (Witten and Frank, etc.); so, instead of discussing the theory, I will 
 	concentrate on the practical aspects of using the machine learning algorithms in Python. More importantly, I will show how Sklearn can later be used with
@@ -271,19 +271,25 @@ print(a)
 </div>
 </center>
 
+<op>
+
+	This results in
+</op>
 
 
+<center>
+  [4 5 2 6 8]
+	
+</center>
 
-This results in
-
-\begin{center}
-     [4 5 2 6 8]
-\end{center}
-
-   
-    
+<p>
 
 We can also declare a Numpy array with different data types. For instance, an array as float.
+
+	
+</p>
+   
+    
 
 <center>
 <div>
@@ -298,18 +304,26 @@ print(a)
 </center>
 
 
-
+<p>
 This gives us
+	
+</p>
 
-\begin{center}
-      [1. 3. 2. 5.]
-\end{center}
 
-  
+	<center>
+		 [1. 3. 2. 5.]
+	</center>
+
+
+
+  <p>
+
+	  A numpy matrix (2D np array) can be declared like so
+
+  </p>
     
 
 
-A numpy matrix (2D np array) can be declared like so
 
 <center>
 <div>
@@ -327,9 +341,12 @@ print(b)
 </div>
 </center>
 
-
-
+<p>
 This gives us a 3x3 matrix
+	
+</p>
+
+
 
 <center>
 <div>
@@ -346,10 +363,12 @@ This gives us a 3x3 matrix
 	
 
 
+  <p>
+	Numpy has special functions to initialize a matrix. For example
   
+  </p>
 
 
-Numpy has special functions to initialize a matrix. For example
 
 <center>
 <div>
@@ -364,18 +383,25 @@ print(b)
 </center>	
 
 
+<p>
+	The previous code generates a numpy array of size 10 made up of all zeros. 
 
+</p>
   
 
-The previous code generates a numpy array of size 10 made up of all zeros. 
+<center>
+ [0 0 0 0 0 0 0 0 0 0]
+	
+</center>
+	
 
-\begin{center}
-      [0 0 0 0 0 0 0 0 0 0]
-\end{center}
-    
-
-
+<p>
 We can also create a matrix of all ones with the following function:
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -389,9 +415,12 @@ print(b)
 </div>
 </center>
 
+<p>
 
+	which produces a 4x6 matrix of type float
 
-which produces a 4x6 matrix of type float
+</p>
+
 
 
 
@@ -410,9 +439,15 @@ which produces a 4x6 matrix of type float
 </center> 
    
 
+
+<p>
 For a matrix made up of just one value we can write
 
- <center>
+	
+</p>
+	
+
+<center>
 <div>
 <textarea rows="6" cols="100">
 
@@ -424,152 +459,162 @@ print(b)
 </div>
 </center>
 
-
-
+<p>
 This generates a 3x3 matrix where all values are 42
+	
+</p>
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={result of matrix with one value}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
 
-       [[42 42 42]
-        [42 42 42]
-        [42 42 42]]
+<center>
+<div>
+<textarea rows="6" cols="100">
 
-\end{lstlisting}
-\end{minipage}
+   [[42 42 42]
+    [42 42 42]
+    [42 42 42]] 
 
+</textarea>
+  
+</div>
+</center>
+	
+
+
+<p>
+Sometimes we need numpy arrays with different data in them. Numpy has quick ways of creating arrays with data in them. 
+	The np.arange function is useful for this. For example
+
+	
+</p>
      
-       
-
-Sometimes we need numpy arrays with different data in them. Numpy has quick ways of creating arrays with data in them. The np.arange function is useful for this. For example
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={numpy arange function}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+  
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 b = np.arange(1, 30, 3) print(b)
 
+</textarea>
+  
+</div>
+</center>     
 
-\end{lstlisting}
-\end{minipage}
 
-
+<p>
 The previous code gives us a numpy array with 10 values in the range from 1 to 28 with a step of size 3. 
 
-\begin{center}
-       [ 1  4  7 10 13 16 19 22 25 28]
-\end{center}
-
- 
-    
+	
+</p>
 
 
 
+<center>
+	 [ 1  4  7 10 13 16 19 22 25 28]
+</center>
+	
+<p>
 The function linspace is another way of generating numpy arrays with data in them. Here we generate 20 data points from 0 to 1 spaced by a step size of around 0.05. 
 
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The function linspace}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+	
+</p>
+ 
+    
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 b = np.linspace(0, 1, 20) print(b)
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center> 
+
+
+
+
+
 
 The output looks like this
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The function linspace output}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+    
+<center>
+<div>
+<textarea rows="7" cols="100">
 
    [ 0.         0.05263158 0.10526316 0.15789474 0.21052632 0.26315789
      0.31578947 0.36842105 0.42105263 0.47368421 0.52631579 0.57894737
      0.63157895 0.68421053 0.73684211 0.78947368 0.84210526 0.89473684
      0.94736842 1.        ]
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
 
-    
 
+
+	<p>
 Yet another useful function is np.random.random
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The function np.random.random}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+		
+	</p>
+
+    
+<center>
+<div>
+<textarea rows="4" cols="100">
 
 b = np.random.random((4, 4)) print(b)
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+<p>
+
+	With this function we can generate random data like the following. Here we have a 4x4 matrix with random values. 
+
+</p>
 
 
-With this function we can generate random data like the following. Here we have a 4x4 matrix with random values. 
-
-
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={The function np.random.random output}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+<center>
+<div>
+<textarea rows="7" cols="100">
 
     [[0.52467069 0.68216617 0.79782109 0.33720887]
      [0.67956722 0.04082517 0.31311017 0.72985649]
      [0.64533659 0.83448976 0.37986602 0.60524177]
      [0.98868748 0.36999339 0.33000013 0.04157917]]
-   
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
 
 
 
-For random data with a mean of 0 and standard deviation of 1 we can write
+	<p>
 
-\begin{minipage}{\linewidth}
-\lstset{language=Python}
-\lstset{showstringspaces=false}  %% remove weird symbol in spaces
-\lstset{frame=lines}
-\lstset{caption={Random data with a mean and standard deviation}}
-%%%%\lstset{label={lst:code_direct}}
-\lstset{basicstyle=\footnotesize}
-\begin{lstlisting}[backgroundcolor = \color{white}]
+		For random data with a mean of 0 and standard deviation of 1 we can write
+
+	</p>
+
+<center>
+<div>
+<textarea rows="5" cols="100">
 
 ## mean 0 and standard deviation 1
 b = np.random.normal(0, 1, (4,4)) print(b)
 
-\end{lstlisting}
-\end{minipage}
+</textarea>
+  
+</div>
+</center>
+
+
+
 
 
 And the data looks like this where we get a 4x4 matrix of random data with mean 0 and standard deviation 1. 
