@@ -142,20 +142,22 @@ import matplotlib.pyplot as plt
 <p>
 In the previous code section, it can be seen that for our deep learning code to work, we only need a few new libraries. The most important new library is Torch. 
 	This of course is the main source of our new code. We will still rely on numpy to efficiently get the data although we can also get data with the
-	statement sklearn.datasets import fetch\_mldata.
+	statement sklearn.datasets import fetch_mldata.
 The next important issue in our code to do would be to set some parameters. Deep learning algorithms are iterative in the sense that they load samples 
 	in batches to avoid running out of memory. This is very important as it allows you to load millions of data samples in subsets called batches. 
 	Therefore, we can set up the parameters for batch processing. In the code below, we can see that we want to load batches of 100 samples each. 
 	For a training set of 1,000 samples, we would divide the set into 10 bins of 100 samples each and therefore run 10 batches. 
-Two additional parameters in this code are the learning\_rate and the n\_epochs. The n\_epochs parameter represents the number of times that we will run our main “for” loop. 
+Two additional parameters in this code are the learning_rate and the n_epochs. The n_epochs parameter represents the number of times that we will run our main “for” loop. 
 	This is the loop that we will run to provide data to our algorithms for training and testing. At this point, an optimization begins to occur which helps the 
 	supervised learning algorithm to learn from the samples. 
-The learning\_rate value (in this case 0.01) is a very important parameter in the learning algorithm. Simply speaking, it represents the step that is taken in a
-	gradient descent algorithm to find an optimal solution. Think of this like a giant walking over a mountainous region with many peaks and valleys. He is trying to find an optimal location; if the step is too big, the giant could go from peak to peak and skip a valley altogether. On the other hand, if the step is to small the giant may take too long to move in or out of a valley. In terms of PyTorch, the learning rate can affect convergence. 
+The learning_rate value (in this case 0.01) is a very important parameter in the learning algorithm. Simply speaking, it represents the step that is taken in a
+	gradient descent algorithm to find an optimal solution. Think of this like a giant walking over a mountainous region with many peaks and valleys. 
+	He is trying to find an optimal location; if the step is too big, the giant could go from peak to peak and skip a valley altogether. 
+	On the other hand, if the step is to small the giant may take too long to move in or out of a valley. In terms of PyTorch, the learning rate can affect convergence. 
 
 
 <br/>
-Convergence is the term that means that the iterative algorithm is starting to tend to the optimal solution. The learning\_rate can also be assigned a function instead
+Convergence is the term that means that the iterative algorithm is starting to tend to the optimal solution. The learning_rate can also be assigned a function instead
 	of just a value. 
 This helps to adjust the learning rate in real time while the algorithm is running. Some researchers have suggested that this type of optimization can provide better 
 	results than just using a fixed value learning rate. 
@@ -230,7 +232,7 @@ So what’s it all about? Again, my focus here is not to discuss deep learning f
 	important concepts but can be overwhelming when starting. Instead, I want to help the reader write deep learning code with PyTorch. Then, the reader will, no doubt,
 	have many questions where the theory and fundamentals will help him or her to better understand and use the algorithms. 
 The figures below present some of the challenges that must be addressed when dealing with real data. Real data such as language data from Twitter is highly noisy and 
-	un-balanced. An imbalance in the data means, for example, that 80 \% of the samples belong to 1 class and the remaining 20 \% belong to the other class. 
+	un-balanced. An imbalance in the data means, for example, that 80% of the samples belong to 1 class and the remaining 20 \% belong to the other class. 
 	Therefore, training a classifier to, say, perform emotion classification (where data is highly imbalanced) can be a difficult task. In the figure below, 
 	a sample of Twitter data is represented. Each sample in the dataset had multiple features but was compressed into a two dimensional vector for visualization purposes. 
 	
@@ -355,7 +357,7 @@ res = model(a, b)
 <p>
 
 	
-In this code we initialize 2 variables "a" and "b" as torch tensors, and add them together. . What is important to note here is that whenever you reference 
+In this code we initialize 2 variables "a" and "b" as torch tensors, and add them together. What is important to note here is that whenever you reference 
 	an object in PyTorch with torch, such as initializing the variable "a", you are actually adding elements or nodes to a graph. 
 	The graph can be seen in the following figure.
 
@@ -451,12 +453,12 @@ y = Matrix_data[:,  0]
 
 <p>
 
-	In the previous code we can slice the class column into the \textbf{y} variable and the rest of the columns into the \textbf{X} variable. 
+	In the previous code we can slice the class column into the "y" variable and the rest of the columns into the "X" variable. 
 	Notice that we are following the SKlearn approach from the previous chapters. PyTorch has its own approaches but I have used SKlearn here for the sake of 
-	simplicity. When slicing a 2-D matrix (matrix[i, j] ) we specify the number of rows with \textbf{“i”} and the number of columns with \textbf{“j”}. 
+	simplicity. When slicing a 2-D matrix ( matrix[i, j] ) we specify the number of rows with \textbf{“i”} and the number of columns with “j”. 
 	We can also specify ranges by doing the following: matrix[2:5, :]. The “:” on the “j” index indicates select all columns. If we wanted to select from a
 	list of column indices we could do the following: X=Matrix_data[:, [1,2,3,5,6]].
-
+<br/>
 Now we can split the data.
 
 
@@ -482,7 +484,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 
 <p>
-Similarly to the previous chapters, we can now split the data from \textbf{X} and \textbf{y} to obtain the train and test sets: X\_train, X\_test, y\_train, y\_test. 
+Similarly to the previous chapters, we can now split the data from "X" and "y" to obtain the train and test sets: X_train, X_test, y_train, y_test. 
 	As can be seen in the previous code segment, these data sets are now ready for one-hot encoding. Only the labels need to be one-hot encoded. The code for 
 	performing the one hot-encoding step is below. The one-hot encoding function and process was defined in the previous chapter. 
 
@@ -508,12 +510,12 @@ y_test_onehot  = convertOneHot_data2(y_test)
 	    
 <p>
 
-In the code above we take the labels in y\_train and y\_test and pass them through our one-hot encoding function to produce the new 
-	variables y\_train\_onehot and y\_test\_onehot. You can visualize the new one-hot encoded vectors by running print y\_train\_onehot[:20,:] for the first 20
+In the code above we take the labels in y_train and y_test and pass them through our one-hot encoding function to produce the new 
+	variables y_train_onehot and y_test_onehot. You can visualize the new one-hot encoded vectors by running print y_train_onehot[:20,:] for the first 20
 	samples. 
 
 <br />
-The next step in the process is to scale the X data. I suggest running your data with scaling and without to compare the performance of your model. 
+The next step in the process is to scale the "X" data. I suggest running your data with scaling and without to compare the performance of your model. 
 	Convergence of your deep learning algorithm and model results can be better with scaled data. In this case we can use SKlearn’s scaling module 
 	StandardScaler() to perform this task. 
 
@@ -543,7 +545,7 @@ X_test_normalized  = sc.transform(X_test)
 <p>
 
 As can be seen in the above code segment, we only need to scale the X data. We can fit a model with the train set and then use that model to scale 
-	both the X\_train and X\_test sets. 
+	both the X_train and X_test sets. 
 
 Now that our data is ready, we want to save some information about the dimensions of the data sets in a couple of variables "A" and "B". This can be 
 	very helpful for code re-usability. We will store the number of features in "A" and the number of classes in "B". 
@@ -647,7 +649,7 @@ The coefficients or weights for each variable are useful in determining the cont
 
 	</p>
 
-$a \ne 0$
+
 	
 <center>
  $ E = \frac{1}{n} \sum_{i = 0}^{n} (y_i - (  x * x_i + b  ))^2 $
@@ -772,7 +774,7 @@ Linear Regression model for wine quality data
 
 <p>
 In this section a linear regression model is trained with PyTorch for a Wine Quality Dataset. Our Wine Quality dataset can also be used in a 
-	classification example since the \textbf{y} values are discrete and consist of the values [0, 1, 2, 3, 4, 5]. These represent the wine quality rating from 0 to 6.
+	classification example since the "y" values are discrete and consist of the values [0, 1, 2, 3, 4, 5]. These represent the wine quality rating from 0 to 6.
 <br/>
 The data can be used to illustrate the differences between regression and classificatio modeling.
 
@@ -1001,9 +1003,12 @@ which should give us
 </center>
 
 
-
-
+<p>
 To print a correlation matrix and perform some data science we can run the following
+
+	
+</p>
+
 
 <center>
 <div>
@@ -1021,9 +1026,12 @@ hm = heatmap(cm, row_names=headers_list, column_names=headers_list, figsize=(20,
 
 
 
+<p>
+
+	This gives us the figure as follows
 
 
-This gives us the figure as follows
+</p>
 
 
 <center>
@@ -1032,12 +1040,17 @@ This gives us the figure as follows
       </div>
 </center>
 
+<p>
+	
+The key is that rows and columns with values very close to zero have no correlation, whereas rows and columns with values close to 
+	one (either positive or negative) have strong correlation. 
 
-
-The key is that rows and columns with values very close to zero have no correlation, whereas rows and columns with values close to one (either positive or negative) have strong correlation. 
-
-
+<br/>
 Now we can proceed to process the data and convert from pandas to Numpy.
+
+	
+</p>
+
 
 <center>
 <div>
@@ -1053,8 +1066,11 @@ print( WINE_raw_data_np )
 </center>
 
 
-
+<p>
 this will print the numpy array as follows
+
+	
+</p>
 
 <center>
 <div>
@@ -1075,10 +1091,13 @@ array([[ 7.  ,  0.27,  0.36, ...,  0.45,  8.8 ,  6.  ],
 </center>
 
 
-
-
-
+<p>
 If we print the shape we can see it is (4898, 12)
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -1092,16 +1111,22 @@ print( WINE_raw_data_np.shape )
 </center>
 
 
+<p>
 
-
-
-Now we proceed to slice the wine data into \textbf{x} and \textbf{y} which gives the dimensions 
-
+Now we proceed to slice the wine data into "x" and "y" which gives the dimensions 
+<br/>
+	<br/>
 X = (4898, 11)
-
+<br/>
+	<br/>
 y = (4898, 1)
-
+<br/>
+	<br/>
 With this we know we have 11 features and one predicted value 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -1121,10 +1146,13 @@ print( y.shape)
 </center>
 
 
-
-
-
+<p>
 printing the y numpy vector gives us
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -1143,10 +1171,14 @@ array([[6.],
 </div>
 </center>
 
+<p>
+I like to split the data randomly every time I train the model. By doing this, I get to see the performance variation. I usually call 
+	this a "poor man's ten fold cross validation". I can achieve it quite simply by doing the following:
+
+	
+</p>
 
 
-
-I like to split the data randomly every time I train the model. By doing this, I get to see the performance variation. I usually call this a "poor man's ten fold cross validation". I can achieve it quite simply by doing the following:
 
 <center>
 <div>
@@ -1169,10 +1201,13 @@ print( y_test.shape)
 </center>
 	
 
-
-
-
+<p>
 after the split you can get the following shapes
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -1191,13 +1226,18 @@ after the split you can get the following shapes
 </center>
 
 
-
+<p>
 
 Sometimes, torch can give you strange errors. One common one relates to the data type being size 64 when it torch wants it to be 32 such as:
-
+<br/>
+	<br/>
 dtype('float64')
-
+<br/>
+	<br/>
 You can check and change the type like this in numpy array and then change to PyTorch tensors
+
+	
+</p>
 
 <center>
 <div>
@@ -1220,12 +1260,16 @@ print( y_test.dtype )
 </center>
 
 
-
-
-
+<p>
 after this, the data type should be set to 32. 
-
+<br>
+	
 Now we are ready to convert to PyTorch.
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -1251,7 +1295,7 @@ There are two main types of scaling which both have worked well for me. Generall
 </p>
 <ul>
 	<li>standardization</li>
-	<li>normalization/li>
+	<li>normalization</li>
 </ul>
 
 <p>
@@ -1274,10 +1318,13 @@ x_deviations = X_train_tr.std( 0, keepdim=True) + epsilon
 </center>
 	
 
+<p>
+
+	These can be viewed, for instance, by printing x_means and we get 
+
+</p>
 
 
-
-These can be viewed, for instance, by printing x\_means and we get 
 
 <center>
 <div>
@@ -1293,10 +1340,15 @@ tensor([[6.8566e+00, 2.7671e-01, 3.3420e-01, 6.3712e+00, 4.5989e-02, 3.5417e+01,
 </center>
 
 
+<p>
+As we saw in the previous chapters, deep learning algorithms are so complex now that using object oriented approaches whenever possible helps
+	to better understand what is going on. In this case we load the data into the torch object "DataLoader" like the code below. 
+	the "shuffle" parameter handles randomizing the data as batches are read into the torch model during training. 
+
+	
+</p>
 
 
-
-As we saw in the previous chapters, deep learning algorithms are so complex now that using object oriented approaches whenever possible helps to better understand what is going on. In this case we load the data into the torch object "DataLoader" like the code below. the "shuffle" parameter handles randomizing the data as batches are read into the torch model during training. 
 
 <center>
 <div>
@@ -1314,17 +1366,26 @@ train_dl = DataLoader( train_ds, batch_size, shuffle=True   )
 	
 
 
+<p>
 
-
-At this stage, we are ready for the linear regression architecture. We define the class for it below. Notice that in the init function we define the number of neurons in the layers. In forward function we then define the neural network sequence from input to output. This even includes the standardization part. 
-
-Our architecture object oriented classes will inherit the "nn.Module" class from torch which is a classic example of class inheritance in object oriented programming. We make use of super init function to instantiate the inherited NN class. 
-
+At this stage, we are ready for the linear regression architecture. We define the class for it below. Notice that in the init function we define the
+	number of neurons in the layers. In forward function we then define the neural network sequence from input to output. This even includes the standardization part. 
+<br/>
+	<br/>
+Our architecture object oriented classes will inherit the "nn.Module" class from torch which is a classic example of class inheritance in object oriented 
+	programming. We make use of super init function to instantiate the inherited NN class. 
+<br/>
+	<br/>
 The input layer has 11 neurons for the 11 features, and the last layer has 1 neuron for the regression output. 
-
+<br/>
+	<br/>
 Notice there are no hidden layers or activation functions. 
-
+<br/>
+	<br/>
 In the following code segment, we define the linear regression architecture. 
+
+	
+</p>
 
 <center>
 <div>
@@ -1357,9 +1418,15 @@ class LinRegNet(nn.Module):
 </div>
 </center>
 
+<p>
+Now, we should be ready to train the model. First we want to define a training function we can re-use. The function has 2 "for" loops. 
+	One loop is to repeat the process based on the number of epochs. The second "for" loop is to read the $ xb $ and $ yb $ data in batches from our DataLoader
+	named "train_dl". Here, $ xb $ is run through the model to predict $ y_pred $. The predicted value is compared to the real
+	value in $ yb $ to calculate the loss. This loss is what we minimize according to the definition of the loss function. 
 
+	
+</p>
 
-Now, we should be ready to train the model. First we want to define a training function we can re-use. The function has 2 "for" loops. one loop is to repeat the process based on the number of epochs. The second "for" loop is to read the $ xb $ and $ yb $ data in batches from our DataLoader named "train\_dl". Here, $ xb $ is run through the model to predict $ y\_pred $. The predicted value is compared to the real value in $ yb $ to calculate the loss. This loss is what we minimize according to the definition of the loss function. 
 
 
 <center>
@@ -1387,12 +1454,17 @@ def train_loop(N_epochs, model, loss_fn, opt):
 </center>
 	
 
-
-
-
-The following 3 commands from our training function zero out the grads buffer, perform the derivatives to calculate the gradients, and finally take a step to update the weights. 
-
+<p>
+The following 3 commands from our training function zero out the grads buffer, perform the derivatives to calculate the gradients, 
+	and finally take a step to update the weights. 
+<br/>
+	<br/>
 If you noticed, the training function takes arguments for the optimization object and the loss function object. These will be described shortly. 
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -1408,23 +1480,37 @@ opt.step()
 </center>
 	
 
+<p>
+Now we can invoke the core functions and instantiate the "Adam" optimizer and the loss function. Two important items to notice are that 
+	the weights from the model are passed to the optimizer with 
+
+	
+</p>
 
 
-Now we can invoke the core functions and instantiate the "Adam" optimizer and the loss function. Two important items to notice are that the weights from the model are passed to the optimizer with 
-
-\begin{center}
+<center>
  model.parameters()
-\end{center}
-
-
+	
+</center>
+	
+<p>
  and that the loss is initialized to the MSE regression loss function with 
 
  
- \begin{center}
- loss\_fn = F.mse\_loss
-\end{center}
+	
+</p>
 
+
+<center>
+ loss_fn = F.mse_loss
+	
+</center>
+	
+<p>
 Now we are ready to call the core functions
+
+	
+</p>
 
 	<center>
 <div>
@@ -1445,9 +1531,12 @@ train_loop(  N_epochs, model, loss_fn, opt    )
 </center>
 
 
-
-
+<p>
 Running the training loop begins the training process and should give us the following output. Notice that the loss is going down. That is the desirable objective. 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -1470,14 +1559,20 @@ Running the training loop begins the training process and should give us the fol
 </div>
 </center>
 	
-
-
+<p>
 Now we are ready to evaluate our trained model on the test set. Printing the shape of the predicted tensor gives us .
 The score is measured with the $ R^2 $ also known as the coefficient of determination. This gives us a size of (980, 1) and the metric as follows: 
-
+<br/>
+	<br/>
 Testing $ R^2 $:  0.3152
+<br/>
+	<br/>
+The result should be close to 1 to be considered a good result. In future sections we can try better architectures than just linear regression. 
+	This is an especially difficult problem to model with regression so the modeling will be challenging but will give us a good dataset to practice on. The code: 
 
-The result should be close to 1 to be considered a good result. In future sections we can try better architectures than just linear regression. This is an especially difficult problem to model with regression so the modeling will be challenging but will give us a good dataset to practice on. The code: 
+	
+</p>
+
 
 <center>
 <div>
@@ -1498,9 +1593,13 @@ print(  "Testing R**2: ",
 </div>
 </center>
 
+<p>
+With the following code we can use the model to predict $ y $ given our $ x $ input vectors of size 11. 
+	The predicted torch tensors need to be detached and converted to numpy for further manipulation. This is a common practice when using Torch. 
 
+	
+</p>
 
-With the following code we can use the model to predict $ y $ given our $ x $ input vectors of size 11. The predicted torch tensors need to be detached and converted to numpy for further manipulation. This is a common practice when using Torch. 
 
 
 <center>
@@ -1561,13 +1660,18 @@ pred, real
 </center>
 	
 
-
-
-
-
-A nice visualization technique to assess our model is to plot together  the predicted and real y values from the test set. If perfect, predicted and real values should be in the same point and there should only be one color. 
-
+<p>
+A nice visualization technique to assess our model is to plot together  the predicted and real y values from the test set. If perfect, predicted and real 
+	values should be in the same point and there should only be one color. 
+<br/>
+	<br/>
 In our graph below we see 2 colors and this shows that the model did not learn so well. The code to do this is as follows:
+
+	
+</p>
+
+
+
 
 <center>
 <div>
@@ -1584,10 +1688,6 @@ plt.ylabel("Rating")
 plt.legend()
 plt.savefig("PredVsRealPlot", dpi=300)
 
-
-
-
-
 	
 </textarea>
 </div>
@@ -1595,9 +1695,12 @@ plt.savefig("PredVsRealPlot", dpi=300)
 
 
 
-
+<p>
 
 and the plot is as follows: 
+	
+</p>
+
 
 
 
@@ -1616,27 +1719,56 @@ and the plot is as follows:
 		Linear Regression to Logistic Regression and Neural Nets
 	</h1>
 
+<p>
+In this section, we are going to modify and extend our code from the linear regression model so that we can implement logistic regression, one-layer neural
+	nets, and deeper neural networks of multiple layers (Deep Learning). In the following code sections I will make some modifications so that the
+	new models can be implemented easily. 
+<br/><br/>
+Additionally, we can use the variables "A" and "B" that we previously described to define the number of neurons per layer. In this case "A" 
+	represents the number of features in our data set. For example, the iris data set has 4 features per sample ( $x_i = [f_1, f_2, f_3, f_4]$ ). 
+	The variable $ x $ is defined as a matrix (tensor) of [None, A] or [None, 4] for this iris dataset. Similarly, $ y $ is defined by [None, B] or [None, 3] 
+	where 3 stands for the number of classes which in this case, for the iris dataset, are Setosa, Versicolor, and Virginica. 
+
+<br/>
+	<br/>
+
+For the new models, we can continue to use the training function that we previously defined. Although very little changes, it is important to mention that the
+	optimizer and learning rate can be changed and that there are many alternatives that could be used. A lot of research has been done on this topic and it is 
+	currently an on-going and open research field. Therefore, many optimization approaches exist and many of them are available in PyTorch.
+
+	
+</p>
 
 
-In this section, we are going to modify and extend our code from the linear regression model so that we can implement logistic regression, one-layer neural nets, and deeper neural networks of multiple layers (Deep Learning). In the following code sections I will make some modifications so that the new models can be implemented easily. 
+<h1>
 
-Additionally, we can use the variables \textbf{A} and \textbf{B} that we previously described to define the number of neurons per layer. In this case \textbf{A} represents the number of features in our data set. For example, the iris data set has 4 features per sample ( $x_i = [f_1, f_2, f_3, f_4]$ ). The variable $ x $ is defined as a matrix (tensor) of [None, A] or [None, 4] for this iris dataset. Similarly, $ y $ is defined by [None, B] or [None, 3] where 3 stands for the number of classes which in this case, for the iris dataset, are Setosa, Versicolor, and Virginica. 
+	Regression vs Classification
+</h1>
+	
+<p>
+In linear regression we were training to predict any kind of real valued number.  From this point on, we build models that can predict either real 
+	valued numbers or discrete classes. The model architectures are similar and we just need to make a few changes usually to output layers and loss functions. 
 
+	
+</p>
 
+<ul>
 
-For the new models, we can continue to use the training function that we previously defined. Although very little changes, it is important to mention that the optimizer and learning rate can be changed and that there are many alternatives that could be used. A lot of research has been done on this topic and it is currently an on-going and open research field. Therefore, many optimization approaches exist and many of them are available in PyTorch.
-
-\subsection{Regression vs Classification}
-
-In linear regression we were training to predict any kind of real valued number.  From this point on, we build models that can predict either real valued numbers or discrete classes. The model architectures are similar and we just need to make a few changes usually to output layers and loss functions. 
-
-\begin{itemize}
-    \item Predict either real valued numbers (Regression)
-    \item Predict discrete classes (Classification)
-\end{itemize}
-
-For classification modeling, where we predict discrete classes (also called labels), we will usually have the real labels and the predicted labels. Our models will predict the labels and we will need ways of comparing them to the real labels. The following function is a way to evaluate the actual or real classes per sample (y\_real) against the predicted classes (y\_pred) per sample in a test set. We can compare the two sets of one-hot encoded labels with torch.eq() to measure the accuracy.
+	<li>Predict either real valued numbers (Regression)</li>
+	<li>Predict discrete classes (Classification)</li>
+</ul>
+	
+<p>
+For classification modeling, where we predict discrete classes (also called labels), we will usually have the real labels and the predicted labels. 
+	Our models will predict the labels and we will need ways of comparing them to the real labels. The following function is a way to evaluate the actual 
+	or real classes per sample (y_real) against the predicted classes (y_pred) per sample in a test set. We can compare the two sets of one-hot encoded 
+	labels with torch.eq() to measure the accuracy.
+	<br/>
 The torch.eq() function returns a vector of boolean values that compares the values in two tensors of equal dimensions as can be seen in the following code listing:
+
+	
+</p>
+
 
 
 <center>
@@ -1655,20 +1787,33 @@ torch.eq(x, y)   =>    [False, False, True]   or  [0, 0, 1]
 </div>
 </center>
 	
+<p>
+The loss functions vary for regression and classification. Classification uses Cross Entropy losss (defined later) and Regression uses
+	Mean Squared Error usually (described earlier).
+
+	
+</p>
 
 
-The loss functions vary for regression and classification. Classification uses Cross Entropy losss (defined later) and Regression uses Mean Squared Error usually (described earlier).
+<ul>
+	<li>Classification loss is Cross Entropy</li>
+	<li>Regression loss is MSE</li>
+</ul>
+	
+<h1>
+Instantiating the different models
+	
+</h1>
 
-\begin{itemize}
-    \item Classification loss is Cross Entropy
-    \item Regression loss is MSE
-\end{itemize}
+<p>
+So, now we are ready to once again define our model architecture, and define the loss and training functions.  This is where the magic will 
+	happen and where the code will be specific to the algorithm and architecture being defined. Since this will vary based on model and output
+	type we want to predict, each algorithm will be addressed in its own section later. For now, I will simply define how we can instantiate the architectures. 
+	For example, in the next code section I have the core function calls for logistic regression.
 
-\subsection{Instantiating the different models}
- 
 
-So, now we are ready to once again define our model architecture, and define the loss and training functions.  This is where the magic will happen and where the code will be specific to the algorithm and architecture being defined. Since this will vary based on model and output type we want to predict, each algorithm will be addressed in its own section later. For now, I will simply define how we can instantiate the architectures. For example, in the next code section I have the core function calls for logistic regression.
-
+	
+</p>
 
 <center>
 <div>
@@ -1689,9 +1834,12 @@ train_loop(  N_epochs, model, loss_fn, opt    )
 </center>
 	
 
-
-
+<p>
 If we were defining a deep neural network (with several layers), we can define the function calls as follows (below). 
+
+
+	
+</p>
 
 
 <center>
@@ -1713,9 +1861,13 @@ train_loop(  N_epochs, model, loss_fn, opt    )
 </center>
 	
 
+<p>
 
+The important aspect is to notice that the structure of the code is mostly maintained and that the only things that change are the architecture definition 
+	and the loss function (usually from MSE to Cross entropy).
+	
+</p>
 
-The important aspect is to notice that the structure of the code is mostly maintained and that the only things that change are the architecture definition and the loss function (usually from MSE to Cross entropy).
 
 <h1>
 Reading Data in batches
@@ -1725,17 +1877,17 @@ Reading Data in batches
 	<p>
 Earlier in this book, I mentioned that one of the advantages of deep neural networks and PyTorch is that they were designed to process massive amounts of data. 
 		Loading millions of records directly into RAM memory would not be suitable for most big data challenges. Instead, to be more efficient we can load data 
-		in batches. That is, we can take our data set and divide it into bins of size \textbf{N\_batch\_size}.  
+		in batches. That is, we can take our data set and divide it into bins of size "N_batch_size".  
 
            
 <br/>
 In the following code section, I will show how to create the batches manually. We need to define the size of each batch (in this case 100 samples) and the 
 		size of the train set file. Then we divide number of samples by number of batches. We can then easily slice out the batches from the data by
-		iterating the \textbf{batch\_n} index. The dimensions are \textbf{sta} for the starting index and \textbf{end} for the ending index. In every 
-		iteration, we select the rows from \textbf{sta} to \textbf{end} (sta:end) and all the columns (:). 
+		iterating the batch_n index. The dimensions are "sta" for the starting index and "end" for the ending index. In every 
+		iteration, we select the rows from "sta" to "end" (sta:end) and all the columns (:). 
 
 <br/>
-PyTorch has tools to do this with Torch \textbf{TensorDataSet} and Torch \textbf{DataLoader} as we previously saw but this is how it works! The code is as follows: 
+PyTorch has tools to do this with Torch "TensorDataSet" and Torch "DataLoader" as we previously saw but this is how it works! The code is as follows: 
 
 		
 	</p>
@@ -1770,8 +1922,8 @@ What is Number of Epochs?
 
 <p>
 The previous code section focuses on the training phase in the main loop. This section has 2 nested loops for training. The first one is to train the model
-	for \textbf{n\_epochs}. This allows us to set how many times we want to run the optimization of the model to learn the parameters (i.e. the weight vectors). 
-	Stop here and think about this for a second and contemplate what this means. If we set \textbf{n\_epochs} to 100,000, then it means that the loop will show 
+	for "n_epochs". This allows us to set how many times we want to run the optimization of the model to learn the parameters (i.e. the weight vectors). 
+	Stop here and think about this for a second and contemplate what this means. If we set "n_epochs" to 100,000, then it means that the loop will show 
 	the same data to the model during training a total of 100,000 times! The data is usually randomized or shuffled each time but still. The model sees the 
 	data 100,000 (again and again). Do humans need that many times to learn something? We should think about this.
 
@@ -1785,91 +1937,153 @@ The previous code section focuses on the training phase in the main loop. This s
 </h1>
 
 
-Before we look at the deep neural nets, it is a good idea to look at logistic regression. Logistic regression is still a linear classifier but deep neural nets can build on the ideas of logistic regression. So, basically here we will use all the code we have developed so far. The only main difference is that now we will re-define the code for:
+<p>
+Before we look at the deep neural nets, it is a good idea to look at logistic regression. Logistic regression is still a linear classifier but deep neural 
+	nets can build on the ideas of logistic regression. So, basically here we will use all the code we have developed so far. The only main difference is 
+	that now we will re-define the code for:
 
-\begin{itemize}
-    \item The architecture classes (Inference class)
-    \item The loss function
-\end{itemize}
+	
+</p>
+	
+<ul>
+
+	<li>The architecture classes (Inference class)</li>
+	<li>
+		 The loss function
+	</li>
+</ul>
+
+<p>
+
+	The logistic regression inference model class is mainly different from the linear regression approach because we now run our function "nn.linear" 
+	which represents the linear equation through a Softmax function.
+
+</p>
 
 
-The logistic regression inference model class is mainly different from the linear regression approach because we now run our function \textbf{nn.linear} which represents the linear equation through a Softmax function.
 
-\begin{center}
-    y = Softmax( torch.matmul(x, W) + b  )
+<center>
+   y = Softmax( torch.matmul(x, W) + b  )
 
-    
-\end{center}
+	
+</center>
+	
+<p>
 
-Additionally, instead of predicting a real valued number with just one output neuron, we now have several output neurons which represent each possible class (3 in the case of IRIS, or 10 in the case of MNIST or CIFAR-10, etc.). Our Wine Quality dataset can also be used in a classification example since the \textbf{y} values are discrete and consist of the values [0, 1, 2, 3, 4, 5]. These represent the wine quality rating from 0 to 6. So, in this case would have 6 classes. 
+	Additionally, instead of predicting a real valued number with just one output neuron, we now have several output neurons which represent each possible
+	class (3 in the case of IRIS, or 10 in the case of MNIST or CIFAR-10, etc.). Our Wine Quality dataset can also be used in a classification 
+	example since the "y" values are discrete and consist of the values [0, 1, 2, 3, 4, 5]. These represent the wine quality rating from 0 to 6. 
+	So, in this case would have 6 classes. 
 
-\subsection{Theory and Intuition of Logistic Regression  }
+</p>
 
-Intuitively think of it this way. Imagine you want to predict housing prices given square footage. The value we want to predict is a real value number and not a class. So, this means that you use regression modeling. As such:
 
-\begin{center}
-     $ housing\_price = w_1 * square\_footage + b $
+<h1>
+	Theory and Intuition of Logistic Regression
+</h1>
+	
+<p>
+Intuitively think of it this way. Imagine you want to predict housing prices given square footage. The value we want to predict is a real value number and
+	not a class. So, this means that you use regression modeling. As such:
 
-\end{center}
+	
+</p>
 
+<center>
+
+	     $ housing_price = w_1 * square_footage + b $
+</center>
+
+
+<p>
 or
+	
+</p>
 
-\begin{center}
-  
-                        $ y = w_1 * x_1 + b $
 
-    
-\end{center}
+<center>
+	   $ y = w_1 * x_1 + b $
+</center>
+
+	
+<p>
+	This formula with values could look like this:
+</p>
      
-This formula with values could look like this:
 
-\begin{center}
+
+<center>
+
+	     \$250,500 = 50 * 5000 + 500
+</center>
   
-                       \$250,500 = 50 * 5000 + 500
+                  
 
-    
-\end{center}
+<p>
 
-
-
-The model learned the parameters 50 and 500, and with an input of 5000 square feet can predict the housing price. This is a network of one input neuron and one output neuron. One can reason that you can create another similar equation with one input and one output and now you have 2 separate functions with 1 input each that predict one different output each. While these are 2 separate equations, we can combine them together using neural networks so that now both equations work together and can predict 2 outputs given 2 inputs. Basically, that is a model of multiple inputs (two in this case) to multiple outputs (two in this case).
+	
+The model learned the parameters 50 and 500, and with an input of 5000 square feet can predict the housing price. This is a network of one input neuron and one
+	output neuron. One can reason that you can create another similar equation with one input and one output and now you have 2 separate functions with 1 input
+	each that predict one different output each. While these are 2 separate equations, we can combine them together using neural networks so that now both
+	equations work together and can predict 2 outputs given 2 inputs. Basically, that is a model of multiple inputs (two in this case) to multiple
+	outputs (two in this case).
+	<br/><br/>
 We can extend this idea to models of several classes such as a model for the IRIS data set which has 3 classes, or the wine quality dataset which has 6. 
-
+<br/><br/>
 Now, how do we convert real valued numbers such as housing prices to discrete classes such as setosa, virgina, and versicolor? 
+<br/><br/>
+
+Well, we know in linear regression we can learn to predict real valued numbers given inputs. From maths we also know that we can run real valued numbers through
+	certain functions to obtain scaled versions of those numbers. In this case a function such as the sigmoid (or the softmax) can do the following:
+
+</p>
 
 
-Well, we know in linear regression we can learn to predict real valued numbers given inputs. From maths we also know that we can run real valued numbers through certain functions to obtain scaled versions of those numbers. In this case a function such as the sigmoid (or the softmax) can do the following:
 
-\begin{center}
+<center>
+   new_y  =  S(y)
+	
+</center>
   
-                      new\_y  =  S(y)
+                   
 
-    
-\end{center}
-
-                       
+<p>
 where 
+	
+</p>                    
 
-\begin{center}
+
+<center>
+
+	  $   y  =  w * x  +  b $
+</center>
   
-                 $   y  =  w * x  +  b $
+               
 
-    
-\end{center}
-
-                 
+<p>
 This function will take any value and convert it into a value in the range from 0-1. For example:
 
-\begin{center}
+	
+</p>
+                 
+
+<p>
+	
+\$250,500 = 50 * 5000 + 500
+                   <br/>                                 
+new_y  =  S( \$250,500 )
+                  <br/>                                        
+new_y  =   0.80
+	
+</p>
+
+	
+
   
-            \$250,500 = 50 * 5000 + 500
-                                                    
-            new\_y  =  S(\$250,500)
-                                                       
-            new\_y  =   0.80
+          
 
     
-\end{center}
+
                                               
              
 
