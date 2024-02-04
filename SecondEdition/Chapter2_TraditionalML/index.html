@@ -66,7 +66,7 @@
 <h1>Copyright, License, FTC and Amazon Disclaimer</h1>
 
 <p>
- Copyright &copy by Ricardo A. Calix. <br/>
+ <center>Copyright &copy by Ricardo A. Calix.</center> <br/>
  All rights reserved. No part of this work may be reproduced or transmitted in any form or by any means, without written permission of the copyright owner. <br/>
  This post/page/article includes Amazon Affiliate links to products. This site receives income if you purchase through these links. 
  This income helps support content such as this one. 
@@ -110,7 +110,7 @@ Machine Learning (ML) is essential for automated systems to make decisions and t
 
 Classifiers are machine learning approaches that produce as an output a specific class given some input features. Important classifiers include Support Vector Machines
 	(Burges 1998) commonly implemented using LibSVM (Chang and Lin, 2001), Naïve Bayes, artificial neural networks, deep learning based neural networks, 
-	decision trees, random forests, and the k-nearest neighbor classifier ( \babelEN{\cite{wittenRef}} ). 
+	decision trees, random forests, and the k-nearest neighbor classifier ( wittenRef ). 
 
 Regression models are those that produce a real valued number instead of class such as the price or square footage of a house. 
 
@@ -178,36 +178,62 @@ from sklearn import decomposition
 </div>
 </center>
 
+<p>
+As you may imagine the SKlearn library is the main library which contains most of the traditional machine learning tools we will discuss in this chapter.
+	The numpy library is essential for efficient matrix and linear algebra operations. For those with experience with MatLab, I can say that numpy is a way of 
+	performing linear algebra operations in python similar to how they are done in MatLab. This makes the code more efficient in its implementation and faster as well.  
+	The datasets library seen above helps to obtain standard corpora. You can use it to obtain annotated data like Fisher’s iris data set, for instance.
 
 
-As you may imagine the SKlearn library is the main library which contains most of the traditional machine learning tools we will discuss in this chapter. The numpy library is essential for efficient matrix and linear algebra operations. For those with experience with MatLab, I can say that numpy is a way of performing linear algebra operations in python similar to how they are done in MatLab. This makes the code more efficient in its implementation and faster as well.  The datasets library seen above helps to obtain standard corpora. You can use it to obtain annotated data like Fisher’s iris data set, for instance.
-
-
-From sklearn.cross\_validation we can import train\_test\_split which is used to create splits in a data matrix such as 70 percent for training purposes and 30 percent for testing purposes. From sklearn.preprocessing we can import the StandardScaler module which helps to scale  data. We will use functions such as these to scale our data for the PyTorch based models. Deep learning algorithms can improve significantly when data is properly scaled. So, it is recommended to do this.  
-We will use the sklearn.metrics module for performance evaluation of the classifiers. I will show that this module can be used with SKlearn models and with PyTorch models. Again, this will help to more easily understand deep learning since we don’t have to use the more complex and very verbose PyTorch functions. 
-
+From sklearn.cross_validation we can import train_test_split which is used to create splits in a data matrix such as 70 percent for training purposes and 30 percent 
+	for testing purposes. From sklearn.preprocessing we can import the StandardScaler module which helps to scale  data. We will use functions such as these to scale 
+	our data for the PyTorch based models. Deep learning algorithms can improve significantly when data is properly scaled. So, it is recommended to do this.  
+We will use the sklearn.metrics module for performance evaluation of the classifiers. I will show that this module can be used with SKlearn models and with PyTorch models. 
+	Again, this will help to more easily understand deep learning since we don’t have to use the more complex and very verbose PyTorch functions. 
+<br/>
 The main metrics used for classification models are:
 
-\begin{itemize}
-\item accuracy\_score
-\item recall\_score
-\item f1\_score
-\item precision\_score
-\item confusion\_matrix
-\end{itemize}
+	
+</p>
 
-The main metrics used for regression models are:
+<ul>
 
-\begin{itemize}
-\item coefficient of determination ($ R^2 $)
-\item RMSE
-\end{itemize}
+	<li>
+	 accuracy_score	
+	</li>
+	<li>recall_score</li>
+	<li>f1_score</li>
+	<li>precision_score</li>
+	<li>confusion_matrix</li>
+	
+	
+</ul>
+
+<p>
+
+	The main metrics used for regression models are:
+
+</p>
+	
+
+<ul>
+<li></li>
+	<li>coefficient of determination ($ R^2 $)</li>
+	<li>RMSE</li>
+	
+</ul>
+	
+<p>
+	Two more very important libraries are matplotlib.pyplot and pandas. The matplotlib.pyplot library is very useful for visualization of data and results,
+	and the pandas library is very useful for pre-processing. The pandas library can be very useful to pre-process large data sets in very fast and very efficient ways.
+There are some parameters that are sometimes useful to set in your code. The code sample below shows the use of np.set\_printoptions. The function is used to print all
+	values in a numpy array. This can be useful when trying to visualize the contents of a large data set. 
+
+
+</p>
 
 
 
-
-Two more very important libraries are matplotlib.pyplot and pandas. The matplotlib.pyplot library is very useful for visualization of data and results, and the pandas library is very useful for pre-processing. The pandas library can be very useful to pre-process large data sets in very fast and very efficient ways.
-There are some parameters that are sometimes useful to set in your code. The code sample below shows the use of np.set\_printoptions. The function is used to print all values in a numpy array. This can be useful when trying to visualize the contents of a large data set. 
 
 
 
@@ -228,8 +254,18 @@ np.set_printoptions(threshold=np.inf)
 </div>
 </center>
 
-Let us assume that our data is stored in the matrix X. The code segment below uses the function train\_test\_split. This function is used to split a data set (in this case X) into 4 sets which are X\_train, X\_test, y\_train, y\_test. These are the 4 sets that will be used by the traditional or the deep learning models. The sets that start with X hold the data (feature vectors) and the sets that start with y hold the labels per sample (e.g. $ y_1 $ for the first feature vector, $ y_2 $ for the second feature vector, and so on). 
-The values test\_size=0.01 and random\_state=42 in the function are parameters that define the split. The value 0.01 makes a train set that has 99 percent of all samples while the test set has 1 percent of all samples. In contrast test\_size=0.20 would mean that there is a 80 \% and 20 \% split. The random\_state=42 allows you to always get the same random data since the seed is defined as 42.
+<p>
+
+	Let us assume that our data is stored in the matrix X. The code segment below uses the function train_test_split. This function is used to split 
+	a data set (in this case X) into 4 sets which are X_train, X_test, y_train, y_test. These are the 4 sets that will be used by the traditional or the deep learning
+	models. The sets that start with X hold the data (feature vectors) and the sets that start with y hold the labels per sample (e.g. $ y_1 $ for the first 
+	feature vector, $ y_2 $ for the second feature vector, and so on). 
+The values test_size=0.01 and random_state=42 in the function are parameters that define the split. The value 0.01 makes a train set that has 99 percent 
+	of all samples while the test set has 1 percent of all samples. In contrast test_size=0.20 would mean that there is a 80% and 20% split. 
+	The random_state=42 allows you to always get the same random data since the seed is defined as 42.
+
+</p>
+	
 
 
 
@@ -250,14 +286,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random
 </div>
 </center>
 	
-
-To call all the functions or models you can employ the following approach.  Here we have defined 5 common models. Notice that each one gets the 4 data sets obtained from the percentage split. Notice also that the data files have a \_normalized added to their name. 
-
-
-
-This is a good standard approach used by programmers to indicate that this data has been scaled. The next chapter addresses scaling. Here you run X\_train through a scaler function to obtain X\_train\_normalized. The labels (y) are not scaled, in this case.
+<p>
+To call all the functions or models you can employ the following approach.  Here we have defined 5 common models. Notice that each one gets the 4 data sets obtained 
+	from the percentage split. Notice also that the data files have a _normalized added to their name. 
 
 
+
+This is a good standard approach used by programmers to indicate that this data has been scaled. The next chapter addresses scaling. Here you 
+	run X\_train through a scaler function to obtain X_train_normalized. The labels (y) are not scaled, in this case.
+
+
+
+	
+</p>
 
 
 
@@ -281,7 +322,13 @@ multilayer_perceptron_rc(X_train_normalized, y_train, X_test_normalized, y_test)
 </div>
 </center>
 
-Before we talk about the models, let us address performance evaluation. Performance evaluation will help you to determine how good your classifier is given an annotated test data set.
+<p>
+Before we talk about the models, let us address performance evaluation. Performance evaluation will help you to determine how good your classifier is 
+	given an annotated test data set.
+
+	
+</p>
+	
 
 <h1>
 
@@ -344,13 +391,20 @@ Regression Performance Evaluation
 		
 	</h1>
 
-	
+	<p>
 The main metrics used for regression models are:
 
-\begin{itemize}
-\item coefficient of determination ($ R^2 $)
-\item RMSE
-\end{itemize}
+
+		
+	</p>
+
+	<ul>
+		<li>coefficient of determination ($ R^2 $)</li>
+		<li>RMSE</li>
+		
+		
+	</ul>
+
 
 
 <p>
@@ -387,62 +441,95 @@ Classification Performance Evaluation
 	
 </h1>
 
+<p>
 The main metrics used for classification models are:
 
-\begin{itemize}
-\item accuracy\_score
-\item recall\_score
-\item f1\_score
-\item precision\_score
-\item confusion\_matrix
-\end{itemize}
+	
+</p>
 
-Evaluation of the performance of your classifiers is extremely important. The SKlearn kit provides very good modules to address this issue. In particular, evaluation often involves measuring accuracy, precision, recall, and f-measure. 
+
+	<ul>
+<li>accuracy_score</li>
+		<li>recall_score</li>
+		<li>f1_score</li>
+		<li>precision_score</li>
+		<li>confusion_matrix</li>
+		
+		
+	</ul>
+
+<p>
+Evaluation of the performance of your classifiers is extremely important. The SKlearn kit provides very good modules to address this issue. In particular, 
+	evaluation often involves measuring accuracy, precision, recall, and f-measure. 
 The best way to understand these metrics is to think of a confusion matrix. Confusion matrices show how many elements from a class are correctly and incorrectly classified. 
 
-
+<br/>
 For example, take the following:
 
 
-
+<br/><br/>
 
 
 Given this table, we can calculate accuracy as
 
-\begin{center}
-    $     accuracy = (a+d) / (a + b + c + d)   $
-\end{center}
+	
+</p>
+
+	<center>
+		  $     accuracy = (a+d) / (a + b + c + d)   $
+	</center>
+
+<p>
+
+precision is
+	
+</p>
           
 
 
-precision is
 
-\begin{center}
-    precision = a / (a + c)
-\end{center}
 
+	<center>
+		 $   precision = a / (a + c)  $
+	</center>
+	
+<p>
+the recall metric can be computed as follows
+
+	
+	
+</p>
 
                 
 
 
-the recall metric can be computed as follows
 
-\begin{center}
-       recall = a / (a + b) 
-\end{center}
+	<center>
+		   $    recall = a / (a + b) $
+	</center>
+
 
 
               
+<p>
+
+	Finally, the f measure which is a harmonic average of recall and precision can be computed as follows
 
 
-Finally, the f measure which is a harmonic average of recall and precision can be computed as follows
+</p>
 
-\begin{center}
-        F = (2 * (precision*recall)) / (precision + recall)  
-\end{center}
+	
+	<center>
+		  $      F = (2 * (precision*recall)) / (precision + recall)   $
+	</center>
 
-
+<p>
 The sample code to obtain these metrics is provided below.
+
+	
+</p>
+
+
 
 
 
@@ -471,7 +558,14 @@ def print_metrics_function(y_test, y_pred):
 </center>
 
 
-The code above shows a function to print the performance metric statistics. Notice that two sets are provided which are y\_pred and y\_test. The y\_test data set contains the original annotated labels. The y\_pred data set contains the labels predicted by your classifier. Each of the metric functions such as \textbf{f1\_score} and \textbf{recall\_score} uses these 2 data sets to calculate the respective metric. 
+<p>
+The code above shows a function to print the performance metric statistics. Notice that two sets are provided which are y_pred and y_test. The y_test 
+	data set contains the original annotated labels. The y_pred data set contains the labels predicted by your classifier. Each of the metric functions
+	such as "f1_score" and "recall_score" uses these 2 data sets to calculate the respective metric. 
+
+	
+</p>
+	
 
 <h1>
 
@@ -479,8 +573,13 @@ The code above shows a function to print the performance metric statistics. Noti
 </h1>
 
 
-In the following code segment we can see the function plot\_metric\_per\_epoch() which can be used to plot metric value every N values. For this to work, you store the metric values in a list such as precision\_scores\_list and then proceed to plot these values using the matplot library. 
+<p>
+	In the following code segment we can see the function plot_metric_per_epoch() which can be used to plot metric value every N values. 
+	For this to work, you store the metric values in a list such as precision_scores_list and then proceed to plot these values using the matplot library. 
 
+
+</p>
+	
 
 
 <center>
@@ -507,9 +606,12 @@ def plot_metric_per_epoch( precision_scores_list ):
 </center>
 	
 
-	
+<p>
 
-The output should look like the following figure. 
+	The output should look like the following figure. 
+
+</p>	
+
 
 <center>
       <div>
@@ -524,26 +626,40 @@ The output should look like the following figure.
 </h1>
     
 
+<p>
+
+	Before we begin to discuss some of the machine learning algorithms, I should say something about optimization. Optimization is a key process in machine 
+	learning. Basically, any supervised learning algorithm needs to learn a prediction equation given a set of annotated data. This prediction function usually 
+	has a set of parameters that must be learned. However, the question is “how do you learn these parameters?”
+
+
+</p>
+
+
+<p>
+
+	The answer is that you do so through: 
+</p>
 
 
 
-Before we begin to discuss some of the machine learning algorithms, I should say something about optimization. Optimization is a key process in machine learning. Basically, any supervised learning algorithm needs to learn a prediction equation given a set of annotated data. This prediction function usually has a set of parameters that must be learned. However, the question is “how do you learn these parameters?”
+<center>
+	optimization
+</center>
 
 
-
-The answer is that you do so through: 
-
-\begin{center}
-    \textbf{optimization}
-
-\end{center}
-
-
-In its simplest form, optimization consists of trying a set of parameters with your model and seeing what result they give you. If the result is not good, the optimization algorithm needs to decide if you should decrease the values of the parameters or increase the values of the parameters. 
-
-In general, you do this in a loop (increasing and decreasing) until you find an optimal set of parameters. But one of the questions to answer here is: do the values go up or down? Well, as it turns out, there are methodologies based on calculus that help you to make this decision. 
-
+	<p>
+		
+In its simplest form, optimization consists of trying a set of parameters with your model and seeing what result they give you. If the result is not good, the 
+		optimization algorithm needs to decide if you should decrease the values of the parameters or increase the values of the parameters. 
+<br/><br/>
+In general, you do this in a loop (increasing and decreasing) until you find an optimal set of parameters. But one of the questions to answer here is: do 
+		the values go up or down? Well, as it turns out, there are methodologies based on calculus that help you to make this decision. 
+<br/><br/>
 Let us try to picture this with a graph (below). 
+	</p>
+
+
 
 
 <center>
@@ -554,17 +670,29 @@ Let us try to picture this with a graph (below).
 
 
 
+<p>
 
+The above graph represents an optimization problem. The y axis represents the cost (or penalty) of using a given parameter. The x axis represents the value of the 
+	parameter (w) being used at the given iteration. The curve represents the behavior that the function being used to minimize the cost will follow for every
+	value of parameter w. 
+<br/><br/>
+As shown in the graph, the optimal value for the curve is found where the star is located (i.e where the value of cost is at a minimum). So, somehow the optimization
+	algorithm needs to travel through the function and arrive at the position indicated by the star. 
+<br/><br/>
+At that point, the value of “w” reduces the cost and finds the best solution. Instead of trying all values of “w” at random, the algorithm can make educated guesses 
+	about which direction to follow (up or down). To do this, we can use calculus to calculate the derivative of the function at a given point. This will allow 
+	us to determine the slope at that point. In the case of the graph, this represents the tangent line to the curve if we calculate the derivative at point w. 
+	If we calculate the slope at the position of the star symbol, then the slope is zero because the tangent at that point is parallel to the x axis. The slope 
+	at the point “w” will be positive. Based on this result, we can tell the direction we want to take for parameter w (decrease or increase). This type of 
+	optimization is called gradient descent and is very important in machine learning and deep learning. There are several approaches to implement gradient 
+	descent and this is just the simplest explanation for conceptual purposes. We can write the algorithm for this technique as follows:
+
+	
+</p>
 
 
     
 
-
-The above graph represents an optimization problem. The y axis represents the cost (or penalty) of using a given parameter. The x axis represents the value of the parameter (w) being used at the given iteration. The curve represents the behavior that the function being used to minimize the cost will follow for every value of parameter w. 
-
-As shown in the graph, the optimal value for the curve is found where the star is located (i.e where the value of cost is at a minimum). So, somehow the optimization algorithm needs to travel through the function and arrive at the position indicated by the star. 
-
-At that point, the value of “w” reduces the cost and finds the best solution. Instead of trying all values of “w” at random, the algorithm can make educated guesses about which direction to follow (up or down). To do this, we can use calculus to calculate the derivative of the function at a given point. This will allow us to determine the slope at that point. In the case of the graph, this represents the tangent line to the curve if we calculate the derivative at point w. If we calculate the slope at the position of the star symbol, then the slope is zero because the tangent at that point is parallel to the x axis. The slope at the point “w” will be positive. Based on this result, we can tell the direction we want to take for parameter w (decrease or increase). This type of optimization is called gradient descent and is very important in machine learning and deep learning. There are several approaches to implement gradient descent and this is just the simplest explanation for conceptual purposes. We can write the algorithm for this technique as follows:
 
 <center>
 <div>
@@ -592,27 +720,36 @@ print(“result is: ”, new_x)
 </center>
 	
 
-
-
+<p>
 In the previous code example we assume a function of 
-
+<br/><br/>
                   $   f() =  x^3 - 3 x^2 + 7    $
-
+<br/><br/>
 that needs to be optimized for parameter x. We will need the value of the derivative for each point x. 
 The derivative for f() is:
-
+<br/><br/>
                $          f '() = 3 x^2 - 6x   $
-
+<br/><br/>
 So, the parameter x can be calculated in a loop using the derivative function which will determine the direction to follow when increasing or decreasing the parameter x.
+
+
+	
+</p>
+
 
 <h1>
 Logistic Regression
 	
 </h1>
 
+<p>
+Logistic regression is a simple algorithm that is often used by practitioners of machine learning because it can obtain good results. Logistic regression
+	is a linear function much like linear regression which predicts the probability of a sample belonging to a given class. Logistic regression uses 
+	another optimization function instead of the standard least squares cost function used in linear regression. 
 
+	
+</p>
 
-Logistic regression is a simple algorithm that is often used by practitioners of machine learning because it can obtain good results. Logistic regression is a linear function much like linear regression which predicts the probability of a sample belonging to a given class. Logistic regression uses another optimization function instead of the standard least squares cost function used in linear regression. 
 
 <center>
 <div>
@@ -630,13 +767,22 @@ def logistic_regression_rc(X_train_normalized, y_train, X_test_normalized, y_tes
 </center>
 	
 
+<p>
+The predicted values from a standard regression approach are now passed through a sigmoid function that basically maps the output to a probability range scale 
+	between 0 and 1. The code below provides an example of how to use the logistic regression function with SKlearn. Later, we will implement this logistic
+	regression function again with PyTorch. 
 
-The predicted values from a standard regression approach are now passed through a sigmoid function that basically maps the output to a probability range scale between 0 and 1. The code below provides an example of how to use the logistic regression function with SKlearn. Later, we will implement this logistic regression function again with PyTorch. 
 
 
+In the previous function, the train and test sets are provided for the model to be trained and tested. In SKlean most steps are abstracted. In contrast, PyTorch 
+	will allow us to define more steps such as the cost function, optimization, and inference equation and other aspects. In the function logistic_regression_rc, 
+	first you initialized a logistic regression object (lr) and then you train and test it with the functions lr.fit and lr.predict. The final step is to measure
+	performance using the previously described function print_stats_percentage_train_test. Most classifiers are implemented in the same way with SKlearn. 
+	In the next section, I will demonstrate how this is done for a neural network in Sklearn.
 
-In the previous function, the train and test sets are provided for the model to be trained and tested. In SKlean most steps are abstracted. In contrast, PyTorch will allow us to define more steps such as the cost function, optimization, and inference equation and other aspects. In the function logistic\_regression\_rc, first you initialized a logistic regression object (lr) and then you train and test it with the functions lr.fit and lr.predict. The final step is to measure performance using the previously described function print\_stats\_percentage\_train\_test. Most classifiers are implemented in the same way with SKlearn. In the next section, I will demonstrate how this is done for a neural network in Sklearn.
 
+	
+</p>
 
 <h1>
 
@@ -644,12 +790,19 @@ In the previous function, the train and test sets are provided for the model to 
 </h1>
 	
 
+<p>
+Neural networks are very complex systems that take a long time to train. Therefore, the use of them in SKlearn may not be recommended except for the smallest of 
+	data sets.  The code is shown here for contrast purposes with later implementations of neural networks in PyTorch. In the next chapters, we will focus 
+	on how to do this in PyTorch and how to create networks of multiple layers.
 
-Neural networks are very complex systems that take a long time to train. Therefore, the use of them in SKlearn may not be recommended except for the smallest of data sets.  The code is shown here for contrast purposes with later implementations of neural networks in PyTorch. In the next chapters, we will focus on how to do this in PyTorch and how to create networks of multiple layers.
+<br/><br/><br/>
 
+In the code below we can see that everything is very similar to the previous logistic regression implementation. The new changes appear in the definition of the
+	clf multilayer object. Here, the parameter hidden_layer_sizes=(100,100) means that the architecture of the network consists of 2 hidden layers with 100
+	neurons each. A parameter such as (200,  ) would mean that the network has 1 hidden layer with 200 neurons.
 
-
-In the code below we can see that everything is very similar to the previous logistic regression implementation. The new changes appear in the definition of the clf multilayer object. Here, the parameter hidden\_layer\_sizes=(100,100) means that the architecture of the network consists of 2 hidden layers with 100 neurons each. A parameter such as (200,  ) would mean that the network has 1 hidden layer with 200 neurons.
+	
+</p>
 
 <center>
 <div>
@@ -679,13 +832,20 @@ def multilayer_perceptron_rc(X_train_normalized, y_train, X_test_normalized, y_t
 </h1>
 
 
+<p>
 
+	
+The k-nearest neighbor (KNN) classifier is a popular algorithm that I always like to use. It requires very little parameter tuning and can be easily implemented. 
+	Here, the code is implemented in mupy becasue of its simplicity. 
+The n_neighbors parameter is the k. In this case, the k closest samples are selected. 
+<br/><br/>
 
-The k-nearest neighbor (KNN) classifier is a popular algorithm that I always like to use. It requires very little parameter tuning and can be easily implemented. Here, the code is implemented in mupy becasue of its simplicity. 
-The n\_neighbors parameter is the k. In this case, the k closest samples are selected. 
+In the next code listing, you can see all the code needed to run KNN. Wow! Pretty short right? This code splits our data into "train" and "test" sets. 
+	Then grabs every sample in the test set and compares it to every sample in the train set. For each test sample, we get all distances between the test 
+	samples and all train samples. We then rank them and select the top "K" distances. Finally, we assign the majority class associated for the 
+	top 5 distances. That is it!
 
-
-In the next code listing, you can see all the code needed to run KNN. Wow! Pretty short right? This code splits our data into \textbf{train} and \textbf{test} sets. Then grabs every sample in the test set and compares it to every sample in the train set. For each test sample, we get all distances between the test samples and all train samples. We then rank them and select the top \textbf{K} distances. Finally, we assign the majority class associated for the top 5 distances. That is it!
+</p>
 
 <center>
 <div>
@@ -737,15 +897,17 @@ my_gen_function()
 </center>
 	
 
+<p>
+	The next code segment includes  a function called the Euclidean distance as can be seen in the next code listing. 
 
+</p>
 
-The next code segment includes  a function called the Euclidean distance as can be seen in the next code listing. 
 
 <center>
 <div>
 <textarea rows="5" cols="100">
 
-def euclidean\_distance(v1, v2):
+def euclidean_distance(v1, v2):
     return np.sqrt( np.sum(   (v1 - v2)**2   )   )
 
 	
@@ -754,15 +916,23 @@ def euclidean\_distance(v1, v2):
 </div>
 </center>
 
+<p>
+This is the function that measures the distance between 2 points in a vector space. These 2 point need to have the same size but the size can be of any dimension. 
+	For instance, for our Iris data, every point has 4 features. So in the code the 2 points v1 and v2 would be of size 4 each. However, we could also have
+	points (samples) of many more dimensions. For instance, points with 100 features. So in this case v1 and v2 would both need to have size 100. But the cool
+	thing is that the function for distance calculation would still work. That is the power of Numpy. 
 
+<br/><br/>
 
-This is the function that measures the distance between 2 points in a vector space. These 2 point need to have the same size but the size can be of any dimension. For instance, for our Iris data, every point has 4 features. So in the code the 2 points v1 and v2 would be of size 4 each. However, we could also have points (samples) of many more dimensions. For instance, points with 100 features. So in this case v1 and v2 would both need to have size 100. But the cool thing is that the function for distance calculation would still work. That is the power of Numpy. 
+The name Euclidean distance comes from a Greek philosopher named Euclid. He is best known for putting together one of the earliest books on geometry. The book was 
+	so good for its time that the type of mathematics it discussed became known as Euclidean geometry.
+<br/><br/>
+So, where does this magical Euclidean distance function come from? Would you believe that it is related to an idea one of the great Greek philosophers (Pytagoras) 
+	is credited with? Pytagoras was before Euclid and is credited with coming up with the Pythagorean Theorem (bubble in the figure). 
 
-
-
-The name Euclidean distance comes from a Greek philosopher named Euclid. He is best known for putting together one of the earliest books on geometry. The book was so good for its time that the type of mathematics it discussed became known as Euclidean geometry.
-
-So, where does this magical Euclidean distance function come from? Would you believe that it is related to an idea one of the great Greek philosophers (Pytagoras) is credited with? Pytagoras was before Euclid and is credited with coming up with the Pythagorean Theorem (bubble in the figure). 
+<br/>
+	
+</p>
 
 
 
@@ -774,10 +944,18 @@ So, where does this magical Euclidean distance function come from? Would you bel
 
     </center>
 
-The theorem states that given a triangle (see figures), the sum of the areas of the two squares on the legs (a and b in green) equals the area of the square on the hypotenuse (c in green). 
 
-If you look closely at the figure below, you can see that I have written down the connection between Pythagoras' theorem, and the euclidean function we used in our code. 
+<p>
 
+	The theorem states that given a triangle (see figures), the sum of the areas of the two squares on the legs (a and b in green) equals the area of the square 
+	on the hypotenuse (c in green). 
+<br/><br/>
+If you look closely at the figure below, you can see that I have written down the connection between Pythagoras' theorem, and the euclidean function we used in our 
+	code. 
+
+
+</p>
+	
 
 
   <center>
@@ -787,33 +965,54 @@ If you look closely at the figure below, you can see that I have written down th
 
     </center>
 
-Now, with some of the math history out of the way, let us continue with our code description. In the next code section we can see the KNN \textbf{predict} function. Actually, the \textbf{predict} function is the actual KNN algorithm. I will describe it in detail next. The variable \textbf{test\_x} is the sample in question. Say, one Iris test sample with 4 features (\textbf{[x1, x2, x3, x4]}). The next line of code:
 
-\begin{center}
-    distances = [ euclidean\_distance(test\_x , x)  for x in X\_train    ]
+<p>
+Now, with some of the math history out of the way, let us continue with our code description. In the next code section we can see the KNN "predict" function. 
+	Actually, the "predict" function is the actual KNN algorithm. I will describe it in detail next. The variable "test_x" is the sample in question. 
+	Say, one Iris test sample with 4 features [x1, x2, x3, x4]}. The next line of code:
 
-\end{center}
+	
+</p>
 
-calculates all the distances between \textbf{test\_x} and all the training samples. The way this statement is written is called a list comprehension in Python. The \textbf{"for x"} part of the statement means that each sample in the train set is grabbed and passed to the \textbf{euclidean\_distance} function along with the test sample. Both points are passed to the Euclidean equation and the distance between them is returned. This is done for every training sample and in the end, the list \textbf{"distances"} contains all the measured distances. 
+	<center>
+   distances = [ euclidean_distance(test_x , x)  for x in X_train    ]
+		
+	</center>
 
+<p>
 
+calculates all the distances between "test_x" and all the training samples. The way this statement is written is called a list comprehension in Python. 
+	The "for x" part of the statement means that each sample in the train set is grabbed and passed to the
+	"euclidean_distance" function along with the test sample. Both points are passed to the Euclidean equation and the distance between them is returned. 
+	This is done for every training sample and in the end, the list \textbf{"distances"} contains all the measured distances. 
 
+<br/><br/>
+	
 The next statement:
+<br/><br/>
+k_neighbor_indices = np.argsort(distances)[:k]
+<br/><br/>
+takes all the distances and, using np.argsort(), sorts them. Then we slice the sorted vector with [:k]. 
+	This slicing only returns the indeces for the k smallest distances. The indeces are assigned to the variable 
+	named "k_neighbor_indices". One important note is that argsort returns only the indeces in the vector and not the values themselves. 
+	Since the indeces in the "X" data and "y" labels are aligned, then we can use these same indeces to extract the corresponding labels 
+	from "y". And that is exactly what we do with the following statement:
+<br/><br/>
+labels = [ y_train[i]  for i in k_neighbor_indices  ]
+<br/><br/>
+Finally, the list "labels" is converted into a Numpy array of the labels which are numbers, and the mean of them is calculated. That is it. You have found the label.
 
-\textbf{k\_neighbor\_indices = np.argsort(distances)[:k]}
-
-takes all the distances and, using \textbf{np.argsort()}, sorts them. Then we slice the sorted vector with \textbf{[:k]}. This slicing only returns the indeces for the k smallest distances. The indeces are assigned to the variable named \textbf{k\_neighbor\_indices}. One important note is that argsort returns only the indeces in the vector and not the values themselves. Since the indeces in the \textbf{"X"} data and \textbf{"y"} labels are aligned, then we can use these same indeces to extract the corresponding labels from \textbf{"y"}. And that is exactly what we do with the following statement:
-
-\textbf{labels = [ y\_train[i]  for i in k\_neighbor\_indices  ]}
-
-Finally, the list \textbf{labels} is converted into a Numpy array of the labels which are numbers, and the mean of them is calculated. That is it. You have found the label.
 
 
 
-
-
+<br/><br/>
 
 Wasn't that easy. We have described the whole KNN algorithm. Wow! 
+
+	
+</p>
+
+
 
 <h1>
 Support Vector Machines (SVM)
@@ -821,15 +1020,25 @@ Support Vector Machines (SVM)
 </h1>
 
 
-	
- 
-Before Deep Neural Networks, SVM was one of the most important ML algorithms. SVM is an example of a theoretically well founded machine learning algorithm. And for this reason it has always been very well respected by machine learning practitioners. This is in contrast to neural networks which haven’t always been considered as very strong on their theoretical framework. As an example, in the rest of this chapter I will discuss SVM’s framework and then provide example code to implement an SVM with SKlearn. 
-Support Vector Machines is a binary classification method based on statistical learning theory which maximizes the margin that separates samples from two classes (Burges 1998; Cortes 1995). This supervised learning machine provides the option of evaluating the data under different spaces through Kernels that range from simple linear to Radial Basis Functions [RBF] (\babelEN{\cite{chang2001Ref}}; Burges 1998; Cortes 1995). Additionally, its wide use in the field of machine learning research and ability to handle large feature spaces makes it an attractive tool for many applications. 
-Statistical Learning Theory (SLT) methods assume prediction models that can be ascribed a confidence characteristic. They are based on the fact that both structural and empirical risks are minimized. The expected risk can be calculated based on the empirical risk that is present in the data with the associated upper and lower bounds. 
+<p>
+
+	Before Deep Neural Networks, SVM was one of the most important ML algorithms. SVM is an example of a theoretically well founded machine learning algorithm. And for this 
+	reason it has always been very well respected by machine learning practitioners. This is in contrast to neural networks which haven’t always been considered as 
+	very strong on their theoretical framework. As an example, in the rest of this chapter I will discuss SVM’s framework and then provide example code to implement an
+	SVM with SKlearn. 
+Support Vector Machines is a binary classification method based on statistical learning theory which maximizes the margin that separates samples from two classes (Burges 1998;
+	Cortes 1995). This supervised learning machine provides the option of evaluating the data under different spaces through Kernels that range from simple linear to 
+	Radial Basis Functions [RBF] (\babelEN{\cite{chang2001Ref}}; Burges 1998; Cortes 1995). Additionally, its wide use in the field of machine learning research and 
+	ability to handle large feature spaces makes it an attractive tool for many applications. 
+Statistical Learning Theory (SLT) methods assume prediction models that can be ascribed a confidence characteristic. They are based on the fact that both structural and 
+	empirical risks are minimized. The expected risk can be calculated based on the empirical risk that is present in the data with the associated upper and lower bounds. 
 
 
 
 The code for SVM can be seen in the next code listing. 
+
+</p>	
+ 
 
 <center>
 <div>
@@ -850,43 +1059,64 @@ def svm_rc(X_train_normalized, y_train, X_test_normalized, y_test):
 
 
 
+<p>
+In SVM, the maximization of the margin is based on the training samples that are closest to the optimal line (also known as support vectors). Because the method 
+	tries to maximize the margin between the samples of two classes under a set of constraints, it ultimately becomes an optimization problem to find the maximum
+	separation band. The function that represents the margin is quadratic and can be solved using quadratic programming techniques with Lagrange operators.  
 
 
-In SVM, the maximization of the margin is based on the training samples that are closest to the optimal line (also known as support vectors). Because the method tries to maximize the margin between the samples of two classes under a set of constraints, it ultimately becomes an optimization problem to find the maximum separation band. The function that represents the margin is quadratic and can be solved using quadratic programming techniques with Lagrange operators.  
+    <br/> <br/>
 
 
-    
+Non-linearly separable cases can be solved by mapping the initial set of features to a higher feature space by way of a Kernel Trick. This will provide higher 
+	freedom in separating the data in higher dimensional space. The Kernel trick takes advantage of the fact that SVMs do not need to know the mapping function
+	because this is expressed as the dot product of the input data. 
+       <br/> <br/>                                                
+Since most real world data includes outliers and noise, a soft margin approach can be introduced in the model to allow for some errors to occur. This softening of
+	the margin is achieved by introducing an error term where the cost represents the penalty for each error
+ <br/> <br/>
 
 
-Non-linearly separable cases can be solved by mapping the initial set of features to a higher feature space by way of a Kernel Trick. This will provide higher freedom in separating the data in higher dimensional space. The Kernel trick takes advantage of the fact that SVMs do not need to know the mapping function because this is expressed as the dot product of the input data. 
-                                                      
-Since most real world data includes outliers and noise, a soft margin approach can be introduced in the model to allow for some errors to occur. This softening of the margin is achieved by introducing an error term where the cost represents the penalty for each error
 
 
 
+Unlike this beautifully well-defined algorithm, neural networks and deep neural networks are not always considered to be so well founded in a theory. Instead, over 
+	the years they have been considered as a type of technique with a black box framework. Because of this, many practitioners have at times disregarded neural 
+	networks and deep neural networks. However, since the early 2000s, deep neural networks have started to defeat all other techniques on challenge after challenge
+	across the machine learning landscape. As such, both academia and industry have noticed and great interest has developed for these techniques. 
+ <br/> <br/>
+Similarly to the previous algorithms, SVM has the same structure as others in SKlearn. It includes a parameter kernel which can be used to set kernels such as linear 
+	or rbf. The rbf kernel requires the parameters of cost and gamma. These values are usually data dependent and require parameter tuning.
+ <br/> <br/>
+	
+</p>
 
-
-
-Unlike this beautifully well-defined algorithm, neural networks and deep neural networks are not always considered to be so well founded in a theory. Instead, over the years they have been considered as a type of technique with a black box framework. Because of this, many practitioners have at times disregarded neural networks and deep neural networks. However, since the early 2000s, deep neural networks have started to defeat all other techniques on challenge after challenge across the machine learning landscape. As such, both academia and industry have noticed and great interest has developed for these techniques. 
-
-Similarly to the previous algorithms, SVM has the same structure as others in SKlearn. It includes a parameter kernel which can be used to set kernels such as linear or rbf. The rbf kernel requires the parameters of cost and gamma. These values are usually data dependent and require parameter tuning.
 
 <h1>
 Regression Trees and XGBoost
 	
 </h1>
 
-\section{}
+<p>
+
+	There are several approaches to fit models to regression data. Three important ones are linear regression, regression trees, and neural networks. 
+	The next section discusses regression and regression trees leading up to XGBoost. 
+
+</p>
  
-There are several approaches to fit models to regression data. Three important ones are linear regression, regression trees, and neural networks. The next section discusses regression and regression trees leading up to XGBoost. 
 
 <h1>
 
 	Regression Trees
 </h1>
 
+<p>
 
-As previously indicated, regression trees (\cite{RegressionTreesTorgo2017}) can fit nonlinear data. Regression trees are a type of decision tree in which the predicted values are not discrete classes but instead are real valued numbers. The key concept here is to use the features from the samples to build a tree. The nodes in the tree are decision points leading to leaves. The leaves contain values that are used to determine the final predicted regression value. 
+	As previously indicated, regression trees (\cite{RegressionTreesTorgo2017}) can fit nonlinear data. Regression trees are a type of decision tree in which 
+	the predicted values are not discrete classes but instead are real valued numbers. The key concept here is to use the features from the samples to build a tree. 
+	The nodes in the tree are decision points leading to leaves. The leaves contain values that are used to determine the final predicted regression value. 
+
+</p>
 
 <h1>
 XGBoost
