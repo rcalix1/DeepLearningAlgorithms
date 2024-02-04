@@ -2071,8 +2071,11 @@ This function will take any value and convert it into a value in the range from 
 	
 \$250,500 = 50 * 5000 + 500
                    <br/>                                 
+                   <br/>                                 
 new_y  =  S( \$250,500 )
-                  <br/>                                        
+                  <br/>  
+                   <br/>                                 
+	
 new_y  =   0.80
 	
 </p>
@@ -2090,37 +2093,50 @@ new_y  =   0.80
 This allows us to learn functions that predict values between 0 and 1. This is good because these values can also be interpreted as probabilities or strengths of my prediction. As in, I have a 0.80 confidence that the house price is \$250,500. But what if I had 3 possible housing prices: \$150,700, \$250,500, and \$350,400. How can I represent this in the previous equation?  
 Well, if we built one equation for \$250,000. Then we can definitely learn equations for the other 2 prices as such:
 
-\begin{center}
-  
-            \$150,700 = 30 * 5000 +  700
-                
+<center>
+
+	    \$150,700 = 30 * 5000 +  700
+                 <br/>  
+                   <br/> 
             \$250,500 = 50 *  5000 +  500
-                                            
+                    <br/>  
+                   <br/>                          
             \$350,400 = 70 * 5000 +  400
+</center>
+  
+            
 
-    
-\end{center}
-
-                
+<p>
 So now if you notice, we have created a system of 3 equations
 
 
-\begin{center}
-  
+	
+</p>
+                
+
+
+<center>
+
              $ y_1   =    w_1  *   x   +   b_1 $
-                    
+                     <br/>  
+                   <br/> 
              $ y_2   =    w_2   *  x   +   b_2 $
-                    
+                     <br/>  
+                   <br/> 
              $ y_3   =    w_3  *    x   +  b_3 $
+	
+</center>
+	
 
 
-    
-\end{center}
+	<p>
+		If you look at this as a network, we can see that it has 3 output neurons and 1 input neuron and, in fact, the network will look like this:
+
+
+
+	</p>
 
                   
-If you look at this as a network, we can see that it has 3 output neurons and 1 input neuron and, in fact, the network will look like this:
-
-
 
 
  <center>
@@ -2132,95 +2148,127 @@ If you look at this as a network, we can see that it has 3 output neurons and 1 
 	
 
 
-
-
+<p>
 If we apply our Sigmoid function:
 
-\begin{center}
+	
+</p>
+
+
+<center>
+    new_y  =  S(y) 
+
+</center>
   
-             new\_y  =  S(y) 
-
-
-    
-\end{center}
-
-                       
-
+         
+<p>
 to each equation then we can get a new set of outputs which are now scaled to be from 0..1 like so: 
 
-\begin{center}
-  
+	
+</p>
+                       
+
+
+<center>
             $o_1     =  S( y_1 )  =    w_1  *   x   +   b_1$
-            
+             <br/>  
+                   <br/> 
             $o_2     =  S( y_2 )  =    w_2   *  x   +   b_2$
-            
+             <br/>  
+                   <br/> 
             $o_3     =  S( y_3 )  =    w_3  *   x   +   b_3$
+	
+</center>
+  
+            
+<p>
 
-
-    
-\end{center}
-
-           
-
+	
  So the formulas, that looked like this 
 
- \clearpage
+</p>
 
-\begin{center}
-  
+           
+<center>
               \$150,700 = 30 * 5000 +  700
-                
-              \$250,500 = 50 *  5000 +  500
-                
+                 <br/>  
+                   <br/> 
+              \$250,500 = 50 * 5000 +  500
+                 <br/>  
+                   <br/> 
               \$350,400 = 70 * 5000 +  400
+	
+</center>
 
 
-    
-\end{center}
 
               
-        
+<p>
 Can now look like this
+	
+</p>        
 
-\begin{center}
-  
-                0.30       = S(30 * 5000 +  700)
-                
+
+<center>
+	        0.30       = S(30 * 5000 +  700)
+                     <br/>  
+                   <br/> 
                 0.60       = S(50 * 5000 +  500)
-                
+                 <br/>  
+                   <br/> 
                 0.70       = S(70 * 5000 +  400)
+</center>
+  
+            
+<p>
 
+This intuition hopefully shows you how you can train models to predict confidence values for a specific output neuron such as, confidence that, given a square
+	footage of 5000, the housing price is more likely to be \$250,000 (based on the 0.60 confidence). 
+<br/><br/>
+For this example we have discretized the housing prices. The model cannot predict values in between these 3 house prices. It can only tell you which one of 
+	these 3 is the most likely. To get prices between these 3 we would use Regression. To assign the second housing price when  training the model we can
+	use a one hot encoding approach like the following [0, 1, 0] to provide the real values. Notice that if you think of these as probabilities, it means 
+	we have 100% confidence that this is for class 2 (second housing price). But our 3 house probabilities do not add up to one (0.30 + 0.6 + 0.7 = 1.6). 
+	Having these add up to 1.0 would be desirable. Luckily, we can accomplish this with the Softmax function. 
+	
+<br/><br/>
+	
+Formally, a Softmax function is a way of mapping a vector of real valued numbers in any range into a vector of real valued numbers in the range of zero
+	to 1 (0-1.0) where all the values add up to 1.0. The result of the Softmax therefore gives a probability distribution over several classes. 
+	The softmax function can be written as follows:
+	
+<br/><br/>
+	
+$ S(y_i)= \frac{e^{y_i}}{ \sum_{j=1}^{c} e^{y_i} } $
 
-    
-\end{center}
+	
+</p>
 
              
+<p>
 
-This intuition hopefully shows you how you can train models to predict confidence values for a specific output neuron such as, confidence that, given a square footage of 5000, the housing price is more likely to be \$250,000 (based on the 0.60 confidence). 
+This function takes the y values as inputs (called logit scores), which represent the classes "c",  and produces a new y vector where all values add up to 1. 
+	An example can be seen here:
 
-For this example we have discretized the housing prices. The model cannot predict values in between these 3 house prices. It can only tell you which one of these 3 is the most likely. To get prices between these 3 we would use Regression. To assign the second housing price when  training the model we can use a one hot encoding approach like the following [0, 1, 0] to provide the real values. Notice that if you think of these as probabilities, it means we have 100\% confidence that this is for class 2 (second housing price). But our 3 house probabilities do not add up to one (0.30 + 0.6 + 0.7 = 1.6). Having these add up to 1.0 would be desirable. Luckily, we can accomplish this with the Softmax function. 
+	
+</p>
 
-Formally, a Softmax function is a way of mapping a vector of real valued numbers in any range into a vector of real valued numbers in the range of zero to 1 (0-1.0) where all the values add up to 1.0. The result of the Softmax therefore gives a probability distribution over several classes. The softmax function can be written as follows:
+<center>
 
-\[ S(y_i)= \frac{e^{y_i}}{ \sum_{j=1}^{c} e^{y_i} }\]
-
-
-
-
-This function takes the y values as inputs (called logit scores), which represent the classes "c",  and produces a new y vector where all values add up to 1. An example can be seen here:
-
-\begin{center}
-  
-[2.0 , 1.0, 0.1]       and maps it to  =>        [0.7, 0.2, 0.1]
+	[2.0 , 1.0, 0.1]       and maps it to  =>        [0.7, 0.2, 0.1]
 
 
-    
-\end{center}
+</center>
 
 
 
-
+<p>
 In python we can test this as follows:
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -2241,9 +2289,11 @@ print( sum(softmax) )
 </center>
 
 
+<p>
+	In the next code segment, the inference function for logistic regression is defined in PyTorch. 
 
+</p>
 
-In the next code segment, the inference function for logistic regression is defined in PyTorch. 
 
 <center>
 <div>
@@ -2258,8 +2308,12 @@ y_pred = nn.Softmax(  y  )
 </center>
 
 
+<p>
 
 For illustration, the figure below shows the logistic regression neural network for the Iris dataset. 
+
+	
+</p>
 
 
 
@@ -2270,30 +2324,59 @@ For illustration, the figure below shows the logistic regression neural network 
 
     </center>
 
-So, assuming we are working with the iris dataset, the features are equal to 4 and the classes are equal to 3. The previous figure shows the architecture for a logistic regression model. If you look closely, you can conclude that a logistic regression model is like a neural network with no hidden layers. There are only 2 layers: the input layer and the output layer. A hidden layer would be a layer in between input and output that connects these 2 layers. The number of neurons in one layer and the number of neuron in the next layer determine the size of the weights matrix W. For the Iris example we can see that W results in a matrix that is [4,3] in size. The b vector (bias) has dimension 3 (for the 3 output neurons). That is, there is now a bias for every neuron in the output layer. 
+<p>
+So, assuming we are working with the iris dataset, the features are equal to 4 and the classes are equal to 3. The previous figure shows the architecture
+	for a logistic regression model. If you look closely, you can conclude that a logistic regression model is like a neural network with no hidden layers. 
+	There are only 2 layers: the input layer and the output layer. A hidden layer would be a layer in between input and output that connects these 2 layers. 
+	The number of neurons in one layer and the number of neuron in the next layer determine the size of the weights matrix W. For the Iris example we can see
+	that W results in a matrix that is [4,3] in size. The b vector (bias) has dimension 3 (for the 3 output neurons). That is, there is now a bias for every
+	neuron in the output layer. 
 
 
+<br/><br/>
+In the linear regression example we used a Least Squares Error loss function (or MSE). In this case we now use a logistic regression cost function. 
+	Logistic regression uses a cost function called Cross Entropy. The Cross Entropy compares the real labels to the predicted labels.
 
-In the linear regression example we used a Least Squares Error loss function (or MSE). In this case we now use a logistic regression cost function.  Logistic regression uses a cost function called Cross Entropy. The Cross Entropy compares the real labels to the predicted labels.
+	<br/><br/>
 There are actually 2 types of Cross Entropy. They are:
 
-\begin{itemize}
-    \item The binary form of cross entropy (for 2 classes)
-    \item The multi-class form
-\end{itemize}
+	
+</p>
+	
 
-\subsubsection{Binary Cross Entropy}
+<center>
 
-The binary form of cross entropy is for cases when you only have 2 classes. The Cross Entropy compares the real labels to the predicted labels using the following equation. The following Cross Entropy loss equation replaces our previously described MSE loss function when optimizing classification models. The Cross Entropy is formally defined as follows:
+	<li>The binary form of cross entropy (for 2 classes)</li>
+	<li>The multi-class form</li>
+</center>
+	
+<h1>
 
-\begin{center}
+	Binary Cross Entropy
+</h1>
+
+<p>
+
+The binary form of cross entropy is for cases when you only have 2 classes. The Cross Entropy compares the real labels to the predicted labels using the 
+	following equation. The following Cross Entropy loss equation replaces our previously described MSE loss function when optimizing classification models.
+	The Cross Entropy is formally defined as follows:
+
+	
+</p>
+
+
+<center>
+	
 $ 
 \begin{aligned}
 cost( g(w^T * x), y ) & = - log( g(w^T * x)) \qquad \longrightarrow  if \qquad y = 1 \\
                       & = - log( 1- g(w^T * x))     \longrightarrow  if \qquad y = 0 
 \end{aligned}
 $ 
-\end{center}
+	
+</center>
+
+
 
 
 In the previous cost function definition, g() represents the Sigmoid function. We can also write these equations as follows:
