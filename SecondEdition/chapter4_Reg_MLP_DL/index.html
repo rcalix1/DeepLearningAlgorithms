@@ -2344,11 +2344,14 @@ There are actually 2 types of Cross Entropy. They are:
 </p>
 	
 
-<center>
-
-	<li>The binary form of cross entropy (for 2 classes)</li>
+<ul>
+<li>The binary form of cross entropy (for 2 classes)</li>
 	<li>The multi-class form</li>
-</center>
+	
+</ul>
+
+	
+
 	
 <h1>
 
@@ -2377,21 +2380,29 @@ $
 </center>
 
 
+<p>
+	In the previous cost function definition, g() represents the Sigmoid function. We can also write these equations as follows:
 
+</p>
 
-In the previous cost function definition, g() represents the Sigmoid function. We can also write these equations as follows:
+<center>
 
-
-\begin{center}
-$ 
+	$ 
 \begin{aligned}
          & - log( h_0(x)) \qquad \longrightarrow  if \qquad y = 1 \\
          & - log( 1- h_0(x))     \longrightarrow  if \qquad y = 0 
 \end{aligned}
 $ 
-\end{center}
+</center>
 
-These 2 equations generate the following graphs:
+
+<p>
+
+	These 2 equations generate the following graphs:
+
+</p>
+
+
 
  <center>
       <div>
@@ -2409,27 +2420,53 @@ These 2 equations generate the following graphs:
     </center>
 
 
-As can be seen in the graphs, the loss has one shape for one class and another shape for the other. 
+<p>
+
+	As can be seen in the graphs, the loss has one shape for one class and another shape for the other. 
 For convenience, the previous logistic regression functions can also be written as one function as follows:
 
-\begin{center}
-    $   J( \theta ) = -(\frac{1}{m}) \sum_{i=1}^{m} \quad [y * log(h_{\theta}(x)) + (1-y)* log(1 - h_{\theta}(x))] $
-\end{center}
+</p>
+	
+<center>
 
-\subsubsection{Multi Class Cross Entropy}
+	   $   J( \theta ) = -(\frac{1}{m}) \sum_{i=1}^{m} \quad [y * log(h_{\theta}(x)) + (1-y)* log(1 - h_{\theta}(x))] $
+
+</center>
 
 
+ <h1>
+Multi Class Cross Entropy
+	 
+ </h1>
+
+<p>
 The following code shows the implementation of the Multi-Class loss function for logistic regression as if we were writing out the equations. 
 One important thing to mention is that I have noticed that this model does not always converge. To correct this, you can use a clipping function like so
 
-\begin{center}
-    y\_pred2 = torch.clip\_by\_value (y\_pred, 1e-10, 1.0) 
-    
-\end{center}
+	
+</p>
 
+
+	<center>
+
+    y_pred2 = torch.clip_by_value (y_pred, 1e-10, 1.0) 
+    
+
+
+		
+	</center>
+
+
+<p>
+This line of code helps because some values in the process become NaN (Not a Number) and the clipping in the function addresses the problem. 
+	This approach of writing out the cost function or equations is not always the most optimal but I have shown it here for contrast between
+	linear regression and logistic regression. A better approach is to use PyTorch built-in cost functions for Cross Entropy calculations. 
+	Future code for deep neural networks will abstract this by using the built-in functions. 
+
+	
+</p>
            
            
-This line of code helps because some values in the process become NaN (Not a Number) and the clipping in the function addresses the problem. This approach of writing out the cost function or equations is not always the most optimal but I have shown it here for contrast between linear regression and logistic regression. A better approach is to use PyTorch built-in cost functions for Cross Entropy calculations. Future code for deep neural networks will abstract this by using the built-in functions. 
 
 <center>
 <div>
@@ -2448,9 +2485,12 @@ def loss(y_pred, y_real):
 </center>
 	
 
-
-
+<p>
 The following statement is where we invoke the multi-class cross entropy loss function.
+
+	
+</p>
+
 
 <center>
 <div>
@@ -2464,79 +2504,132 @@ dot_product = y_real * torch.log( y_pred2 )
 </center>
 
 
+<p>
+
+	An easy way to understand the multi-class cross entropy loss function is with an example. Assume we try to classify images of vehicles and we 
+	have  5 categories for [plane, car, boat, bike, balloon]. Given a cross entropy model we have the following output vector for this multi-class problem as such:
+
+</p>
+
+<center>
+     $ Q_1 = [0.3,  0.2,    0.05,    0.05,   0.40] $
+	
+</center>
 
 
+   <p>
+According to this model, the image is 30% plane, 20% car, 5% boat, 5% bike, and 40% ballon. The model is not very confident about what type of vehicle this is. 
+	   In contrast, the label for each image would tell us with great certainty 
 
-An easy way to understand the multi-class cross entropy loss function is with an example. Assume we try to classify images of vehicles and we have  5 categories for [plane, car, boat, bike, balloon]. Given a cross entropy model we have the following output vector for this multi-class problem as such:
+	   
+   </p> 
 
-\begin{center}
-         $ Q_1 = [0.3,  0.2,    0.05,    0.05,   0.40] $
-\end{center}
             
-                           
-According to this model, the image is 30\% plane, 20\% car, 5\% boat, 5\% bike, and 40\% ballon. The model is not very confident about what type of vehicle this is. In contrast, the label for each image would tell us with great certainty 
-
-\begin{center}
-
+   <center>
     $ P_1 =  [ 1,    0,     0,      0,       0 ] $
 
-\end{center}
+	   
+   </center>                        
 
+<p>
 
 that this is a plane. We can calculate the cross entropy to measure our model's cost. 
 
-\begin{center}
-      $ CrossEntropy(P_1, Q_1) = -\sum P_1(i) log Q_1(i) $
-\end{center}
+	
+</p>
+
+
+	<center>
+   $ CrossEntropy(P_1, Q_1) = -\sum P_1(i) log Q_1(i) $
+		
+	</center>
+
+
+<p>
+
+	If we calculate the values we get:
+
+</p>
      
+<center>
 
-If we calculate the values we get:
-
-\begin{center}
-
-CrossEntropy = -(1 log 0.3  +  0 log 0.2  + 0 log 0.05  +  0  log 0.05  + 0 log 0.4)
+	CrossEntropy   = -(1 log 0.3  +  0 log 0.2  + 0 log 0.05  +  0  log 0.05  + 0 log 0.4)
+	<br/><br/>
   
-  CrossEntropy         = - log 0.3
-         
-    CrossEntropy       =   1.20
-    
-\end{center}
+        CrossEntropy   = - log 0.3
+         <br/><br/>
+        CrossEntropy   =   1.20
+	
+</center>
 
-  
 
+
+<p>
 After training, the model is much better and it can predict the following
 
-\begin{center}
-
-    $ Q_1 = [0.98,   0.01,    0.01,    0,   0] $
+	
+</p>
     
-\end{center}
-              
-                    
+
+
+  
+<center>
+
+
+	  $ Q_1 = [0.98,   0.01,    0.01,    0,   0] $
+    
+</center>
+
+
+
+<p>
 As you can see below, the cross entropy is now lower and optimized. 
 
-\begin{center}
+	
+</p>
+              
 
-  CrossEntropy = -(1 log 0.98  +  0 log 0.01  + 0 log 0.01  +  0  log 0  + 0 log 0)
-  
-                 CrossEntropy          = - log 0.98
-                 
-                CrossEntropy          =   0.0202
-    
-\end{center}
+<center>
+
+  CrossEntropy    = -(1 log 0.98  +  0 log 0.01  + 0 log 0.01  +  0  log 0  + 0 log 0)
+  <br/><br/>
+  CrossEntropy    = - log 0.98
+      <br/><br/>           
+  CrossEntropy    =   0.0202
+	
+</center>
 
 
-
+<p>
 Therefore, with the cross entropy loss you compare predicted values to the labels. As the prediction improves, the cross entropy value goes down. 
 
+	
+</p>
 
-\subsection{Logistic Regression NN Architecture}
+
+<h1>
+
+Logistic Regression NN Architecture
+	
+</h1>
+
+<p>
 
 In this section, I will show the architecture to implement a simple logistic regression NN for the Iris data set and the Wine Data Quality Dataset. 
 
-\subsubsection{Iris Data set} 
+	
+</p>
 
-The architecture for the inference NN is as follows:
+<h1>
+
+	Iris Data set
+</h1>
+	
+<p>
+
+	The architecture for the inference NN is as follows:
+
+</p>
 
 <center>
 <div>
@@ -2564,10 +2657,13 @@ class Logistic_Regression_Net(nn.Module):
 </center>
 	
 
-
-
-
+<p>
 Notice that the model has 4 neurons in the input layer, and 3 output neurons for the 3 labels. The loss functions can be one of several versions of Cross Entropy such as
+
+	
+</p>
+
+
 
 <center>
 <div>
@@ -2581,13 +2677,24 @@ loss_fn = nn.CrossEntropyLoss( )
 </div>
 </center>
 	
-
-
+<p>
 Everything else should be the same as in the Linear Regression code. 
 
-\subsubsection{Wine Quality Data set} 
+	
+</p>
 
+<h1>
+Wine Quality Data set
+	
+</h1>
+	
+
+<p>
 The architecture for the inference NN is as follows:
+
+	
+</p>
+
 
 <center>
 <div>
@@ -2616,10 +2723,14 @@ class Logistic_Regression_Net(nn.Module):
 </center>
 	
 
+<p>
+
+	Notice that the model has 11 neurons in the input layer, and 6 output neurons for the 6 labels. The loss functions can be one of several
+	versions of Cross Entropy such as
+
+</p>
 
 
-
-Notice that the model has 11 neurons in the input layer, and 6 output neurons for the 6 labels. The loss functions can be one of several versions of Cross Entropy such as
 
 
 <center>
@@ -2634,20 +2745,29 @@ loss_fn = nn.CrossEntropyLoss( )
 </div>
 </center>
 	
-
-
+<p>
 Everything else should be the same as in the Linear Regression code. 
-
+<br/><br/>
 Now we are ready to add more layers. The next step is to add hidden layers.
 
+	
+</p>
 
-\section{Layers of the Neural Network in PyTorch}
- 
-As we saw in the previous discussions, a logistic regression model is similar to a linear regression model. As you might imagine, a neural network is similar to the logistic regression model. 
+<h1>
+Layers of the Neural Network in PyTorch
+	
+</h1>
+
+<p>
+
+	As we saw in the previous discussions, a logistic regression model is similar to a linear regression model. 
+	As you might imagine, a neural network is similar to the logistic regression model. 
 In particular, the neural network now has more layers and the more layers it has, the deeper it becomes. 
-
+<br/><br/>
 Layers in between the input and output layers are called hidden layers and help to represent non-linearity along with activation functions. 
 
+
+</p>
 
 
 
@@ -2658,9 +2778,16 @@ Layers in between the input and output layers are called hidden layers and help 
 
     </center>
 
+	<p>
+A 1-layer neural network can look like the previous figure and a 2-layer neural network can look like the network in the figure below. 
+		As can be seen, we can continue to add layers and this is part of defining the architecture of a deep neural network. In theory, more 
+		layers can potentially give a model more power to learn from the data and be better. 
+Notice, however, that this also means that many more parameters need to be estimated (e.g. more weights). Therefore, until recently, this was very 
+		expensive to achieve. With the advent of high performance hardware and GPUs, this is now more feasible. 
 
-A 1-layer neural network can look like the previous figure and a 2-layer neural network can look like the network in the figure below. As can be seen, we can continue to add layers and this is part of defining the architecture of a deep neural network. In theory, more layers can potentially give a model more power to learn from the data and be better. 
-Notice, however, that this also means that many more parameters need to be estimated (e.g. more weights). Therefore, until recently, this was very expensive to achieve. With the advent of high performance hardware and GPUs, this is now more feasible. 
+
+		
+	</p>
 
 
 
@@ -2674,15 +2801,35 @@ Notice, however, that this also means that many more parameters need to be estim
     </center>
 
 
-\subsection{Intuition of adding more layers to a NN}
+<h1>
 
-So why can  more layers potentially give a model more power to learn and be better? Let us think of an example. In an image processing problem, a neuron in a hidden layer might take as inputs 2 features or input neurons that detect circles. If these two circles are detected by the 2 input neurons, then the neuron in the next hidden layer which is connected to them might infer that a pair of eyes has been discovered. Therefore, this neuron in the hidden layer becomes a face detection or “pair of eyes” detection neuron. Given enough data, the model may discover this intuition and many others.  
+	Intuition of adding more layers to a NN
+</h1>
+	
+<p>
 
-\section{Going Deep: An N layer Neural Network in PyTorch}
+So why can  more layers potentially give a model more power to learn and be better? Let us think of an example. In an image processing problem, a neuron 
+	in a hidden layer might take as inputs 2 features or input neurons that detect circles. If these two circles are detected by the 2 input neurons, 
+	then the neuron in the next hidden layer which is connected to them might infer that a pair of eyes has been discovered. Therefore, this neuron in 
+	the hidden layer becomes a face detection or “pair of eyes” detection neuron. Given enough data, the model may discover this intuition and many others.  
+	
+</p>
 
-We have defined so much of the code already that there really isn’t much left except to define the architecture and cost (or loss) function for the deep neural network. In the next code segments, I will define the 1-hidden layer NN (MLP), and a 2-Hidden layer NN (Deep Learning).
+<h1>
 
+	Going Deep: An N layer Neural Network in PyTorch
+</h1>
+	
+
+<p>
+We have defined so much of the code already that there really isn’t much left except to define the architecture and cost (or loss) function for the deep 
+	neural network. In the next code segments, I will define the 1-hidden layer NN (MLP), and a 2-Hidden layer NN (Deep Learning).
+<br/>
 The architecture for an MLP is as follows:
+
+	
+</p>
+
 
 
 <center>
@@ -2716,9 +2863,14 @@ class MLP_Net_Net(nn.Module):
 
 
 
+<p>
 
+Notice that the model has 11 neurons in the input layer, 8 neuron in the hidden layer, and 6 output neurons for the 6 labels in the output layer. 
+	ReLU activation is used on the hidden layer, and Softmax is used on the output layer. The loss functions can be one of several versions of Cross Entropy such as
 
-Notice that the model has 11 neurons in the input layer, 8 neuron in the hidden layer, and 6 output neurons for the 6 labels in the output layer. ReLU activation is used on the hidden layer, and Softmax is used on the output layer. The loss functions can be one of several versions of Cross Entropy such as
+	
+</p>
+
 
 <center>
 <div>
@@ -2733,13 +2885,16 @@ loss_fn = nn.CrossEntropyLoss( )
 </center>
 
 
+<p>
+Everything else should be the same
+<br/><br/>
+The architecture for the deep neural network is as follows:
 
+	
+</p>
 	
 
 
-Everything else should be the same
-
-The architecture for the deep neural network is as follows:
 
 <center>
 <div>
@@ -2776,10 +2931,14 @@ class Deep_Neural_Net_Net(nn.Module):
 </center>
 
 
+<p>
+
+	Notice that the model has 11 neurons in the input layer, 15 neurons in the first hidden layers, 8 neurons in the second hidden layer, 
+	and 6 neurons in the last output layer. The loss functions can be one of several versions of Cross Entropy such as
+
+</p>
 
 
-
-Notice that the model has 11 neurons in the input layer, 15 neurons in the first hidden layers, 8 neurons in the second hidden layer, and 6 neurons in the last output layer. The loss functions can be one of several versions of Cross Entropy such as
 
 <center>
 <div>
@@ -2793,20 +2952,35 @@ loss_fn = nn.CrossEntropyLoss( )
 </div>
 </center>
 	
-
-
+<p>
 Everything else should be the same. 
 
-There are several activation functions but for these 2 architectures I have used the ReLU activation. The ReLU (Hahnloser et al. 2000) function stands for rectified linear unit. It is an optimal neuron for neural networks and it serves as a very effective activation function.  
+There are several activation functions but for these 2 architectures I have used the ReLU activation. 
+	The ReLU (Hahnloser et al. 2000) function stands for rectified linear unit. It is an optimal neuron for neural networks and it serves as a very effective 
+	activation function.  
+
+	
+</p>
+
+<h1>
+Easy Deep Learning with the Iris dataset
+	
+</h1>
 
 
-\section{Easy Deep Learning with the Iris dataset}
-
+<p>
 In this section we will train models with the Iris dataset for classification. The Iris data set is a classic dataset that is not too difficult to model for classification. 
+	<br/><br/>
 
 Let us get started. 
-
+<br/><br/>
 First we load the libraries. 
+
+	
+</p>
+
+	
+
 
 
 <center>
@@ -2835,8 +3009,11 @@ from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_sc
 </center>
 
 
-
+<p>
 Now we set the parameters.
+	
+</p>
+
 
 <center>
 <div>
@@ -2854,8 +3031,11 @@ epsilon = 0.0001
 </center>
 
 
+<p>
 
-Now we can load the data with Pandas
+Now we can load the data with Pandas	
+</p>
+
 
 <center>
 <div>
@@ -2870,9 +3050,12 @@ path_data = "iris.csv"
 </div>
 </center>
 
+<p>
 
+	The labels for Iris are strings. We convert them to integers using Pandas as follows:
 
-The labels for Iris are strings. We convert them to integers using Pandas as follows:
+</p>
+
 
 <center>
 <div>
@@ -2886,11 +3069,19 @@ iris_raw_data.species = iris_raw_data.species.map( {'setosa':0 , 'virginica':1, 
 </center>
 
 
-
-
+<p>
 We can view the column headings which gives us 
 
-['sepal\_length', 'sepal\_width', 'petal\_length', 'petal\_width', 'species']
+	
+</p>
+
+<center>
+['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
+
+
+	
+</center>
+	
 
 <center>
 <div>
@@ -2904,9 +3095,12 @@ headers_list
 </div>
 </center>
 
-
-
+<p>
 We can now convert the Pandas data frame to numpy. Printing the shape gives us (150, 5)
+
+	
+</p>
+
 
 <center>
 <div>
@@ -2923,9 +3117,12 @@ iris_raw_data_np.shape
 </div>
 </center>
 
-
-
+<p>
 Now we slice the data for our "X" and "y" data.
+
+	
+</p>
+
 
 <center>
 <div>
@@ -2942,8 +3139,11 @@ y = iris_raw_data_np[:, 4:5]
 
 
 
-
+<p>
 we can convert the data type to integer
+
+	
+</p>
 
 <center>
 <div>
@@ -2957,8 +3157,11 @@ y = y.astype(int)
 </center>
 
 
-
+<p>
 let us determine the number of labels with np.unique. This give us [0, 1, 2]. There are 3 labels. 
+
+	
+</p>
 
 
 <center>
@@ -2977,8 +3180,12 @@ len(  the_set  )
 </center>
 
 
+<p>
 
-In classification problems, it is a good idea to determine the class balance or imbalance. Imbalanced dataset are more difficult to model. We will see this with the Wine dataset in the next section. Using a histogram can help us to visualize this. 
+In classification problems, it is a good idea to determine the class balance or imbalance. Imbalanced dataset are more difficult to model.
+	We will see this with the Wine dataset in the next section. Using a histogram can help us to visualize this. 
+	
+</p>
 
 <center>
 <div>
@@ -2996,9 +3203,12 @@ plt.show()
 </center>
 
 	
-
-
+<p>
 From the histogram below we can see that the classes are balanced. 
+
+	
+</p>
+
 
 
 
@@ -3009,7 +3219,13 @@ From the histogram below we can see that the classes are balanced.
 
     </center>
 
+
+<p>
 The shapes can be printed and seen below
+
+	
+</p>
+	
 
 <center>
 <div>
@@ -3027,9 +3243,12 @@ print(y.shape)
 </div>
 </center>
 
-
+<p>
 
 Let us split the data
+	
+</p>
+
 
 <center>
 <div>
@@ -3055,8 +3274,11 @@ print(y_test.shape)
 </center>
 
 
-
+<p>
 Let us typecast the data to avoid possible errors and then convert to torch tensors. 
+
+	
+</p>
 
 <center>
 <div>
@@ -3078,8 +3300,10 @@ y_test_tr  = torch.from_numpy(y_test)
 </center>
 
 
-
+<p>
 Let us calculate means and standard deviations of the X data for data scaling. 
+	
+</p>
 
 <center>
 <div>
@@ -3100,9 +3324,12 @@ print( x_deviations.shape )
 </center>
 
 
-
-
+<p>
 Torch provides a very handy DataLoader that works effieciently with our neural networks. 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3122,9 +3349,12 @@ print(  iris_train_list[:3]   )
 </center>
 
 
-
-
+<p>
 three samples of the data should now look like this
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3139,10 +3369,13 @@ three samples of the data should now look like this
 </div>
 </center>
 
-
+<p>
 
 
 The following command creates the DataLoader
+	
+</p>
+
 
 <center>
 <div>
@@ -3156,8 +3389,11 @@ train_dl = torch.utils.data.DataLoader(iris_train_list, batch_size=batch_size, s
 </center>
 
 
-
+<p>
 we next create the test DataLoader with batch size equal to 30
+
+	
+</p>
 
 <center>
 <div>
@@ -3175,8 +3411,11 @@ test_dl  = torch.utils.data.DataLoader(iris_test_list,  batch_size=all_test_data
 </center>
 
 
-
+<p>
 We know define the architecture for the MLP as follows
+
+	
+</p>
 
 <center>
 <div>
@@ -3218,8 +3457,11 @@ class MLP_Net(nn.Module):
 </center>
 
 
-
+<p>
 We can try another architecture such as a deep neural network of 2 hidden layers
+
+	
+</p>
 
 <center>
 <div>
@@ -3266,8 +3508,11 @@ class DL_Net(nn.Module):
 </center>
 
 
-
+<p>
 The next step is to define the train function. We have seen this before.
+
+	
+</p>
 
 <center>
 <div>
@@ -3298,8 +3543,11 @@ def training_loop( N_Epochs, model, loss_fn, opt  ):
 </center>
 
 
-
+<p>
 Now we call the Core Functions for the MLP. 
+
+	
+</p>
 
 <center>
 <div>
@@ -3320,10 +3568,13 @@ training_loop(  N_Epochs, model, loss_fn, opt  )
 </center>
 
 
+<p>
 
-The torch loss  \textbf{nn.CrossEntropyLoss( )}  is very versatile. It is defined to accept the real labels as integers and does not need them to be onbe hot encoded. 
-
+	The torch loss  "nn.CrossEntropyLoss( )"  is very versatile. It is defined to accept the real labels as integers and does not need them to be onbe hot encoded. 
+<br/><br/>
 Training gives us the following losses. 
+
+</p>
 
 <center>
 <div>
@@ -3354,9 +3605,12 @@ Training gives us the following losses.
 </div>
 </center>
 
-
-
+<p>
 We can use our previously defined funtion to determine classification performance.
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3377,8 +3631,11 @@ def print_metrics_function(y_test, y_pred):
 </center>
 
 
-
+<p>
 Finally, we can estimate the performance metrics for the MLP with Iris
+
+	
+</p>
 
 <center>
 <div>
@@ -3398,9 +3655,12 @@ with torch.no_grad():
 </div>
 </center>
 
-
-
+<p>
 the performance can be seen below. Notice that the results are very good. 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3422,8 +3682,11 @@ F1-measure: 0.967
 </center>
 
 
+<p>
 
-We can also try the deep learning architecture
+	We can also try the deep learning architecture
+
+</p>
 
 <center>
 <div>
@@ -3445,8 +3708,11 @@ training_loop(  N_Epochs, model, loss_fn, opt  )
 </center>
 
 
-
+<p>
 the training gives us the following losses
+
+	
+</p>
 
 <center>
 <div>
@@ -3483,8 +3749,11 @@ the training gives us the following losses
 </center>
 
 
+<p>
 
 finally we predict with the DL model on the test set with 
+	
+</p>
 
 <center>
 <div>
@@ -3505,8 +3774,10 @@ with torch.no_grad():
 </center>
 
 
-
+<p>
 The performance metrics can be seen below and they are very good.
+	
+</p>
 
 <center>
 <div>
@@ -3526,18 +3797,29 @@ F1-measure: 0.967
 </div>
 </center>
 
+<p>
+That was hopefully easy and a lot of fun. In the next section we explore a more challenging problem. It looks simple, an yet, helps us to see some
+	of the common problems faced when training deep neural networks on noisy or more difficult data. 
 
+	
+</p>
 
-That was hopefully easy and a lot of fun. In the next section we explore a more challenging problem. It looks simple, an yet, helps us to see some of the common problems faced when training deep neural networks on noisy or more difficult data. 
+<h1>
 
+	More Challenging Deep Learning with the Wine Quality dataset
+</h1>
 
-\section{More Challenging Deep Learning with the Wine Quality dataset}
-
-Here we repeat the process from the previous section but on the more challenging Wine Quality data set. We previously used this dataset for regression and now I will use it for classification. 
-
+<p>
+Here we repeat the process from the previous section but on the more challenging Wine Quality data set. We previously used this dataset for regression
+	and now I will use it for classification. 
+<br/><br/>
 I will only include parts of the code that are new or different from the previous section. 
-
+<br/><br/>
 We use the following parameters.
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3553,9 +3835,12 @@ epsilon = 0.0001
 </div>
 </center>
 
+<p>
 
+	now we read the Wine quality data 
 
-now we read the Wine quality data 
+</p>
+
 
 <center>
 <div>
@@ -3571,9 +3856,12 @@ WINE_raw_data = pd.read_csv( path_data, delimiter=";" )
 </center>
 
 
-
-
+<p>
 we can process the data like we did before
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3592,11 +3880,16 @@ y = y.astype(int)
 </div>
 </center>
 
-
-
-The wine quality data was designed more for regression modeling. To make our classification modeling more interesting, I am going to process the data so we can also use it for classification. Since the predicted label consists of only 7 rating values, it is possible for us to convert into to classification data.
-
+<p>
+The wine quality data was designed more for regression modeling. To make our classification modeling more interesting, 
+	I am going to process the data so we can also use it for classification. Since the predicted label consists of only 7 rating values, 
+	it is possible for us to convert into to classification data.
+<br/><br/>
 First we print the labels (ratings) from the y vector with the following
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3612,11 +3905,14 @@ len(  the_set  )
 </div>
 </center>
 
-
-
+<p>
 which gives us the ratings [3, 4, 5, 6, 7, 8, 9]. There are 7 ratings and these will become our labels. 
 
 Let us visualize the label counts with a histogram using the following code
+
+	
+</p>
+
 
 
 <center>
@@ -3634,9 +3930,12 @@ plt.show()
 </center>
 
 
-
-
+<p>
 As can be seen in the following histogram, the data is highly imbalanced. This means that this dataset will be more challenging to model for classification. 
+
+
+	
+</p>
 
 
 
@@ -3647,7 +3946,12 @@ As can be seen in the following histogram, the data is highly imbalanced. This m
 
     </center>
 
+<p>
 let us first split the data like in the previous section
+
+	
+</p>
+	
 
 <center>
 <div>
@@ -3672,9 +3976,12 @@ print(y_test.shape)
 </div>
 </center>
 
+<p>
 
+	as in the previous section, let us change the data type and conver the numpy arrays to torch tensors. 
 
-as in the previous section, let us change the data type and conver the numpy arrays to torch tensors. 
+</p>
+
 
 <center>
 <div>
@@ -3697,9 +4004,12 @@ y_test_tr  = torch.from_numpy(y_test)
 </div>
 </center>
 
+<p>
 
+	we now calculate parameters for standardization
 
-we now calculate parameters for standardization
+</p>
+
 
 <center>
 <div>
@@ -3714,9 +4024,13 @@ x_deviations = X_train_tr.std( 0, keepdim=True) + epsilon
 </div>
 </center>
 
+<p>
+To create the data loader we first need to create a label map. DataLoader does not allow gaps in label sequences. Our wine quality data does not have 
+	labels 2 or 1, for instance. So we need to fix this with a label\_map as follows
 
+	
+</p>
 
-To create the data loader we first need to create a label map. DataLoader does not allow gaps in label sequences. Our wine quality data does not have labels 2 or 1, for instance. So we need to fix this with a label\_map as follows
 
 <center>
 <div>
@@ -3734,9 +4048,12 @@ reverse_label_map = { 0:3, 1:4, 2:5, 3:6, 4:7, 5:8, 6:9 }
 </div>
 </center>
 	
-
-
+<p>
 with the folowing code we can fix the gap issue and create our list for the data loader as follows
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3751,8 +4068,11 @@ wine_test_list  = [  ( X_test_tr[i],  label_map[ y_test_tr[i].item()  ] )  for i
 </center>
 
 
-
+<p>
 The following 3 examples show us what these lists look like
+
+	
+</p>
 
 <center>
 <div>
@@ -3774,9 +4094,12 @@ print( wine_train_list[:3] )
 </div>
 </center>
 
-
-
+<p>
 the train data loader is created with the following statement
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3789,9 +4112,13 @@ train_dl = torch.utils.data.DataLoader(wine_train_list, batch_size=batch_size, s
 </div>
 </center>
 
-
+<p>
 
 we do something similar for the test data loader
+
+	
+</p>
+
 
 
 <center>
@@ -3809,11 +4136,15 @@ test_dl  = torch.utils.data.DataLoader(wine_test_list,  batch_size=all_test_data
 </div>
 </center>
 
-
-
+<p>
+	
 Once the data is ready, we can proceed to define the architectures and train and evalaute our model. 
-
+<br/><br/>
 The architecture for the MLP is as follows. 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3856,9 +4187,12 @@ class MLP_Net(nn.Module):
 </div>
 </center>
 
-
+<p>
 
 and the deep learning architecture can also be defined as follows
+	
+</p>
+
 
 <center>
 <div>
@@ -3904,9 +4238,11 @@ class DL_Net(nn.Module):
 </div>
 </center>
 
+<p>
+	Finally, we proceed to train and evaluate our models. Let us first look at the MLP model
 
+</p>
 
-Finally, we proceed to train and evaluate our models. Let us first look at the MLP model
 
 
 <center>
@@ -3928,10 +4264,13 @@ training_loop(  N_Epochs, model, loss_fn, opt  )
 </center>
 
 
-
-
-
+<p>
 the losses for the MLP look as follows
+
+	
+</p>
+
+
 
 
 <center>
@@ -3965,9 +4304,12 @@ the losses for the MLP look as follows
 </center>
 
 
-
-
+<p>
 From the losses, it can be seen that the  model has trouble training and learning. Let us verify this by running the model on the test set with the following code
+
+	
+</p>
+
 
 <center>
 <div>
@@ -3984,9 +4326,12 @@ with torch.no_grad():
 </div>
 </center>
 
-
-
+<p>
 Running the classification metrics we see that the model does not learn well. It is likely that the class imbalance is affecting performance. 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -4009,9 +4354,11 @@ F1-measure: 0.445
 </center>
 
 
+<p>
+	we repeat the exercise with the DL architecture
 
+</p>
 
-we repeat the exercise with the DL architecture
 
 
 <center>
@@ -4040,9 +4387,12 @@ with torch.no_grad():
 </div>
 </center>
 
-
-
+<p>
 As can be seen below, the results are not good. 
+
+	
+</p>
+
 
 
 <center>
