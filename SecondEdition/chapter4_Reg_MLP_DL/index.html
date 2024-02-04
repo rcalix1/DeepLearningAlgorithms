@@ -449,7 +449,7 @@ y = Matrix_data[:,  0]
 	Notice that we are following the SKlearn approach from the previous chapters. PyTorch has its own approaches but I have used SKlearn here for the sake of 
 	simplicity. When slicing a 2-D matrix (matrix[i, j] ) we specify the number of rows with \textbf{“i”} and the number of columns with \textbf{“j”}. 
 	We can also specify ranges by doing the following: matrix[2:5, :]. The “:” on the “j” index indicates select all columns. If we wanted to select from a
-	list of column indices we could do the following: X=Matrix\_data[:, [1,2,3,5,6]].
+	list of column indices we could do the following: X=Matrix_data[:, [1,2,3,5,6]].
 
 Now we can split the data.
 
@@ -641,6 +641,8 @@ The coefficients or weights for each variable are useful in determining the cont
 
 	</p>
 
+$a \ne 0$
+	
 <center>
  $ E = \frac{1}{n} \sum_{i = 0}^{n} (y_i - (  x * x_i + b  ))^2 $
 	
