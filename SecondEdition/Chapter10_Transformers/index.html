@@ -1420,7 +1420,7 @@ Finally, the Multi-Head Attention class use the Head class where the Attention m
 
     <center>
 <div>
-<textarea rows="30" cols="100">
+<textarea rows="45" cols="100">
 
 
 class Head(nn.Module):
@@ -1655,6 +1655,16 @@ wei = wei.masked_fill(
 </div>
 </center>
 
+	<p>
+		An example of the effect of the mask on one sample in the batch
+	</p>
+
+  <center>
+      <div>
+        <img src="https://rcalix1.github.io/DeepLearningAlgorithms/SecondEdition/images/mask_attention.jpg" height="500" width="auto">
+      </div>
+
+    </center>
 
 <p>
 
@@ -1811,6 +1821,30 @@ And that covers all the classes of the NN architecture. We are now ready to inst
 
 	 
  </p>
+
+	<h1>
+	</h1>
+
+<p>
+I have further broken down all the previous linear algebra operations using random data into  the linked jupyter notebook.
+	I recommend going through it to further understand what is going on. 
+
+	<ul>
+
+<li>
+<a href="https://github.com/rcalix1/DeepLearningAlgorithms/blob/main/SecondEdition/Chapter10_Transformers/GPTs/LinearAlgebraATTENTIONandNNs.ipynb">Attention and linear algebra</a>
+</li>
+
+	</ul>
+	
+</p>
+
+
+	
+	<h1>
+
+		Instantiate the GPT
+	</h1>
 
 
        <center>
