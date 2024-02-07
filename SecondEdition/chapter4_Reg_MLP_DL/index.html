@@ -1991,7 +1991,7 @@ Intuitively think of it this way. Imagine you want to predict housing prices giv
 
 <center>
 
-	     $ housing_price = w_1 * square_footage + b $
+	     $ housing\_price = w_1 * square\_footage + b $
 </center>
 
 
@@ -2238,8 +2238,12 @@ Formally, a Softmax function is a way of mapping a vector of real valued numbers
 	The softmax function can be written as follows:
 	
 <br/><br/>
+
+	<center>
+		$ S(y_i)= \frac{e^{y_i}}{ \sum_{j=1}^{c} e^{y_i} } $
+	</center>
 	
-$ S(y_i)= \frac{e^{y_i}}{ \sum_{j=1}^{c} e^{y_i} } $
+
 
 	
 </p>
