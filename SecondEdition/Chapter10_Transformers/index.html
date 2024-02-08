@@ -382,7 +382,8 @@ Implementing a GPT in PyTorch from Scratch
 	  <p>
 In this section,  I will implement a simple GPT using everything we have learned in this book. The code will be very object oriented for efficiency. That being said, 
 	this GPT is implemented from scratch, works really well, and can be scaled. Thanks to Andrej Karpathy for helping me to better understand the PyTorch 
-		  implementation of a GPT (<a href="https://karpathy.ai">Andrej Karpathy</a>).
+		  implementation of a GPT (<a href="https://karpathy.ai">Andrej Karpathy</a>). There are many implementations of GPTs out there. The GPT discussed in this 
+		  section is based on Andrej Karpathy's GPT implementation. I have modified it a bit to be consistent with the original Vaswani paper (Attention is all you need).
 
 For the sake of simplicity I will not use subwords here and instead just use the letters of the English alphabet and a few symbols. The vocabulary of a large GPT such as
 	GPT-4 could be hundreds of thousands of subwords or more. This GPT reads in one text file and trains on it. 
@@ -1834,6 +1835,9 @@ I have further broken down all the previous linear algebra operations using rand
 
 <li>
 <a href="https://github.com/rcalix1/DeepLearningAlgorithms/blob/main/SecondEdition/Chapter10_Transformers/GPTs/LinearAlgebraATTENTIONandNNs.ipynb">Attention and linear algebra</a>
+</li>
+		<li>
+<a href="https://github.com/rcalix1/DeepLearningAlgorithms/blob/main/SecondEdition/Chapter10_Transformers/GPTs/NN_linear_x_w_b_matmul.ipynb">nn.Linear() as w, x, b, matmul</a>
 </li>
 
 	</ul>
