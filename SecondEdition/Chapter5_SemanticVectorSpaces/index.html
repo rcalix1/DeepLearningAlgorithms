@@ -63,10 +63,11 @@
 <h1>Copyright, License, FTC and Amazon Disclaimer</h1>
 
 <p>
- Copyright &copy by Ricardo A. Calix. <br/>
+	<center>Copyright &copy by Ricardo A. Calix.</center>
+  <br/>
  All rights reserved. No part of this work may be reproduced or transmitted in any form or by any means, without written permission of the copyright owner. <br/>
  This post/page/article includes Amazon Affiliate links to products. This site receives income if you purchase through these links. 
- This income helps support content such as this one. 
+ This income helps support content such as this one. License: MIT. 
  <br/>
 
 	
@@ -93,16 +94,16 @@
 
 In this chapter, I will discuss semantic vector spaces. I will discuss the vector space model and then address Latent Semantic Analysis (LSA), and the very important
 	vector space models based on word embeddings such as Word2vec (\babelEN{\cite{mikolovRef}}). Again, the focus will be on the intuition. Many companies today 
-	base their products on these very simple but powerful semantic vector spaces. 
+	base their products on these very simple but powerful semantic vector spaces. <br/><br/>
 Annotating data is a very expensive and time consuming task and in many cases it is practically impossible to accomplish. In the past, unsupervised methods were not
 	always the most successful in information extraction tasks and were sometimes relegated to data compression (i.e. PCA, SVD, auto-encoding, etc.), or to data clustering. 
 	However, in recent years there has been a renewed interest in unsupervised or semi-supervised learning methods. Not taking advantage of the vast amounts of 
 	unsupervised data means that a great chunk of knowledge is being left on the table. In particular, deep learning has helped to make some unsupervised learning 
-	problems more tractable and/or approachable. 
+	problems more tractable and/or approachable. <br/><br/>
 Current deep learning based methods are optimally designed to handle big data. That is, terabytes of data can now be processed and new patterns in the data discovered.
 	Additionally, the properties of deep neural networks have allowed for the development of new architectures and methodologies to address unsupervised data using 
 	shallow or deep neural networks. Some of these new approaches based on deep learning include distributed word embeddings such word2vec (Mikolov et al. 2014), 
-	Autoencoders (\babelEN{\cite{goodfellow2016Ref}}), Transformers, and Generative Adversarial Networks (\babelEN{\cite{goodfellowRef}}).  
+	Autoencoders (\babelEN{\cite{goodfellow2016Ref}}), Transformers, and Generative Adversarial Networks (\babelEN{\cite{goodfellowRef}}).  <br/><br/>
 Distributed word embeddings are techniques that learn dense vector representations for words based on the co-occurrence of words in very large data sets. Distributed
 	word embeddings have been used extensively in many projects.
 
@@ -111,11 +112,19 @@ Distributed word embeddings are techniques that learn dense vector representatio
 
 <h1>
 Vector Space Model
-	
 </h1>
 
-The vector space model refers to a space that can be created to represent samples. A set of axes is created from 0 to some range. Then, any samples can be represented in this space. For example, say that you want to represent 100 people in a room by their age, height and weight. Then, in this case we can create a vector space of 3 dimensions ($ R^3 $) which are age, height, and weight. Now, every person in the room can be mapped to this space based on their values for these 3 parameters. 
 
+<p>
+The vector space model refers to a space that can be created to represent samples. A set of axes is created from 0 to some range. 
+	Then, any samples can be represented in this space. For example, say that you want to represent 100 people in a room by their age, height and weight. 
+	Then, in this case we can create a vector space of 3 dimensions ($ R^3 $) which are age, height, and weight. Now, every person in the room can be mapped to 
+	this space based on their values for these 3 parameters. 
+
+
+	
+</p>
+	
 
 
 
@@ -127,13 +136,24 @@ The vector space model refers to a space that can be created to represent sample
     </center>
 
 
+<p>
+Think of each feature as an axis in this space. If we view the space of balls in the figure below, we immediately know what the ball is. But since AIs do not have eyes
+	(yet), they have to rely on other methods. In this case, KNN should solve this problem.
+Look at the figure again. In the lower right hand corner there are 3 white baseball balls and one green tennis ball. And then there is an odd looking ball with the 
+	shape of a baseball and the color of a tennis ball. What is it? Is this odd looking ball closer to the green tennis ball or the baseball shaped balls? 
+	The vector space creates a geometric space where distances can be calculated.
+
+Basically, an algorithm like KNN will take a sample in question, say the green baseball, and measure the distance between it and all other balls in this space
+	(i.e. the soccer balls, basket balls, football balls, tennis balls, and baseballs). Once KNN calculates all the distances, it will rank then from lowest 
+	to highest distance. Out of these ranked distances, it will select the top \textbf{k} distances and assign to the ball in question the majority class 
+	from the set containing just the top \textbf{k} shortest distances. For the given example, if we selected a k=5 then the 5 closest balls to the ball
+	in question (green baseball) would be 3 baseballs, 1 tennis ball, and one football. Since the majority is baseball, KNN would assign the class baseball 
+	to our ball in question. From the figure, that would seem like the right answer. 
 
 
-Think of each feature as an axis in this space. If we view the space of balls in the figure below, we immediately know what the ball is. But since AIs do not have eyes (yet), they have to rely on other methods. In this case, KNN should solve this problem.
-Look at the figure again. In the lower right hand corner there are 3 white baseball balls and one green tennis ball. And then there is an odd looking ball with the shape of a baseball and the color of a tennis ball. What is it? Is this odd looking ball closer to the green tennis ball or the baseball shaped balls? The vector space creates a geometric space where distances can be calculated.
 
-Basically, an algorithm like KNN will take a sample in question, say the green baseball, and measure the distance between it and all other balls in this space (i.e. the soccer balls, basket balls, football balls, tennis balls, and baseballs). Once KNN calculates all the distances, it will rank then from lowest to highest distance. Out of these ranked distances, it will select the top \textbf{k} distances and assign to the ball in question the majority class from the set containing just the top \textbf{k} shortest distances. For the given example, if we selected a k=5 then the 5 closest balls to the ball in question (green baseball) would be 3 baseballs, 1 tennis ball, and one football. Since the majority is baseball, KNN would assign the class baseball to our ball in question. From the figure, that would seem like the right answer. 
-
+	
+</p>
 
 
 
@@ -145,18 +165,28 @@ Basically, an algorithm like KNN will take a sample in question, say the green b
     </center>
 
 
+<h1>
+Latent Semantic Analysis (LSA)
+	
+</h1>
+
+
+<p>
+
+Latent Semantic Analysis (LSA) is a method for discovering relationships or concepts between a set of rows and columns in a dataset such as between documents and 
+	terms or between users and movies. These newly discovered concepts can be represented as vectors and they can become a new way of mapping the elements 
+	(e.g. the terms). This technique has been used extensively in natural language processing. The concept vectors are discovered using a technique called singular
+	value decomposition (SVD). A very good discussion of SVD can be found in the book: Data-Driven Modeling \& Scientific Computation by J. Nathan Kutz
+	(\babelEN{\cite{kutzRef}}). 
+Once this new space has been created based on the discovered vectors, the elements or terms can be represented in this space. Within this space, distance
+	function metrics can be used to measure similarity between the elements (such as the documents). 
+The following example shows how LSA can be used to plot and capture the relationship between authors of classical literary books. Since this LSA space
+	has considered writing style, it is expected that books by the same author will appear close to each other.
 
 
 
-\section{Latent Semantic Analysis (LSA)}
-
-
-
-Latent Semantic Analysis (LSA) is a method for discovering relationships or concepts between a set of rows and columns in a dataset such as between documents and terms or between users and movies. These newly discovered concepts can be represented as vectors and they can become a new way of mapping the elements (e.g. the terms). This technique has been used extensively in natural language processing. The concept vectors are discovered using a technique called singular value decomposition (SVD). A very good discussion of SVD can be found in the book: Data-Driven Modeling \& Scientific Computation by J. Nathan Kutz (\babelEN{\cite{kutzRef}}). 
-Once this new space has been created based on the discovered vectors, the elements or terms can be represented in this space. Within this space, distance function metrics can be used to measure similarity between the elements (such as the documents). 
-The following example shows how LSA can be used to plot and capture the relationship between authors of classical literary books. Since this LSA space has considered writing style, it is expected that books by the same author will appear close to each other.
-
-
+	
+</p>
 
 
 
@@ -168,8 +198,14 @@ The following example shows how LSA can be used to plot and capture the relation
     </center>
 
 
-The code to perform the LSA analysis using the SKlearn kit can be seen in the following code segments. It is assumed that you receive a list of text documents or paragraphs in the python list 
+<p>
+The code to perform the LSA analysis using the SKlearn kit can be seen in the following code segments. It is assumed that you receive a list of text documents
+	or paragraphs in the python list 
 
+
+	
+</p>
+	
 
 <center>
 <div>
@@ -190,8 +226,7 @@ Similarity = np.asarray(np.asmatrix(dtm_lsa) *
 
 
 
-
-           
+<p>
            
 The list of texts is vectorized and a tf-idf (term frequency-inverse document frequency) matrix is calculated. From this matrix, an LSA model is calculated. 
 
@@ -200,7 +235,11 @@ Then, the data is normalized and a similarity metric is calculated between all t
 
 This similarity metric can help to determine which documents are close to each other. The last part of the code is to print the results using the pandas library. 
 
-The full code can be seen here
+The full code can be seen here:
+
+	
+</p>
+           
 
 <center>
 <div>
@@ -238,46 +277,69 @@ print( pd.DataFrame(
 </center>
 	
 
+<h1>
 
+	Word Embeddings and Neural Nets
+</h1>
 
+<p>
+Word embeddings are another approach like LSA that allow you to place data in a vector space to discover relationships. Specifically, word embeddings look at 
+	the co-occurrence of terms in a document. Word embeddings have existed for a while. However, the improvements in deep learning technologies have led to
+	the development of newer techniques for calculating word embeddings. In particular, Mikolov et al. proposed new algorithms to calculate word embeddings.
+	One of the methods he proposed is called word2vec. Although not a deep neural network (it only uses 1 hidden layer), this technique can be efficiently 
+	implemented in PyTorch.  
 
-\section{Word Embeddings and Neural Nets}
-
-Word embeddings are another approach like LSA that allow you to place data in a vector space to discover relationships. Specifically, word embeddings look at the co-occurrence of terms in a document. Word embeddings have existed for a while. However, the improvements in deep learning technologies have led to the development of newer techniques for calculating word embeddings. In particular, Mikolov et al. proposed new algorithms to calculate word embeddings. One of the methods he proposed is called word2vec. Although not a deep neural network (it only uses 1 hidden layer), this technique can be efficiently implemented in PyTorch.  
-
-
+<br/><br/>
 
 The python code for word2vec is available from the book GitHub at https://github.com/rcalix1 and the book website at www.rcalix.com. 
+<br/><br/>
+The word2vec code seldom needs to be modified, except for a few parameters. and so I will not discuss it here. Instead, I will focus the discussion on a 
+	few aspects of word2vec and utilization. 
+<br/><br/>
+In particular, word2vec has been widely used for natural language processing. It takes a very large document set and produces a vector space where all the
+	words can be mapped. This vector space is based on the co-occurrence of the words. The dimension $ m $  (number of orthogonal axes) in the space is 
+	determined by the number of neurons $ m $ in the hidden layer of the neural network used to perform the analysis. There are various implementations of word2vec. 
+	The most common one (the skip gram model) uses a 1-layer neural network to calculate the probability of co-occurrence between the words in a vocabulary defined 
+	from the input text set.  
 
-The word2vec code seldom needs to be modified, except for a few parameters. and so I will not discuss it here. Instead, I will focus the discussion on a few aspects of word2vec and utilization. 
-
-In particular, word2vec has been widely used for natural language processing. It takes a very large document set and produces a vector space where all the words can be mapped. This vector space is based on the co-occurrence of the words. The dimension $ m $  (number of orthogonal axes) in the space is determined by the number of neurons $ m $ in the hidden layer of the neural network used to perform the analysis. There are various implementations of word2vec. The most common one (the skip gram model) uses a 1-layer neural network to calculate the probability of co-occurrence between the words in a vocabulary defined from the input text set.  
 
 
-
-
+<br/><br/>
 
 As can be seen in the figure below, the word2vec model has 3 layers: 
 
-\begin{itemize}
-    \item input
-    \item hidden 1
-    \item output
-\end{itemize}
+	
+</p>
+
+	<ul>
+
+		<li>input</li>
+		<li>hidden 1</li>
+		<li>output</li>
+	</ul>
 
 
 
-
-
-The input layer consists of the words in the vocabulary of size “v”. One-hot encoding once again is used here. For example, for the vector [dog, cat, blue] that might represent a vocabulary of a total of 3 words, the word cat would be encoded as follows: 
-
+	<p>
+		
+The input layer consists of the words in the vocabulary of size “v”. One-hot encoding once again is used here. For example, for the vector [dog, cat, blue] that
+		might represent a vocabulary of a total of 3 words, the word cat would be encoded as follows: 
+<br/><br/>
 [0, 1, 0]
+<br/><br/>
+The vocabulary defines the number of neurons (v) in the input layer. These one-hot encoded vectors for the words in the vocabulary are the inputs to the input 
+		layer of the neural network. The outputs of the neural network are also the one-hot encoded word vectors using a softmax function ( s() ). 
 
-The vocabulary defines the number of neurons (v) in the input layer. These one-hot encoded vectors for the words in the vocabulary are the inputs to the input layer of the neural network. The outputs of the neural network are also the one-hot encoded word vectors using a softmax function ( s() ). 
+
+<br/><br/><br/>
+Similarly to logistic regression, the softmax is used to calculate a probability distribution over the words. In this case, the probability that word $ j $ in 
+		the vocabulary co-occurs with the other words in the vocabulary. 
+
+<br/>
 
 
+	</p>
 
-Similarly to logistic regression, the softmax is used to calculate a probability distribution over the words. In this case, the probability that word $ j $ in the vocabulary co-occurs with the other words in the vocabulary. 
 
 
 
@@ -290,17 +352,24 @@ Similarly to logistic regression, the softmax is used to calculate a probability
 
     </center>
 
-
-Finally, the hidden layer in the model learns the embeddings through the weight matrix (W) for each word. The number of neurons in the hidden layer is selected arbitrarily (m). In this way, each word will have an embedding represented by the $ m $ neurons in the hidden layer. Assuming that the neurons in the hidden layer are called:
+<p>
+Finally, the hidden layer in the model learns the embeddings through the weight matrix (W) for each word. The number of neurons in the hidden layer is selected arbitrarily 
+	(m). In this way, each word will have an embedding represented by the $ m $ neurons in the hidden layer. Assuming that the neurons in the hidden layer are called:
+	<br/><br/>
 
       $ h_1, h_2, h_3, …,h_m $
-
+<br/><br/>
 Then, an embedding for a word would be as follows:
-
+<br/><br/>
     $  word_j = w_1*h_1+ w_2* h_2 + w_3*h_3 + … + w_m*h_m $ 
-
+<br/><br/>
 and the weight matrix (W) would look like the following.
 
+
+	
+</p>
+
+	
 
 
  <center>
@@ -310,8 +379,12 @@ and the weight matrix (W) would look like the following.
 
     </center>
 
-
+	<p>
 In the next example we can see each word and its vector representation assuming a hidden layer of 6 neurons.
+
+		
+	</p>
+
 
 
 <center>
@@ -339,17 +412,24 @@ got,-0.120518,-0.0410703,-0.0321787,0.0545667,-0.069366,0.101827
 </div>
 </center>
 
+<p>
+One of the important observations Mikolov et al. made about the word2vec space is that semantic relationships can be discovered by performing vector arithmetic. 
+	For instance, given enough data, the following vector arithmetic may be discovered: 
+
+	
+</p>
 
 
+<center>
+	king + man – queen = woman
+</center>
 
-One of the important observations Mikolov et al. made about the word2vec space is that semantic relationships can be discovered by performing vector arithmetic. For instance, given enough data, the following vector arithmetic may be discovered: 
+	
+<p>
+	The following code segment shows a simple way of performing vector arithmetic, assuming you have a dictionary of vectors. 
 
-\begin{center}
-king + man – queen = woman
-\end{center}
+</p>
 
-
-The following code segment shows a simple way of performing vector arithmetic, assuming you have a dictionary of vectors. 
 
 <center>
 <div>
@@ -398,14 +478,27 @@ result_word = findClosestWordToThisVector_list( a )
 </center>
 
 	
+<h1>
+Word2vec code
+	
+</h1>
 
+<p>
 
-
-
-\section{Word2vec code}
-
-In this section, I will explain some aspects of the word2vec code proposed by Mikolov et. al (2014). I do recommend that you use the available word2vec code from the PyTorch foundation or the one posted on the github repository. That being said, I always wanted to understand word2vec and I am sure you are interested in understanding it as well. Therefore, here I will go over certain parts of the code and try to clarify aspects of it. Generally speaking, I would say that the word2vec code has 2 main components. One component is non deep learning related and the other is the deep learning architecture. Most algorithms we have discussed so far usually are straight forward when it comes to obtaining the data (X) and the labels (y). As such, the focus and challenge has been in the deep learning architecture itself. Given that we have mainly looked at supervised learning algorithms, our data was simple. Feature vectors of images, for instance, and their annotated one-hot encoded labeles. Word2vec is different though. Word2vec is an unsupervised or semi-supervised learning algorithm so there are no annotated labels. Instead, we need to learn mappings (distributed vector representations) from the co-occurrence of things such as terms in a text. This process of getting the initial train data is more difficult. Remember that we said in the previous section that the inputs and outputs of the model are the one-hot encoded words from a large vocabulary. 
-Okay, so here we go. The best way to understand this process of obtaining the $ X  $ and $ y $ is with an example. The first thing we need is some libraries and parameters which can be seen in the below code section. 
+In this section, I will explain some aspects of the word2vec code proposed by Mikolov et. al (2014). I do recommend that you use the available word2vec code from 
+	the PyTorch foundation or the one posted on the github repository. That being said, I always wanted to understand word2vec and I am sure you are interested
+	in understanding it as well. Therefore, here I will go over certain parts of the code and try to clarify aspects of it. Generally speaking, I would say that
+	the word2vec code has 2 main components. One component is non deep learning related and the other is the deep learning architecture. Most algorithms we have 
+	discussed so far usually are straight forward when it comes to obtaining the data (X) and the labels (y). As such, the focus and challenge has been in the deep
+	learning architecture itself. Given that we have mainly looked at supervised learning algorithms, our data was simple. Feature vectors of images, for instance, 
+	and their annotated one-hot encoded labeles. Word2vec is different though. Word2vec is an unsupervised or semi-supervised learning algorithm so there are no 
+	annotated labels. Instead, we need to learn mappings (distributed vector representations) from the co-occurrence of things such as terms in a text. This process 
+	of getting the initial train data is more difficult. Remember that we said in the previous section that the inputs and outputs of the model are the one-hot encoded
+	words from a large vocabulary. 
+Okay, so here we go. The best way to understand this process of obtaining the $ X  $ and $ y $ is with an example. The first thing we need is some libraries and parameters
+	which can be seen in the below code section. 
+	
+</p>
 
 <center>
 <div>
@@ -427,18 +520,23 @@ vocabulary_size = 55000
 </div>
 </center>
 
-	
-
-
+	<p>
 
 Next, let us assume that we have a very very large text like the following named “text8”:
 
-\begin{center}
-     ... anarchism originated as a term of abuse first used ...
-\end{center}
+		
+	</p>
 
+<center>
+	   ... anarchism originated as a term of abuse first used ...
+</center>
+
+<p>
+	
 The first step is is to convert this very large text into a list of words. To achieve this we can use a PyTorch command. 
 
+
+</p>
 
 <center>
 <div>
@@ -455,23 +553,41 @@ print('Data size', len(words))
 </div>
 </center>
 	
-
-
+<p>
 Our variable \textbf{words} now contains the text in the form of a list. 
 
-\begin{center}
-    words = ["anarchism", "originated", "as", "a", "term", "of", "abuse", "first", "used", ...]
-\end{center}
+	
+</p>
 
-The next step is to perform a frequency count of the terms in the list \textbf{words}. The variable \textbf{“count”} is created and used for this purpose. After the frequency count is performed, count looks like the following: 
 
-\begin{center}
-      count = [[unk,-1], (the,78), (of, 67), ...]
-\end{center}
+<center>
+	  words = ["anarchism", "originated", "as", "a", "term", "of", "abuse", "first", "used", ...]
+</center>
+	
+<p>
+The next step is to perform a frequency count of the terms in the list \textbf{words}. The variable \textbf{“count”} is created and used for this purpose. 
+	After the frequency count is performed, count looks like the following: 
+
+	
+</p>
+
+
+<center>
+  count = [[unk,-1], (the,78), (of, 67), ...]
+	
+</center>
+	
+<p>
+As can expected, the most frequent terms are “the”, “of”, etc. The variable "UNK" will be used to count infrequent words. That is, not all words will be 
+	used as part of the vocabulary. For example, out of 100,000 words, the 55,000 most frequent words could be selected to form the vocabulary. 
+	As a result, the remaining 45,000 infrequent words would not be part of the vocabulary and would be counted as unknown words. The variable vocabulary
+	size must be manually set. The code to perform the count can be seen below. 
+
+	
+</p>
 
       
 
-As can expected, the most frequent terms are “the”, “of”, etc. The variable "UNK" will be used to count infrequent words. That is, not all words will be used as part of the vocabulary. For example, out of 100,000 words, the 55,000 most frequent words could be selected to form the vocabulary. As a result, the remaining 45,000 infrequent words would not be part of the vocabulary and would be counted as unknown words. The variable vocabulary size must be manually set. The code to perform the count can be seen below. 
 
 	<center>
 <div>
@@ -485,21 +601,28 @@ count.extend(collections.Counter(words).most_common(vocabulary_size - 1))
 </div>
 </center>
 
+<p>
+
+	The next step is to build a dictionary of words and keys. Keys are created in order of most frequent using the current dictionary size. 
+	Most frequent terms have lower value keys. For example
+
+</p>
 
 
+<center>
+	dictionary = {'and': 3, 'of': 2, 'the': 1, 'UNK': 0}
+  
+</center>
 
 
+<p>
+The code to create the dictionary is provided below. Notice that it uses the previously created frequency counts to assign the keys in ascending order 
+	from most frequent to least frequent. 
 
+	
+</p>
 
-The next step is to build a dictionary of words and keys. Keys are created in order of most frequent using the current dictionary size. Most frequent terms have lower value keys. For example
-
-\begin{center}
-dictionary = {'and': 3, 'of': 2, 'the': 1, 'UNK': 0}
     
-\end{center}
-
-    
-The code to create the dictionary is provided below. Notice that it uses the previously created frequency counts to assign the keys in ascending order from most frequent to least frequent. 
 
 	<center>
 <div>
@@ -515,26 +638,40 @@ for word, _ in count:
 </center>
 	
 
+<p>
+The next step is to create the variable “data”. The code below uses the word, key pairs in the dictionary to create the variable “data”. The variable dictionary 
+	(which is a python dictionary data structure) has each word and its corresponding key.  The resulting “data” object is a list that contains the keys for the
+	words in the original list “words”. So now data has the same information as words except that instead of containing the actual word (such as cat) it cointains
+	its corresponding key (such as 3) from the dictionary. The objects words and data are 2 parallel lists; one list for the words and one list for the keys. 
+	So if words looked like this 
+
+	
+</p>
 
 
+<center>
+   words = ["hello", "Cat", "tree", ...] 
+	
+</center>
 
 
+<p>
 
-The next step is to create the variable “data”. The code below uses the word, key pairs in the dictionary to create the variable “data”. The variable dictionary (which is a python dictionary data structure) has each word and its corresponding key.  The resulting “data” object is a list that contains the keys for the words in the original list “words”. So now data has the same information as words except that instead of containing the actual word (such as cat) it cointains its corresponding key (such as 3) from the dictionary. The objects words and data are 2 parallel lists; one list for the words and one list for the keys. So if words looked like this 
-
-\begin{center}
-      words = ["hello", "Cat", "tree", ...] 
-\end{center}
-
-      
 then data now looks like this
+	
+</p>
 
-\begin{center}
+      <center>
      data = [17, 3, 53, ...]
-\end{center}
+	      
+      </center>
+
+<p>
+	where in dictionary we have
+</p>
                
 
-where in dictionary we have
+
 
 	<center>
 <div>
@@ -550,10 +687,13 @@ dictionary["tree"]   = 53
 </center>
 	
 
-	
-
+<p>
 
 The code to accomplish this is as follows:
+	
+</p>	
+
+
 
 <center>
 <div>
@@ -577,11 +717,17 @@ for word in words:
 </center>
 
 
+<p>
+The “if” statement in the code checks to see if the current word from words is in the dictionary (is frequent) or if it is not (infrequent). 
+	If the word is not in the dictionary, the unk\_count is incremented. If the word is in the dictionary, then its corresponding key is extracted and 
+	appended to data. Unknown words have an index of zero. 
+Once the loop finishes counting the unknown words, the unknown parameter in the frequency count stored in count is updated with this value as can be seen in the 
+	next code section. 
+
+	
+</p>
 
 
-
-The “if” statement in the code checks to see if the current word from words is in the dictionary (is frequent) or if it is not (infrequent). If the word is not in the dictionary, the unk\_count is incremented. If the word is in the dictionary, then its corresponding key is extracted and appended to data. Unknown words have an index of zero. 
-Once the loop finishes counting the unknown words, the unknown parameter in the frequency count stored in count is updated with this value as can be seen in the next code section. 
 
 <center>
 <div>
@@ -594,11 +740,16 @@ count[0][1] = unk_count
 </center>
 
 
-
-
-
-The object count is a frequency count of the words. The unknown word UNK, which is the first tuple in count initially has a -1 value. After the unknown words count is complete, \textbf{UNK} will have the total of all the unknown terms. 
+<p>
+The object count is a frequency count of the words. The unknown word UNK, which is the first tuple in count initially has a -1 value. After the unknown words count 
+	is complete, \textbf{UNK} will have the total of all the unknown terms. 
 Now that we have created \textbf{words} and \textbf{data}, we can visualize them together with the following code. The loop shows the first 15 values for each object. 
+	
+
+	
+</p>
+
+
 
 
 <center>
@@ -613,10 +764,13 @@ for i in range(15):
 </center>
 	
 
-
-
-
+<p>
 The result of the visualization is shown below. It shows word and key pairs in the format word -> key. 
+
+	
+</p>
+
+
 
 
 <center>
@@ -637,27 +791,34 @@ used        -> 59
 </div>
 </center>
 	
-
-
-
+<p>
 The next step is to reverse the dictionary and its order. 
 The dictionary looks like this 
 
+	
+</p>
 
-\begin{center}
+
+<center>
     dictionary = {'and': 3, 'of': 2, 'the': 1, 'UNK': 0}
-\end{center}
+	
+</center>
 
+<p>
 
+and when reversed, the dictionary will look as follows and we will call it Reverse_dictionary
+<br/><br/>
 
-and when reversed, the dictionary will look as follows and we will call it Reverse\_dictionary
-
-
-Reverse\_dictionary = {0: 'UNK', 1: 'the', 2: 'of', 3: 'and', 4: 'one', 5: 'in', 6: 'a', 7: 'to', 8: 'zero', 9: 'nine', 10: 'two', ...}
-
+Reverse_dictionary = {0: 'UNK', 1: 'the', 2: 'of', 3: 'and', 4: 'one', 5: 'in', 6: 'a', 7: 'to', 8: 'zero', 9: 'nine', 10: 'two', ...}
+	
+<br/><br/>
 
 
 The code to achieve this is straight forward. 
+
+	
+</p>
+
 
 <center>
 <div>
@@ -706,7 +867,7 @@ print(  'Sample data',
 </center>
 
 <p>
-Okay, after all of this we are now ready to generate a batch of \textbf{x} data, and a batch of labels \textbf{y}. To do this we will use a function called 
+Okay, after all of this we are now ready to generate a batch of "x" data, and a batch of labels "y". To do this we will use a function called 
 
 
 	
@@ -715,12 +876,12 @@ Okay, after all of this we are now ready to generate a batch of \textbf{x} data,
 
 <center>
 
-	\textbf{ generate\_batch() }
+	generate_batch()
 </center>
 
 <p>
-Since we are training a word2vec model we know that \textbf{x} is a list of one-hot encoded word vector, and \textbf{y} is also a list of one-hot encoded vectors.
-	Intuitively, each sample in \textbf{x} should look like this
+Since we are training a word2vec model we know that "x" is a list of one-hot encoded word vector, and "y" is also a list of one-hot encoded vectors.
+	Intuitively, each sample in "x" should look like this
 
 	
 </p>                                                   
@@ -736,7 +897,7 @@ Since we are training a word2vec model we know that \textbf{x} is a list of one-
 	
   <p>
 
-	And each sample in \textbf{y} should look like this
+	And each sample in "y" should look like this
 
   
   </p>                 
@@ -1058,7 +1219,7 @@ And these are the labels "ys"
 
 So we finally have our \textbf{xs} and \textbf{ys} which we can use in our neural network model. 
 <br/>
-So \textbf{xs} is
+So "xs" is
 	
 </p>
 
@@ -1170,11 +1331,11 @@ num_sampled    = 64   # Number of negative examples to sample
 	Once we have our parameter set and the data, we can proceed to define the architecture for the neural network (NN). 
 	For the NN definition we need to  create an embedding matrix called \textbf{"embeddings"} of size [vocabulary\_size, embedding\_size]. For this
 	example, it is [ 55000, 128].
-
+<br/><br/>
 The Embedding size is the number of dimensions of our embedding space (in this case 128). We can use a PyTorch embedding "look up" table for this.  
-
+<br/><br/>
 The function \textbf{nn.Embedding} is a function that returns vectors of size \textbf{embedding\_size} given the provided input words in train\_inputs (\textbf{x}). 
-
+<br/>
 </p>
 
 
