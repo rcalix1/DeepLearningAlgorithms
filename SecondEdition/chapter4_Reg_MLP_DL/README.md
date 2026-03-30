@@ -3,7 +3,7 @@
 * Iris data
 * Wine Quality data
 
-## Update Deployment repo
+## Updated Deployment code and repo
 
 * https://github.com/rcalix1/ConstraintsMLprediction/tree/main/Deployment/RealData/Run10
 * LEPINE
